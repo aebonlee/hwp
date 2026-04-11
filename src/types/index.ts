@@ -26,24 +26,20 @@ export interface HwpDocumentInput {
 // ─── Template ───
 export interface HwpTemplate {
   id: string;
-  category: string;
+  user_id: string;
   title: string;
-  title_en: string;
   description: string;
-  content: string;
-  fields: TemplateField[];
-  sort_order: number;
-  is_active: boolean;
+  content: string;        // {{field}} 포함 마크다운
+  fields: TemplateFieldDef[];
   created_at: string;
+  updated_at: string;
 }
 
-export interface TemplateField {
+export interface TemplateFieldDef {
   key: string;
   label: string;
-  label_en: string;
-  type: 'text' | 'textarea' | 'date' | 'number';
+  type: 'text' | 'textarea';
   placeholder: string;
-  required: boolean;
 }
 
 // ─── Conversion ───

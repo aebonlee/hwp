@@ -10,6 +10,7 @@ const Home = lazy(() => import('../pages/Home'));
 const Convert = lazy(() => import('../pages/Convert'));
 const Editor = lazy(() => import('../pages/Editor'));
 const Templates = lazy(() => import('../pages/Templates'));
+const TemplateCreate = lazy(() => import('../pages/TemplateCreate'));
 const TemplateDetail = lazy(() => import('../pages/TemplateDetail'));
 const Documents = lazy(() => import('../pages/Documents'));
 const DocumentDetail = lazy(() => import('../pages/DocumentDetail'));
@@ -41,8 +42,9 @@ const PublicLayout = (): ReactElement => {
             {/* HWP 기능 페이지 */}
             <Route path="/convert" element={<Convert />} />
             <Route path="/editor" element={<Editor />} />
-            <Route path="/templates" element={<Templates />} />
-            <Route path="/templates/:id" element={<TemplateDetail />} />
+            <Route path="/templates" element={<AuthGuard><Templates /></AuthGuard>} />
+            <Route path="/templates/new" element={<AuthGuard><TemplateCreate /></AuthGuard>} />
+            <Route path="/templates/:id" element={<AuthGuard><TemplateDetail /></AuthGuard>} />
             <Route path="/guide" element={<Guide />} />
 
             {/* 문서 관리 (AuthGuard) */}

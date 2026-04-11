@@ -1,4 +1,5 @@
-import { useState, useRef, type ReactElement } from 'react';
+import { useState, useRef, useEffect, type ReactElement } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEOHead from '../components/SEOHead';
 import { downloadText } from '../utils/fileUtils';
@@ -6,10 +7,17 @@ import '../styles/editor.css';
 
 const Editor = (): ReactElement => {
   const { t } = useLanguage();
+  const location = useLocation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [showExport, setShowExport] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const state = location.state as { content?: string; title?: string } | null;
+    if (state?.content) setContent(state.content);
+    if (state?.title) setTitle(state.title);
+  }, [location.state]);
 
   const handleExport = async (format: string) => {
     setShowExport(false);
