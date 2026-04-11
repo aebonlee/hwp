@@ -92,19 +92,6 @@ const Editor = (): ReactElement => {
             <textarea
               value={content}
               onChange={e => setContent(e.target.value)}
-              style={{
-                width: '100%',
-                minHeight: '500px',
-                padding: '20px',
-                border: 'none',
-                outline: 'none',
-                fontFamily: 'monospace',
-                fontSize: '14px',
-                lineHeight: '1.6',
-                resize: 'vertical',
-                background: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
               placeholder="마크다운으로 문서를 작성하세요..."
             />
           </div>

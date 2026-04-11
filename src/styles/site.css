@@ -1,30 +1,411 @@
 /* ============================================
-   사이트 전용 스타일
-   하위 사이트에 맞게 이 파일을 수정하세요
+   HWP Web — Site-Specific Styles
    ============================================ */
 
-/* Welcome Section */
+/* ── CSS Variable Aliases ── */
+:root {
+  --primary: var(--primary-blue);
+  --primary-dark: var(--primary-blue-dark);
+  --primary-light: var(--primary-blue-light);
+  --primary-rgb: 0, 70, 200;
+  --bg-primary: var(--bg-white);
+  --bg-secondary: var(--bg-light-gray);
+  --border-color: var(--border-light);
+}
+
+[data-theme="dark"] {
+  --primary-rgb: 74, 143, 231;
+  --bg-primary: var(--bg-white);
+  --bg-secondary: var(--bg-light-gray);
+  --border-color: var(--border-light);
+}
+
+/* ── Page Header (gradient banner) ── */
+.page-header {
+  background: var(--hero-bg);
+  padding: calc(var(--nav-height) + 48px) 0 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 600px 300px at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 80% 30%, rgba(255,255,255,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.page-header .container {
+  position: relative;
+  z-index: 1;
+}
+
+.page-header h2 {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.page-header p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Section base ── */
+.section {
+  padding: 64px 0;
+}
+
+.section:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+/* ── Welcome Section (Home) ── */
 .site-welcome {
   text-align: center;
-  padding: 4rem 0;
+  padding: 0 0 16px;
   max-width: 700px;
   margin: 0 auto;
 }
 
 .site-welcome h3 {
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
   color: var(--text-primary);
 }
 
 .site-welcome p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.8;
   color: var(--text-secondary);
 }
 
-/* Section base */
-.section {
-  padding: 4rem 0;
+/* ── Feature Cards (Home) ── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.feature-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.feature-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+  text-align: center;
+  transition: var(--transition-base);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 32px;
+  background: rgba(var(--primary-rgb), 0.08);
+  transition: var(--transition-base);
+}
+
+.feature-card:hover .feature-card-icon {
+  background: rgba(var(--primary-rgb), 0.15);
+  transform: scale(1.1);
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Stats Row (Home) ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ── CTA Button ── */
+.cta-wrapper {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-base);
+  box-shadow: 0 4px 14px rgba(var(--primary-rgb), 0.3);
+}
+
+.cta-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.35);
+}
+
+.cta-btn svg {
+  transition: transform 0.3s;
+}
+
+.cta-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Guide Page ── */
+.guide-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.guide-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  transition: var(--transition-base);
+}
+
+.guide-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.guide-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.guide-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  background: rgba(var(--primary-rgb), 0.08);
+  color: var(--primary);
+}
+
+.guide-card-header h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.guide-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.guide-card ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.guide-card ul li {
+  position: relative;
+  padding: 4px 0 4px 20px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.guide-card ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.5;
+}
+
+/* ── Tip / Alert Box ── */
+.tip-box {
+  background: rgba(var(--primary-rgb), 0.05);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 20px;
+  margin-top: 20px;
+}
+
+.tip-box p {
+  color: var(--text-primary) !important;
+  font-size: 0.9rem !important;
+}
+
+.tip-box strong {
+  color: var(--primary);
+}
+
+/* ── Error Alert ── */
+.error-alert {
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+[data-theme="dark"] .error-alert {
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* ── Dark mode overrides for new components ── */
+[data-theme="dark"] .feature-card {
+  background: var(--bg-light-gray);
+  border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .guide-card {
+  background: var(--bg-light-gray);
+  border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .feature-card-icon {
+  background: rgba(var(--primary-rgb), 0.15);
+}
+
+[data-theme="dark"] .guide-card-icon {
+  background: rgba(var(--primary-rgb), 0.15);
+}
+
+[data-theme="dark"] .page-header {
+  background: var(--hero-bg-dark);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .page-header {
+    padding: calc(var(--nav-height) + 32px) 0 40px;
+  }
+
+  .page-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 32px 0;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  .guide-card {
+    padding: 24px 20px;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
 }

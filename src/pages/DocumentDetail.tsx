@@ -100,19 +100,7 @@ const DocumentDetail = (): ReactElement => {
             <textarea
               value={content}
               onChange={e => setContent(e.target.value)}
-              style={{
-                width: '100%',
-                minHeight: '500px',
-                padding: '20px',
-                border: 'none',
-                outline: 'none',
-                fontFamily: 'monospace',
-                fontSize: '14px',
-                lineHeight: '1.6',
-                resize: 'vertical',
-                background: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
+              placeholder="문서 내용을 입력하세요..."
             />
           </div>
         </div>

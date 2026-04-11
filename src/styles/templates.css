@@ -3,24 +3,26 @@
    ============================================ */
 
 .templates-page {
-  padding: 40px 0;
+  padding: 48px 0;
 }
 
+/* ── Category Filters ── */
 .template-filters {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .filter-btn {
-  padding: 8px 20px;
+  padding: 8px 22px;
   border: 1px solid var(--border-color);
   background: var(--bg-primary);
-  border-radius: 20px;
+  border-radius: var(--radius-full);
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition-base);
   color: var(--text-secondary);
 }
 
@@ -28,13 +30,16 @@
   background: var(--primary);
   color: white;
   border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.25);
 }
 
 .filter-btn:hover:not(.active) {
   border-color: var(--primary);
   color: var(--primary);
+  background: rgba(var(--primary-rgb), 0.03);
 }
 
+/* ── Template Grid ── */
 .template-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -43,38 +48,59 @@
 
 .template-card {
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 24px;
-  transition: all 0.3s;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: var(--transition-base);
   background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.template-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .template-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: rgba(var(--primary-rgb), 0.2);
+}
+
+.template-card:hover::after {
+  opacity: 1;
 }
 
 .template-card-category {
   display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
   font-weight: 600;
-  margin-bottom: 12px;
-  background: rgba(var(--primary-rgb, 0, 70, 200), 0.1);
+  margin-bottom: 14px;
+  background: rgba(var(--primary-rgb, 0, 70, 200), 0.08);
   color: var(--primary);
+  letter-spacing: 0.02em;
 }
 
 .template-card h3 {
-  margin: 0 0 8px;
-  font-size: 18px;
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .template-card p {
-  margin: 0 0 16px;
-  font-size: 14px;
+  margin: 0 0 20px;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .template-card-actions {
@@ -83,13 +109,14 @@
 }
 
 .template-card-actions button {
-  padding: 8px 16px;
+  padding: 8px 18px;
   border: 1px solid var(--border-color);
   background: var(--bg-primary);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 13px;
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition-base);
   color: var(--text-primary);
 }
 
@@ -99,22 +126,42 @@
   border-color: var(--primary);
 }
 
-.template-card-actions button:hover {
-  opacity: 0.85;
+.template-card-actions button.primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
-/* Template Detail */
+/* ── Template Detail ── */
 .template-detail {
-  max-width: 800px;
+  max-width: 840px;
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 8px 0 40px;
+}
+
+.template-detail > h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.template-detail > h3::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 2px;
 }
 
 .template-fields {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin: 24px 0;
+  gap: 18px;
+  margin: 16px 0 36px;
 }
 
 .template-field {
@@ -125,17 +172,26 @@
 
 .template-field label {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
 }
 
 .template-field input,
 .template-field textarea {
-  padding: 10px 14px;
+  padding: 11px 16px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
   background: var(--bg-primary);
   color: var(--text-primary);
+  transition: border-color 0.2s;
+}
+
+.template-field input:focus,
+.template-field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
 }
 
 .template-field textarea {
@@ -145,9 +201,12 @@
 
 .template-preview-box {
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 24px;
+  border-radius: var(--radius-md);
+  padding: 28px;
   background: var(--bg-secondary);
   line-height: 1.8;
   white-space: pre-wrap;
+  font-size: 0.9rem;
+  max-height: 400px;
+  overflow-y: auto;
 }
