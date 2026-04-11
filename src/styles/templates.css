@@ -1,0 +1,153 @@
+/* ============================================
+   Templates Page Styles
+   ============================================ */
+
+.templates-page {
+  padding: 40px 0;
+}
+
+.template-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.filter-btn {
+  padding: 8px 20px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  color: var(--text-secondary);
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.filter-btn:hover:not(.active) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.template-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s;
+  background: var(--bg-primary);
+}
+
+.template-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.template-card-category {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  background: rgba(var(--primary-rgb, 0, 70, 200), 0.1);
+  color: var(--primary);
+}
+
+.template-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.template-card p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.template-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.template-card-actions button {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.template-card-actions button.primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.template-card-actions button:hover {
+  opacity: 0.85;
+}
+
+/* Template Detail */
+.template-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.template-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.template-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.template-field label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.template-field input,
+.template-field textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.template-field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.template-preview-box {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+  background: var(--bg-secondary);
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
