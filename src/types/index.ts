@@ -58,6 +58,7 @@ export type ConversionDirection = ConversionRecord['direction'];
 export interface UserProfile {
   id: string;
   email: string;
+  name: string;
   display_name: string;
   avatar_url: string;
   phone: string;
