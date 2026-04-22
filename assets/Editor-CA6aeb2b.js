@@ -1,5 +1,5 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-DhBOH3JZ.js","assets/jszip.min-CF_QwUG1.js","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import{u as v,a as k,r as i,j as t,_ as g}from"./index-D5lKMjVp.js";import{S as E}from"./SEOHead-D1yKkAqs.js";import{d}from"./fileUtils-1h3TEy09.js";/* empty css               */const H=()=>{const{t:e}=v(),x=k(),[l,h]=i.useState(""),[o,p]=i.useState(""),[m,u]=i.useState(!1),b=i.useRef(null);i.useEffect(()=>{const s=x.state;s?.content&&p(s.content),s?.title&&h(s.title)},[x.state]);const n=async s=>{u(!1);const r=l||e("site.editor.untitled");switch(s){case"md":d(o,`${r}.md`,"text/markdown");break;case"html":{const a=`<!DOCTYPE html>
+import{u as v,a as k,r as i,j as t,_ as g}from"./index-_3CB8yVd.js";import{S as E}from"./SEOHead-Dxm8EZRb.js";import{d}from"./fileUtils-1h3TEy09.js";/* empty css               */const H=()=>{const{t:e}=v(),x=k(),[l,h]=i.useState(""),[o,p]=i.useState(""),[m,u]=i.useState(!1),b=i.useRef(null);i.useEffect(()=>{const s=x.state;s?.content&&p(s.content),s?.title&&h(s.title)},[x.state]);const n=async s=>{u(!1);const r=l||e("site.editor.untitled");switch(s){case"md":d(o,`${r}.md`,"text/markdown");break;case"html":{const a=`<!DOCTYPE html>
 <html lang="ko">
 <head><meta charset="UTF-8"><title>${r}</title></head>
 <body>${o}</body>
