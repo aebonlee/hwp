@@ -156,6 +156,27 @@
   pointer-events: none;
 }
 
+/* ── Hidden textarea for IME input ── */
+.hwp-hidden-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hwp-hidden-input:focus {
+  pointer-events: auto;
+}
+
 /* ── Cursor overlay ── */
 .hwp-cursor {
   position: absolute;
