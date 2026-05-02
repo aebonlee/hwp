@@ -163,7 +163,7 @@ const HwpEditor: React.FC = () => {
     pageIndex: number; x: number; y: number; height: number;
   } | null>(null);
   const selAnchorRef = useRef<CursorPos | null>(null);
-  const [hasSelection, setHasSelection] = useState(false);
+  const [, setHasSelection] = useState(false);
   const [selRects, setSelRects] = useState<SelectionRect[]>([]);
 
   // ViewBox cache per page
@@ -614,7 +614,7 @@ const HwpEditor: React.FC = () => {
     if (!doc) return;
     saveSnapshot();
     let pos = cursorRef.current;
-    if (hasSelection) {
+    if (selAnchorRef.current) {
       const np = deleteSelection();
       if (np) pos = np;
     }
@@ -623,17 +623,17 @@ const HwpEditor: React.FC = () => {
       const r = parseResult(rj);
       const newOff = (r?.charOffset as number) ?? pos.charOffset + text.length;
       const newPos: CursorPos = { ...pos, charOffset: newOff };
+      rerender();
       moveCursor(newPos);
-    } catch { /* ignore */ }
-    rerender();
-  }, [hasSelection, saveSnapshot, deleteSelection, moveCursor, rerender]);
+    } catch (e) { console.error('insertText failed:', e); }
+  }, [saveSnapshot, deleteSelection, moveCursor, rerender]);
 
   // ── Delete before/after cursor ─────────────────────────────────────────────
 
   const deleteCharBefore = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
-    if (hasSelection) { const np = deleteSelection(); if (np) moveCursor(np); rerender(); return; }
+    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerender(); return; }
     const pos = cursorRef.current;
     saveSnapshot();
     try {
@@ -644,7 +644,8 @@ const HwpEditor: React.FC = () => {
         moveCursor({ ...pos, charOffset: newOff });
       } else if (pos.paraIdx > 0) {
         const prevLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx - 1);
-        const rj = doc.mergeParagraph(pos.secIdx, pos.paraIdx - 1);
+        // mergeParagraph(sec, para): merges para into para-1, deletes para
+        const rj = doc.mergeParagraph(pos.secIdx, pos.paraIdx);
         const r = parseResult(rj);
         moveCursor({
           secIdx: pos.secIdx,
@@ -652,14 +653,14 @@ const HwpEditor: React.FC = () => {
           charOffset: (r?.charOffset as number) ?? prevLen,
         });
       }
-    } catch { /* ignore */ }
+    } catch (e) { console.error('deleteCharBefore failed:', e); }
     rerender();
-  }, [hasSelection, deleteSelection, saveSnapshot, moveCursor, rerender]);
+  }, [deleteSelection, saveSnapshot, moveCursor, rerender]);
 
   const deleteCharAfter = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
-    if (hasSelection) { const np = deleteSelection(); if (np) moveCursor(np); rerender(); return; }
+    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerender(); return; }
     const pos = cursorRef.current;
     saveSnapshot();
     try {
@@ -670,7 +671,9 @@ const HwpEditor: React.FC = () => {
       } else {
         const pCount = doc.getParagraphCount(pos.secIdx);
         if (pos.paraIdx < pCount - 1) {
-          const rj = doc.mergeParagraph(pos.secIdx, pos.paraIdx);
+          // mergeParagraph(sec, para): merges para into para-1, deletes para
+          // For Delete at end: merge next paragraph into current
+          const rj = doc.mergeParagraph(pos.secIdx, pos.paraIdx + 1);
           const r = parseResult(rj);
           moveCursor({
             secIdx: pos.secIdx,
@@ -679,9 +682,9 @@ const HwpEditor: React.FC = () => {
           });
         }
       }
-    } catch { /* ignore */ }
+    } catch (e) { console.error('deleteCharAfter failed:', e); }
     rerender();
-  }, [hasSelection, deleteSelection, saveSnapshot, moveCursor, rerender]);
+  }, [deleteSelection, saveSnapshot, moveCursor, rerender]);
 
   // ── Formatting ─────────────────────────────────────────────────────────────
 
@@ -690,7 +693,7 @@ const HwpEditor: React.FC = () => {
     if (!doc) return;
     const pos = cursorRef.current;
     saveSnapshot();
-    if (hasSelection && selAnchorRef.current) {
+    if (selAnchorRef.current) {
       const anchor = selAnchorRef.current;
       let sp = anchor.paraIdx; let so = anchor.charOffset;
       let ep = pos.paraIdx; let eo = pos.charOffset;
@@ -720,7 +723,7 @@ const HwpEditor: React.FC = () => {
     }
     rerender();
     updateCharProps(pos);
-  }, [hasSelection, saveSnapshot, rerender, updateCharProps]);
+  }, [saveSnapshot, rerender, updateCharProps]);
 
   const applyParaFormat = useCallback((props: Record<string, unknown>) => {
     const doc = docRef.current;
@@ -1020,8 +1023,8 @@ const HwpEditor: React.FC = () => {
     switch (e.key) {
       case 'Enter': {
         e.preventDefault();
-        if (hasSelection) { const np = deleteSelection(); if (np) { setCursor(np); rerender(); updateCursorDisplay(np); } }
         saveSnapshot();
+        if (selAnchorRef.current) { const np = deleteSelection(); if (np) setCursor(np); }
         const curP = cursorRef.current;
         try {
           const rj = doc.splitParagraph(curP.secIdx, curP.paraIdx, curP.charOffset);
@@ -1178,7 +1181,7 @@ const HwpEditor: React.FC = () => {
         break;
     }
   }, [
-    cursor, hasSelection, cursorRect,
+    cursor, cursorRect,
     handleUndo, handleRedo,
     toggleBold, toggleItalic, toggleUnderline,
     insertText, deleteSelection, deleteCharBefore, deleteCharAfter,
@@ -1272,7 +1275,7 @@ const HwpEditor: React.FC = () => {
 
   // ── Derived values ─────────────────────────────────────────────────────────
 
-  const hasDoc = docRef.current !== null && svgs.length > 0;
+  const hasDoc = svgs.length > 0;
   const textColorHex = hwpColorToHex(charProps.textColor);
   const highlightHex = hwpColorToHex(charProps.highlight);
 
