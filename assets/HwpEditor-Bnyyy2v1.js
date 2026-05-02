@@ -1,7 +1,7 @@
-import { u as ps, r as n, _ as mt, j as t, __tla as __tla_0 } from "./index-DbtbuWeR.js";
-import { u as us, __tla as __tla_1 } from "./useRhwp-De7gZ18w.js";
-import { S as xs } from "./SEOHead-IURV6xUA.js";
-let ks;
+import { u as dr, r as n, _ as jt, j as t, __tla as __tla_0 } from "./index-B1Os76hq.js";
+import { u as pr, __tla as __tla_1 } from "./useRhwp-BeqL0wP0.js";
+import { S as ur } from "./SEOHead-BgvAu2Yz.js";
+let Cr;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -14,11 +14,11 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    function ue(b) {
+    function pe(b) {
         const F = parseInt(b.slice(1, 3), 16), N = parseInt(b.slice(3, 5), 16);
         return parseInt(b.slice(5, 7), 16) << 16 | N << 8 | F;
     }
-    function vt(b) {
+    function mt(b) {
         const F = b & 255, N = b >> 8 & 255, l = b >> 16 & 255;
         return "#" + [
             F,
@@ -33,7 +33,7 @@ let __tla = Promise.all([
             return null;
         }
     }
-    function fs(b) {
+    function xr(b) {
         const F = b.match(/viewBox=["']([^"']+)["']/);
         if (!F) return null;
         const N = F[1].split(/[\s,]+/).map(Number);
@@ -44,8 +44,8 @@ let __tla = Promise.all([
             h: N[3]
         };
     }
-    let gs, ws, ys, bs, js;
-    gs = [
+    let fr, gr, wr, yr, br;
+    fr = [
         "맑은 고딕",
         "함초롬바탕",
         "함초롬돋움",
@@ -57,7 +57,7 @@ let __tla = Promise.all([
         "Arial",
         "Times New Roman"
     ];
-    ws = [
+    gr = [
         8,
         9,
         10,
@@ -75,7 +75,7 @@ let __tla = Promise.all([
         48,
         72
     ];
-    ys = [
+    wr = [
         {
             label: "100%",
             value: 100
@@ -109,7 +109,7 @@ let __tla = Promise.all([
             value: 300
         }
     ];
-    bs = [
+    yr = [
         [
             "#000000",
             "#434343",
@@ -147,13 +147,13 @@ let __tla = Promise.all([
             "#EAD1DC"
         ]
     ];
-    js = 100;
-    ks = ()=>{
-        const { ready: b, loading: F, error: N } = us(), { t: l } = ps(), u = n.useRef(null), [He, Ct] = n.useState([]), [V, kt] = n.useState(0), [U, J] = n.useState(0), [xe, fe] = n.useState("1"), [Y, Te] = n.useState(100), [Z, It] = n.useState(""), [Ot, Me] = n.useState(!1), m = n.useRef({
+    br = 100;
+    Cr = ()=>{
+        const { ready: b, loading: F, error: N } = pr(), { t: l } = dr(), u = n.useRef(null), [ze, vt] = n.useState([]), [K, Ct] = n.useState(0), [A, V] = n.useState(0), [ue, xe] = n.useState("1"), [X, Te] = n.useState(100), [J, kt] = n.useState(""), [It, He] = n.useState(!1), m = n.useRef({
             secIdx: 0,
             paraIdx: 0,
             charOffset: 0
-        }), [ge, We] = n.useState(null), [R, Q] = n.useState(null), h = n.useRef(null), [D, k] = n.useState(!1), [St, T] = n.useState([]), q = n.useRef({}), [I, Nt] = n.useState({
+        }), [fe, Me] = n.useState(null), [R, Z] = n.useState(null), h = n.useRef(null), [, k] = n.useState(!1), [Ot, T] = n.useState([]), Y = n.useRef({}), [I, St] = n.useState({
             fontFamily: "맑은 고딕",
             fontSize: 1e3,
             bold: !1,
@@ -161,56 +161,56 @@ let __tla = Promise.all([
             underline: !1,
             strikethrough: !1,
             textColor: 0,
-            highlight: ue("#FFFF00")
-        }), [G, Et] = n.useState({
+            highlight: pe("#FFFF00")
+        }), [q, Nt] = n.useState({
             alignment: "justify",
             lineSpacing: 160,
             marginLeft: 0,
             marginRight: 0,
             indent: 0
-        }), P = n.useRef([]), M = n.useRef([]), [Ft, ee] = n.useState(!1), [Rt, te] = n.useState(!1), se = n.useRef(!1), _ = n.useRef(null), $e = n.useRef({}), [Dt, Lt] = n.useState(!0), [Bt, we] = n.useState(!1), [Ae, L] = n.useState(""), [ye, re] = n.useState(!1), [be, ne] = n.useState(!1), [je, ae] = n.useState(!1), [me, ce] = n.useState(!1), [ve, oe] = n.useState(!1), [Ce, ie] = n.useState(!1), [ke, le] = n.useState(!1), [Ie, Pt] = n.useState(3), [Oe, zt] = n.useState(3), [Ht, Tt] = n.useState("#000000"), [Mt, Wt] = n.useState("#FFFF00"), [Se, Ue] = n.useState("맑은 고딕"), [_e, Ke] = n.useState("10"), [Ve, he] = n.useState(!1), [B, $t] = n.useState(""), [X, At] = n.useState(""), [W, Ut] = n.useState(!1), [Je, $] = n.useState(""), Ze = n.useRef(null), Qe = n.useRef(null), Xe = n.useRef(null), Ye = n.useRef(null), qe = n.useRef(null), Ge = n.useRef(null), et = n.useRef(null), tt = n.useRef(null), st = n.useRef(null), rt = n.useRef(null), nt = n.useRef(null), at = n.useRef(null), ct = n.useRef(null), ot = n.useRef(null), j = n.useCallback((e)=>{
-            m.current = e, We(e);
+        }), B = n.useRef([]), H = n.useRef([]), [Et, G] = n.useState(!1), [Ft, ee] = n.useState(!1), te = n.useRef(!1), U = n.useRef(null), We = n.useRef({}), [Rt, Dt] = n.useState(!0), [Lt, ge] = n.useState(!1), [$e, D] = n.useState(""), [we, re] = n.useState(!1), [ye, se] = n.useState(!1), [be, ne] = n.useState(!1), [je, ae] = n.useState(!1), [me, ce] = n.useState(!1), [ve, oe] = n.useState(!1), [Ce, ie] = n.useState(!1), [ke, Bt] = n.useState(3), [Ie, Pt] = n.useState(3), [zt, Tt] = n.useState("#000000"), [Ht, Mt] = n.useState("#FFFF00"), [Oe, Ae] = n.useState("맑은 고딕"), [Ue, _e] = n.useState("10"), [Ke, le] = n.useState(!1), [L, Wt] = n.useState(""), [Q, $t] = n.useState(""), [M, At] = n.useState(!1), [Ve, W] = n.useState(""), Je = n.useRef(null), Ze = n.useRef(null), Qe = n.useRef(null), Xe = n.useRef(null), Ye = n.useRef(null), qe = n.useRef(null), Ge = n.useRef(null), et = n.useRef(null), tt = n.useRef(null), rt = n.useRef(null), st = n.useRef(null), nt = n.useRef(null), at = n.useRef(null), ct = n.useRef(null), j = n.useCallback((e)=>{
+            m.current = e, Me(e);
         }, []), p = n.useCallback(()=>{
             const e = u.current;
             if (e) try {
-                const r = e.pageCount();
-                kt(r);
-                const s = [];
-                for(let o = 0; o < r; o++){
-                    const a = e.renderPageSvg(o);
-                    s.push(a);
-                    const c = fs(a);
-                    c && (q.current[o] = c);
-                }
+                const s = e.pageCount();
                 Ct(s);
-            } catch (r) {
-                L(String(r));
+                const r = [];
+                for(let o = 0; o < s; o++){
+                    const a = e.renderPageSvg(o);
+                    r.push(a);
+                    const c = xr(a);
+                    c && (Y.current[o] = c);
+                }
+                vt(r);
+            } catch (s) {
+                D(String(s));
             }
         }, []), w = n.useCallback((e)=>{
-            const r = u.current;
-            if (!r) {
-                Q(null);
+            const s = u.current;
+            if (!s) {
+                Z(null);
                 return;
             }
             try {
-                const s = y(r.getCursorRect(e.secIdx, e.paraIdx, e.charOffset));
-                s && s.x !== void 0 ? (Q({
-                    pageIndex: s.pageIndex ?? 0,
-                    x: s.x,
-                    y: s.y,
-                    height: s.height
-                }), J(s.pageIndex ?? 0)) : Q(null);
+                const r = y(s.getCursorRect(e.secIdx, e.paraIdx, e.charOffset));
+                r && r.x !== void 0 ? (Z({
+                    pageIndex: r.pageIndex ?? 0,
+                    x: r.x,
+                    y: r.y,
+                    height: r.height
+                }), V(r.pageIndex ?? 0)) : Z(null);
             } catch  {
-                Q(null);
+                Z(null);
             }
         }, []), E = n.useCallback((e)=>{
-            const r = u.current;
-            if (r) {
+            const s = u.current;
+            if (s) {
                 try {
-                    const s = r.getCharPropertiesAt(e.secIdx, e.paraIdx, e.charOffset), o = y(s);
+                    const r = s.getCharPropertiesAt(e.secIdx, e.paraIdx, e.charOffset), o = y(r);
                     if (o) {
                         const a = o.fontFamily || "맑은 고딕", c = o.fontSize || 1e3;
-                        Ue(a), Ke(String(Math.round(c / 100))), Nt({
+                        Ae(a), _e(String(Math.round(c / 100))), St({
                             fontFamily: a,
                             fontSize: c,
                             bold: !!o.bold,
@@ -218,13 +218,13 @@ let __tla = Promise.all([
                             underline: !!o.underline,
                             strikethrough: !!o.strikethrough,
                             textColor: o.textColor ?? 0,
-                            highlight: o.highlight ?? ue("#FFFF00")
+                            highlight: o.highlight ?? pe("#FFFF00")
                         });
                     }
                 } catch  {}
                 try {
-                    const s = r.getParaPropertiesAt(e.secIdx, e.paraIdx), o = y(s);
-                    o && Et({
+                    const r = s.getParaPropertiesAt(e.secIdx, e.paraIdx), o = y(r);
+                    o && Nt({
                         alignment: o.alignment || "justify",
                         lineSpacing: o.lineSpacing || 160,
                         marginLeft: o.marginLeft || 0,
@@ -233,13 +233,13 @@ let __tla = Promise.all([
                     });
                 } catch  {}
             }
-        }, []), O = n.useCallback((e, r)=>{
-            const s = u.current;
-            if (!s) {
+        }, []), O = n.useCallback((e, s)=>{
+            const r = u.current;
+            if (!r) {
                 T([]);
                 return;
             }
-            let o = e.paraIdx, a = e.charOffset, c = r.paraIdx, i = r.charOffset;
+            let o = e.paraIdx, a = e.charOffset, c = s.paraIdx, i = s.charOffset;
             (o > c || o === c && a > i) && ([o, c] = [
                 c,
                 o
@@ -248,13 +248,13 @@ let __tla = Promise.all([
                 a
             ]);
             try {
-                const d = s.getSelectionRects(e.secIdx, o, a, c, i), x = JSON.parse(d);
+                const d = r.getSelectionRects(e.secIdx, o, a, c, i), x = JSON.parse(d);
                 T(Array.isArray(x) ? x : []);
             } catch  {
                 T([]);
             }
-        }, []), f = n.useCallback((e, r = !0)=>{
-            j(e), r ? (h.current = null, k(!1), T([])) : h.current && O(h.current, e), w(e), E(e), Me(!0), _.current?.focus();
+        }, []), f = n.useCallback((e, s = !0)=>{
+            j(e), s ? (h.current = null, k(!1), T([])) : h.current && O(h.current, e), w(e), E(e), He(!0), U.current?.focus();
         }, [
             j,
             w,
@@ -263,70 +263,70 @@ let __tla = Promise.all([
         ]), g = n.useCallback(()=>{
             const e = u.current;
             if (e) try {
-                const r = e.saveSnapshot();
-                if (P.current.push(r), P.current.length > js) {
-                    const s = P.current.shift();
-                    if (s !== void 0) try {
-                        e.discardSnapshot(s);
+                const s = e.saveSnapshot();
+                if (B.current.push(s), B.current.length > br) {
+                    const r = B.current.shift();
+                    if (r !== void 0) try {
+                        e.discardSnapshot(r);
                     } catch  {}
                 }
-                M.current.forEach((s)=>{
+                H.current.forEach((r)=>{
                     try {
-                        e.discardSnapshot(s);
+                        e.discardSnapshot(r);
                     } catch  {}
-                }), M.current = [], ee(!0), te(!1);
+                }), H.current = [], G(!0), ee(!1);
             } catch  {}
-        }, []), Ne = n.useCallback(()=>{
+        }, []), Se = n.useCallback(()=>{
             const e = u.current;
-            if (!e || P.current.length === 0) return;
-            const r = P.current.pop();
+            if (!e || B.current.length === 0) return;
+            const s = B.current.pop();
             try {
                 const o = e.saveSnapshot();
-                M.current.push(o), e.restoreSnapshot(r);
+                H.current.push(o), e.restoreSnapshot(s);
                 try {
-                    e.discardSnapshot(r);
+                    e.discardSnapshot(s);
                 } catch  {}
             } catch  {}
-            p(), ee(P.current.length > 0), te(!0);
-            const s = m.current;
-            w(s), E(s);
+            p(), G(B.current.length > 0), ee(!0);
+            const r = m.current;
+            w(r), E(r);
         }, [
             p,
             w,
             E
-        ]), Ee = n.useCallback(()=>{
+        ]), Ne = n.useCallback(()=>{
             const e = u.current;
-            if (!e || M.current.length === 0) return;
-            const r = M.current.pop();
+            if (!e || H.current.length === 0) return;
+            const s = H.current.pop();
             try {
                 const o = e.saveSnapshot();
-                P.current.push(o), e.restoreSnapshot(r);
+                B.current.push(o), e.restoreSnapshot(s);
                 try {
-                    e.discardSnapshot(r);
+                    e.discardSnapshot(s);
                 } catch  {}
             } catch  {}
-            p(), ee(!0), te(M.current.length > 0);
-            const s = m.current;
-            w(s), E(s);
+            p(), G(!0), ee(H.current.length > 0);
+            const r = m.current;
+            w(r), E(r);
         }, [
             p,
             w,
             E
-        ]), de = n.useCallback((e, r)=>{
+        ]), he = n.useCallback((e, s)=>{
             try {
                 e.convertToEditable();
             } catch  {}
             if (u.current && u.current !== e) try {
                 u.current.free();
             } catch  {}
-            u.current = e, P.current = [], M.current = [], ee(!1), te(!1), It(r), Me(!1), We(null), Q(null), h.current = null, k(!1), T([]), J(0), L(""), q.current = {}, p();
+            u.current = e, B.current = [], H.current = [], G(!1), ee(!1), kt(s), He(!1), Me(null), Z(null), h.current = null, k(!1), T([]), V(0), D(""), Y.current = {}, p();
             try {
-                const s = y(e.getCaretPosition());
-                if (s && s.paragraphIndex !== void 0) {
+                const r = y(e.getCaretPosition());
+                if (r && r.paragraphIndex !== void 0) {
                     const o = {
-                        secIdx: s.sectionIndex ?? 0,
-                        paraIdx: s.paragraphIndex,
-                        charOffset: s.charOffset ?? 0
+                        secIdx: r.sectionIndex ?? 0,
+                        paraIdx: r.paragraphIndex,
+                        charOffset: r.charOffset ?? 0
                     };
                     j(o), setTimeout(()=>w(o), 80);
                 } else {
@@ -338,99 +338,99 @@ let __tla = Promise.all([
                     j(o), setTimeout(()=>w(o), 80);
                 }
             } catch  {
-                const s = {
+                const r = {
                     secIdx: 0,
                     paraIdx: 0,
                     charOffset: 0
                 };
-                j(s), setTimeout(()=>w(s), 80);
+                j(r), setTimeout(()=>w(r), 80);
             }
         }, [
             p,
             j,
             w
-        ]), it = n.useCallback(async ()=>{
+        ]), ot = n.useCallback(async ()=>{
             if (b) try {
-                const { HwpDocument: e } = await mt(async ()=>{
-                    const { HwpDocument: s } = await import("./rhwp-BgOEd_j0.js");
+                const { HwpDocument: e } = await jt(async ()=>{
+                    const { HwpDocument: r } = await import("./rhwp-BgOEd_j0.js");
                     return {
-                        HwpDocument: s
+                        HwpDocument: r
                     };
-                }, []), r = e.createEmpty();
-                y(r.createBlankDocument()), de(r, "새 문서.hwp");
+                }, []), s = e.createEmpty();
+                y(s.createBlankDocument()), he(s, "새 문서.hwp");
             } catch (e) {
-                L(`새 문서 생성 실패: ${e.message}`);
+                D(`새 문서 생성 실패: ${e.message}`);
             }
         }, [
             b,
-            de
-        ]), pe = n.useCallback(async (e)=>{
+            he
+        ]), de = n.useCallback(async (e)=>{
             if (!b) return;
-            const r = e.name.split(".").pop()?.toLowerCase();
-            if (r !== "hwp" && r !== "hwpx") {
-                L(".hwp 또는 .hwpx 파일만 지원합니다.");
+            const s = e.name.split(".").pop()?.toLowerCase();
+            if (s !== "hwp" && s !== "hwpx") {
+                D(".hwp 또는 .hwpx 파일만 지원합니다.");
                 return;
             }
             try {
-                const { HwpDocument: s } = await mt(async ()=>{
+                const { HwpDocument: r } = await jt(async ()=>{
                     const { HwpDocument: c } = await import("./rhwp-BgOEd_j0.js");
                     return {
                         HwpDocument: c
                     };
-                }, []), o = new Uint8Array(await e.arrayBuffer()), a = new s(o);
-                de(a, e.name);
-            } catch (s) {
-                L(`파일 열기 실패: ${s.message}`);
+                }, []), o = new Uint8Array(await e.arrayBuffer()), a = new r(o);
+                he(a, e.name);
+            } catch (r) {
+                D(`파일 열기 실패: ${r.message}`);
             }
         }, [
             b,
-            de
-        ]), lt = n.useCallback(()=>{
+            he
+        ]), it = n.useCallback(()=>{
             const e = document.createElement("input");
             e.type = "file", e.accept = ".hwp,.hwpx", e.onchange = ()=>{
-                e.files?.[0] && pe(e.files[0]);
+                e.files?.[0] && de(e.files[0]);
             }, e.click();
         }, [
-            pe
-        ]), ht = n.useCallback((e)=>{
-            e.preventDefault(), we(!0);
-        }, []), dt = n.useCallback(()=>we(!1), []), pt = n.useCallback((e)=>{
-            e.preventDefault(), we(!1);
-            const r = e.dataTransfer.files[0];
-            r && pe(r);
+            de
+        ]), lt = n.useCallback((e)=>{
+            e.preventDefault(), ge(!0);
+        }, []), ht = n.useCallback(()=>ge(!1), []), dt = n.useCallback((e)=>{
+            e.preventDefault(), ge(!1);
+            const s = e.dataTransfer.files[0];
+            s && de(s);
         }, [
-            pe
-        ]), _t = n.useCallback((e, r)=>{
-            const s = u.current;
-            if (!s) return;
-            const o = $e.current[r];
+            de
+        ]), Ut = n.useCallback((e, s)=>{
+            const r = u.current;
+            if (!r) return;
+            const o = We.current[s];
             if (!o) return;
-            const a = q.current[r];
+            const a = Y.current[s];
             if (!a) return;
             const c = o.querySelector("svg"), i = c ? c.getBoundingClientRect() : o.getBoundingClientRect(), d = (e.clientX - i.left) / i.width * a.w + a.x, x = (e.clientY - i.top) / i.height * a.h + a.y;
             try {
-                const S = s.hitTest(r, d, x), C = y(S);
+                const S = r.hitTest(s, d, x), C = y(S);
                 if (!C) return;
-                const ze = C.paragraphIndex ?? C.paraIndex ?? 0, H = {
+                const Pe = C.paragraphIndex ?? C.paraIndex ?? 0, z = {
                     secIdx: C.sectionIndex ?? 0,
-                    paraIdx: ze,
+                    paraIdx: Pe,
                     charOffset: C.charOffset ?? 0
                 };
-                e.shiftKey && h.current ? (j(H), O(h.current, H), k(!0), w(H), E(H)) : (h.current = {
-                    ...H
-                }, f(H, !0));
+                e.shiftKey && h.current ? (j(z), O(h.current, z), k(!0), w(z), E(z)) : (h.current = {
+                    ...z
+                }, f(z, !0));
             } catch  {}
-            _.current?.focus();
+            U.current?.focus();
         }, [
             j,
             f,
             O,
             w,
             E
-        ]), z = n.useCallback(()=>{
-            const e = u.current, r = h.current, s = m.current;
-            if (!e || !r) return null;
-            let o = r.paraIdx, a = r.charOffset, c = s.paraIdx, i = s.charOffset;
+        ]), P = n.useCallback(()=>{
+            const e = u.current, s = h.current, r = m.current;
+            if (!e || !s) return null;
+            let o = s.paraIdx, a = s.charOffset, c = r.paraIdx, i = r.charOffset;
             (o > c || o === c && a > i) && ([o, c] = [
                 c,
                 o
@@ -439,116 +439,120 @@ let __tla = Promise.all([
                 a
             ]);
             try {
-                const d = e.deleteRange(s.secIdx, o, a, c, i), x = y(d);
+                const d = e.deleteRange(r.secIdx, o, a, c, i), x = y(d);
                 return h.current = null, k(!1), T([]), x?.ok ? {
-                    secIdx: s.secIdx,
+                    secIdx: r.secIdx,
                     paraIdx: x.paraIdx,
                     charOffset: x.charOffset
                 } : {
-                    ...r
+                    ...s
                 };
             } catch  {
                 return h.current = null, k(!1), T([]), {
-                    ...r
+                    ...s
                 };
             }
-        }, []), A = n.useCallback((e)=>{
-            const r = u.current;
-            if (!r) return;
+        }, []), $ = n.useCallback((e)=>{
+            const s = u.current;
+            if (!s) return;
             g();
-            let s = m.current;
-            if (D) {
-                const o = z();
-                o && (s = o);
+            let r = m.current;
+            if (h.current) {
+                const o = P();
+                o && (r = o);
             }
             try {
-                const o = r.insertText(s.secIdx, s.paraIdx, s.charOffset, e), c = y(o)?.charOffset ?? s.charOffset + e.length, i = {
-                    ...s,
+                const o = s.insertText(r.secIdx, r.paraIdx, r.charOffset, e), c = y(o)?.charOffset ?? r.charOffset + e.length, i = {
+                    ...r,
                     charOffset: c
                 };
-                f(i);
-            } catch  {}
-            p();
+                p(), f(i);
+            } catch (o) {
+                console.error("insertText failed:", o);
+            }
         }, [
-            D,
             g,
-            z,
+            P,
             f,
             p
-        ]), Fe = n.useCallback(()=>{
+        ]), Ee = n.useCallback(()=>{
             const e = u.current;
             if (!e) return;
-            if (D) {
-                const s = z();
-                s && f(s), p();
+            if (h.current) {
+                g();
+                const r = P();
+                r && f(r), p();
                 return;
             }
-            const r = m.current;
+            const s = m.current;
             g();
             try {
-                if (r.charOffset > 0) {
-                    const s = e.deleteText(r.secIdx, r.paraIdx, r.charOffset - 1, 1), a = y(s)?.charOffset ?? r.charOffset - 1;
+                if (s.charOffset > 0) {
+                    const r = e.deleteText(s.secIdx, s.paraIdx, s.charOffset - 1, 1), a = y(r)?.charOffset ?? s.charOffset - 1;
                     f({
-                        ...r,
+                        ...s,
                         charOffset: a
                     });
-                } else if (r.paraIdx > 0) {
-                    const s = e.getParagraphLength(r.secIdx, r.paraIdx - 1), o = e.mergeParagraph(r.secIdx, r.paraIdx - 1), a = y(o);
+                } else if (s.paraIdx > 0) {
+                    const r = e.getParagraphLength(s.secIdx, s.paraIdx - 1), o = e.mergeParagraph(s.secIdx, s.paraIdx), a = y(o);
                     f({
-                        secIdx: r.secIdx,
-                        paraIdx: a?.paraIdx ?? r.paraIdx - 1,
-                        charOffset: a?.charOffset ?? s
+                        secIdx: s.secIdx,
+                        paraIdx: a?.paraIdx ?? s.paraIdx - 1,
+                        charOffset: a?.charOffset ?? r
                     });
                 }
-            } catch  {}
+            } catch (r) {
+                console.error("deleteCharBefore failed:", r);
+            }
             p();
         }, [
-            D,
-            z,
+            P,
             g,
             f,
             p
-        ]), ut = n.useCallback(()=>{
+        ]), pt = n.useCallback(()=>{
             const e = u.current;
             if (!e) return;
-            if (D) {
-                const s = z();
-                s && f(s), p();
+            if (h.current) {
+                g();
+                const r = P();
+                r && f(r), p();
                 return;
             }
-            const r = m.current;
+            const s = m.current;
             g();
             try {
-                const s = e.getParagraphLength(r.secIdx, r.paraIdx);
-                if (r.charOffset < s) e.deleteText(r.secIdx, r.paraIdx, r.charOffset, 1), f({
-                    ...r
+                const r = e.getParagraphLength(s.secIdx, s.paraIdx);
+                if (s.charOffset < r) e.deleteText(s.secIdx, s.paraIdx, s.charOffset, 1), f({
+                    ...s
                 });
                 else {
-                    const o = e.getParagraphCount(r.secIdx);
-                    if (r.paraIdx < o - 1) {
-                        const a = e.mergeParagraph(r.secIdx, r.paraIdx), c = y(a);
+                    const o = e.getParagraphCount(s.secIdx);
+                    if (s.paraIdx < o - 1) {
+                        const a = e.mergeParagraph(s.secIdx, s.paraIdx + 1), c = y(a);
                         f({
-                            secIdx: r.secIdx,
-                            paraIdx: c?.paraIdx ?? r.paraIdx,
-                            charOffset: c?.charOffset ?? r.charOffset
+                            secIdx: s.secIdx,
+                            paraIdx: c?.paraIdx ?? s.paraIdx,
+                            charOffset: c?.charOffset ?? s.charOffset
                         });
                     }
                 }
-            } catch  {}
+            } catch (r) {
+                console.error("deleteCharAfter failed:", r);
+            }
             p();
         }, [
-            D,
-            z,
+            P,
             g,
             f,
             p
         ]), v = n.useCallback((e)=>{
-            const r = u.current;
-            if (!r) return;
-            const s = m.current;
-            if (g(), D && h.current) {
+            const s = u.current;
+            if (!s) return;
+            const r = m.current;
+            if (g(), h.current) {
                 const o = h.current;
-                let a = o.paraIdx, c = o.charOffset, i = s.paraIdx, d = s.charOffset;
+                let a = o.paraIdx, c = o.charOffset, i = r.paraIdx, d = r.charOffset;
                 (a > i || a === i && c > d) && ([a, i] = [
                     i,
                     a
@@ -557,101 +561,116 @@ let __tla = Promise.all([
                     c
                 ]);
                 try {
-                    r.beginBatch();
+                    s.beginBatch();
                     for(let x = a; x <= i; x++){
-                        const S = x === a ? c : 0, C = x === i ? d : r.getParagraphLength(s.secIdx, x);
-                        r.applyCharFormat(s.secIdx, x, S, C, JSON.stringify(e));
+                        const S = x === a ? c : 0, C = x === i ? d : s.getParagraphLength(r.secIdx, x);
+                        s.applyCharFormat(r.secIdx, x, S, C, JSON.stringify(e));
                     }
-                    r.endBatch();
+                    s.endBatch();
                 } catch  {
                     try {
-                        r.endBatch();
+                        s.endBatch();
                     } catch  {}
                 }
             } else try {
-                const o = r.getParagraphLength(s.secIdx, s.paraIdx), a = Math.min(s.charOffset + 1, o);
-                s.charOffset < a && r.applyCharFormat(s.secIdx, s.paraIdx, s.charOffset, a, JSON.stringify(e));
+                const o = s.getParagraphLength(r.secIdx, r.paraIdx), a = Math.min(r.charOffset + 1, o);
+                r.charOffset < a && s.applyCharFormat(r.secIdx, r.paraIdx, r.charOffset, a, JSON.stringify(e));
             } catch  {}
-            p(), E(s);
+            p(), E(r);
         }, [
-            D,
             g,
             p,
             E
-        ]), K = n.useCallback((e)=>{
-            const r = u.current;
-            if (!r) return;
-            const s = m.current;
+        ]), _ = n.useCallback((e)=>{
+            const s = u.current;
+            if (!s) return;
+            const r = m.current;
             g();
             try {
-                r.applyParaFormat(s.secIdx, s.paraIdx, JSON.stringify(e));
+                s.applyParaFormat(r.secIdx, r.paraIdx, JSON.stringify(e));
             } catch  {}
-            p(), E(s);
+            p(), E(r);
         }, [
             g,
             p,
             E
-        ]), Re = n.useCallback(()=>v({
+        ]), Fe = n.useCallback(()=>v({
                 bold: !I.bold
             }), [
             v,
             I.bold
-        ]), De = n.useCallback(()=>v({
+        ]), Re = n.useCallback(()=>v({
                 italic: !I.italic
             }), [
             v,
             I.italic
-        ]), Le = n.useCallback(()=>v({
+        ]), De = n.useCallback(()=>v({
                 underline: !I.underline
             }), [
             v,
             I.underline
-        ]), Kt = n.useCallback(()=>v({
+        ]), _t = n.useCallback(()=>v({
                 strikethrough: !I.strikethrough
             }), [
             v,
             I.strikethrough
-        ]), Vt = n.useCallback((e)=>{
+        ]), Kt = n.useCallback((e)=>{
             v({
                 fontFamily: e
-            }), Ue(e), re(!1);
+            }), Ae(e), re(!1);
+        }, [
+            v
+        ]), Vt = n.useCallback((e)=>{
+            v({
+                fontSize: Math.round(e * 100)
+            }), _e(String(e)), se(!1);
         }, [
             v
         ]), Jt = n.useCallback((e)=>{
-            v({
-                fontSize: Math.round(e * 100)
-            }), Ke(String(e)), ne(!1);
-        }, [
-            v
-        ]), Zt = n.useCallback((e)=>{
-            K({
+            _({
                 alignment: e
             });
         }, [
-            K
-        ]), Qt = n.useCallback((e)=>{
-            K({
+            _
+        ]), Zt = n.useCallback((e)=>{
+            _({
                 lineSpacing: e
-            }), ie(!1);
+            }), oe(!1);
         }, [
-            K
-        ]), xt = n.useCallback((e)=>{
-            const r = Math.max(0, G.marginLeft + e * 800);
-            K({
-                marginLeft: r
+            _
+        ]), ut = n.useCallback((e)=>{
+            const s = Math.max(0, q.marginLeft + e * 800);
+            _({
+                marginLeft: s
             });
         }, [
-            K,
-            G.marginLeft
+            _,
+            q.marginLeft
+        ]), Qt = n.useCallback(()=>{
+            const e = u.current;
+            if (!e) return;
+            const s = m.current;
+            g();
+            try {
+                const r = e.ensureDefaultBullet("●");
+                e.applyParaFormat(s.secIdx, s.paraIdx, JSON.stringify({
+                    numberingId: r,
+                    numberingLevel: 0
+                }));
+            } catch  {}
+            p();
+        }, [
+            g,
+            p
         ]), Xt = n.useCallback(()=>{
             const e = u.current;
             if (!e) return;
-            const r = m.current;
+            const s = m.current;
             g();
             try {
-                const s = e.ensureDefaultBullet("●");
-                e.applyParaFormat(r.secIdx, r.paraIdx, JSON.stringify({
-                    numberingId: s,
+                const r = e.ensureDefaultNumbering();
+                e.applyParaFormat(s.secIdx, s.paraIdx, JSON.stringify({
+                    numberingId: r,
                     numberingLevel: 0
                 }));
             } catch  {}
@@ -659,203 +678,187 @@ let __tla = Promise.all([
         }, [
             g,
             p
-        ]), Yt = n.useCallback(()=>{
-            const e = u.current;
-            if (!e) return;
-            const r = m.current;
-            g();
-            try {
-                const s = e.ensureDefaultNumbering();
-                e.applyParaFormat(r.secIdx, r.paraIdx, JSON.stringify({
-                    numberingId: s,
-                    numberingLevel: 0
-                }));
-            } catch  {}
-            p();
+        ]), Yt = n.useCallback((e)=>{
+            v({
+                textColor: pe(e)
+            }), ne(!1);
         }, [
-            g,
-            p
+            v
         ]), qt = n.useCallback((e)=>{
             v({
-                textColor: ue(e)
+                highlight: pe(e)
             }), ae(!1);
         }, [
             v
-        ]), Gt = n.useCallback((e)=>{
-            v({
-                highlight: ue(e)
-            }), ce(!1);
-        }, [
-            v
-        ]), es = n.useCallback(()=>{
+        ]), Gt = n.useCallback(()=>{
             const e = u.current;
             if (!e) return;
-            const r = m.current;
+            const s = m.current;
             g();
             try {
-                const s = e.createTable(r.secIdx, r.paraIdx, r.charOffset, Ie, Oe), o = y(s);
+                const r = e.createTable(s.secIdx, s.paraIdx, s.charOffset, ke, Ie), o = y(r);
                 o?.ok && f({
-                    ...r,
-                    paraIdx: o.paraIdx ?? r.paraIdx,
+                    ...s,
+                    paraIdx: o.paraIdx ?? s.paraIdx,
                     charOffset: 0
                 });
-            } catch (s) {
-                L(s.message);
+            } catch (r) {
+                D(r.message);
             }
-            p(), le(!1);
+            p(), ie(!1);
         }, [
             g,
             f,
             p,
-            Ie,
-            Oe
-        ]), ts = n.useCallback(()=>{
+            ke,
+            Ie
+        ]), er = n.useCallback(()=>{
             const e = document.createElement("input");
-            e.type = "file", e.accept = "image/*", e.onchange = async (r)=>{
-                const s = r.target.files?.[0];
-                if (!s) return;
+            e.type = "file", e.accept = "image/*", e.onchange = async (s)=>{
+                const r = s.target.files?.[0];
+                if (!r) return;
                 const o = u.current;
                 if (!o) return;
                 const a = m.current;
                 g();
                 try {
-                    const c = new Uint8Array(await s.arrayBuffer()), i = new Image, d = URL.createObjectURL(s);
+                    const c = new Uint8Array(await r.arrayBuffer()), i = new Image, d = URL.createObjectURL(r);
                     i.onload = ()=>{
                         URL.revokeObjectURL(d);
-                        const x = i.naturalWidth, S = i.naturalHeight, C = Math.min(Math.round(x / 96 * 7200), 48e3), ze = Math.round(S / x * C), H = s.name.split(".").pop()?.toLowerCase() || "png";
+                        const x = i.naturalWidth, S = i.naturalHeight, C = Math.min(Math.round(x / 96 * 7200), 48e3), Pe = Math.round(S / x * C), z = r.name.split(".").pop()?.toLowerCase() || "png";
                         try {
-                            o.insertPicture(a.secIdx, a.paraIdx, a.charOffset, c, C, ze, x, S, H, s.name), f({
+                            o.insertPicture(a.secIdx, a.paraIdx, a.charOffset, c, C, Pe, x, S, z, r.name), f({
                                 ...a,
                                 charOffset: a.charOffset + 1
                             });
-                        } catch (ds) {
-                            L(ds.message);
+                        } catch (hr) {
+                            D(hr.message);
                         }
                         p();
                     }, i.src = d;
                 } catch (c) {
-                    L(c.message);
+                    D(c.message);
                 }
             }, e.click();
         }, [
             g,
             f,
             p
-        ]), ss = n.useCallback(()=>{
+        ]), tr = n.useCallback(()=>{
             const e = u.current;
             if (!e) return;
-            const r = m.current;
+            const s = m.current;
             g();
             try {
-                e.insertPageBreak(r.secIdx, r.paraIdx, r.charOffset);
+                e.insertPageBreak(s.secIdx, s.paraIdx, s.charOffset);
             } catch  {}
             p();
         }, [
             g,
             p
-        ]), ft = n.useCallback(()=>{
+        ]), xt = n.useCallback(()=>{
             const e = u.current;
-            if (!e || !B) return;
-            const r = m.current;
+            if (!e || !L) return;
+            const s = m.current;
             try {
-                const s = e.searchText(B, r.secIdx, r.paraIdx, r.charOffset, !0, W), o = y(s);
+                const r = e.searchText(L, s.secIdx, s.paraIdx, s.charOffset, !0, M), o = y(r);
                 if (o?.found) {
                     const a = {
-                        secIdx: o.sectionIndex ?? r.secIdx,
-                        paraIdx: o.paragraphIndex ?? o.paraIdx ?? r.paraIdx,
+                        secIdx: o.sectionIndex ?? s.secIdx,
+                        paraIdx: o.paragraphIndex ?? o.paraIdx ?? s.paraIdx,
                         charOffset: o.charOffset ?? 0
                     };
-                    f(a), $("");
-                } else $(l("site.hwpEditor.noResults"));
+                    f(a), W("");
+                } else W(l("site.hwpEditor.noResults"));
             } catch  {}
         }, [
-            B,
-            W,
+            L,
+            M,
             f,
             l
-        ]), gt = n.useCallback(()=>{
+        ]), ft = n.useCallback(()=>{
             const e = u.current;
-            if (!(!e || !B)) {
+            if (!(!e || !L)) {
                 g();
                 try {
-                    const r = e.replaceOne(B, X, W);
-                    y(r)?.ok ? (p(), $(l("site.hwpEditor.replaced"))) : $(l("site.hwpEditor.noResults"));
+                    const s = e.replaceOne(L, Q, M);
+                    y(s)?.ok ? (p(), W(l("site.hwpEditor.replaced"))) : W(l("site.hwpEditor.noResults"));
                 } catch  {}
             }
         }, [
-            B,
-            X,
-            W,
+            L,
+            Q,
+            M,
             g,
             p,
             l
-        ]), rs = n.useCallback(()=>{
+        ]), rr = n.useCallback(()=>{
             const e = u.current;
-            if (!(!e || !B)) {
+            if (!(!e || !L)) {
                 g();
                 try {
-                    const r = e.replaceAll(B, X, W), s = y(r);
-                    p(), $(`${l("site.hwpEditor.replaced")} ${s?.count ?? 0}`);
+                    const s = e.replaceAll(L, Q, M), r = y(s);
+                    p(), W(`${l("site.hwpEditor.replaced")} ${r?.count ?? 0}`);
                 } catch  {}
             }
         }, [
-            B,
-            X,
-            W,
+            L,
+            Q,
+            M,
             g,
             p,
             l
-        ]), wt = n.useCallback((e)=>{
-            const r = u.current;
-            if (r) {
+        ]), gt = n.useCallback((e)=>{
+            const s = u.current;
+            if (s) {
                 try {
-                    const s = e === "hwp" ? r.exportHwp() : r.exportHwpx(), o = new Blob([
-                        s
+                    const r = e === "hwp" ? s.exportHwp() : s.exportHwpx(), o = new Blob([
+                        r
                     ], {
                         type: "application/octet-stream"
                     }), a = URL.createObjectURL(o), c = document.createElement("a");
                     c.href = a;
-                    const i = Z ? Z.replace(/\.[^.]+$/, "") : "document";
+                    const i = J ? J.replace(/\.[^.]+$/, "") : "document";
                     c.download = `${i}.${e}`, c.click(), URL.revokeObjectURL(a);
-                } catch (s) {
-                    L(`내보내기 실패: ${s.message}`);
+                } catch (r) {
+                    D(`내보내기 실패: ${r.message}`);
                 }
-                oe(!1);
+                ce(!1);
             }
         }, [
-            Z
-        ]), ns = n.useCallback((e)=>{
-            if (se.current) return;
-            const r = u.current;
-            if (!r || !m.current) return;
-            const s = m.current;
+            J
+        ]), sr = n.useCallback((e)=>{
+            if (te.current) return;
+            const s = u.current;
+            if (!s || !m.current) return;
+            const r = m.current;
             if (e.ctrlKey || e.metaKey) {
                 switch(e.key.toLowerCase()){
                     case "z":
-                        e.preventDefault(), Ne();
+                        e.preventDefault(), Se();
                         return;
                     case "y":
-                        e.preventDefault(), Ee();
+                        e.preventDefault(), Ne();
                         return;
                     case "b":
-                        e.preventDefault(), Re();
+                        e.preventDefault(), Fe();
                         return;
                     case "i":
-                        e.preventDefault(), De();
+                        e.preventDefault(), Re();
                         return;
                     case "u":
-                        e.preventDefault(), Le();
+                        e.preventDefault(), De();
                         return;
                     case "f":
-                        e.preventDefault(), he(!0);
+                        e.preventDefault(), le(!0);
                         return;
                     case "a":
                         {
                             e.preventDefault();
                             try {
-                                const a = r.getSectionCount();
+                                const a = s.getSectionCount();
                                 if (a === 0) return;
-                                const c = a - 1, i = r.getParagraphCount(c) - 1, d = r.getParagraphLength(c, i), x = {
+                                const c = a - 1, i = s.getParagraphCount(c) - 1, d = s.getParagraphLength(c, i), x = {
                                     secIdx: 0,
                                     paraIdx: 0,
                                     charOffset: 0
@@ -873,7 +876,7 @@ let __tla = Promise.all([
                             e.preventDefault();
                             const a = h.current;
                             if (!a) return;
-                            let c = a.paraIdx, i = a.charOffset, d = s.paraIdx, x = s.charOffset;
+                            let c = a.paraIdx, i = a.charOffset, d = r.paraIdx, x = r.charOffset;
                             (c > d || c === d && i > x) && ([c, d] = [
                                 d,
                                 c
@@ -882,7 +885,7 @@ let __tla = Promise.all([
                                 i
                             ]);
                             try {
-                                const S = r.copySelection(s.secIdx, c, i, d, x), C = y(S);
+                                const S = s.copySelection(r.secIdx, c, i, d, x), C = y(S);
                                 C?.text && navigator.clipboard.writeText(C.text).catch(()=>{});
                             } catch  {}
                             return;
@@ -892,7 +895,7 @@ let __tla = Promise.all([
                             e.preventDefault();
                             const a = h.current;
                             if (!a) return;
-                            let c = a.paraIdx, i = a.charOffset, d = s.paraIdx, x = s.charOffset;
+                            let c = a.paraIdx, i = a.charOffset, d = r.paraIdx, x = r.charOffset;
                             (c > d || c === d && i > x) && ([c, d] = [
                                 d,
                                 c
@@ -901,16 +904,16 @@ let __tla = Promise.all([
                                 i
                             ]);
                             try {
-                                const S = r.copySelection(s.secIdx, c, i, d, x), C = y(S);
+                                const S = s.copySelection(r.secIdx, c, i, d, x), C = y(S);
                                 C?.text && navigator.clipboard.writeText(C.text).catch(()=>{});
                             } catch  {}
-                            Fe();
+                            Ee();
                             return;
                         }
                     case "v":
                         {
                             e.preventDefault(), navigator.clipboard.readText().then((a)=>{
-                                a && A(a);
+                                a && $(a);
                             }).catch(()=>{});
                             return;
                         }
@@ -920,14 +923,13 @@ let __tla = Promise.all([
             switch(e.key){
                 case "Enter":
                     {
-                        if (e.preventDefault(), D) {
-                            const c = z();
-                            c && (j(c), p(), w(c));
+                        if (e.preventDefault(), g(), h.current) {
+                            const c = P();
+                            c && j(c);
                         }
-                        g();
                         const a = m.current;
                         try {
-                            const c = r.splitParagraph(a.secIdx, a.paraIdx, a.charOffset), i = y(c), d = {
+                            const c = s.splitParagraph(a.secIdx, a.paraIdx, a.charOffset), i = y(c), d = {
                                 secIdx: a.secIdx,
                                 paraIdx: i?.paraIdx ?? a.paraIdx + 1,
                                 charOffset: 0
@@ -938,28 +940,28 @@ let __tla = Promise.all([
                         break;
                     }
                 case "Backspace":
-                    e.preventDefault(), Fe();
+                    e.preventDefault(), Ee();
                     break;
                 case "Delete":
-                    e.preventDefault(), ut();
+                    e.preventDefault(), pt();
                     break;
                 case "ArrowLeft":
                     {
                         e.preventDefault();
                         const a = {
-                            ...s
+                            ...r
                         };
-                        if (s.charOffset > 0) a.charOffset = s.charOffset - 1;
-                        else if (s.paraIdx > 0) {
-                            a.paraIdx = s.paraIdx - 1;
+                        if (r.charOffset > 0) a.charOffset = r.charOffset - 1;
+                        else if (r.paraIdx > 0) {
+                            a.paraIdx = r.paraIdx - 1;
                             try {
-                                a.charOffset = r.getParagraphLength(s.secIdx, a.paraIdx);
+                                a.charOffset = s.getParagraphLength(r.secIdx, a.paraIdx);
                             } catch  {
                                 a.charOffset = 0;
                             }
                         } else break;
                         e.shiftKey ? (h.current || (h.current = {
-                            ...s
+                            ...r
                         }), j(a), O(h.current, a), k(!0), w(a)) : f(a);
                         break;
                     }
@@ -967,21 +969,21 @@ let __tla = Promise.all([
                     {
                         e.preventDefault();
                         const a = {
-                            ...s
+                            ...r
                         };
                         try {
-                            const c = r.getParagraphLength(s.secIdx, s.paraIdx);
-                            if (s.charOffset < c) a.charOffset = s.charOffset + 1;
+                            const c = s.getParagraphLength(r.secIdx, r.paraIdx);
+                            if (r.charOffset < c) a.charOffset = r.charOffset + 1;
                             else {
-                                const i = r.getParagraphCount(s.secIdx);
-                                if (s.paraIdx < i - 1) a.paraIdx = s.paraIdx + 1, a.charOffset = 0;
+                                const i = s.getParagraphCount(r.secIdx);
+                                if (r.paraIdx < i - 1) a.paraIdx = r.paraIdx + 1, a.charOffset = 0;
                                 else break;
                             }
                         } catch  {
                             break;
                         }
                         e.shiftKey ? (h.current || (h.current = {
-                            ...s
+                            ...r
                         }), j(a), O(h.current, a), k(!0), w(a)) : f(a);
                         break;
                     }
@@ -990,30 +992,30 @@ let __tla = Promise.all([
                         e.preventDefault();
                         const a = R ? R.x : 0;
                         try {
-                            const c = r.moveVertical(s.secIdx, s.paraIdx, s.charOffset, -1, a, 4294967295, 4294967295, 4294967295, 4294967295), i = y(c);
+                            const c = s.moveVertical(r.secIdx, r.paraIdx, r.charOffset, -1, a, 4294967295, 4294967295, 4294967295, 4294967295), i = y(c);
                             if (i) {
                                 const d = {
-                                    secIdx: i.sectionIndex ?? s.secIdx,
-                                    paraIdx: i.paragraphIndex ?? i.paraIdx ?? s.paraIdx,
-                                    charOffset: i.charOffset ?? s.charOffset
+                                    secIdx: i.sectionIndex ?? r.secIdx,
+                                    paraIdx: i.paragraphIndex ?? i.paraIdx ?? r.paraIdx,
+                                    charOffset: i.charOffset ?? r.charOffset
                                 };
                                 e.shiftKey ? (h.current || (h.current = {
-                                    ...s
+                                    ...r
                                 }), j(d), O(h.current, d), k(!0), w(d)) : f(d);
                             }
                         } catch  {
-                            if (s.paraIdx > 0) {
+                            if (r.paraIdx > 0) {
                                 const c = {
-                                    ...s,
-                                    paraIdx: s.paraIdx - 1
+                                    ...r,
+                                    paraIdx: r.paraIdx - 1
                                 };
                                 try {
-                                    c.charOffset = Math.min(s.charOffset, r.getParagraphLength(s.secIdx, c.paraIdx));
+                                    c.charOffset = Math.min(r.charOffset, s.getParagraphLength(r.secIdx, c.paraIdx));
                                 } catch  {
                                     c.charOffset = 0;
                                 }
                                 e.shiftKey ? (h.current || (h.current = {
-                                    ...s
+                                    ...r
                                 }), j(c), O(h.current, c), k(!0), w(c)) : f(c);
                             }
                         }
@@ -1024,27 +1026,27 @@ let __tla = Promise.all([
                         e.preventDefault();
                         const a = R ? R.x : 0;
                         try {
-                            const c = r.moveVertical(s.secIdx, s.paraIdx, s.charOffset, 1, a, 4294967295, 4294967295, 4294967295, 4294967295), i = y(c);
+                            const c = s.moveVertical(r.secIdx, r.paraIdx, r.charOffset, 1, a, 4294967295, 4294967295, 4294967295, 4294967295), i = y(c);
                             if (i) {
                                 const d = {
-                                    secIdx: i.sectionIndex ?? s.secIdx,
-                                    paraIdx: i.paragraphIndex ?? i.paraIdx ?? s.paraIdx,
-                                    charOffset: i.charOffset ?? s.charOffset
+                                    secIdx: i.sectionIndex ?? r.secIdx,
+                                    paraIdx: i.paragraphIndex ?? i.paraIdx ?? r.paraIdx,
+                                    charOffset: i.charOffset ?? r.charOffset
                                 };
                                 e.shiftKey ? (h.current || (h.current = {
-                                    ...s
+                                    ...r
                                 }), j(d), O(h.current, d), k(!0), w(d)) : f(d);
                             }
                         } catch  {
                             try {
-                                const c = r.getParagraphCount(s.secIdx);
-                                if (s.paraIdx < c - 1) {
+                                const c = s.getParagraphCount(r.secIdx);
+                                if (r.paraIdx < c - 1) {
                                     const i = {
-                                        ...s,
-                                        paraIdx: s.paraIdx + 1
+                                        ...r,
+                                        paraIdx: r.paraIdx + 1
                                     };
-                                    i.charOffset = Math.min(s.charOffset, r.getParagraphLength(s.secIdx, i.paraIdx)), e.shiftKey ? (h.current || (h.current = {
-                                        ...s
+                                    i.charOffset = Math.min(r.charOffset, s.getParagraphLength(r.secIdx, i.paraIdx)), e.shiftKey ? (h.current || (h.current = {
+                                        ...r
                                     }), j(i), O(h.current, i), k(!0), w(i)) : f(i);
                                 }
                             } catch  {}
@@ -1055,12 +1057,12 @@ let __tla = Promise.all([
                     {
                         e.preventDefault();
                         try {
-                            const a = y(r.getLineInfo(s.secIdx, s.paraIdx, s.charOffset)), c = {
-                                ...s,
+                            const a = y(s.getLineInfo(r.secIdx, r.paraIdx, r.charOffset)), c = {
+                                ...r,
                                 charOffset: a ? a.charStart : 0
                             };
                             e.shiftKey ? (h.current || (h.current = {
-                                ...s
+                                ...r
                             }), j(c), O(h.current, c), k(!0), w(c)) : f(c);
                         } catch  {}
                         break;
@@ -1069,90 +1071,89 @@ let __tla = Promise.all([
                     {
                         e.preventDefault();
                         try {
-                            const a = y(r.getLineInfo(s.secIdx, s.paraIdx, s.charOffset)), c = r.getParagraphLength(s.secIdx, s.paraIdx), i = {
-                                ...s,
+                            const a = y(s.getLineInfo(r.secIdx, r.paraIdx, r.charOffset)), c = s.getParagraphLength(r.secIdx, r.paraIdx), i = {
+                                ...r,
                                 charOffset: a ? Math.min(a.charEnd, c) : c
                             };
                             e.shiftKey ? (h.current || (h.current = {
-                                ...s
+                                ...r
                             }), j(i), O(h.current, i), k(!0), w(i)) : f(i);
                         } catch  {}
                         break;
                     }
                 case "Tab":
-                    e.preventDefault(), A("	");
+                    e.preventDefault(), $("	");
                     break;
                 case "Escape":
-                    he(!1), re(!1), ne(!1), ae(!1), ce(!1), oe(!1), ie(!1), le(!1);
+                    le(!1), re(!1), se(!1), ne(!1), ae(!1), ce(!1), oe(!1), ie(!1);
                     break;
             }
         }, [
-            ge,
-            D,
+            fe,
             R,
+            Se,
             Ne,
-            Ee,
+            Fe,
             Re,
             De,
-            Le,
-            A,
-            z,
-            Fe,
-            ut,
+            $,
+            P,
+            Ee,
+            pt,
             g,
             f,
             p,
             O,
             w,
             j
-        ]), as = n.useCallback(()=>{
-            se.current = !0;
-        }, []), cs = n.useCallback((e)=>{
-            se.current = !1;
-            const r = e.data;
-            r && A(r), _.current && (_.current.value = "");
+        ]), nr = n.useCallback(()=>{
+            te.current = !0;
+        }, []), ar = n.useCallback((e)=>{
+            te.current = !1;
+            const s = e.data;
+            s && $(s), U.current && (U.current.value = "");
         }, [
+            $
+        ]), cr = n.useCallback((e)=>{
+            if (te.current) return;
+            const s = e.target, r = s.value;
+            r && ($(r), s.value = "");
+        }, [
+            $
+        ]), or = n.useCallback((e)=>{
+            xe(e.target.value);
+        }, []), wt = n.useCallback(()=>{
+            const e = parseInt(ue, 10);
+            !isNaN(e) && e >= 1 && e <= K ? V(e - 1) : xe(String(A + 1));
+        }, [
+            ue,
+            K,
             A
-        ]), os = n.useCallback((e)=>{
-            if (se.current) return;
-            const r = e.target, s = r.value;
-            s && (A(s), r.value = "");
-        }, [
-            A
-        ]), is = n.useCallback((e)=>{
-            fe(e.target.value);
-        }, []), yt = n.useCallback(()=>{
-            const e = parseInt(xe, 10);
-            !isNaN(e) && e >= 1 && e <= V ? J(e - 1) : fe(String(U + 1));
-        }, [
-            xe,
-            V,
-            U
-        ]), ls = n.useCallback(()=>Te((e)=>Math.min(e + 10, 200)), []), hs = n.useCallback(()=>Te((e)=>Math.max(e - 10, 30)), []);
+        ]), ir = n.useCallback(()=>Te((e)=>Math.min(e + 10, 200)), []), lr = n.useCallback(()=>Te((e)=>Math.max(e - 10, 30)), []);
         n.useEffect(()=>{
-            fe(String(U + 1));
+            xe(String(A + 1));
         }, [
-            U
+            A
         ]), n.useEffect(()=>{
-            if (!ge) return;
-            const e = setInterval(()=>Lt((r)=>!r), 530);
+            if (!fe) return;
+            const e = setInterval(()=>Dt((s)=>!s), 530);
             return ()=>clearInterval(e);
         }, [
-            ge
+            fe
         ]), n.useEffect(()=>{
-            const e = (r)=>{
-                const s = r.target, o = (a, c)=>!a.current?.contains(s) && !c.current?.contains(s);
-                ye && o(Ze, Qe) && re(!1), be && o(Xe, Ye) && ne(!1), je && o(qe, Ge) && ae(!1), me && o(et, tt) && ce(!1), ve && o(st, rt) && oe(!1), Ce && o(nt, at) && ie(!1), ke && o(ot, ct) && le(!1);
+            const e = (s)=>{
+                const r = s.target, o = (a, c)=>!a.current?.contains(r) && !c.current?.contains(r);
+                we && o(Je, Ze) && re(!1), ye && o(Qe, Xe) && se(!1), be && o(Ye, qe) && ne(!1), je && o(Ge, et) && ae(!1), me && o(tt, rt) && ce(!1), ve && o(st, nt) && oe(!1), Ce && o(ct, at) && ie(!1);
             };
             return document.addEventListener("mousedown", e), ()=>document.removeEventListener("mousedown", e);
         }, [
+            we,
             ye,
             be,
             je,
             me,
             ve,
-            Ce,
-            ke
+            Ce
         ]), n.useEffect(()=>()=>{
                 if (u.current) {
                     try {
@@ -1161,12 +1162,12 @@ let __tla = Promise.all([
                     u.current = null;
                 }
             }, []);
-        const bt = u.current !== null && He.length > 0, Be = vt(I.textColor), Pe = vt(I.highlight), jt = (e, r, s, o)=>t.jsxs("div", {
+        const yt = ze.length > 0, Le = mt(I.textColor), Be = mt(I.highlight), bt = (e, s, r, o)=>t.jsxs("div", {
                 className: "hwp-color-picker",
                 children: [
                     t.jsx("div", {
                         className: "hwp-color-grid",
-                        children: bs.map((a, c)=>t.jsx("div", {
+                        children: yr.map((a, c)=>t.jsx("div", {
                                 style: {
                                     display: "flex"
                                 },
@@ -1185,11 +1186,11 @@ let __tla = Promise.all([
                         children: [
                             t.jsx("input", {
                                 type: "color",
-                                value: r,
-                                onChange: (a)=>s(a.target.value)
+                                value: s,
+                                onChange: (a)=>r(a.target.value)
                             }),
                             t.jsx("button", {
-                                onClick: ()=>o(r),
+                                onClick: ()=>o(s),
                                 children: "OK"
                             })
                         ]
@@ -1198,7 +1199,7 @@ let __tla = Promise.all([
             });
         return t.jsxs(t.Fragment, {
             children: [
-                t.jsx(xs, {
+                t.jsx(ur, {
                     title: l("site.hwpEditor.title"),
                     description: l("site.hwpEditor.subtitle")
                 }),
@@ -1221,7 +1222,7 @@ let __tla = Promise.all([
                     children: t.jsxs("div", {
                         className: "container",
                         children: [
-                            Ae && t.jsxs("div", {
+                            $e && t.jsxs("div", {
                                 className: "hwp-editor-error",
                                 children: [
                                     t.jsxs("svg", {
@@ -1252,10 +1253,10 @@ let __tla = Promise.all([
                                         ]
                                     }),
                                     t.jsx("span", {
-                                        children: Ae
+                                        children: $e
                                     }),
                                     t.jsx("button", {
-                                        onClick: ()=>L(""),
+                                        onClick: ()=>D(""),
                                         style: {
                                             marginLeft: "auto",
                                             background: "none",
@@ -1318,11 +1319,11 @@ let __tla = Promise.all([
                                     })
                                 ]
                             }),
-                            b && !bt && !F && t.jsx("div", {
-                                className: `hwp-editor-container${Bt ? " drag-over" : ""}`,
-                                onDragOver: ht,
-                                onDragLeave: dt,
-                                onDrop: pt,
+                            b && !yt && !F && t.jsx("div", {
+                                className: `hwp-editor-container${Lt ? " drag-over" : ""}`,
+                                onDragOver: lt,
+                                onDragLeave: ht,
+                                onDrop: dt,
                                 children: t.jsxs("div", {
                                     className: "hwp-editor-empty",
                                     children: [
@@ -1365,7 +1366,7 @@ let __tla = Promise.all([
                                             children: [
                                                 t.jsxs("button", {
                                                     className: "hwp-empty-btn primary",
-                                                    onClick: it,
+                                                    onClick: ot,
                                                     disabled: !b,
                                                     children: [
                                                         t.jsxs("svg", {
@@ -1389,7 +1390,7 @@ let __tla = Promise.all([
                                                 }),
                                                 t.jsxs("button", {
                                                     className: "hwp-empty-btn",
-                                                    onClick: lt,
+                                                    onClick: it,
                                                     disabled: !b,
                                                     children: [
                                                         t.jsx("svg", {
@@ -1411,7 +1412,7 @@ let __tla = Promise.all([
                                     ]
                                 })
                             }),
-                            bt && t.jsxs("div", {
+                            yt && t.jsxs("div", {
                                 className: "hwp-editor-container",
                                 children: [
                                     t.jsxs("div", {
@@ -1423,7 +1424,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.newDoc"),
-                                                        onClick: it,
+                                                        onClick: ot,
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -1444,7 +1445,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.openFile"),
-                                                        onClick: lt,
+                                                        onClick: it,
                                                         children: t.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -1461,10 +1462,10 @@ let __tla = Promise.all([
                                                         className: "hwp-export-wrapper",
                                                         children: [
                                                             t.jsxs("button", {
-                                                                ref: st,
+                                                                ref: tt,
                                                                 className: "hwp-toolbar-btn",
                                                                 title: l("site.hwpEditor.export"),
-                                                                onClick: ()=>oe((e)=>!e),
+                                                                onClick: ()=>ce((e)=>!e),
                                                                 children: [
                                                                     t.jsxs("svg", {
                                                                         viewBox: "0 0 24 24",
@@ -1496,16 +1497,16 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            ve && t.jsxs("div", {
+                                                            me && t.jsxs("div", {
                                                                 ref: rt,
                                                                 className: "hwp-export-dropdown",
                                                                 children: [
                                                                     t.jsx("button", {
-                                                                        onClick: ()=>wt("hwp"),
+                                                                        onClick: ()=>gt("hwp"),
                                                                         children: l("site.hwpEditor.exportHwp")
                                                                     }),
                                                                     t.jsx("button", {
-                                                                        onClick: ()=>wt("hwpx"),
+                                                                        onClick: ()=>gt("hwpx"),
                                                                         children: l("site.hwpEditor.exportHwpx")
                                                                     })
                                                                 ]
@@ -1523,8 +1524,8 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: `${l("site.hwpEditor.undo")} (Ctrl+Z)`,
-                                                        onClick: Ne,
-                                                        disabled: !Ft,
+                                                        onClick: Se,
+                                                        disabled: !Et,
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -1545,8 +1546,8 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: `${l("site.hwpEditor.redo")} (Ctrl+Y)`,
-                                                        onClick: Ee,
-                                                        disabled: !Rt,
+                                                        onClick: Ne,
+                                                        disabled: !Ft,
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -1578,21 +1579,21 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             t.jsxs("button", {
-                                                                ref: Ze,
+                                                                ref: Je,
                                                                 className: "hwp-font-btn hwp-toolbar-btn",
                                                                 title: l("site.hwpEditor.font"),
                                                                 onClick: ()=>re((e)=>!e),
                                                                 children: [
                                                                     t.jsx("span", {
                                                                         style: {
-                                                                            fontFamily: Se,
+                                                                            fontFamily: Oe,
                                                                             maxWidth: 96,
                                                                             overflow: "hidden",
                                                                             textOverflow: "ellipsis",
                                                                             whiteSpace: "nowrap",
                                                                             display: "inline-block"
                                                                         },
-                                                                        children: Se
+                                                                        children: Oe
                                                                     }),
                                                                     t.jsx("span", {
                                                                         style: {
@@ -1603,15 +1604,15 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            ye && t.jsx("div", {
-                                                                ref: Qe,
+                                                            we && t.jsx("div", {
+                                                                ref: Ze,
                                                                 className: "hwp-toolbar-dropdown hwp-font-dropdown",
-                                                                children: gs.map((e)=>t.jsx("button", {
+                                                                children: fr.map((e)=>t.jsx("button", {
                                                                         style: {
                                                                             fontFamily: e
                                                                         },
-                                                                        className: Se === e ? "active" : "",
-                                                                        onClick: ()=>Vt(e),
+                                                                        className: Oe === e ? "active" : "",
+                                                                        onClick: ()=>Kt(e),
                                                                         children: e
                                                                     }, e))
                                                             })
@@ -1623,13 +1624,13 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             t.jsxs("button", {
-                                                                ref: Xe,
+                                                                ref: Qe,
                                                                 className: "hwp-size-btn hwp-toolbar-btn",
                                                                 title: l("site.hwpEditor.fontSize"),
-                                                                onClick: ()=>ne((e)=>!e),
+                                                                onClick: ()=>se((e)=>!e),
                                                                 children: [
                                                                     t.jsx("span", {
-                                                                        children: _e
+                                                                        children: Ue
                                                                     }),
                                                                     t.jsx("span", {
                                                                         style: {
@@ -1640,12 +1641,12 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            be && t.jsx("div", {
-                                                                ref: Ye,
+                                                            ye && t.jsx("div", {
+                                                                ref: Xe,
                                                                 className: "hwp-toolbar-dropdown hwp-size-dropdown",
-                                                                children: ws.map((e)=>t.jsx("button", {
-                                                                        className: parseFloat(_e) === e ? "active" : "",
-                                                                        onClick: ()=>Jt(e),
+                                                                children: gr.map((e)=>t.jsx("button", {
+                                                                        className: parseFloat(Ue) === e ? "active" : "",
+                                                                        onClick: ()=>Vt(e),
                                                                         children: e
                                                                     }, e))
                                                             })
@@ -1662,7 +1663,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: `hwp-toolbar-btn${I.bold ? " active" : ""}`,
                                                         title: `${l("site.hwpEditor.bold")} (Ctrl+B)`,
-                                                        onClick: Re,
+                                                        onClick: Fe,
                                                         style: {
                                                             fontWeight: "bold"
                                                         },
@@ -1671,7 +1672,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: `hwp-toolbar-btn${I.italic ? " active" : ""}`,
                                                         title: `${l("site.hwpEditor.italic")} (Ctrl+I)`,
-                                                        onClick: De,
+                                                        onClick: Re,
                                                         style: {
                                                             fontStyle: "italic"
                                                         },
@@ -1680,7 +1681,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: `hwp-toolbar-btn${I.underline ? " active" : ""}`,
                                                         title: `${l("site.hwpEditor.underline")} (Ctrl+U)`,
-                                                        onClick: Le,
+                                                        onClick: De,
                                                         style: {
                                                             textDecoration: "underline"
                                                         },
@@ -1689,7 +1690,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: `hwp-toolbar-btn${I.strikethrough ? " active" : ""}`,
                                                         title: l("site.hwpEditor.strikethrough"),
-                                                        onClick: Kt,
+                                                        onClick: _t,
                                                         style: {
                                                             textDecoration: "line-through"
                                                         },
@@ -1709,19 +1710,67 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             t.jsxs("button", {
-                                                                ref: qe,
+                                                                ref: Ye,
                                                                 className: "hwp-toolbar-btn",
                                                                 title: l("site.hwpEditor.textColor"),
+                                                                onClick: ()=>ne((e)=>!e),
+                                                                children: [
+                                                                    t.jsx("span", {
+                                                                        style: {
+                                                                            fontWeight: "bold",
+                                                                            color: Le,
+                                                                            fontSize: "14px",
+                                                                            lineHeight: 1
+                                                                        },
+                                                                        children: "A"
+                                                                    }),
+                                                                    t.jsx("div", {
+                                                                        className: "hwp-color-indicator",
+                                                                        style: {
+                                                                            backgroundColor: Le
+                                                                        }
+                                                                    }),
+                                                                    t.jsx("span", {
+                                                                        style: {
+                                                                            fontSize: "10px",
+                                                                            marginLeft: 1
+                                                                        },
+                                                                        children: "▾"
+                                                                    })
+                                                                ]
+                                                            }),
+                                                            be && t.jsx("div", {
+                                                                ref: qe,
+                                                                style: {
+                                                                    position: "absolute",
+                                                                    zIndex: 1e3,
+                                                                    top: "100%",
+                                                                    left: 0
+                                                                },
+                                                                children: bt(Le, zt, Tt, Yt)
+                                                            })
+                                                        ]
+                                                    }),
+                                                    t.jsxs("div", {
+                                                        style: {
+                                                            position: "relative"
+                                                        },
+                                                        children: [
+                                                            t.jsxs("button", {
+                                                                ref: Ge,
+                                                                className: "hwp-toolbar-btn",
+                                                                title: l("site.hwpEditor.highlight"),
                                                                 onClick: ()=>ae((e)=>!e),
                                                                 children: [
                                                                     t.jsx("span", {
                                                                         style: {
                                                                             fontWeight: "bold",
-                                                                            color: Be,
-                                                                            fontSize: "14px",
+                                                                            backgroundColor: Be,
+                                                                            padding: "0 2px",
+                                                                            fontSize: "13px",
                                                                             lineHeight: 1
                                                                         },
-                                                                        children: "A"
+                                                                        children: "H"
                                                                     }),
                                                                     t.jsx("div", {
                                                                         className: "hwp-color-indicator",
@@ -1739,62 +1788,14 @@ let __tla = Promise.all([
                                                                 ]
                                                             }),
                                                             je && t.jsx("div", {
-                                                                ref: Ge,
-                                                                style: {
-                                                                    position: "absolute",
-                                                                    zIndex: 1e3,
-                                                                    top: "100%",
-                                                                    left: 0
-                                                                },
-                                                                children: jt(Be, Ht, Tt, qt)
-                                                            })
-                                                        ]
-                                                    }),
-                                                    t.jsxs("div", {
-                                                        style: {
-                                                            position: "relative"
-                                                        },
-                                                        children: [
-                                                            t.jsxs("button", {
                                                                 ref: et,
-                                                                className: "hwp-toolbar-btn",
-                                                                title: l("site.hwpEditor.highlight"),
-                                                                onClick: ()=>ce((e)=>!e),
-                                                                children: [
-                                                                    t.jsx("span", {
-                                                                        style: {
-                                                                            fontWeight: "bold",
-                                                                            backgroundColor: Pe,
-                                                                            padding: "0 2px",
-                                                                            fontSize: "13px",
-                                                                            lineHeight: 1
-                                                                        },
-                                                                        children: "H"
-                                                                    }),
-                                                                    t.jsx("div", {
-                                                                        className: "hwp-color-indicator",
-                                                                        style: {
-                                                                            backgroundColor: Pe
-                                                                        }
-                                                                    }),
-                                                                    t.jsx("span", {
-                                                                        style: {
-                                                                            fontSize: "10px",
-                                                                            marginLeft: 1
-                                                                        },
-                                                                        children: "▾"
-                                                                    })
-                                                                ]
-                                                            }),
-                                                            me && t.jsx("div", {
-                                                                ref: tt,
                                                                 style: {
                                                                     position: "absolute",
                                                                     zIndex: 1e3,
                                                                     top: "100%",
                                                                     left: 0
                                                                 },
-                                                                children: jt(Pe, Mt, Wt, Gt)
+                                                                children: bt(Be, Ht, Mt, qt)
                                                             })
                                                         ]
                                                     })
@@ -1811,12 +1812,12 @@ let __tla = Promise.all([
                                                     "right",
                                                     "justify"
                                                 ].map((e)=>{
-                                                    const r = {
+                                                    const s = {
                                                         left: l("site.hwpEditor.alignLeft"),
                                                         center: l("site.hwpEditor.alignCenter"),
                                                         right: l("site.hwpEditor.alignRight"),
                                                         justify: l("site.hwpEditor.alignJustify")
-                                                    }, s = {
+                                                    }, r = {
                                                         left: t.jsxs("svg", {
                                                             viewBox: "0 0 16 16",
                                                             width: "15",
@@ -1963,10 +1964,10 @@ let __tla = Promise.all([
                                                         })
                                                     };
                                                     return t.jsx("button", {
-                                                        className: `hwp-toolbar-btn${G.alignment === e ? " active" : ""}`,
-                                                        title: r[e],
-                                                        onClick: ()=>Zt(e),
-                                                        children: s[e]
+                                                        className: `hwp-toolbar-btn${q.alignment === e ? " active" : ""}`,
+                                                        title: s[e],
+                                                        onClick: ()=>Jt(e),
+                                                        children: r[e]
                                                     }, e);
                                                 })
                                             }),
@@ -1981,10 +1982,10 @@ let __tla = Promise.all([
                                                     },
                                                     children: [
                                                         t.jsxs("button", {
-                                                            ref: nt,
+                                                            ref: st,
                                                             className: "hwp-toolbar-btn",
                                                             title: l("site.hwpEditor.lineSpacing"),
-                                                            onClick: ()=>ie((e)=>!e),
+                                                            onClick: ()=>oe((e)=>!e),
                                                             children: [
                                                                 t.jsxs("svg", {
                                                                     viewBox: "0 0 24 24",
@@ -2035,12 +2036,12 @@ let __tla = Promise.all([
                                                                 })
                                                             ]
                                                         }),
-                                                        Ce && t.jsx("div", {
-                                                            ref: at,
+                                                        ve && t.jsx("div", {
+                                                            ref: nt,
                                                             className: "hwp-toolbar-dropdown hwp-spacing-dropdown",
-                                                            children: ys.map((e)=>t.jsx("button", {
-                                                                    className: G.lineSpacing === e.value ? "active" : "",
-                                                                    onClick: ()=>Qt(e.value),
+                                                            children: wr.map((e)=>t.jsx("button", {
+                                                                    className: q.lineSpacing === e.value ? "active" : "",
+                                                                    onClick: ()=>Zt(e.value),
                                                                     children: e.label
                                                                 }, e.value))
                                                         })
@@ -2056,7 +2057,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.outdent"),
-                                                        onClick: ()=>xt(-1),
+                                                        onClick: ()=>ut(-1),
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2098,7 +2099,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.indent"),
-                                                        onClick: ()=>xt(1),
+                                                        onClick: ()=>ut(1),
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2148,7 +2149,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.bulletList"),
-                                                        onClick: Xt,
+                                                        onClick: Qt,
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2202,7 +2203,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.numberedList"),
-                                                        onClick: Yt,
+                                                        onClick: Xt,
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2273,10 +2274,10 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             t.jsx("button", {
-                                                                ref: ot,
+                                                                ref: ct,
                                                                 className: "hwp-toolbar-btn",
                                                                 title: l("site.hwpEditor.insertTable"),
-                                                                onClick: ()=>le((e)=>!e),
+                                                                onClick: ()=>ie((e)=>!e),
                                                                 children: t.jsxs("svg", {
                                                                     viewBox: "0 0 24 24",
                                                                     width: "16",
@@ -2319,8 +2320,8 @@ let __tla = Promise.all([
                                                                     ]
                                                                 })
                                                             }),
-                                                            ke && t.jsxs("div", {
-                                                                ref: ct,
+                                                            Ce && t.jsxs("div", {
+                                                                ref: at,
                                                                 className: "hwp-table-dialog",
                                                                 children: [
                                                                     t.jsxs("div", {
@@ -2333,8 +2334,8 @@ let __tla = Promise.all([
                                                                                 type: "number",
                                                                                 min: 1,
                                                                                 max: 50,
-                                                                                value: Ie,
-                                                                                onChange: (e)=>Pt(Number(e.target.value))
+                                                                                value: ke,
+                                                                                onChange: (e)=>Bt(Number(e.target.value))
                                                                             })
                                                                         ]
                                                                     }),
@@ -2348,8 +2349,8 @@ let __tla = Promise.all([
                                                                                 type: "number",
                                                                                 min: 1,
                                                                                 max: 20,
-                                                                                value: Oe,
-                                                                                onChange: (e)=>zt(Number(e.target.value))
+                                                                                value: Ie,
+                                                                                onChange: (e)=>Pt(Number(e.target.value))
                                                                             })
                                                                         ]
                                                                     }),
@@ -2359,7 +2360,7 @@ let __tla = Promise.all([
                                                                             width: "100%",
                                                                             justifyContent: "center"
                                                                         },
-                                                                        onClick: es,
+                                                                        onClick: Gt,
                                                                         children: l("site.hwpEditor.insertTable")
                                                                     })
                                                                 ]
@@ -2369,7 +2370,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.insertImage"),
-                                                        onClick: ts,
+                                                        onClick: er,
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2399,7 +2400,7 @@ let __tla = Promise.all([
                                                     t.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: l("site.hwpEditor.pageBreak"),
-                                                        onClick: ss,
+                                                        onClick: tr,
                                                         children: t.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2429,9 +2430,9 @@ let __tla = Promise.all([
                                             t.jsx("div", {
                                                 className: "hwp-toolbar-group",
                                                 children: t.jsx("button", {
-                                                    className: `hwp-toolbar-btn${Ve ? " active" : ""}`,
+                                                    className: `hwp-toolbar-btn${Ke ? " active" : ""}`,
                                                     title: `${l("site.hwpEditor.findReplace")} (Ctrl+F)`,
-                                                    onClick: ()=>he((e)=>!e),
+                                                    onClick: ()=>le((e)=>!e),
                                                     children: t.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
                                                         width: "16",
@@ -2458,7 +2459,7 @@ let __tla = Promise.all([
                                             t.jsx("div", {
                                                 className: "hwp-toolbar-spacer"
                                             }),
-                                            Z && t.jsxs("span", {
+                                            J && t.jsxs("span", {
                                                 style: {
                                                     fontSize: "0.8rem",
                                                     color: "var(--text-secondary)",
@@ -2469,49 +2470,49 @@ let __tla = Promise.all([
                                                     whiteSpace: "nowrap"
                                                 },
                                                 children: [
-                                                    Z,
-                                                    Ot ? " *" : ""
+                                                    J,
+                                                    It ? " *" : ""
                                                 ]
                                             })
                                         ]
                                     }),
-                                    Ve && t.jsxs("div", {
+                                    Ke && t.jsxs("div", {
                                         className: "hwp-find-bar",
                                         children: [
                                             t.jsx("input", {
                                                 type: "text",
                                                 placeholder: l("site.hwpEditor.find"),
-                                                value: B,
+                                                value: L,
                                                 onChange: (e)=>{
-                                                    $t(e.target.value), $("");
+                                                    Wt(e.target.value), W("");
                                                 },
                                                 onKeyDown: (e)=>{
-                                                    e.key === "Enter" && ft();
+                                                    e.key === "Enter" && xt();
                                                 },
                                                 autoFocus: !0
                                             }),
                                             t.jsx("input", {
                                                 type: "text",
                                                 placeholder: l("site.hwpEditor.replace"),
-                                                value: X,
-                                                onChange: (e)=>At(e.target.value),
+                                                value: Q,
+                                                onChange: (e)=>$t(e.target.value),
                                                 onKeyDown: (e)=>{
-                                                    e.key === "Enter" && gt();
+                                                    e.key === "Enter" && ft();
                                                 }
                                             }),
                                             t.jsx("button", {
                                                 className: "hwp-toolbar-btn",
-                                                onClick: ft,
+                                                onClick: xt,
                                                 children: l("site.hwpEditor.findNext")
                                             }),
                                             t.jsx("button", {
                                                 className: "hwp-toolbar-btn",
-                                                onClick: gt,
+                                                onClick: ft,
                                                 children: l("site.hwpEditor.replaceOne")
                                             }),
                                             t.jsx("button", {
                                                 className: "hwp-toolbar-btn",
-                                                onClick: rs,
+                                                onClick: rr,
                                                 children: l("site.hwpEditor.replaceAllBtn")
                                             }),
                                             t.jsxs("label", {
@@ -2525,20 +2526,20 @@ let __tla = Promise.all([
                                                 children: [
                                                     t.jsx("input", {
                                                         type: "checkbox",
-                                                        checked: W,
-                                                        onChange: (e)=>Ut(e.target.checked)
+                                                        checked: M,
+                                                        onChange: (e)=>At(e.target.checked)
                                                     }),
                                                     l("site.hwpEditor.caseSensitive")
                                                 ]
                                             }),
-                                            Je && t.jsx("span", {
+                                            Ve && t.jsx("span", {
                                                 className: "hwp-find-info",
-                                                children: Je
+                                                children: Ve
                                             }),
                                             t.jsx("button", {
                                                 className: "hwp-find-close",
                                                 onClick: ()=>{
-                                                    he(!1), $("");
+                                                    le(!1), W("");
                                                 },
                                                 children: "✕"
                                             })
@@ -2546,25 +2547,25 @@ let __tla = Promise.all([
                                     }),
                                     t.jsx("div", {
                                         className: "hwp-canvas-wrapper",
-                                        onClick: ()=>_.current?.focus(),
-                                        onDragOver: ht,
-                                        onDragLeave: dt,
-                                        onDrop: pt,
-                                        children: He.map((e, r)=>{
-                                            const s = q.current[r], o = R && R.pageIndex === r, a = St.filter((c)=>c.pageIndex === r);
+                                        onClick: ()=>U.current?.focus(),
+                                        onDragOver: lt,
+                                        onDragLeave: ht,
+                                        onDrop: dt,
+                                        children: ze.map((e, s)=>{
+                                            const r = Y.current[s], o = R && R.pageIndex === s, a = Ot.filter((c)=>c.pageIndex === s);
                                             return t.jsxs("div", {
                                                 ref: (c)=>{
-                                                    $e.current[r] = c;
+                                                    We.current[s] = c;
                                                 },
                                                 className: "hwp-canvas",
                                                 style: {
                                                     position: "relative",
                                                     cursor: "text",
                                                     userSelect: "none",
-                                                    transform: `scale(${Y / 100})`,
+                                                    transform: `scale(${X / 100})`,
                                                     transformOrigin: "top center"
                                                 },
-                                                onClick: (c)=>_t(c, r),
+                                                onClick: (c)=>Ut(c, s),
                                                 children: [
                                                     t.jsx("div", {
                                                         dangerouslySetInnerHTML: {
@@ -2575,43 +2576,43 @@ let __tla = Promise.all([
                                                             lineHeight: 0
                                                         }
                                                     }),
-                                                    s && a.map((c, i)=>t.jsx("div", {
+                                                    r && a.map((c, i)=>t.jsx("div", {
                                                             className: "hwp-selection-overlay",
                                                             style: {
                                                                 position: "absolute",
-                                                                left: `${(c.x - s.x) / s.w * 100}%`,
-                                                                top: `${(c.y - s.y) / s.h * 100}%`,
-                                                                width: `${c.width / s.w * 100}%`,
-                                                                height: `${c.height / s.h * 100}%`
+                                                                left: `${(c.x - r.x) / r.w * 100}%`,
+                                                                top: `${(c.y - r.y) / r.h * 100}%`,
+                                                                width: `${c.width / r.w * 100}%`,
+                                                                height: `${c.height / r.h * 100}%`
                                                             }
                                                         }, i)),
-                                                    o && s && Dt && t.jsx("div", {
+                                                    o && r && Rt && t.jsx("div", {
                                                         className: "hwp-cursor",
                                                         style: {
                                                             position: "absolute",
-                                                            left: `${(R.x - s.x) / s.w * 100}%`,
-                                                            top: `${(R.y - s.y) / s.h * 100}%`,
-                                                            height: `${R.height / s.h * 100}%`,
+                                                            left: `${(R.x - r.x) / r.w * 100}%`,
+                                                            top: `${(R.y - r.y) / r.h * 100}%`,
+                                                            height: `${R.height / r.h * 100}%`,
                                                             width: "2px",
                                                             pointerEvents: "none"
                                                         }
                                                     })
                                                 ]
-                                            }, r);
+                                            }, s);
                                         })
                                     }),
                                     t.jsx("textarea", {
-                                        ref: _,
+                                        ref: U,
                                         className: "hwp-hidden-input",
                                         "aria-label": "HWP Editor input",
                                         autoComplete: "off",
                                         autoCorrect: "off",
                                         autoCapitalize: "off",
                                         spellCheck: !1,
-                                        onCompositionStart: as,
-                                        onCompositionEnd: cs,
-                                        onInput: os,
-                                        onKeyDown: ns,
+                                        onCompositionStart: nr,
+                                        onCompositionEnd: ar,
+                                        onInput: cr,
+                                        onKeyDown: sr,
                                         style: {
                                             position: "fixed",
                                             left: "-9999px",
@@ -2631,8 +2632,8 @@ let __tla = Promise.all([
                                                 children: [
                                                     t.jsx("button", {
                                                         className: "hwp-page-btn",
-                                                        disabled: U <= 0,
-                                                        onClick: ()=>J((e)=>Math.max(0, e - 1)),
+                                                        disabled: A <= 0,
+                                                        onClick: ()=>V((e)=>Math.max(0, e - 1)),
                                                         children: t.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "14",
@@ -2653,21 +2654,21 @@ let __tla = Promise.all([
                                                             t.jsx("input", {
                                                                 className: "hwp-page-input",
                                                                 type: "text",
-                                                                value: xe,
-                                                                onChange: is,
-                                                                onBlur: yt,
+                                                                value: ue,
+                                                                onChange: or,
+                                                                onBlur: wt,
                                                                 onKeyDown: (e)=>{
-                                                                    e.key === "Enter" && yt();
+                                                                    e.key === "Enter" && wt();
                                                                 }
                                                             }),
                                                             " / ",
-                                                            V
+                                                            K
                                                         ]
                                                     }),
                                                     t.jsx("button", {
                                                         className: "hwp-page-btn",
-                                                        disabled: U >= V - 1,
-                                                        onClick: ()=>J((e)=>Math.min(V - 1, e + 1)),
+                                                        disabled: A >= K - 1,
+                                                        onClick: ()=>V((e)=>Math.min(K - 1, e + 1)),
                                                         children: t.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "14",
@@ -2687,21 +2688,21 @@ let __tla = Promise.all([
                                                 children: [
                                                     t.jsx("button", {
                                                         className: "hwp-zoom-btn",
-                                                        onClick: hs,
-                                                        disabled: Y <= 30,
+                                                        onClick: lr,
+                                                        disabled: X <= 30,
                                                         children: "−"
                                                     }),
                                                     t.jsxs("span", {
                                                         className: "hwp-zoom-label",
                                                         children: [
-                                                            Y,
+                                                            X,
                                                             "%"
                                                         ]
                                                     }),
                                                     t.jsx("button", {
                                                         className: "hwp-zoom-btn",
-                                                        onClick: ls,
-                                                        disabled: Y >= 200,
+                                                        onClick: ir,
+                                                        disabled: X >= 200,
                                                         children: "+"
                                                     })
                                                 ]
@@ -2717,4 +2718,4 @@ let __tla = Promise.all([
         });
     };
 });
-export { ks as default, __tla };
+export { Cr as default, __tla };
