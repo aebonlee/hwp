@@ -15,6 +15,7 @@ const TemplateDetail = lazy(() => import('../pages/TemplateDetail'));
 const Documents = lazy(() => import('../pages/Documents'));
 const DocumentDetail = lazy(() => import('../pages/DocumentDetail'));
 const BusinessPlan = lazy(() => import('../pages/BusinessPlan'));
+const HwpEditor = lazy(() => import('../pages/HwpEditor'));
 const Viewer = lazy(() => import('../pages/Viewer'));
 const Generator = lazy(() => import('../pages/Generator'));
 const Guide = lazy(() => import('../pages/Guide'));
@@ -44,7 +45,8 @@ const PublicLayout = (): ReactElement => {
 
             {/* HWP 기능 페이지 */}
             <Route path="/convert" element={<Convert />} />
-            <Route path="/editor" element={<Editor />} />
+            <Route path="/md-editor" element={<Editor />} />
+            <Route path="/hwp-editor" element={<HwpEditor />} />
             <Route path="/templates" element={<AuthGuard><Templates /></AuthGuard>} />
             <Route path="/templates/new" element={<AuthGuard><TemplateCreate /></AuthGuard>} />
             <Route path="/templates/:id" element={<AuthGuard><TemplateDetail /></AuthGuard>} />

@@ -509,3 +509,105 @@
     background: rgba(74, 143, 231, 0.08);
     border-color: rgba(74, 143, 231, 0.2);
 }
+
+/* ── HWP Editor dark mode ── */
+[data-theme="dark"] .hwp-editor-toolbar {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .hwp-toolbar-divider {
+    background: var(--border-medium);
+}
+
+[data-theme="dark"] .hwp-toolbar-btn {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .hwp-toolbar-btn:hover {
+    background: rgba(74, 143, 231, 0.1);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .hwp-toolbar-btn.active {
+    background: rgba(74, 143, 231, 0.15);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+[data-theme="dark"] .hwp-editor-container {
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .hwp-canvas-wrapper {
+    background: #1a1a2e;
+}
+
+[data-theme="dark"] .hwp-page-bar {
+    background: var(--bg-light-gray);
+    border-top-color: var(--border-medium);
+}
+
+[data-theme="dark"] .hwp-page-btn,
+[data-theme="dark"] .hwp-zoom-btn {
+    background: var(--bg-medium-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .hwp-page-btn:hover:not(:disabled),
+[data-theme="dark"] .hwp-zoom-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+[data-theme="dark"] .hwp-page-input {
+    background: var(--bg-medium-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .hwp-export-dropdown {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .hwp-export-dropdown button:hover {
+    background: var(--bg-medium-gray);
+}
+
+[data-theme="dark"] .hwp-editor-error {
+    background: #7f1d1d;
+    border-color: #991b1b;
+    color: #fca5a5;
+}
+
+[data-theme="dark"] .hwp-table-dialog {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .hwp-table-dialog input {
+    background: var(--bg-medium-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .hwp-editor-empty {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .hwp-editor-empty h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .hwp-empty-btn {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .hwp-empty-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}

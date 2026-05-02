@@ -60,7 +60,7 @@ const Editor = (): ReactElement => {
 
   return (
     <>
-      <SEOHead title={t('site.editor.title')} path="/editor" />
+      <SEOHead title={t('site.editor.title')} path="/md-editor" />
 
       <section className="page-header">
         <div className="container">

@@ -55,7 +55,8 @@ const site: SiteConfig = {
 
   menuItems: [
     { path: '/convert', labelKey: 'site.nav.convert' },
-    { path: '/editor', labelKey: 'site.nav.editor' },
+    { path: '/md-editor', labelKey: 'site.nav.mdEditor' },
+    { path: '/hwp-editor', labelKey: 'site.nav.hwpEditor' },
     { path: '/viewer', labelKey: 'site.nav.viewer' },
     { path: '/business-plan', labelKey: 'site.nav.businessPlan' },
     { path: '/generator', labelKey: 'site.nav.generator' },
@@ -67,7 +68,8 @@ const site: SiteConfig = {
   footerLinks: [
     { path: '/', labelKey: 'nav.home' },
     { path: '/convert', labelKey: 'site.nav.convert' },
-    { path: '/editor', labelKey: 'site.nav.editor' },
+    { path: '/md-editor', labelKey: 'site.nav.mdEditor' },
+    { path: '/hwp-editor', labelKey: 'site.nav.hwpEditor' },
     { path: '/templates', labelKey: 'site.nav.templates' },
     { path: '/guide', labelKey: 'site.nav.guide' },
   ],

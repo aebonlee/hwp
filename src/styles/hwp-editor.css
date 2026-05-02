@@ -1,0 +1,453 @@
+/* ============================================
+   HWP Editor Page Styles
+   ============================================ */
+
+.hwp-editor-page {
+  padding: 32px 0 64px;
+}
+
+/* ── Toolbar ── */
+.hwp-editor-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hwp-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hwp-toolbar-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border-color);
+  margin: 0 6px;
+}
+
+.hwp-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  background: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: var(--transition-base);
+  white-space: nowrap;
+  gap: 4px;
+}
+
+.hwp-toolbar-btn:hover {
+  background: rgba(var(--primary-rgb), 0.06);
+  border-color: var(--border-color);
+}
+
+.hwp-toolbar-btn:active {
+  background: rgba(var(--primary-rgb), 0.12);
+}
+
+.hwp-toolbar-btn.active {
+  background: rgba(var(--primary-rgb), 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hwp-toolbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.hwp-toolbar-btn svg {
+  flex-shrink: 0;
+}
+
+.hwp-toolbar-spacer {
+  flex: 1;
+}
+
+/* ── Export dropdown ── */
+.hwp-export-wrapper {
+  position: relative;
+}
+
+.hwp-export-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 180px;
+  z-index: 100;
+  overflow: hidden;
+  animation: dropdown-in 0.15s ease-out;
+}
+
+.hwp-export-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 18px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: background 0.15s;
+}
+
+.hwp-export-dropdown button:hover {
+  background: rgba(var(--primary-rgb), 0.06);
+  color: var(--primary);
+}
+
+.hwp-export-dropdown button + button {
+  border-top: 1px solid var(--border-color);
+}
+
+/* ── Canvas area ── */
+.hwp-editor-container {
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.hwp-canvas-wrapper {
+  overflow: auto;
+  padding: 24px;
+  background: #f0f0f0;
+  min-height: 500px;
+  max-height: 75vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.hwp-canvas {
+  position: relative;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  cursor: text;
+}
+
+.hwp-canvas svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ── Cursor overlay ── */
+.hwp-cursor {
+  position: absolute;
+  width: 2px;
+  background: var(--primary);
+  pointer-events: none;
+  z-index: 10;
+  animation: hwp-cursor-blink 1s step-end infinite;
+}
+
+@keyframes hwp-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── Selection overlay ── */
+.hwp-selection-overlay {
+  position: absolute;
+  background: rgba(var(--primary-rgb), 0.2);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Page navigation bar ── */
+.hwp-page-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  gap: 12px;
+}
+
+.hwp-page-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hwp-page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.hwp-page-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hwp-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.hwp-page-info {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hwp-page-input {
+  width: 42px;
+  padding: 2px 4px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  text-align: center;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.hwp-page-input::-webkit-outer-spin-button,
+.hwp-page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hwp-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hwp-zoom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: var(--transition-base);
+}
+
+.hwp-zoom-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hwp-zoom-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 38px;
+  text-align: center;
+}
+
+/* ── Empty state ── */
+.hwp-editor-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 20px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 40px;
+}
+
+.hwp-editor-empty svg {
+  color: var(--text-light);
+}
+
+.hwp-editor-empty h3 {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.hwp-editor-empty p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.hwp-editor-empty-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.hwp-empty-btn {
+  padding: 10px 24px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hwp-empty-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hwp-empty-btn.primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.hwp-empty-btn.primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+/* ── Loading state ── */
+.hwp-editor-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 60px 0;
+  color: var(--text-secondary);
+}
+
+/* ── Error ── */
+.hwp-editor-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+/* ── Table dialog ── */
+.hwp-table-dialog {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 16px;
+  z-index: 100;
+  animation: dropdown-in 0.15s ease-out;
+}
+
+.hwp-table-dialog label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.hwp-table-dialog input {
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
+.hwp-table-dialog-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.hwp-table-dialog button {
+  padding: 6px 16px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.hwp-table-dialog button:hover {
+  background: var(--primary-dark);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hwp-editor-toolbar {
+    padding: 6px 10px;
+  }
+
+  .hwp-toolbar-btn {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    font-size: 0.78rem;
+  }
+
+  .hwp-canvas-wrapper {
+    padding: 12px;
+  }
+
+  .hwp-page-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hwp-toolbar-btn span {
+    display: none;
+  }
+}
