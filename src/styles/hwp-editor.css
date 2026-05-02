@@ -455,34 +455,26 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
   cursor: text;
+  user-select: none;
 }
 
-.hwp-canvas svg {
+.hwp-canvas svg:not(.hwp-overlay-svg) {
   display: block;
   max-width: 100%;
   height: auto;
   pointer-events: none;
+  user-select: none;
 }
 
-/* ── Cursor overlay ── */
-.hwp-cursor {
+/* ── Overlay SVG for cursor/selection ── */
+/* Separate SVG with identical viewBox, positioned exactly over the rendered page.
+   Coordinates in the overlay map 1:1 to the rendered SVG's coordinate space. */
+.hwp-canvas .hwp-overlay-svg {
   position: absolute;
-  width: 2px;
-  background: var(--primary);
-  pointer-events: none;
-  z-index: 10;
-  animation: hwp-cursor-blink 1s step-end infinite;
-}
-
-@keyframes hwp-cursor-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* ── Selection overlay ── */
-.hwp-selection-overlay {
-  position: absolute;
-  background: rgba(var(--primary-rgb), 0.2);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 5;
 }

@@ -54,6 +54,12 @@ function parseViewBox(svg: string): ViewBox | null {
   return { x: parts[0], y: parts[1], w: parts[2], h: parts[3] };
 }
 
+/** Extract preserveAspectRatio from SVG string (fallback to default). */
+function parsePAR(svg: string): string {
+  const m = svg.match(/preserveAspectRatio=["']([^"']+)["']/);
+  return m ? m[1] : 'xMidYMid meet';
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Constants
 // ─────────────────────────────────────────────────────────────────────────────
@@ -200,9 +206,6 @@ const HwpEditor: React.FC = () => {
 
   // Canvas refs (one per page)
   const canvasRefs = useRef<Record<number, HTMLDivElement | null>>({});
-
-  // Cursor blink
-  const [cursorVisible, setCursorVisible] = useState(true);
 
   // Drag-drop
   const [isDragging, setIsDragging] = useState(false);
@@ -547,10 +550,24 @@ const HwpEditor: React.FC = () => {
     const vb = vbCache.current[pageIdx];
     if (!vb) return;
 
-    const svgEl = el.querySelector('svg');
-    const rect = svgEl ? svgEl.getBoundingClientRect() : el.getBoundingClientRect();
-    const svgX = ((e.clientX - rect.left) / rect.width) * vb.w + vb.x;
-    const svgY = ((e.clientY - rect.top) / rect.height) * vb.h + vb.y;
+    // Find the rendered page SVG (not the overlay)
+    const svgEl = el.querySelector('svg:not(.hwp-overlay-svg)') as SVGSVGElement | null;
+    let svgX: number;
+    let svgY: number;
+
+    // Use getScreenCTM for accurate coordinate mapping (handles CSS transforms)
+    const ctm = svgEl?.getScreenCTM();
+    if (ctm) {
+      const pt = new DOMPoint(e.clientX, e.clientY);
+      const svgPt = pt.matrixTransform(ctm.inverse());
+      svgX = svgPt.x;
+      svgY = svgPt.y;
+    } else {
+      // Fallback: manual calculation
+      const rect = svgEl ? svgEl.getBoundingClientRect() : el.getBoundingClientRect();
+      svgX = ((e.clientX - rect.left) / rect.width) * vb.w + vb.x;
+      svgY = ((e.clientY - rect.top) / rect.height) * vb.h + vb.y;
+    }
 
     try {
       const hj = doc.hitTest(pageIdx, svgX, svgY);
@@ -1234,14 +1251,6 @@ const HwpEditor: React.FC = () => {
     setPageInputVal(String(currentPage + 1));
   }, [currentPage]);
 
-  // ── Cursor blink ───────────────────────────────────────────────────────────
-
-  useEffect(() => {
-    if (!cursor) return;
-    const iv = setInterval(() => setCursorVisible((v) => !v), 530);
-    return () => clearInterval(iv);
-  }, [cursor]);
-
   // ── Outside-click to close dropdowns ──────────────────────────────────────
 
   useEffect(() => {
@@ -1278,6 +1287,7 @@ const HwpEditor: React.FC = () => {
   const hasDoc = svgs.length > 0;
   const textColorHex = hwpColorToHex(charProps.textColor);
   const highlightHex = hwpColorToHex(charProps.highlight);
+
 
   // ── Color picker renderer ─────────────────────────────────────────────────
 
@@ -1867,8 +1877,10 @@ const HwpEditor: React.FC = () => {
               >
                 {svgs.map((svg, pageIdx) => {
                   const vb = vbCache.current[pageIdx];
+                  const par = parsePAR(svg);
                   const isCursorPage = cursorRect && cursorRect.pageIndex === pageIdx;
                   const pageSelRects = selRects.filter((r) => r.pageIndex === pageIdx);
+                  const strokeW = vb ? Math.max(vb.w * 0.0015, 1) : 2;
 
                   return (
                     <div
@@ -1876,48 +1888,56 @@ const HwpEditor: React.FC = () => {
                       ref={(el) => { canvasRefs.current[pageIdx] = el; }}
                       className="hwp-canvas"
                       style={{
-                        position: 'relative',
-                        cursor: 'text',
-                        userSelect: 'none',
                         transform: `scale(${zoom / 100})`,
                         transformOrigin: 'top center',
                       }}
                       onClick={(e) => handleCanvasClick(e, pageIdx)}
                     >
-                      {/* SVG rendered page */}
+                      {/* Rendered page SVG */}
                       <div
                         dangerouslySetInnerHTML={{ __html: svg }}
                         style={{ display: 'block', lineHeight: 0 }}
                       />
 
-                      {/* Selection overlay rects */}
-                      {vb && pageSelRects.map((sr, i) => (
-                        <div
-                          key={i}
-                          className="hwp-selection-overlay"
-                          style={{
-                            position: 'absolute',
-                            left: `${((sr.x - vb.x) / vb.w) * 100}%`,
-                            top: `${((sr.y - vb.y) / vb.h) * 100}%`,
-                            width: `${(sr.width / vb.w) * 100}%`,
-                            height: `${(sr.height / vb.h) * 100}%`,
-                          }}
-                        />
-                      ))}
+                      {/* Overlay SVG — same viewBox as rendered SVG, positioned on top */}
+                      {vb && (pageSelRects.length > 0 || isCursorPage) && (
+                        <svg
+                          className="hwp-overlay-svg"
+                          viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
+                          preserveAspectRatio={par}
+                        >
+                          {/* Selection highlight rects */}
+                          {pageSelRects.map((sr, i) => (
+                            <rect
+                              key={i}
+                              x={sr.x}
+                              y={sr.y}
+                              width={sr.width}
+                              height={sr.height}
+                              fill="rgba(0, 70, 200, 0.2)"
+                            />
+                          ))}
 
-                      {/* Cursor blinking line */}
-                      {isCursorPage && vb && cursorVisible && (
-                        <div
-                          className="hwp-cursor"
-                          style={{
-                            position: 'absolute',
-                            left: `${((cursorRect!.x - vb.x) / vb.w) * 100}%`,
-                            top: `${((cursorRect!.y - vb.y) / vb.h) * 100}%`,
-                            height: `${(cursorRect!.height / vb.h) * 100}%`,
-                            width: '2px',
-                            pointerEvents: 'none',
-                          }}
-                        />
+                          {/* Cursor blinking line */}
+                          {isCursorPage && (
+                            <line
+                              x1={cursorRect!.x}
+                              y1={cursorRect!.y}
+                              x2={cursorRect!.x}
+                              y2={cursorRect!.y + cursorRect!.height}
+                              stroke="var(--primary, #0046C8)"
+                              strokeWidth={strokeW}
+                            >
+                              <animate
+                                attributeName="opacity"
+                                values="1;1;0;0"
+                                keyTimes="0;0.5;0.5;1"
+                                dur="1.06s"
+                                repeatCount="indefinite"
+                              />
+                            </line>
+                          )}
+                        </svg>
                       )}
                     </div>
                   );
