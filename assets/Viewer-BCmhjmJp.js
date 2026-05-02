@@ -1,5 +1,5 @@
-import { r, _ as D, u as T, j as e, __tla as __tla_0 } from "./index-CzPHPB3A.js";
-import { S as H } from "./SEOHead-CuC8HsIL.js";
+import { r as n, _ as D, u as T, j as e, __tla as __tla_0 } from "./index-9utJaTWv.js";
+import { S as H } from "./SEOHead-DhT4I9Pd.js";
 let V;
 let __tla = Promise.all([
     (()=>{
@@ -10,25 +10,29 @@ let __tla = Promise.all([
 ]).then(async ()=>{
     let p = null, v = !1;
     function F() {
-        const t = globalThis;
-        if (typeof t.measureTextWidth == "function") return;
+        const s = globalThis;
+        if (typeof s.measureTextWidth == "function") return;
         const i = document.createElement("canvas").getContext("2d");
-        t.measureTextWidth = (o, g)=>i ? (i.font = g || "16px sans-serif", i.measureText(o).width) : o.length * 10;
+        s.measureTextWidth = (o, g)=>i ? (i.font = g || "16px sans-serif", i.measureText(o).width) : o.length * 10;
     }
     function I() {
         return v ? Promise.resolve() : p || (p = (async ()=>{
             F();
-            const t = await D(()=>import("./rhwp-BgOEd_j0.js"), []);
-            typeof t.init_panic_hook == "function" && t.init_panic_hook(), typeof t.default == "function" && await t.default(), v = !0;
+            const s = await D(()=>import("./rhwp-BgOEd_j0.js"), []);
+            typeof s.default == "function" && await s.default();
+            try {
+                typeof s.init_panic_hook == "function" && s.init_panic_hook();
+            } catch  {}
+            v = !0;
         })(), p);
     }
     function U() {
-        const [t, l] = r.useState({
+        const [s, l] = n.useState({
             ready: v,
             loading: !v,
             error: null
-        }), i = r.useRef(!0);
-        return r.useEffect(()=>{
+        }), i = n.useRef(!0);
+        return n.useEffect(()=>{
             if (i.current = !0, v) {
                 l({
                     ready: !0,
@@ -52,57 +56,57 @@ let __tla = Promise.all([
             }), ()=>{
                 i.current = !1;
             };
-        }, []), t;
+        }, []), s;
     }
     V = ()=>{
-        const { t } = T(), { ready: l, loading: i, error: o } = U(), [g, m] = r.useState(!1), [N, b] = r.useState(null), [k, x] = r.useState(""), [C, w] = r.useState(!1), [a, f] = r.useState([]), [c, h] = r.useState(0), [_, j] = r.useState(100), R = r.useRef(null), S = r.useCallback(async (s)=>{
-            const n = s.name.split(".").pop()?.toLowerCase();
-            if (n !== "hwp" && n !== "hwpx") {
+        const { t: s } = T(), { ready: l, loading: i, error: o } = U(), [g, m] = n.useState(!1), [N, b] = n.useState(null), [k, x] = n.useState(""), [C, w] = n.useState(!1), [a, f] = n.useState([]), [c, h] = n.useState(0), [_, j] = n.useState(100), R = n.useRef(null), S = n.useCallback(async (t)=>{
+            const r = t.name.split(".").pop()?.toLowerCase();
+            if (r !== "hwp" && r !== "hwpx") {
                 x(".hwp 또는 .hwpx 파일만 지원합니다.");
                 return;
             }
-            b(s), x(""), w(!0), f([]), h(0);
+            b(t), x(""), w(!0), f([]), h(0);
             try {
                 const { HwpDocument: d } = await D(async ()=>{
                     const { HwpDocument: u } = await import("./rhwp-BgOEd_j0.js");
                     return {
                         HwpDocument: u
                     };
-                }, []), O = await s.arrayBuffer(), y = new d(new Uint8Array(O)), z = y.pageCount(), E = [];
+                }, []), O = await t.arrayBuffer(), y = new d(new Uint8Array(O)), z = y.pageCount(), E = [];
                 for(let u = 0; u < z; u++)E.push(y.renderPageSvg(u));
                 y.free(), f(E), w(!1);
             } catch (d) {
-                x(d.message || t("site.viewer.error")), w(!1);
+                x(d.message || s("site.viewer.error")), w(!1);
             }
         }, [
-            t
-        ]), L = (s)=>{
-            s.preventDefault(), m(!1);
-            const n = s.dataTransfer.files;
-            n.length > 0 && S(n[0]);
+            s
+        ]), L = (t)=>{
+            t.preventDefault(), m(!1);
+            const r = t.dataTransfer.files;
+            r.length > 0 && S(r[0]);
         }, P = ()=>{
-            const s = document.createElement("input");
-            s.type = "file", s.accept = ".hwp,.hwpx", s.onchange = ()=>{
-                s.files && s.files.length > 0 && S(s.files[0]);
-            }, s.click();
+            const t = document.createElement("input");
+            t.type = "file", t.accept = ".hwp,.hwpx", t.onchange = ()=>{
+                t.files && t.files.length > 0 && S(t.files[0]);
+            }, t.click();
         }, B = ()=>{
             if (!a[c]) return;
-            const s = new Blob([
+            const t = new Blob([
                 a[c]
             ], {
                 type: "image/svg+xml"
-            }), n = URL.createObjectURL(s), d = document.createElement("a");
-            d.href = n, d.download = `${N?.name?.replace(/\.[^.]+$/, "") || "page"}_p${c + 1}.svg`, d.click(), URL.revokeObjectURL(n);
+            }), r = URL.createObjectURL(t), d = document.createElement("a");
+            d.href = r, d.download = `${N?.name?.replace(/\.[^.]+$/, "") || "page"}_p${c + 1}.svg`, d.click(), URL.revokeObjectURL(r);
         }, M = ()=>{
             b(null), f([]), h(0), j(100), x("");
-        }, W = (s)=>{
-            const n = parseInt(s.target.value, 10);
-            !isNaN(n) && n >= 1 && n <= a.length && h(n - 1);
+        }, W = (t)=>{
+            const r = parseInt(t.target.value, 10);
+            !isNaN(r) && r >= 1 && r <= a.length && h(r - 1);
         };
         return e.jsxs(e.Fragment, {
             children: [
                 e.jsx(H, {
-                    title: t("site.viewer.title"),
+                    title: s("site.viewer.title"),
                     path: "/viewer"
                 }),
                 e.jsx("section", {
@@ -111,10 +115,10 @@ let __tla = Promise.all([
                         className: "container",
                         children: [
                             e.jsx("h2", {
-                                children: t("site.viewer.title")
+                                children: s("site.viewer.title")
                             }),
                             e.jsx("p", {
-                                children: t("site.viewer.subtitle")
+                                children: s("site.viewer.subtitle")
                             })
                         ]
                     })
@@ -154,7 +158,7 @@ let __tla = Promise.all([
                                             })
                                         ]
                                     }),
-                                    t("site.viewer.wasmError"),
+                                    s("site.viewer.wasmError"),
                                     ": ",
                                     o
                                 ]
@@ -200,13 +204,13 @@ let __tla = Promise.all([
                                             className: "loading-spinner"
                                         }),
                                         e.jsx("p", {
-                                            children: t("site.viewer.loading")
+                                            children: s("site.viewer.loading")
                                         })
                                     ]
                                 }) : e.jsxs("div", {
                                     className: `dropzone ${g ? "drag-over" : ""}`,
-                                    onDragOver: (s)=>{
-                                        s.preventDefault(), m(!0);
+                                    onDragOver: (t)=>{
+                                        t.preventDefault(), m(!0);
                                     },
                                     onDragLeave: ()=>m(!1),
                                     onDrop: L,
@@ -234,10 +238,10 @@ let __tla = Promise.all([
                                             ]
                                         }),
                                         e.jsx("h3", {
-                                            children: t("site.viewer.upload")
+                                            children: s("site.viewer.upload")
                                         }),
                                         e.jsx("p", {
-                                            children: t("site.viewer.uploadHint")
+                                            children: s("site.viewer.uploadHint")
                                         })
                                     ]
                                 })
@@ -249,7 +253,7 @@ let __tla = Promise.all([
                                         className: "loading-spinner"
                                     }),
                                     e.jsx("p", {
-                                        children: t("site.viewer.rendering")
+                                        children: s("site.viewer.rendering")
                                     })
                                 ]
                             }),
@@ -271,7 +275,7 @@ let __tla = Promise.all([
                                                 children: [
                                                     e.jsx("button", {
                                                         className: "viewer-nav-btn",
-                                                        onClick: ()=>h((s)=>Math.max(0, s - 1)),
+                                                        onClick: ()=>h((t)=>Math.max(0, t - 1)),
                                                         disabled: c === 0,
                                                         children: e.jsx("svg", {
                                                             viewBox: "0 0 24 24",
@@ -298,7 +302,7 @@ let __tla = Promise.all([
                                                             }),
                                                             e.jsxs("span", {
                                                                 children: [
-                                                                    t("site.viewer.of"),
+                                                                    s("site.viewer.of"),
                                                                     " ",
                                                                     a.length
                                                                 ]
@@ -307,7 +311,7 @@ let __tla = Promise.all([
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-nav-btn",
-                                                        onClick: ()=>h((s)=>Math.min(a.length - 1, s + 1)),
+                                                        onClick: ()=>h((t)=>Math.min(a.length - 1, t + 1)),
                                                         disabled: c === a.length - 1,
                                                         children: e.jsx("svg", {
                                                             viewBox: "0 0 24 24",
@@ -328,7 +332,7 @@ let __tla = Promise.all([
                                                 children: [
                                                     e.jsx("button", {
                                                         className: "viewer-zoom-btn",
-                                                        onClick: ()=>j((s)=>Math.max(50, s - 25)),
+                                                        onClick: ()=>j((t)=>Math.max(50, t - 25)),
                                                         children: "-"
                                                     }),
                                                     e.jsxs("span", {
@@ -340,13 +344,13 @@ let __tla = Promise.all([
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-zoom-btn",
-                                                        onClick: ()=>j((s)=>Math.min(200, s + 25)),
+                                                        onClick: ()=>j((t)=>Math.min(200, t + 25)),
                                                         children: "+"
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-action-btn",
                                                         onClick: B,
-                                                        title: t("site.viewer.downloadSvg"),
+                                                        title: s("site.viewer.downloadSvg"),
                                                         children: e.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -373,7 +377,7 @@ let __tla = Promise.all([
                                                     e.jsx("button", {
                                                         className: "viewer-action-btn",
                                                         onClick: M,
-                                                        title: t("site.viewer.newFile"),
+                                                        title: s("site.viewer.newFile"),
                                                         children: e.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
