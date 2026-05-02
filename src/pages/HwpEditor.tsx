@@ -6,7 +6,6 @@ import React, {
   type ChangeEvent,
   type DragEvent,
   type KeyboardEvent,
-  type MouseEvent,
 } from 'react';
 import type { HwpDocument as RhwpDoc } from '@rhwp/core';
 import { useRhwp } from '../hooks/useRhwp';
@@ -283,13 +282,19 @@ const HwpEditor: React.FC = () => {
   const [findInfo, setFindInfo] = useState('');
 
   // Edit context (cell / header-footer / footnote)
-  const [editMode, setEditMode] = useState<EditMode>('body');
+  const [editMode, setEditModeState] = useState<EditMode>('body');
+  const editModeRef = useRef<EditMode>('body');
+  const setEditMode = useCallback((mode: EditMode) => {
+    editModeRef.current = mode;
+    setEditModeState(mode);
+  }, []);
   const cellCtxRef = useRef<CellContext | null>(null);
   const hfCtxRef = useRef<HfContext | null>(null);
   const fnCtxRef = useRef<FnContext | null>(null);
 
   // Mouse drag selection
   const [isDragSelecting, setIsDragSelecting] = useState(false);
+  const dragStartPos = useRef<CursorPos | null>(null);
 
   // Context menu (right-click)
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
@@ -333,6 +338,7 @@ const HwpEditor: React.FC = () => {
   const tableBtnRef = useRef<HTMLButtonElement>(null);
   const styleBtnRef = useRef<HTMLButtonElement>(null);
   const styleDropRef = useRef<HTMLDivElement>(null);
+  const contextMenuRef = useRef<HTMLDivElement>(null);
 
   // ── Cursor setter ────────────────────────────────────────────────────────
 
@@ -379,6 +385,49 @@ const HwpEditor: React.FC = () => {
       setEditorError(String(e));
     }
   }, []);
+
+  const rerenderPage = useCallback((pageIdx: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const canvas = pageCanvasRefs.current[pageIdx];
+    if (!canvas) return;
+    const scale = renderScaleRef.current;
+    try {
+      doc.renderPageToCanvas(pageIdx, canvas, scale);
+      const cssW = canvas.width / scale;
+      const cssH = canvas.height / scale;
+      canvas.style.width = cssW + 'px';
+      canvas.style.height = cssH + 'px';
+      pageSizesRef.current[pageIdx] = { w: cssW, h: cssH };
+      const overlay = overlayCanvasRefs.current[pageIdx];
+      if (overlay) {
+        overlay.width = canvas.width;
+        overlay.height = canvas.height;
+        overlay.style.width = cssW + 'px';
+        overlay.style.height = cssH + 'px';
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const rerenderCurrentPage = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const count = doc.pageCount();
+      if (count !== pageCount) {
+        setPageCount(count);
+        setRenderVer((v) => v + 1);
+      } else {
+        const cur = currentPage;
+        rerenderPage(cur);
+        if (cur > 0) rerenderPage(cur - 1);
+        if (cur < count - 1) rerenderPage(cur + 1);
+        setRenderVer((v) => v + 1);
+      }
+    } catch (e) {
+      setEditorError(String(e));
+    }
+  }, [pageCount, currentPage, rerenderPage]);
 
   // ── Cursor display ────────────────────────────────────────────────────────
 
@@ -640,46 +689,6 @@ const HwpEditor: React.FC = () => {
     if (file) openFile(file);
   }, [openFile]);
 
-  // ── Canvas hit-test ───────────────────────────────────────────────────────
-
-  const handleCanvasClick = useCallback((e: MouseEvent<HTMLDivElement>, pageIdx: number) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const canvas = pageCanvasRefs.current[pageIdx];
-    if (!canvas) return;
-
-    // Convert screen click to page coordinates
-    const scale = renderScaleRef.current;
-    const rect = canvas.getBoundingClientRect();
-    // Map client coords → canvas buffer coords → page coords
-    const pageX = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
-    const pageY = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
-
-    try {
-      const hj = doc.hitTest(pageIdx, pageX, pageY);
-      const h = parseResult(hj);
-      if (!h) return;
-      const pi = ((h.paragraphIndex ?? h.paraIndex) as number) ?? 0;
-      const pos: CursorPos = {
-        secIdx: (h.sectionIndex as number) ?? 0,
-        paraIdx: pi,
-        charOffset: (h.charOffset as number) ?? 0,
-      };
-      if (e.shiftKey && selAnchorRef.current) {
-        setCursor(pos);
-        updateSelectionRects(selAnchorRef.current, pos);
-        setHasSelection(true);
-        updateCursorDisplay(pos);
-        updateCharProps(pos);
-      } else {
-        selAnchorRef.current = { ...pos };
-        moveCursor(pos, true);
-      }
-    } catch { /* hitTest can fail on margins */ }
-
-    hiddenInputRef.current?.focus();
-  }, [setCursor, moveCursor, updateSelectionRects, updateCursorDisplay, updateCharProps]);
-
   // ── Delete selection ──────────────────────────────────────────────────────
 
   const deleteSelection = useCallback((): CursorPos | null => {
@@ -726,17 +735,17 @@ const HwpEditor: React.FC = () => {
       const r = parseResult(rj);
       const newOff = (r?.charOffset as number) ?? pos.charOffset + text.length;
       const newPos: CursorPos = { ...pos, charOffset: newOff };
-      rerender();
+      rerenderCurrentPage();
       moveCursor(newPos);
     } catch (e) { console.error('insertText failed:', e); }
-  }, [saveSnapshot, deleteSelection, moveCursor, rerender]);
+  }, [saveSnapshot, deleteSelection, moveCursor, rerenderCurrentPage]);
 
   // ── Delete before/after cursor ─────────────────────────────────────────────
 
   const deleteCharBefore = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
-    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerender(); return; }
+    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerenderCurrentPage(); return; }
     const pos = cursorRef.current;
     saveSnapshot();
     try {
@@ -747,7 +756,6 @@ const HwpEditor: React.FC = () => {
         moveCursor({ ...pos, charOffset: newOff });
       } else if (pos.paraIdx > 0) {
         const prevLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx - 1);
-        // mergeParagraph(sec, para): merges para into para-1, deletes para
         const rj = doc.mergeParagraph(pos.secIdx, pos.paraIdx);
         const r = parseResult(rj);
         moveCursor({
@@ -757,25 +765,23 @@ const HwpEditor: React.FC = () => {
         });
       }
     } catch (e) { console.error('deleteCharBefore failed:', e); }
-    rerender();
-  }, [deleteSelection, saveSnapshot, moveCursor, rerender]);
+    rerenderCurrentPage();
+  }, [deleteSelection, saveSnapshot, moveCursor, rerenderCurrentPage]);
 
   const deleteCharAfter = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
-    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerender(); return; }
+    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerenderCurrentPage(); return; }
     const pos = cursorRef.current;
     saveSnapshot();
     try {
       const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
       if (pos.charOffset < pLen) {
         doc.deleteText(pos.secIdx, pos.paraIdx, pos.charOffset, 1);
-        moveCursor({ ...pos }); // stay at same offset
+        moveCursor({ ...pos });
       } else {
         const pCount = doc.getParagraphCount(pos.secIdx);
         if (pos.paraIdx < pCount - 1) {
-          // mergeParagraph(sec, para): merges para into para-1, deletes para
-          // For Delete at end: merge next paragraph into current
           const rj = doc.mergeParagraph(pos.secIdx, pos.paraIdx + 1);
           const r = parseResult(rj);
           moveCursor({
@@ -786,8 +792,8 @@ const HwpEditor: React.FC = () => {
         }
       }
     } catch (e) { console.error('deleteCharAfter failed:', e); }
-    rerender();
-  }, [deleteSelection, saveSnapshot, moveCursor, rerender]);
+    rerenderCurrentPage();
+  }, [deleteSelection, saveSnapshot, moveCursor, rerenderCurrentPage]);
 
   // ── Formatting ─────────────────────────────────────────────────────────────
 
@@ -815,18 +821,23 @@ const HwpEditor: React.FC = () => {
         try { doc.endBatch(); } catch { /* ignore */ }
       }
     } else {
-      // Apply at single char at cursor
+      // Apply at single char near cursor (prefer char before cursor at end)
       try {
         const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
-        const endOff = Math.min(pos.charOffset + 1, pLen);
-        if (pos.charOffset < endOff) {
-          doc.applyCharFormat(pos.secIdx, pos.paraIdx, pos.charOffset, endOff, JSON.stringify(props));
+        let startO = pos.charOffset;
+        let endO = pos.charOffset + 1;
+        if (pos.charOffset >= pLen && pos.charOffset > 0) {
+          startO = pos.charOffset - 1;
+          endO = pos.charOffset;
+        }
+        if (startO < endO) {
+          doc.applyCharFormat(pos.secIdx, pos.paraIdx, startO, endO, JSON.stringify(props));
         }
       } catch { /* ignore */ }
     }
-    rerender();
+    rerenderCurrentPage();
     updateCharProps(pos);
-  }, [saveSnapshot, rerender, updateCharProps]);
+  }, [saveSnapshot, rerenderCurrentPage, updateCharProps]);
 
   const applyParaFormat = useCallback((props: Record<string, unknown>) => {
     const doc = docRef.current;
@@ -985,10 +996,9 @@ const HwpEditor: React.FC = () => {
     const pos = hitTestToPos(e, pageIdx);
     if (!pos) return;
     setIsDragSelecting(true);
+    dragStartPos.current = { ...pos };
     selAnchorRef.current = { ...pos };
     setCursor(pos);
-    setHasSelection(false);
-    setSelRects([]);
     updateCursorDisplay(pos);
     updateCharProps(pos);
     hiddenInputRef.current?.focus();
@@ -1004,9 +1014,33 @@ const HwpEditor: React.FC = () => {
     updateCursorDisplay(pos);
   }, [isDragSelecting, hitTestToPos, setCursor, updateSelectionRects, updateCursorDisplay]);
 
-  const handleCanvasMouseUp = useCallback(() => {
+  const handleCanvasMouseUp = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+    if (!isDragSelecting) return;
     setIsDragSelecting(false);
-  }, []);
+    const endPos = hitTestToPos(e, pageIdx);
+    const start = dragStartPos.current;
+
+    if (start && endPos &&
+        start.secIdx === endPos.secIdx &&
+        start.paraIdx === endPos.paraIdx &&
+        start.charOffset === endPos.charOffset) {
+      // Single click (no drag): move cursor or extend selection
+      if (e.shiftKey && selAnchorRef.current) {
+        setCursor(endPos);
+        updateSelectionRects(selAnchorRef.current, endPos);
+        setHasSelection(true);
+        updateCursorDisplay(endPos);
+        updateCharProps(endPos);
+      } else {
+        moveCursor(endPos, true);
+      }
+    } else if (endPos) {
+      // Drag completed: keep selection
+      setCursor(endPos);
+      updateCursorDisplay(endPos);
+      updateCharProps(endPos);
+    }
+  }, [isDragSelecting, hitTestToPos, setCursor, moveCursor, updateSelectionRects, updateCursorDisplay, updateCharProps]);
 
   // ── Context menu (right-click) ────────────────────────────────────────────
 
@@ -1412,13 +1446,116 @@ const HwpEditor: React.FC = () => {
     }
   }, [handleUndo, handleRedo, applyCharFormatInCell, splitParagraphInCell, deleteTextInCell, enterCellMode]);
 
+  const deleteTextInHf = useCallback((forward: boolean) => {
+    const doc = docRef.current;
+    const ctx = hfCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      if (!forward && ctx.charOffset > 0) {
+        doc.deleteTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset - 1, 1);
+        ctx.charOffset--;
+      } else if (!forward && ctx.charOffset === 0 && ctx.hfParaIdx > 0) {
+        const rj = doc.mergeParagraphInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx);
+        const r = parseResult(rj);
+        ctx.hfParaIdx = (r?.paraIdx as number) ?? ctx.hfParaIdx - 1;
+        ctx.charOffset = (r?.charOffset as number) ?? 0;
+      } else if (forward) {
+        doc.deleteTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 1);
+      }
+      rerenderCurrentPage();
+      try {
+        const cr = parseResult(doc.getCursorRectInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 0));
+        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+      } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerenderCurrentPage]);
+
+  const splitParagraphInHf = useCallback(() => {
+    const doc = docRef.current;
+    const ctx = hfCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      const rj = doc.splitParagraphInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset);
+      const r = parseResult(rj);
+      ctx.hfParaIdx = (r?.paraIdx as number) ?? ctx.hfParaIdx + 1;
+      ctx.charOffset = 0;
+      rerenderCurrentPage();
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerenderCurrentPage]);
+
   const handleKeyDownHf = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Escape') { e.preventDefault(); setEditMode('body'); hfCtxRef.current = null; }
-  }, []);
+    const ctx = hfCtxRef.current;
+    if (!ctx) { setEditMode('body'); return; }
+    const ctrl = e.ctrlKey || e.metaKey;
+    if (ctrl) {
+      switch (e.key.toLowerCase()) {
+        case 'z': e.preventDefault(); handleUndo(); return;
+        case 'y': e.preventDefault(); handleRedo(); return;
+      }
+      return;
+    }
+    switch (e.key) {
+      case 'Escape': e.preventDefault(); setEditMode('body'); hfCtxRef.current = null; break;
+      case 'Enter': e.preventDefault(); splitParagraphInHf(); break;
+      case 'Backspace': e.preventDefault(); deleteTextInHf(false); break;
+      case 'Delete': e.preventDefault(); deleteTextInHf(true); break;
+    }
+  }, [setEditMode, handleUndo, handleRedo, splitParagraphInHf, deleteTextInHf]);
+
+  const deleteTextInFn = useCallback((forward: boolean) => {
+    const doc = docRef.current;
+    const ctx = fnCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      if (!forward && ctx.charOffset > 0) {
+        doc.deleteTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset - 1, 1);
+        ctx.charOffset--;
+      } else if (forward) {
+        doc.deleteTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset, 1);
+      }
+      rerenderCurrentPage();
+      try {
+        const cr = parseResult(doc.getCursorRectInFootnote(0, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset));
+        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+      } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerenderCurrentPage]);
+
+  const splitParagraphInFn = useCallback(() => {
+    const doc = docRef.current;
+    const ctx = fnCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      const rj = doc.splitParagraphInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset);
+      const r = parseResult(rj);
+      ctx.fnParaIdx = (r?.paraIdx as number) ?? ctx.fnParaIdx + 1;
+      ctx.charOffset = 0;
+      rerenderCurrentPage();
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerenderCurrentPage]);
 
   const handleKeyDownFn = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Escape') { e.preventDefault(); setEditMode('body'); fnCtxRef.current = null; }
-  }, []);
+    const ctx = fnCtxRef.current;
+    if (!ctx) { setEditMode('body'); return; }
+    const ctrl = e.ctrlKey || e.metaKey;
+    if (ctrl) {
+      switch (e.key.toLowerCase()) {
+        case 'z': e.preventDefault(); handleUndo(); return;
+        case 'y': e.preventDefault(); handleRedo(); return;
+      }
+      return;
+    }
+    switch (e.key) {
+      case 'Escape': e.preventDefault(); setEditMode('body'); fnCtxRef.current = null; break;
+      case 'Enter': e.preventDefault(); splitParagraphInFn(); break;
+      case 'Backspace': e.preventDefault(); deleteTextInFn(false); break;
+      case 'Delete': e.preventDefault(); deleteTextInFn(true); break;
+    }
+  }, [setEditMode, handleUndo, handleRedo, splitParagraphInFn, deleteTextInFn]);
 
   // ── Find / Replace ─────────────────────────────────────────────────────────
 
@@ -1587,7 +1724,7 @@ const HwpEditor: React.FC = () => {
           };
           moveCursor(np);
         } catch { /* ignore */ }
-        rerender();
+        rerenderCurrentPage();
         break;
       }
       case 'Backspace': e.preventDefault(); deleteCharBefore(); break;
@@ -1739,7 +1876,7 @@ const HwpEditor: React.FC = () => {
     handleUndo, handleRedo,
     toggleBold, toggleItalic, toggleUnderline,
     insertText, deleteSelection, deleteCharBefore, deleteCharAfter,
-    saveSnapshot, moveCursor, rerender,
+    saveSnapshot, moveCursor, rerenderCurrentPage,
     updateSelectionRects, updateCursorDisplay,
     setCursor, handleHtmlPaste,
   ]);
@@ -1754,26 +1891,28 @@ const HwpEditor: React.FC = () => {
     composingRef.current = false;
     const text = e.data;
     if (text) {
-      if (editMode === 'cell') insertTextInCell(text);
-      else if (editMode === 'header' || editMode === 'footer') insertTextInHf(text);
-      else if (editMode === 'footnote') insertTextInFn(text);
+      const mode = editModeRef.current;
+      if (mode === 'cell') insertTextInCell(text);
+      else if (mode === 'header' || mode === 'footer') insertTextInHf(text);
+      else if (mode === 'footnote') insertTextInFn(text);
       else insertText(text);
     }
     if (hiddenInputRef.current) hiddenInputRef.current.value = '';
-  }, [editMode, insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
+  }, [insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
 
   const handleIMEInput = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
     if (composingRef.current) return;
     const target = e.target as HTMLTextAreaElement;
     const val = target.value;
     if (val) {
-      if (editMode === 'cell') insertTextInCell(val);
-      else if (editMode === 'header' || editMode === 'footer') insertTextInHf(val);
-      else if (editMode === 'footnote') insertTextInFn(val);
+      const mode = editModeRef.current;
+      if (mode === 'cell') insertTextInCell(val);
+      else if (mode === 'header' || mode === 'footer') insertTextInHf(val);
+      else if (mode === 'footnote') insertTextInFn(val);
       else insertText(val);
       target.value = '';
     }
-  }, [editMode, insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
+  }, [insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
 
   // ── Page navigation ────────────────────────────────────────────────────────
 
@@ -1815,11 +1954,20 @@ const HwpEditor: React.FC = () => {
       if (spacingOpen && outside(spacingBtnRef, spacingDropRef)) setSpacingOpen(false);
       if (tableDialogOpen && outside(tableBtnRef, tableDialogRef)) setTableDialogOpen(false);
       if (styleOpen && outside(styleBtnRef, styleDropRef)) setStyleOpen(false);
-      if (contextMenu) setContextMenu(null);
+      if (contextMenu && !contextMenuRef.current?.contains(target)) setContextMenu(null);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, [fontOpen, sizeOpen, colorOpen, highlightOpen, exportOpen, spacingOpen, tableDialogOpen, styleOpen, contextMenu]);
+
+  // ── Global mouseup for drag selection (Bug 8) ─────────────────────────────
+
+  useEffect(() => {
+    if (!isDragSelecting) return;
+    const handleGlobalMouseUp = () => setIsDragSelecting(false);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => document.removeEventListener('mouseup', handleGlobalMouseUp);
+  }, [isDragSelecting]);
 
   // ── Cleanup on unmount ─────────────────────────────────────────────────────
 
@@ -2601,7 +2749,6 @@ const HwpEditor: React.FC = () => {
               <div
                 className="hwp-canvas-wrapper"
                 onClick={() => hiddenInputRef.current?.focus()}
-                onMouseUp={handleCanvasMouseUp}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -2615,15 +2762,61 @@ const HwpEditor: React.FC = () => {
                       transform: `scale(${zoom / 100})`,
                       transformOrigin: 'top center',
                     }}
-                    onClick={(e) => handleCanvasClick(e, pageIdx)}
                     onMouseDown={(e) => handleCanvasMouseDown(e, pageIdx)}
                     onMouseMove={(e) => handleCanvasMouseMove(e, pageIdx)}
+                    onMouseUp={(e) => handleCanvasMouseUp(e, pageIdx)}
                     onContextMenu={(e) => handleContextMenu(e, pageIdx)}
-                    onDoubleClick={() => {
-                      // Double-click on header/footer area enters HF mode
+                    onDoubleClick={(e) => {
+                      const doc = docRef.current;
+                      if (!doc || editMode !== 'body') return;
+                      const canvas = pageCanvasRefs.current[pageIdx];
+                      if (!canvas) return;
+                      const scale = renderScaleRef.current;
+                      const rect = canvas.getBoundingClientRect();
+                      const px = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
+                      const py = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
+
+                      // Check header/footer hit
+                      try {
+                        const hfResult = parseResult(doc.hitTestHeaderFooter(pageIdx, px, py));
+                        if (hfResult?.hit) {
+                          enterHeaderFooterMode(
+                            (hfResult.sectionIndex as number) ?? 0,
+                            !!hfResult.isHeader
+                          );
+                          return;
+                        }
+                      } catch { /* ignore */ }
+
+                      // Body double-click → word selection (manual boundary scan)
                       const pos = cursorRef.current;
-                      if (pos && editMode === 'body') {
-                        enterHeaderFooterMode(pos.secIdx, true);
+                      if (pos) {
+                        try {
+                          const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
+                          if (pLen > 0) {
+                            // Read surrounding text to find word boundaries
+                            const textJson = doc.getTextRange(pos.secIdx, pos.paraIdx, 0, pLen);
+                            const textResult = parseResult(textJson);
+                            const text = (textResult?.text as string) ?? '';
+                            if (text) {
+                              const off = Math.min(pos.charOffset, text.length);
+                              const isWordChar = (c: string) => /[\w\u3131-\uD79D]/.test(c);
+                              let wStart = off;
+                              let wEnd = off;
+                              while (wStart > 0 && isWordChar(text[wStart - 1])) wStart--;
+                              while (wEnd < text.length && isWordChar(text[wEnd])) wEnd++;
+                              if (wStart < wEnd) {
+                                const startPos = { ...pos, charOffset: wStart };
+                                const endPos = { ...pos, charOffset: wEnd };
+                                selAnchorRef.current = startPos;
+                                setCursor(endPos);
+                                updateSelectionRects(startPos, endPos);
+                                setHasSelection(true);
+                                updateCursorDisplay(endPos);
+                              }
+                            }
+                          }
+                        } catch { /* ignore */ }
                       }
                     }}
                   >
@@ -2644,9 +2837,9 @@ const HwpEditor: React.FC = () => {
               {/* ── CONTEXT MENU ──────────────────────────────────────────── */}
               {contextMenu && (
                 <div
+                  ref={contextMenuRef}
                   className="hwp-context-menu"
                   style={{ position: 'fixed', left: contextMenu.x, top: contextMenu.y, zIndex: 9999 }}
-                  onMouseDown={(e) => e.stopPropagation()}
                 >
                   {contextMenu.type === 'table' && contextMenu.tableInfo ? (
                     <>
