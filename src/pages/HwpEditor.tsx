@@ -39,26 +39,6 @@ function parseResult(json: string): Record<string, unknown> | null {
   }
 }
 
-interface ViewBox {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
-
-function parseViewBox(svg: string): ViewBox | null {
-  const m = svg.match(/viewBox=["']([^"']+)["']/);
-  if (!m) return null;
-  const parts = m[1].split(/[\s,]+/).map(Number);
-  if (parts.length < 4) return null;
-  return { x: parts[0], y: parts[1], w: parts[2], h: parts[3] };
-}
-
-/** Extract preserveAspectRatio from SVG string (fallback to default). */
-function parsePAR(svg: string): string {
-  const m = svg.match(/preserveAspectRatio=["']([^"']+)["']/);
-  return m ? m[1] : 'xMidYMid meet';
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Constants
@@ -154,8 +134,8 @@ const HwpEditor: React.FC = () => {
 
   // Document
   const docRef = useRef<RhwpDoc | null>(null);
-  const [svgs, setSvgs] = useState<string[]>([]);
   const [pageCount, setPageCount] = useState(0);
+  const [renderVer, setRenderVer] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageInputVal, setPageInputVal] = useState('1');
   const [zoom, setZoom] = useState(100);
@@ -171,9 +151,13 @@ const HwpEditor: React.FC = () => {
   const selAnchorRef = useRef<CursorPos | null>(null);
   const [, setHasSelection] = useState(false);
   const [selRects, setSelRects] = useState<SelectionRect[]>([]);
+  const [cursorVisible, setCursorVisible] = useState(true);
 
-  // ViewBox cache per page
-  const vbCache = useRef<Record<number, ViewBox>>({});
+  // Canvas refs per page (content + overlay)
+  const pageCanvasRefs = useRef<Record<number, HTMLCanvasElement | null>>({});
+  const overlayCanvasRefs = useRef<Record<number, HTMLCanvasElement | null>>({});
+  const renderScaleRef = useRef(window.devicePixelRatio || 1);
+  const pageSizesRef = useRef<Record<number, { w: number; h: number }>>({});
 
   // Char / para display props
   const [charProps, setCharProps] = useState<CharProps>({
@@ -204,7 +188,7 @@ const HwpEditor: React.FC = () => {
   const composingRef = useRef(false);
   const hiddenInputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Canvas refs (one per page)
+  // Canvas container refs (for hit-test querySelector)
   const canvasRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   // Drag-drop
@@ -272,14 +256,7 @@ const HwpEditor: React.FC = () => {
     try {
       const count = doc.pageCount();
       setPageCount(count);
-      const newSvgs: string[] = [];
-      for (let i = 0; i < count; i++) {
-        const svg = doc.renderPageSvg(i);
-        newSvgs.push(svg);
-        const vb = parseViewBox(svg);
-        if (vb) vbCache.current[i] = vb;
-      }
-      setSvgs(newSvgs);
+      setRenderVer((v) => v + 1);
     } catch (e) {
       setEditorError(String(e));
     }
@@ -460,7 +437,7 @@ const HwpEditor: React.FC = () => {
     setSelRects([]);
     setCurrentPage(0);
     setEditorError('');
-    vbCache.current = {};
+    pageSizesRef.current = {};
     rerender();
     // Initial cursor from saved caret
     try {
@@ -545,32 +522,18 @@ const HwpEditor: React.FC = () => {
   const handleCanvasClick = useCallback((e: MouseEvent<HTMLDivElement>, pageIdx: number) => {
     const doc = docRef.current;
     if (!doc) return;
-    const el = canvasRefs.current[pageIdx];
-    if (!el) return;
-    const vb = vbCache.current[pageIdx];
-    if (!vb) return;
+    const canvas = pageCanvasRefs.current[pageIdx];
+    if (!canvas) return;
 
-    // Find the rendered page SVG (not the overlay)
-    const svgEl = el.querySelector('svg:not(.hwp-overlay-svg)') as SVGSVGElement | null;
-    let svgX: number;
-    let svgY: number;
-
-    // Use getScreenCTM for accurate coordinate mapping (handles CSS transforms)
-    const ctm = svgEl?.getScreenCTM();
-    if (ctm) {
-      const pt = new DOMPoint(e.clientX, e.clientY);
-      const svgPt = pt.matrixTransform(ctm.inverse());
-      svgX = svgPt.x;
-      svgY = svgPt.y;
-    } else {
-      // Fallback: manual calculation
-      const rect = svgEl ? svgEl.getBoundingClientRect() : el.getBoundingClientRect();
-      svgX = ((e.clientX - rect.left) / rect.width) * vb.w + vb.x;
-      svgY = ((e.clientY - rect.top) / rect.height) * vb.h + vb.y;
-    }
+    // Convert screen click to page coordinates
+    const scale = renderScaleRef.current;
+    const rect = canvas.getBoundingClientRect();
+    // Map client coords → canvas buffer coords → page coords
+    const pageX = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
+    const pageY = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
 
     try {
-      const hj = doc.hitTest(pageIdx, svgX, svgY);
+      const hj = doc.hitTest(pageIdx, pageX, pageY);
       const h = parseResult(hj);
       if (!h) return;
       const pi = ((h.paragraphIndex ?? h.paraIndex) as number) ?? 0;
@@ -1282,9 +1245,90 @@ const HwpEditor: React.FC = () => {
     };
   }, []);
 
+  // ── Canvas rendering effect ─────────────────────────────────────────────────
+  // When renderVer changes (document modified), re-draw all page canvases.
+
+  useEffect(() => {
+    const doc = docRef.current;
+    if (!doc || pageCount === 0) return;
+    const scale = renderScaleRef.current;
+
+    for (let i = 0; i < pageCount; i++) {
+      const canvas = pageCanvasRefs.current[i];
+      if (!canvas) continue;
+      try {
+        doc.renderPageToCanvas(i, canvas, scale);
+        // renderPageToCanvas sets canvas.width/height = page_size * scale
+        // Set CSS display size = page_size in CSS pixels
+        const cssW = canvas.width / scale;
+        const cssH = canvas.height / scale;
+        canvas.style.width = cssW + 'px';
+        canvas.style.height = cssH + 'px';
+        pageSizesRef.current[i] = { w: cssW, h: cssH };
+
+        // Setup overlay canvas with matching buffer size
+        const overlay = overlayCanvasRefs.current[i];
+        if (overlay) {
+          overlay.width = canvas.width;
+          overlay.height = canvas.height;
+          overlay.style.width = cssW + 'px';
+          overlay.style.height = cssH + 'px';
+        }
+      } catch (e) {
+        console.error('renderPageToCanvas failed for page', i, e);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [renderVer, pageCount]);
+
+  // ── Overlay drawing effect ──────────────────────────────────────────────────
+  // Draws cursor and selection rects on overlay canvases.
+
+  useEffect(() => {
+    const scale = renderScaleRef.current;
+    for (let i = 0; i < pageCount; i++) {
+      const overlay = overlayCanvasRefs.current[i];
+      if (!overlay) continue;
+      const ctx = overlay.getContext('2d');
+      if (!ctx) continue;
+      ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+      // Selection rects for this page
+      const pageRects = selRects.filter((r) => r.pageIndex === i);
+      if (pageRects.length > 0) {
+        ctx.fillStyle = 'rgba(0, 70, 200, 0.25)';
+        for (const sr of pageRects) {
+          ctx.fillRect(sr.x * scale, sr.y * scale, sr.width * scale, sr.height * scale);
+        }
+      }
+
+      // Cursor line for this page
+      if (cursorRect && cursorRect.pageIndex === i && cursorVisible) {
+        ctx.strokeStyle = '#0046C8';
+        ctx.lineWidth = Math.max(1.5, 2 * scale);
+        ctx.beginPath();
+        ctx.moveTo(cursorRect.x * scale, cursorRect.y * scale);
+        ctx.lineTo(cursorRect.x * scale, (cursorRect.y + cursorRect.height) * scale);
+        ctx.stroke();
+      }
+    }
+  }, [pageCount, cursorRect, selRects, cursorVisible, renderVer]);
+
+  // ── Cursor blink ────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    if (!cursorRect) {
+      setCursorVisible(true);
+      return;
+    }
+    setCursorVisible(true);
+    const interval = setInterval(() => setCursorVisible((v) => !v), 530);
+    return () => clearInterval(interval);
+  }, [cursorRect]);
+
   // ── Derived values ─────────────────────────────────────────────────────────
 
-  const hasDoc = svgs.length > 0;
+  const hasDoc = pageCount > 0;
   const textColorHex = hwpColorToHex(charProps.textColor);
   const highlightHex = hwpColorToHex(charProps.highlight);
 
@@ -1875,73 +1919,29 @@ const HwpEditor: React.FC = () => {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
               >
-                {svgs.map((svg, pageIdx) => {
-                  const vb = vbCache.current[pageIdx];
-                  const par = parsePAR(svg);
-                  const isCursorPage = cursorRect && cursorRect.pageIndex === pageIdx;
-                  const pageSelRects = selRects.filter((r) => r.pageIndex === pageIdx);
-                  const strokeW = vb ? Math.max(vb.w * 0.0015, 1) : 2;
-
-                  return (
-                    <div
-                      key={pageIdx}
-                      ref={(el) => { canvasRefs.current[pageIdx] = el; }}
-                      className="hwp-canvas"
-                      style={{
-                        transform: `scale(${zoom / 100})`,
-                        transformOrigin: 'top center',
-                      }}
-                      onClick={(e) => handleCanvasClick(e, pageIdx)}
-                    >
-                      {/* Rendered page SVG */}
-                      <div
-                        dangerouslySetInnerHTML={{ __html: svg }}
-                        style={{ display: 'block', lineHeight: 0 }}
-                      />
-
-                      {/* Overlay SVG — same viewBox as rendered SVG, positioned on top */}
-                      {vb && (pageSelRects.length > 0 || isCursorPage) && (
-                        <svg
-                          className="hwp-overlay-svg"
-                          viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
-                          preserveAspectRatio={par}
-                        >
-                          {/* Selection highlight rects */}
-                          {pageSelRects.map((sr, i) => (
-                            <rect
-                              key={i}
-                              x={sr.x}
-                              y={sr.y}
-                              width={sr.width}
-                              height={sr.height}
-                              fill="rgba(0, 70, 200, 0.2)"
-                            />
-                          ))}
-
-                          {/* Cursor blinking line */}
-                          {isCursorPage && (
-                            <line
-                              x1={cursorRect!.x}
-                              y1={cursorRect!.y}
-                              x2={cursorRect!.x}
-                              y2={cursorRect!.y + cursorRect!.height}
-                              stroke="var(--primary, #0046C8)"
-                              strokeWidth={strokeW}
-                            >
-                              <animate
-                                attributeName="opacity"
-                                values="1;1;0;0"
-                                keyTimes="0;0.5;0.5;1"
-                                dur="1.06s"
-                                repeatCount="indefinite"
-                              />
-                            </line>
-                          )}
-                        </svg>
-                      )}
-                    </div>
-                  );
-                })}
+                {Array.from({ length: pageCount }, (_, pageIdx) => (
+                  <div
+                    key={pageIdx}
+                    ref={(el) => { canvasRefs.current[pageIdx] = el; }}
+                    className="hwp-canvas"
+                    style={{
+                      transform: `scale(${zoom / 100})`,
+                      transformOrigin: 'top center',
+                    }}
+                    onClick={(e) => handleCanvasClick(e, pageIdx)}
+                  >
+                    {/* Content canvas — rendered by WASM via renderPageToCanvas */}
+                    <canvas
+                      ref={(el) => { pageCanvasRefs.current[pageIdx] = el; }}
+                      className="hwp-page-canvas"
+                    />
+                    {/* Overlay canvas — cursor & selection drawn via 2D context */}
+                    <canvas
+                      ref={(el) => { overlayCanvasRefs.current[pageIdx] = el; }}
+                      className="hwp-overlay-canvas"
+                    />
+                  </div>
+                ))}
               </div>
 
               {/* Hidden textarea for IME-safe keyboard input */}

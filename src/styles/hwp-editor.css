@@ -458,23 +458,17 @@
   user-select: none;
 }
 
-.hwp-canvas svg:not(.hwp-overlay-svg) {
+.hwp-canvas .hwp-page-canvas {
   display: block;
-  max-width: 100%;
-  height: auto;
   pointer-events: none;
   user-select: none;
 }
 
-/* ── Overlay SVG for cursor/selection ── */
-/* Separate SVG with identical viewBox, positioned exactly over the rendered page.
-   Coordinates in the overlay map 1:1 to the rendered SVG's coordinate space. */
-.hwp-canvas .hwp-overlay-svg {
+/* Overlay canvas for cursor/selection — same buffer size, positioned on top */
+.hwp-canvas .hwp-overlay-canvas {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
   z-index: 5;
 }
