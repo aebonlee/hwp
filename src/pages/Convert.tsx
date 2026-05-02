@@ -2,6 +2,7 @@ import { useState, useCallback, type ReactElement, type DragEvent } from 'react'
 import { useLanguage } from '../contexts/LanguageContext';
 import SEOHead from '../components/SEOHead';
 import { formatFileSize, getFileExtension } from '../utils/fileUtils';
+import getSupabase from '../utils/supabase';
 import type { IRDocument } from '../types/hwpx';
 import '../styles/convert.css';
 
@@ -14,9 +15,12 @@ const Convert = (): ReactElement => {
   const [file, setFile] = useState<File | null>(null);
   const [markdown, setMarkdown] = useState('');
   const [_irDoc, setIrDoc] = useState<IRDocument | null>(null);
-  const [tab, setTab] = useState<'source' | 'preview'>('source');
+  const [tab, setTab] = useState<'source' | 'preview' | 'ai'>('source');
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
+  const [aiMarkdown, setAiMarkdown] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
 
   const handleFile = useCallback(async (f: File) => {
     const ext = getFileExtension(f.name);
@@ -86,12 +90,33 @@ const Convert = (): ReactElement => {
     URL.revokeObjectURL(url);
   };
 
+  const handleAiEnhance = async () => {
+    if (aiMarkdown || aiLoading) return;
+    setAiLoading(true);
+    setAiError('');
+    try {
+      const client = getSupabase();
+      if (!client) throw new Error('Supabase not configured');
+      const { data, error: fnError } = await client.functions.invoke('enhance-markdown', {
+        body: { markdown },
+      });
+      if (fnError) throw fnError;
+      setAiMarkdown(data?.enhanced || data?.markdown || markdown);
+    } catch {
+      setAiError(t('site.convert.aiNotAvailable'));
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   const reset = () => {
     setStep('upload');
     setFile(null);
     setMarkdown('');
     setIrDoc(null);
     setError('');
+    setAiMarkdown('');
+    setAiError('');
   };
 
   return (
@@ -194,6 +219,12 @@ const Convert = (): ReactElement => {
                   <button className={`result-tab ${tab === 'preview' ? 'active' : ''}`} onClick={() => setTab('preview')}>
                     {t('site.convert.preview')}
                   </button>
+                  <button
+                    className={`result-tab ai-tab ${tab === 'ai' ? 'active' : ''}`}
+                    onClick={() => { setTab('ai'); handleAiEnhance(); }}
+                  >
+                    {aiLoading ? t('site.convert.aiEnhancing') : t('site.convert.aiEnhance')}
+                  </button>
                 </div>
                 <div className="result-actions">
                   <button onClick={handleCopy}>
@@ -211,8 +242,39 @@ const Convert = (): ReactElement => {
               <div className="result-content">
                 {tab === 'source' ? (
                   <pre>{markdown}</pre>
-                ) : (
+                ) : tab === 'preview' ? (
                   <div className="result-preview" dangerouslySetInnerHTML={{ __html: markdownToHtml(markdown) }} />
+                ) : (
+                  <div className="ai-enhance-content">
+                    {aiLoading && (
+                      <div className="ai-loading">
+                        <div className="loading-spinner"></div>
+                        <p>{t('site.convert.aiEnhancing')}</p>
+                      </div>
+                    )}
+                    {aiError && (
+                      <div className="ai-notice">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="16" x2="12" y2="12" />
+                          <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                        <p>{aiError}</p>
+                      </div>
+                    )}
+                    {aiMarkdown && !aiLoading && (
+                      <div className="ai-compare">
+                        <div className="ai-compare-col">
+                          <div className="ai-compare-label">{t('site.convert.original')}</div>
+                          <pre>{markdown}</pre>
+                        </div>
+                        <div className="ai-compare-col">
+                          <div className="ai-compare-label">{t('site.convert.enhanced')}</div>
+                          <pre>{aiMarkdown}</pre>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

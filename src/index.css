@@ -15,5 +15,7 @@
 @import './styles/editor.css';
 @import './styles/templates.css';
 @import './styles/documents.css';
+@import './styles/business-plan.css';
+@import './styles/tools.css';
 @import './styles/dark-mode.css';
 @import './styles/responsive.css';

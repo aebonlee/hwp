@@ -9,6 +9,7 @@ export const TABLES = {
   documents: `${site.dbPrefix}documents`,
   templates: `${site.dbPrefix}templates`,
   conversions: `${site.dbPrefix}conversions`,
+  businessPlans: `${site.dbPrefix}business_plans`,
 } as const;
 
 let supabase: SupabaseClient | null = null;

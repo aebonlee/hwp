@@ -14,6 +14,8 @@ const TemplateCreate = lazy(() => import('../pages/TemplateCreate'));
 const TemplateDetail = lazy(() => import('../pages/TemplateDetail'));
 const Documents = lazy(() => import('../pages/Documents'));
 const DocumentDetail = lazy(() => import('../pages/DocumentDetail'));
+const BusinessPlan = lazy(() => import('../pages/BusinessPlan'));
+const Tools = lazy(() => import('../pages/Tools'));
 const Guide = lazy(() => import('../pages/Guide'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
@@ -45,6 +47,8 @@ const PublicLayout = (): ReactElement => {
             <Route path="/templates" element={<AuthGuard><Templates /></AuthGuard>} />
             <Route path="/templates/new" element={<AuthGuard><TemplateCreate /></AuthGuard>} />
             <Route path="/templates/:id" element={<AuthGuard><TemplateDetail /></AuthGuard>} />
+            <Route path="/business-plan" element={<BusinessPlan />} />
+            <Route path="/tools" element={<Tools />} />
             <Route path="/guide" element={<Guide />} />
 
             {/* 문서 관리 (AuthGuard) */}

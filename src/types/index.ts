@@ -158,3 +158,45 @@ export type ColorTheme = 'blue' | 'red' | 'green' | 'purple' | 'orange';
 
 // ─── Language ───
 export type Language = 'ko' | 'en';
+
+// ─── Business Plan ───
+export type BusinessPlanType = 'startup' | 'sme' | 'investment' | 'government';
+
+export interface BusinessPlanFieldDef {
+  key: string;
+  labelKo: string;
+  labelEn: string;
+  type: 'text' | 'textarea' | 'number' | 'date' | 'select';
+  required?: boolean;
+  placeholder?: string;
+  options?: string[];
+}
+
+export interface BusinessPlanSection {
+  id: string;
+  titleKo: string;
+  titleEn: string;
+  fields: BusinessPlanFieldDef[];
+}
+
+export interface BusinessPlanTemplate {
+  type: BusinessPlanType;
+  nameKo: string;
+  nameEn: string;
+  icon: string;
+  descKo: string;
+  descEn: string;
+  sections: BusinessPlanSection[];
+  markdownTemplate: string;
+}
+
+export interface BusinessPlan {
+  id: string;
+  user_id: string;
+  plan_type: BusinessPlanType;
+  title: string;
+  data: Record<string, string>;
+  generated_content: string;
+  created_at: string;
+  updated_at: string;
+}

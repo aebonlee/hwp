@@ -362,3 +362,104 @@
     border-color: #F9FAFB;
     box-shadow: 0 0 0 2px #1F2937, 0 0 0 4px #F9FAFB;
 }
+
+/* ── Business Plan dark mode ── */
+[data-theme="dark"] .bp-type-card {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .bp-type-card:hover {
+    border-color: var(--primary-blue);
+}
+
+[data-theme="dark"] .bp-accordion {
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .bp-accordion-header {
+    background: var(--bg-light-gray);
+}
+
+[data-theme="dark"] .bp-accordion-header.open {
+    border-bottom-color: var(--border-medium);
+}
+
+[data-theme="dark"] .bp-field input,
+[data-theme="dark"] .bp-field textarea,
+[data-theme="dark"] .bp-field select {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bp-progress-bar {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .bp-preview-content pre {
+    background: var(--bg-light-gray);
+}
+
+[data-theme="dark"] .bp-export-btn {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bp-export-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+[data-theme="dark"] .bp-btn {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bp-step {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+/* ── Tools page dark mode ── */
+[data-theme="dark"] .tool-card {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .tool-card:hover {
+    border-color: var(--primary-blue);
+}
+
+[data-theme="dark"] .tool-card-code pre {
+    background: var(--bg-medium-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .tool-card-link {
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .tool-card-link:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+/* ── AI enhance dark mode ── */
+[data-theme="dark"] .ai-compare-col {
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .ai-compare-label {
+    background: var(--bg-light-gray);
+    border-bottom-color: var(--border-medium);
+}
+
+[data-theme="dark"] .ai-notice {
+    background: rgba(74, 143, 231, 0.08);
+    border-color: rgba(74, 143, 231, 0.2);
+}
