@@ -10,44 +10,45 @@
 .hwp-editor-toolbar {
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px 12px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md) var(--radius-md) 0 0;
-  gap: 6px;
+  gap: 4px;
   flex-wrap: wrap;
 }
 
 .hwp-toolbar-group {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .hwp-toolbar-divider {
   width: 1px;
   height: 28px;
   background: var(--border-color);
-  margin: 0 6px;
+  margin: 0 4px;
 }
 
 .hwp-toolbar-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 32px;
-  height: 32px;
-  padding: 0 8px;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
   border: 1px solid transparent;
   background: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-primary);
   transition: var(--transition-base);
   white-space: nowrap;
-  gap: 4px;
+  gap: 3px;
+  position: relative;
 }
 
 .hwp-toolbar-btn:hover {
@@ -76,6 +77,292 @@
 
 .hwp-toolbar-spacer {
   flex: 1;
+}
+
+/* ── Font selector ── */
+.hwp-font-btn {
+  min-width: 100px;
+  max-width: 140px;
+  font-size: 0.78rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.hwp-size-btn {
+  min-width: 48px;
+  font-size: 0.78rem;
+  justify-content: space-between;
+  padding: 0 6px;
+}
+
+/* ── Generic toolbar dropdown ── */
+.hwp-toolbar-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  overflow: hidden;
+  animation: dropdown-in 0.15s ease-out;
+}
+
+.hwp-toolbar-dropdown.right {
+  left: auto;
+  right: 0;
+}
+
+/* ── Font dropdown ── */
+.hwp-font-dropdown {
+  min-width: 180px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.hwp-font-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 7px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.hwp-font-dropdown button:hover {
+  background: rgba(var(--primary-rgb), 0.06);
+  color: var(--primary);
+}
+
+.hwp-font-dropdown button.selected {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.hwp-font-dropdown button + button {
+  border-top: 1px solid var(--border-color);
+}
+
+/* ── Size dropdown ── */
+.hwp-size-dropdown {
+  min-width: 70px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.hwp-size-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  border: none;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  transition: background 0.15s;
+}
+
+.hwp-size-dropdown button:hover {
+  background: rgba(var(--primary-rgb), 0.06);
+  color: var(--primary);
+}
+
+.hwp-size-dropdown button.selected {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.hwp-size-dropdown button + button {
+  border-top: 1px solid var(--border-color);
+}
+
+/* ── Color picker ── */
+.hwp-color-indicator {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  border-radius: 1px;
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hwp-color-picker {
+  padding: 10px;
+  min-width: 186px;
+}
+
+.hwp-color-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  margin-bottom: 8px;
+}
+
+.hwp-color-swatch {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s;
+}
+
+.hwp-color-swatch:hover {
+  transform: scale(1.3);
+  z-index: 1;
+  border-color: var(--text-primary);
+}
+
+.hwp-color-swatch.active {
+  border: 2px solid var(--primary);
+  box-shadow: 0 0 0 1px white;
+}
+
+.hwp-color-custom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-color);
+}
+
+.hwp-color-custom input[type="color"] {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 1px;
+  cursor: pointer;
+  background: none;
+}
+
+.hwp-color-custom span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ── Line spacing dropdown ── */
+.hwp-spacing-dropdown {
+  min-width: 100px;
+}
+
+.hwp-spacing-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 7px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  transition: background 0.15s;
+}
+
+.hwp-spacing-dropdown button:hover {
+  background: rgba(var(--primary-rgb), 0.06);
+  color: var(--primary);
+}
+
+.hwp-spacing-dropdown button.selected {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.hwp-spacing-dropdown button + button {
+  border-top: 1px solid var(--border-color);
+}
+
+/* ── Find/Replace bar ── */
+.hwp-find-bar {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-top: none;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hwp-find-bar input {
+  padding: 4px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-width: 120px;
+}
+
+.hwp-find-bar input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.hwp-find-bar button {
+  padding: 4px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: var(--transition-base);
+  white-space: nowrap;
+}
+
+.hwp-find-bar button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hwp-find-bar label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.hwp-find-bar label input[type="checkbox"] {
+  min-width: auto;
+  width: auto;
+}
+
+.hwp-find-info {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-left: 4px;
+}
+
+.hwp-find-close {
+  margin-left: auto;
+  border: none !important;
+  background: none !important;
+  font-size: 1.1rem !important;
+  padding: 2px 6px !important;
+  color: var(--text-secondary) !important;
+}
+
+.hwp-find-close:hover {
+  color: var(--text-primary) !important;
 }
 
 /* ── Export dropdown ── */
@@ -121,6 +408,27 @@
   border-top: 1px solid var(--border-color);
 }
 
+/* ── Hidden textarea for IME input ── */
+.hwp-hidden-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hwp-hidden-input:focus {
+  pointer-events: auto;
+}
+
 /* ── Canvas area ── */
 .hwp-editor-container {
   border: 1px solid var(--border-color);
@@ -154,27 +462,6 @@
   max-width: 100%;
   height: auto;
   pointer-events: none;
-}
-
-/* ── Hidden textarea for IME input ── */
-.hwp-hidden-input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  resize: none;
-  overflow: hidden;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.hwp-hidden-input:focus {
-  pointer-events: auto;
 }
 
 /* ── Cursor overlay ── */
@@ -447,14 +734,19 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .hwp-editor-toolbar {
-    padding: 6px 10px;
+    padding: 6px 8px;
   }
 
   .hwp-toolbar-btn {
-    min-width: 28px;
-    height: 28px;
-    padding: 0 6px;
-    font-size: 0.78rem;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 4px;
+    font-size: 0.75rem;
+  }
+
+  .hwp-font-btn {
+    min-width: 70px;
+    max-width: 100px;
   }
 
   .hwp-canvas-wrapper {
@@ -465,10 +757,26 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .hwp-find-bar {
+    padding: 4px 8px;
+  }
+
+  .hwp-find-bar input {
+    min-width: 80px;
+  }
 }
 
 @media (max-width: 480px) {
   .hwp-toolbar-btn span {
+    display: none;
+  }
+
+  .hwp-font-btn {
+    display: none;
+  }
+
+  .hwp-size-btn {
     display: none;
   }
 }
