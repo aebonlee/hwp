@@ -424,27 +424,73 @@
     border-color: var(--border-medium);
 }
 
-/* ── Tools page dark mode ── */
-[data-theme="dark"] .tool-card {
+/* ── Viewer page dark mode ── */
+[data-theme="dark"] .viewer-container {
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .viewer-toolbar {
     background: var(--bg-light-gray);
-    border-color: var(--border-medium);
+    border-bottom-color: var(--border-medium);
 }
 
-[data-theme="dark"] .tool-card:hover {
-    border-color: var(--primary-blue);
-}
-
-[data-theme="dark"] .tool-card-code pre {
+[data-theme="dark"] .viewer-nav-btn,
+[data-theme="dark"] .viewer-zoom-btn,
+[data-theme="dark"] .viewer-action-btn {
     background: var(--bg-medium-gray);
-    border-color: var(--border-medium);
-}
-
-[data-theme="dark"] .tool-card-link {
     border-color: var(--border-medium);
     color: var(--text-primary);
 }
 
-[data-theme="dark"] .tool-card-link:hover {
+[data-theme="dark"] .viewer-nav-btn:hover:not(:disabled),
+[data-theme="dark"] .viewer-zoom-btn:hover,
+[data-theme="dark"] .viewer-action-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+[data-theme="dark"] .viewer-page-input {
+    background: var(--bg-medium-gray);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .viewer-canvas-wrapper {
+    background: #1a1a2e;
+}
+
+/* ── Generator page dark mode ── */
+[data-theme="dark"] .gen-type-card {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .gen-type-card:hover {
+    border-color: var(--primary-blue);
+}
+
+[data-theme="dark"] .gen-type-card.selected {
+    border-color: var(--primary-blue);
+    background: rgba(74, 143, 231, 0.08);
+}
+
+/* ── Ecosystem cards (Guide page) dark mode ── */
+[data-theme="dark"] .ecosystem-card {
+    background: var(--bg-light-gray);
+    border-color: var(--border-medium);
+}
+
+[data-theme="dark"] .ecosystem-badge {
+    background: rgba(74, 143, 231, 0.15);
+    color: var(--primary-blue-light);
+}
+
+[data-theme="dark"] .ecosystem-link {
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .ecosystem-link:hover {
     border-color: var(--primary-blue);
     color: var(--primary-blue);
 }

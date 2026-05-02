@@ -372,6 +372,85 @@
   background: rgba(var(--primary-rgb), 0.15);
 }
 
+/* ── Ecosystem Tools Grid (Guide page) ── */
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.ecosystem-card {
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  transition: var(--transition-base);
+}
+
+.ecosystem-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.ecosystem-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ecosystem-card-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ecosystem-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary);
+}
+
+.ecosystem-card p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+}
+
+.ecosystem-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+.ecosystem-link:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.section-subtitle {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .ecosystem-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 [data-theme="dark"] .page-header {
   background: var(--hero-bg-dark);
 }

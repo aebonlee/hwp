@@ -34,6 +34,17 @@ const Home = (): ReactElement => {
     {
       icon: (
         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+      title: language === 'ko' ? 'HWP 뷰어' : 'HWP Viewer',
+      desc: language === 'ko' ? 'WASM 기반으로 브라우저에서 HWP 파일을 직접 열람하고 SVG로 내보냅니다' : 'View HWP files directly in the browser with WASM and export as SVG',
+      path: '/viewer',
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
           <rect x="9" y="3" width="6" height="4" rx="1" />
           <line x1="9" y1="12" x2="15" y2="12" />
@@ -49,6 +60,19 @@ const Home = (): ReactElement => {
         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
           <polyline points="14 2 14 8 20 8" />
+          <line x1="12" y1="18" x2="12" y2="12" />
+          <line x1="9" y1="15" x2="15" y2="15" />
+        </svg>
+      ),
+      title: language === 'ko' ? '문서 생성' : 'Document Generator',
+      desc: language === 'ko' ? '보고서, 서한, 회의록 등 6종 공문서를 위자드로 작성합니다' : 'Create 6 types of formal documents with a step-by-step wizard',
+      path: '/generator',
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
           <line x1="16" y1="13" x2="8" y2="13" />
           <line x1="16" y1="17" x2="8" y2="17" />
           <polyline points="10 9 9 9 8 9" />
@@ -57,16 +81,6 @@ const Home = (): ReactElement => {
       titleKey: 'site.templates.title',
       descKey: 'site.templates.subtitle',
       path: '/templates',
-    },
-    {
-      icon: (
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-        </svg>
-      ),
-      title: language === 'ko' ? 'HWP 도구 생태계' : 'HWP Tools Ecosystem',
-      desc: language === 'ko' ? 'Go, Python, Rust, MCP 기반 오픈소스 HWP 도구 모음' : 'Open-source HWP tools based on Go, Python, Rust, and MCP',
-      path: '/tools',
     },
   ];
 
@@ -131,12 +145,12 @@ const Home = (): ReactElement => {
         <div className="container">
           <div className="stats-row" data-aos="fade-up">
             <div className="stat-item">
-              <span className="stat-number">4{language === 'ko' ? '종' : ' Types'}</span>
-              <span className="stat-label">{language === 'ko' ? '사업계획서' : 'Business Plans'}</span>
+              <span className="stat-number">6{language === 'ko' ? '종' : ' Types'}</span>
+              <span className="stat-label">{language === 'ko' ? '공문서 생성' : 'Document Types'}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-number">AI</span>
-              <span className="stat-label">{language === 'ko' ? '변환 향상' : 'Enhanced'}</span>
+              <span className="stat-number">WASM</span>
+              <span className="stat-label">{language === 'ko' ? 'HWP 뷰어' : 'HWP Viewer'}</span>
             </div>
             <div className="stat-item">
               <span className="stat-number">100%</span>

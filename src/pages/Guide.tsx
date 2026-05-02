@@ -3,7 +3,8 @@ import SEOHead from '../components/SEOHead';
 import type { ReactElement } from 'react';
 
 const Guide = (): ReactElement => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isKo = language === 'ko';
 
   const sections = [
     {
@@ -39,13 +40,45 @@ const Guide = (): ReactElement => {
     {
       icon: (
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+      title: '3. HWP 뷰어',
+      body: (
+        <p>
+          <strong>HWP 뷰어</strong> 메뉴에서 .hwp/.hwpx 파일을 업로드하면 Rust+WASM 엔진(@rhwp/core)으로
+          브라우저에서 직접 렌더링합니다. 페이지 네비게이션, 줌, SVG 다운로드를 지원합니다.
+        </p>
+      ),
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="12" y1="18" x2="12" y2="12" />
+          <line x1="9" y1="15" x2="15" y2="15" />
+        </svg>
+      ),
+      title: '4. 문서 생성',
+      body: (
+        <p>
+          <strong>문서 생성</strong> 메뉴에서 보고서, 서한, 회의록, 제안서, 이력서, 증명서 등 6종의 공문서를
+          위자드 형태로 간편하게 작성하고 HWPX/MD/HTML로 내보낼 수 있습니다.
+        </p>
+      ),
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
           <polyline points="14 2 14 8 20 8" />
           <line x1="16" y1="13" x2="8" y2="13" />
           <line x1="16" y1="17" x2="8" y2="17" />
         </svg>
       ),
-      title: '3. 문서 템플릿',
+      title: '5. 문서 템플릿',
       body: (
         <p>
           <strong>템플릿</strong> 메뉴에서 사업계획서, 강의계획서, 보고서 등 다양한 공문서 양식을 선택하여
@@ -61,7 +94,7 @@ const Guide = (): ReactElement => {
           <polyline points="7 3 7 8 15 8" />
         </svg>
       ),
-      title: '4. 문서 저장 (로그인 필요)',
+      title: '6. 문서 저장 (로그인 필요)',
       body: (
         <p>
           로그인하면 작성한 문서를 클라우드에 저장하고 어디서든 불러올 수 있습니다.
@@ -77,11 +110,11 @@ const Guide = (): ReactElement => {
           <line x1="12" y1="8" x2="12.01" y2="8" />
         </svg>
       ),
-      title: '지원 파일 형식',
+      title: isKo ? '지원 파일 형식' : 'Supported Formats',
       body: (
         <ul>
           <li><strong>.hwpx</strong> — Open HWPML (한컴오피스 2014+)</li>
-          <li><strong>.hwp</strong> — HWP 5.x 바이너리 (기본 텍스트 추출)</li>
+          <li><strong>.hwp</strong> — HWP 5.x 바이너리 (기본 텍스트 추출 + WASM 뷰어)</li>
           <li><strong>.md</strong> — Markdown</li>
         </ul>
       ),
@@ -94,7 +127,7 @@ const Guide = (): ReactElement => {
           <line x1="12" y1="17" x2="12.01" y2="17" />
         </svg>
       ),
-      title: '알려진 제한사항',
+      title: isKo ? '알려진 제한사항' : 'Known Limitations',
       body: (
         <ul>
           <li>HWP 5.x 바이너리 파일은 텍스트만 추출되며, 서식 정보는 제한적입니다.</li>
@@ -103,6 +136,41 @@ const Guide = (): ReactElement => {
           <li>HWPX 내보내기는 기본 서식만 지원합니다.</li>
         </ul>
       ),
+    },
+  ];
+
+  const ecosystemTools = [
+    {
+      name: 'hwp2md',
+      badge: 'Go CLI',
+      desc: isKo
+        ? 'HWP/HWPX → Markdown 변환 CLI. 2단계 파이프라인(파서 + LLM)으로 정확한 변환.'
+        : 'HWP/HWPX → Markdown CLI. 2-stage pipeline (parser + LLM) for accurate conversion.',
+      github: 'https://github.com/aebonlee/hwp2md',
+    },
+    {
+      name: 'hwp-mcp',
+      badge: 'Python MCP',
+      desc: isKo
+        ? 'AI 모델이 HWP 문서를 직접 생성·편집할 수 있는 MCP 서버.'
+        : 'MCP server enabling AI models to directly create and edit HWP documents.',
+      github: 'https://github.com/aebonlee/hwp-mcp',
+    },
+    {
+      name: 'python-hwplib',
+      badge: 'Python + Java',
+      desc: isKo
+        ? 'Java hwplib 기반 고정확도 HWP 텍스트 추출 라이브러리.'
+        : 'High-accuracy HWP text extraction library based on Java hwplib.',
+      github: 'https://github.com/aebonlee/python-hwplib',
+    },
+    {
+      name: 'rhwp',
+      badge: 'Rust + WASM',
+      desc: isKo
+        ? 'Rust+WASM 기반 HWP 뷰어/에디터. 이 사이트의 HWP 뷰어 엔진.'
+        : 'Rust+WASM HWP viewer/editor. Powers the HWP Viewer on this site.',
+      github: 'https://github.com/edwardkim/rhwp',
     },
   ];
 
@@ -132,10 +200,42 @@ const Guide = (): ReactElement => {
 
             <div className="tip-box">
               <p>
-                <strong>Tip:</strong> 모든 변환은 브라우저에서 직접 처리되므로 파일이 서버로 전송되지 않습니다.
-                개인정보가 포함된 문서도 안전하게 변환할 수 있습니다.
+                <strong>Tip:</strong> {isKo
+                  ? '모든 변환은 브라우저에서 직접 처리되므로 파일이 서버로 전송되지 않습니다. 개인정보가 포함된 문서도 안전하게 변환할 수 있습니다.'
+                  : 'All conversions are processed directly in the browser. Files are never sent to a server, so even documents with personal information can be converted safely.'}
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* HWP 도구 생태계 참고 섹션 */}
+      <section className="section">
+        <div className="container">
+          <h2 className="section-title">
+            {isKo ? 'HWP 도구 생태계' : 'HWP Tools Ecosystem'}
+          </h2>
+          <p className="section-subtitle" style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '32px' }}>
+            {isKo
+              ? '오픈소스 HWP 문서 처리 도구 모음입니다.'
+              : 'A collection of open-source HWP document processing tools.'}
+          </p>
+          <div className="ecosystem-grid">
+            {ecosystemTools.map(tool => (
+              <div key={tool.name} className="ecosystem-card">
+                <div className="ecosystem-card-header">
+                  <h4>{tool.name}</h4>
+                  <span className="ecosystem-badge">{tool.badge}</span>
+                </div>
+                <p>{tool.desc}</p>
+                <a href={tool.github} target="_blank" rel="noopener noreferrer" className="ecosystem-link">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
