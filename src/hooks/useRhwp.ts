@@ -30,12 +30,17 @@ function doInit(): Promise<void> {
   initPromise = (async () => {
     setupMeasureCallback();
     const rhwp = await import('@rhwp/core');
-    if (typeof rhwp.init_panic_hook === 'function') {
-      rhwp.init_panic_hook();
-    }
-    // The default export is the init function for wasm-pack modules
+    // default export is the __wbg_init function — must be called FIRST to load WASM
     if (typeof rhwp.default === 'function') {
       await rhwp.default();
+    }
+    // init_panic_hook requires WASM to be loaded, so call AFTER default()
+    try {
+      if (typeof rhwp.init_panic_hook === 'function') {
+        rhwp.init_panic_hook();
+      }
+    } catch {
+      // non-critical — ignore if panic hook fails
     }
     initDone = true;
   })();
