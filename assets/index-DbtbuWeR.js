@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-DyomhAHL.js","assets/SEOHead-w9vpUQy8.js","assets/Convert-C4AgFO6e.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-tpwQwpUB.js","assets/editor-B2FMxC-J.css","assets/Templates-DIW5-vTD.js","assets/templates-B0Lp2Vr7.css","assets/TemplateCreate-DvMW04wO.js","assets/TemplateDetail-rAtwO212.js","assets/Documents-Dsk5rCJ4.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-BylsDpJw.js","assets/BusinessPlan-Ckl3qT2x.js","assets/BusinessPlan-D5W1kh0e.css","assets/HwpEditor-BiyV7XN2.js","assets/useRhwp-BEzLNlwP.js","assets/Viewer-Hpq-JTfs.js","assets/Viewer-BeyzE84f.css","assets/Generator-C4-NZpvS.js","assets/Generator-B3i-1g61.css","assets/Guide-rmA6n78-.js","assets/NotFound-Bp37ndl7.js","assets/Login-CyOpbyrl.js","assets/auth-DKHmQrFs.css","assets/Register-BFr-2XQ5.js","assets/ForgotPassword-AEfCsB2u.js","assets/MyPage-CSs7DwhK.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-Bg5E6D0C.js","assets/SEOHead-IURV6xUA.js","assets/Convert-TuvYq81n.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-BLMgyerG.js","assets/editor-B2FMxC-J.css","assets/Templates-F6bNIrX6.js","assets/templates-B0Lp2Vr7.css","assets/TemplateCreate-u1dXNiBX.js","assets/TemplateDetail-B0mgBvub.js","assets/Documents-C9uKHJUf.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-CBMziElU.js","assets/BusinessPlan-DlxVUcfm.js","assets/BusinessPlan-D5W1kh0e.css","assets/HwpEditor-CIRky06X.js","assets/useRhwp-De7gZ18w.js","assets/Viewer-DzW7IoWK.js","assets/Viewer-BeyzE84f.css","assets/Generator-C8l0zMjx.js","assets/Generator-B3i-1g61.css","assets/Guide-DJcNb82i.js","assets/NotFound-BkyNAmdz.js","assets/Login-C29D79rr.js","assets/auth-DKHmQrFs.css","assets/Register-B9k25SVs.js","assets/ForgotPassword-B167J2OK.js","assets/MyPage-C-e8LzrY.js"])))=>i.map(i=>d[i]);
 let Rn, gE, Fe, Gt, Sg, SE, Km, mE, vE, Jt, bE, _E, _, wE, Ec, De, x, yE, tg;
 let __tla = (async ()=>{
     (function() {
@@ -10382,10 +10382,32 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     bold: "굵게",
                     italic: "기울임",
                     underline: "밑줄",
+                    strikethrough: "취소선",
                     alignLeft: "왼쪽 정렬",
                     alignCenter: "가운데 정렬",
                     alignRight: "오른쪽 정렬",
+                    alignJustify: "양쪽 정렬",
+                    font: "글꼴",
+                    fontSize: "글자 크기",
+                    textColor: "글자 색",
+                    highlight: "형광펜",
+                    lineSpacing: "줄 간격",
+                    indent: "들여쓰기",
+                    outdent: "내어쓰기",
+                    bulletList: "글머리 기호",
+                    numberedList: "번호 매기기",
                     insertTable: "표 삽입",
+                    insertImage: "이미지 삽입",
+                    pageBreak: "쪽 나누기",
+                    findReplace: "찾기/바꾸기",
+                    find: "찾기",
+                    replace: "바꾸기",
+                    findNext: "다음 찾기",
+                    replaceOne: "바꾸기",
+                    replaceAllBtn: "모두 바꾸기",
+                    caseSensitive: "대소문자 구분",
+                    noResults: "결과 없음",
+                    replaced: "개 바꿈",
                     undo: "실행취소",
                     redo: "다시실행",
                     page: "페이지",
@@ -10633,10 +10655,32 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     bold: "Bold",
                     italic: "Italic",
                     underline: "Underline",
+                    strikethrough: "Strikethrough",
                     alignLeft: "Align Left",
                     alignCenter: "Align Center",
                     alignRight: "Align Right",
+                    alignJustify: "Justify",
+                    font: "Font",
+                    fontSize: "Font Size",
+                    textColor: "Text Color",
+                    highlight: "Highlight",
+                    lineSpacing: "Line Spacing",
+                    indent: "Indent",
+                    outdent: "Outdent",
+                    bulletList: "Bullet List",
+                    numberedList: "Numbered List",
                     insertTable: "Insert Table",
+                    insertImage: "Insert Image",
+                    pageBreak: "Page Break",
+                    findReplace: "Find/Replace",
+                    find: "Find",
+                    replace: "Replace",
+                    findNext: "Find Next",
+                    replaceOne: "Replace",
+                    replaceAllBtn: "Replace All",
+                    caseSensitive: "Case Sensitive",
+                    noResults: "No results",
+                    replaced: "replaced",
                     undo: "Undo",
                     redo: "Redo",
                     page: "Page",
@@ -20246,48 +20290,48 @@ ${B}`;
             })
         });
     };
-    XS = x.lazy(()=>Fe(()=>import("./Home-DyomhAHL.js"), __vite__mapDeps([0,1])));
-    JS = x.lazy(()=>Fe(()=>import("./Convert-C4AgFO6e.js").then(async (m)=>{
+    XS = x.lazy(()=>Fe(()=>import("./Home-Bg5E6D0C.js"), __vite__mapDeps([0,1])));
+    JS = x.lazy(()=>Fe(()=>import("./Convert-TuvYq81n.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([2,1,3,4])));
-    WS = x.lazy(()=>Fe(()=>import("./Editor-tpwQwpUB.js").then(async (m)=>{
+    WS = x.lazy(()=>Fe(()=>import("./Editor-BLMgyerG.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([5,1,3,6])));
-    QS = x.lazy(()=>Fe(()=>import("./Templates-DIW5-vTD.js"), __vite__mapDeps([7,1,8])));
-    ZS = x.lazy(()=>Fe(()=>import("./TemplateCreate-DvMW04wO.js").then(async (m)=>{
+    QS = x.lazy(()=>Fe(()=>import("./Templates-F6bNIrX6.js"), __vite__mapDeps([7,1,8])));
+    ZS = x.lazy(()=>Fe(()=>import("./TemplateCreate-u1dXNiBX.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([9,1,3,8])));
-    FS = x.lazy(()=>Fe(()=>import("./TemplateDetail-rAtwO212.js").then(async (m)=>{
+    FS = x.lazy(()=>Fe(()=>import("./TemplateDetail-B0mgBvub.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([10,1,3,8])));
-    eE = x.lazy(()=>Fe(()=>import("./Documents-Dsk5rCJ4.js"), __vite__mapDeps([11,1,12])));
-    tE = x.lazy(()=>Fe(()=>import("./DocumentDetail-BylsDpJw.js"), __vite__mapDeps([13,1,3,6])));
-    nE = x.lazy(()=>Fe(()=>import("./BusinessPlan-Ckl3qT2x.js").then(async (m)=>{
+    eE = x.lazy(()=>Fe(()=>import("./Documents-C9uKHJUf.js"), __vite__mapDeps([11,1,12])));
+    tE = x.lazy(()=>Fe(()=>import("./DocumentDetail-CBMziElU.js"), __vite__mapDeps([13,1,3,6])));
+    nE = x.lazy(()=>Fe(()=>import("./BusinessPlan-DlxVUcfm.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([14,1,15])));
-    aE = x.lazy(()=>Fe(()=>import("./HwpEditor-BiyV7XN2.js").then(async (m)=>{
+    aE = x.lazy(()=>Fe(()=>import("./HwpEditor-CIRky06X.js").then(async (m)=>{
                 await m.__tla;
                 return m;
-            }), __vite__mapDeps([16,1,17])));
-    iE = x.lazy(()=>Fe(()=>import("./Viewer-Hpq-JTfs.js").then(async (m)=>{
+            }), __vite__mapDeps([16,17,1])));
+    iE = x.lazy(()=>Fe(()=>import("./Viewer-DzW7IoWK.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([18,1,17,19])));
-    rE = x.lazy(()=>Fe(()=>import("./Generator-C4-NZpvS.js").then(async (m)=>{
+    rE = x.lazy(()=>Fe(()=>import("./Generator-C8l0zMjx.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([20,1,21])));
-    sE = x.lazy(()=>Fe(()=>import("./Guide-rmA6n78-.js"), __vite__mapDeps([22,1])));
-    lE = x.lazy(()=>Fe(()=>import("./NotFound-Bp37ndl7.js"), __vite__mapDeps([23,1])));
-    oE = x.lazy(()=>Fe(()=>import("./Login-CyOpbyrl.js"), __vite__mapDeps([24,1,25])));
-    uE = x.lazy(()=>Fe(()=>import("./Register-BFr-2XQ5.js"), __vite__mapDeps([26,1,25])));
-    cE = x.lazy(()=>Fe(()=>import("./ForgotPassword-AEfCsB2u.js"), __vite__mapDeps([27,1,25])));
-    hE = x.lazy(()=>Fe(()=>import("./MyPage-CSs7DwhK.js"), __vite__mapDeps([28,1,25])));
+    sE = x.lazy(()=>Fe(()=>import("./Guide-DJcNb82i.js"), __vite__mapDeps([22,1])));
+    lE = x.lazy(()=>Fe(()=>import("./NotFound-BkyNAmdz.js"), __vite__mapDeps([23,1])));
+    oE = x.lazy(()=>Fe(()=>import("./Login-C29D79rr.js"), __vite__mapDeps([24,1,25])));
+    uE = x.lazy(()=>Fe(()=>import("./Register-B9k25SVs.js"), __vite__mapDeps([26,1,25])));
+    cE = x.lazy(()=>Fe(()=>import("./ForgotPassword-B167J2OK.js"), __vite__mapDeps([27,1,25])));
+    hE = x.lazy(()=>Fe(()=>import("./MyPage-C-e8LzrY.js"), __vite__mapDeps([28,1,25])));
     fE = ()=>_.jsx("div", {
             style: {
                 display: "flex",
