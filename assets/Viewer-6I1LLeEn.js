@@ -1,112 +1,68 @@
-import { r as n, _ as D, u as T, j as e, __tla as __tla_0 } from "./index-9utJaTWv.js";
-import { S as H } from "./SEOHead-DhT4I9Pd.js";
-let V;
+import { u as O, r as i, _ as P, j as e, __tla as __tla_0 } from "./index-Ctewv4u7.js";
+import { S as H } from "./SEOHead-DHi9tw9A.js";
+import { u as W, __tla as __tla_1 } from "./useRhwp-CwZsT57c.js";
+let I;
 let __tla = Promise.all([
     (()=>{
         try {
             return __tla_0;
         } catch  {}
+    })(),
+    (()=>{
+        try {
+            return __tla_1;
+        } catch  {}
     })()
 ]).then(async ()=>{
-    let p = null, v = !1;
-    function F() {
-        const s = globalThis;
-        if (typeof s.measureTextWidth == "function") return;
-        const i = document.createElement("canvas").getContext("2d");
-        s.measureTextWidth = (o, g)=>i ? (i.font = g || "16px sans-serif", i.measureText(o).width) : o.length * 10;
-    }
-    function I() {
-        return v ? Promise.resolve() : p || (p = (async ()=>{
-            F();
-            const s = await D(()=>import("./rhwp-BgOEd_j0.js"), []);
-            typeof s.default == "function" && await s.default();
-            try {
-                typeof s.init_panic_hook == "function" && s.init_panic_hook();
-            } catch  {}
-            v = !0;
-        })(), p);
-    }
-    function U() {
-        const [s, l] = n.useState({
-            ready: v,
-            loading: !v,
-            error: null
-        }), i = n.useRef(!0);
-        return n.useEffect(()=>{
-            if (i.current = !0, v) {
-                l({
-                    ready: !0,
-                    loading: !1,
-                    error: null
-                });
-                return;
-            }
-            return I().then(()=>{
-                i.current && l({
-                    ready: !0,
-                    loading: !1,
-                    error: null
-                });
-            }).catch((o)=>{
-                i.current && l({
-                    ready: !1,
-                    loading: !1,
-                    error: o.message || "WASM init failed"
-                });
-            }), ()=>{
-                i.current = !1;
-            };
-        }, []), s;
-    }
-    V = ()=>{
-        const { t: s } = T(), { ready: l, loading: i, error: o } = U(), [g, m] = n.useState(!1), [N, b] = n.useState(null), [k, x] = n.useState(""), [C, w] = n.useState(!1), [a, f] = n.useState([]), [c, h] = n.useState(0), [_, j] = n.useState(100), R = n.useRef(null), S = n.useCallback(async (t)=>{
-            const r = t.name.split(".").pop()?.toLowerCase();
+    I = ()=>{
+        const { t } = O(), { ready: h, loading: C, error: m } = W(), [S, v] = i.useState(!1), [u, j] = i.useState(null), [f, d] = i.useState(""), [y, x] = i.useState(!1), [n, p] = i.useState([]), [a, o] = i.useState(0), [N, w] = i.useState(100), _ = i.useRef(null), b = i.useCallback(async (s)=>{
+            const r = s.name.split(".").pop()?.toLowerCase();
             if (r !== "hwp" && r !== "hwpx") {
-                x(".hwp 또는 .hwpx 파일만 지원합니다.");
+                d(".hwp 또는 .hwpx 파일만 지원합니다.");
                 return;
             }
-            b(t), x(""), w(!0), f([]), h(0);
+            j(s), d(""), x(!0), p([]), o(0);
             try {
-                const { HwpDocument: d } = await D(async ()=>{
-                    const { HwpDocument: u } = await import("./rhwp-BgOEd_j0.js");
+                const { HwpDocument: l } = await P(async ()=>{
+                    const { HwpDocument: c } = await import("./rhwp-BgOEd_j0.js");
                     return {
-                        HwpDocument: u
+                        HwpDocument: c
                     };
-                }, []), O = await t.arrayBuffer(), y = new d(new Uint8Array(O)), z = y.pageCount(), E = [];
-                for(let u = 0; u < z; u++)E.push(y.renderPageSvg(u));
-                y.free(), f(E), w(!1);
-            } catch (d) {
-                x(d.message || s("site.viewer.error")), w(!1);
+                }, []), z = await s.arrayBuffer(), g = new l(new Uint8Array(z)), M = g.pageCount(), k = [];
+                for(let c = 0; c < M; c++)k.push(g.renderPageSvg(c));
+                g.free(), p(k), x(!1);
+            } catch (l) {
+                d(l.message || t("site.viewer.error")), x(!1);
             }
         }, [
-            s
-        ]), L = (t)=>{
-            t.preventDefault(), m(!1);
-            const r = t.dataTransfer.files;
-            r.length > 0 && S(r[0]);
-        }, P = ()=>{
-            const t = document.createElement("input");
-            t.type = "file", t.accept = ".hwp,.hwpx", t.onchange = ()=>{
-                t.files && t.files.length > 0 && S(t.files[0]);
-            }, t.click();
-        }, B = ()=>{
-            if (!a[c]) return;
-            const t = new Blob([
-                a[c]
+            t
+        ]), B = (s)=>{
+            s.preventDefault(), v(!1);
+            const r = s.dataTransfer.files;
+            r.length > 0 && b(r[0]);
+        }, D = ()=>{
+            const s = document.createElement("input");
+            s.type = "file", s.accept = ".hwp,.hwpx", s.onchange = ()=>{
+                s.files && s.files.length > 0 && b(s.files[0]);
+            }, s.click();
+        }, E = ()=>{
+            if (!n[a]) return;
+            const s = new Blob([
+                n[a]
             ], {
                 type: "image/svg+xml"
-            }), r = URL.createObjectURL(t), d = document.createElement("a");
-            d.href = r, d.download = `${N?.name?.replace(/\.[^.]+$/, "") || "page"}_p${c + 1}.svg`, d.click(), URL.revokeObjectURL(r);
-        }, M = ()=>{
-            b(null), f([]), h(0), j(100), x("");
-        }, W = (t)=>{
-            const r = parseInt(t.target.value, 10);
-            !isNaN(r) && r >= 1 && r <= a.length && h(r - 1);
+            }), r = URL.createObjectURL(s), l = document.createElement("a");
+            l.href = r, l.download = `${u?.name?.replace(/\.[^.]+$/, "") || "page"}_p${a + 1}.svg`, l.click(), URL.revokeObjectURL(r);
+        }, L = ()=>{
+            j(null), p([]), o(0), w(100), d("");
+        }, R = (s)=>{
+            const r = parseInt(s.target.value, 10);
+            !isNaN(r) && r >= 1 && r <= n.length && o(r - 1);
         };
         return e.jsxs(e.Fragment, {
             children: [
                 e.jsx(H, {
-                    title: s("site.viewer.title"),
+                    title: t("site.viewer.title"),
                     path: "/viewer"
                 }),
                 e.jsx("section", {
@@ -115,10 +71,10 @@ let __tla = Promise.all([
                         className: "container",
                         children: [
                             e.jsx("h2", {
-                                children: s("site.viewer.title")
+                                children: t("site.viewer.title")
                             }),
                             e.jsx("p", {
-                                children: s("site.viewer.subtitle")
+                                children: t("site.viewer.subtitle")
                             })
                         ]
                     })
@@ -128,7 +84,7 @@ let __tla = Promise.all([
                     children: e.jsxs("div", {
                         className: "container",
                         children: [
-                            o && e.jsxs("div", {
+                            m && e.jsxs("div", {
                                 className: "error-alert",
                                 children: [
                                     e.jsxs("svg", {
@@ -158,12 +114,12 @@ let __tla = Promise.all([
                                             })
                                         ]
                                     }),
-                                    s("site.viewer.wasmError"),
+                                    t("site.viewer.wasmError"),
                                     ": ",
-                                    o
+                                    m
                                 ]
                             }),
-                            k && e.jsxs("div", {
+                            f && e.jsxs("div", {
                                 className: "error-alert",
                                 children: [
                                     e.jsxs("svg", {
@@ -193,31 +149,31 @@ let __tla = Promise.all([
                                             })
                                         ]
                                     }),
-                                    k
+                                    f
                                 ]
                             }),
-                            a.length === 0 && !C && e.jsx(e.Fragment, {
-                                children: i ? e.jsxs("div", {
+                            n.length === 0 && !y && e.jsx(e.Fragment, {
+                                children: C ? e.jsxs("div", {
                                     className: "viewer-loading",
                                     children: [
                                         e.jsx("div", {
                                             className: "loading-spinner"
                                         }),
                                         e.jsx("p", {
-                                            children: s("site.viewer.loading")
+                                            children: t("site.viewer.loading")
                                         })
                                     ]
                                 }) : e.jsxs("div", {
-                                    className: `dropzone ${g ? "drag-over" : ""}`,
-                                    onDragOver: (t)=>{
-                                        t.preventDefault(), m(!0);
+                                    className: `dropzone ${S ? "drag-over" : ""}`,
+                                    onDragOver: (s)=>{
+                                        s.preventDefault(), v(!0);
                                     },
-                                    onDragLeave: ()=>m(!1),
-                                    onDrop: L,
-                                    onClick: l ? P : void 0,
+                                    onDragLeave: ()=>v(!1),
+                                    onDrop: B,
+                                    onClick: h ? D : void 0,
                                     style: {
-                                        cursor: l ? "pointer" : "not-allowed",
-                                        opacity: l ? 1 : .5
+                                        cursor: h ? "pointer" : "not-allowed",
+                                        opacity: h ? 1 : .5
                                     },
                                     children: [
                                         e.jsxs("svg", {
@@ -238,26 +194,26 @@ let __tla = Promise.all([
                                             ]
                                         }),
                                         e.jsx("h3", {
-                                            children: s("site.viewer.upload")
+                                            children: t("site.viewer.upload")
                                         }),
                                         e.jsx("p", {
-                                            children: s("site.viewer.uploadHint")
+                                            children: t("site.viewer.uploadHint")
                                         })
                                     ]
                                 })
                             }),
-                            C && e.jsxs("div", {
+                            y && e.jsxs("div", {
                                 className: "viewer-loading",
                                 children: [
                                     e.jsx("div", {
                                         className: "loading-spinner"
                                     }),
                                     e.jsx("p", {
-                                        children: s("site.viewer.rendering")
+                                        children: t("site.viewer.rendering")
                                     })
                                 ]
                             }),
-                            a.length > 0 && e.jsxs("div", {
+                            n.length > 0 && e.jsxs("div", {
                                 className: "viewer-container",
                                 children: [
                                     e.jsxs("div", {
@@ -267,7 +223,7 @@ let __tla = Promise.all([
                                                 className: "viewer-toolbar-left",
                                                 children: e.jsx("span", {
                                                     className: "viewer-filename",
-                                                    children: N?.name
+                                                    children: u?.name
                                                 })
                                             }),
                                             e.jsxs("div", {
@@ -275,8 +231,8 @@ let __tla = Promise.all([
                                                 children: [
                                                     e.jsx("button", {
                                                         className: "viewer-nav-btn",
-                                                        onClick: ()=>h((t)=>Math.max(0, t - 1)),
-                                                        disabled: c === 0,
+                                                        onClick: ()=>o((s)=>Math.max(0, s - 1)),
+                                                        disabled: a === 0,
                                                         children: e.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -295,24 +251,24 @@ let __tla = Promise.all([
                                                             e.jsx("input", {
                                                                 type: "number",
                                                                 className: "viewer-page-input",
-                                                                value: c + 1,
-                                                                onChange: W,
+                                                                value: a + 1,
+                                                                onChange: R,
                                                                 min: 1,
-                                                                max: a.length
+                                                                max: n.length
                                                             }),
                                                             e.jsxs("span", {
                                                                 children: [
-                                                                    s("site.viewer.of"),
+                                                                    t("site.viewer.of"),
                                                                     " ",
-                                                                    a.length
+                                                                    n.length
                                                                 ]
                                                             })
                                                         ]
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-nav-btn",
-                                                        onClick: ()=>h((t)=>Math.min(a.length - 1, t + 1)),
-                                                        disabled: c === a.length - 1,
+                                                        onClick: ()=>o((s)=>Math.min(n.length - 1, s + 1)),
+                                                        disabled: a === n.length - 1,
                                                         children: e.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -332,25 +288,25 @@ let __tla = Promise.all([
                                                 children: [
                                                     e.jsx("button", {
                                                         className: "viewer-zoom-btn",
-                                                        onClick: ()=>j((t)=>Math.max(50, t - 25)),
+                                                        onClick: ()=>w((s)=>Math.max(50, s - 25)),
                                                         children: "-"
                                                     }),
                                                     e.jsxs("span", {
                                                         className: "viewer-zoom-label",
                                                         children: [
-                                                            _,
+                                                            N,
                                                             "%"
                                                         ]
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-zoom-btn",
-                                                        onClick: ()=>j((t)=>Math.min(200, t + 25)),
+                                                        onClick: ()=>w((s)=>Math.min(200, s + 25)),
                                                         children: "+"
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-action-btn",
-                                                        onClick: B,
-                                                        title: s("site.viewer.downloadSvg"),
+                                                        onClick: E,
+                                                        title: t("site.viewer.downloadSvg"),
                                                         children: e.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -376,8 +332,8 @@ let __tla = Promise.all([
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-action-btn",
-                                                        onClick: M,
-                                                        title: s("site.viewer.newFile"),
+                                                        onClick: L,
+                                                        title: t("site.viewer.newFile"),
                                                         children: e.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -401,15 +357,15 @@ let __tla = Promise.all([
                                     }),
                                     e.jsx("div", {
                                         className: "viewer-canvas-wrapper",
-                                        ref: R,
+                                        ref: _,
                                         children: e.jsx("div", {
                                             className: "viewer-canvas",
                                             style: {
-                                                transform: `scale(${_ / 100})`,
+                                                transform: `scale(${N / 100})`,
                                                 transformOrigin: "top center"
                                             },
                                             dangerouslySetInnerHTML: {
-                                                __html: a[c] || ""
+                                                __html: n[a] || ""
                                             }
                                         })
                                     })
@@ -422,4 +378,4 @@ let __tla = Promise.all([
         });
     };
 });
-export { V as default, __tla };
+export { I as default, __tla };

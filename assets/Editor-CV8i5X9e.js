@@ -1,6 +1,6 @@
 const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-DhBOH3JZ.js","assets/jszip.min-CF_QwUG1.js","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import { u as v, a as k, r as i, j as t, _ as g, __tla as __tla_0 } from "./index-9utJaTWv.js";
-import { S as E } from "./SEOHead-DhT4I9Pd.js";
+import { u as v, a as k, r as i, j as t, _ as g, __tla as __tla_0 } from "./index-Ctewv4u7.js";
+import { S as E } from "./SEOHead-DHi9tw9A.js";
 import { d } from "./fileUtils-1h3TEy09.js";
 let H;
 let __tla = Promise.all([
@@ -11,10 +11,10 @@ let __tla = Promise.all([
     })()
 ]).then(async ()=>{
     H = ()=>{
-        const { t: e } = v(), x = k(), [l, h] = i.useState(""), [o, p] = i.useState(""), [m, u] = i.useState(!1), b = i.useRef(null);
+        const { t: e } = v(), x = k(), [l, h] = i.useState(""), [o, m] = i.useState(""), [p, u] = i.useState(!1), b = i.useRef(null);
         i.useEffect(()=>{
             const s = x.state;
-            s?.content && p(s.content), s?.title && h(s.title);
+            s?.content && m(s.content), s?.title && h(s.title);
         }, [
             x.state
         ]);
@@ -59,7 +59,7 @@ let __tla = Promise.all([
             children: [
                 t.jsx(E, {
                     title: e("site.editor.title"),
-                    path: "/editor"
+                    path: "/md-editor"
                 }),
                 t.jsx("section", {
                     className: "page-header",
@@ -98,13 +98,13 @@ let __tla = Promise.all([
                                             children: [
                                                 t.jsxs("button", {
                                                     className: "editor-btn",
-                                                    onClick: ()=>u(!m),
+                                                    onClick: ()=>u(!p),
                                                     children: [
                                                         e("site.editor.export"),
                                                         " ▾"
                                                     ]
                                                 }),
-                                                m && t.jsxs("div", {
+                                                p && t.jsxs("div", {
                                                     className: "export-dropdown",
                                                     children: [
                                                         t.jsx("button", {
@@ -134,7 +134,7 @@ let __tla = Promise.all([
                                 className: "md-editor-wrapper",
                                 children: t.jsx("textarea", {
                                     value: o,
-                                    onChange: (s)=>p(s.target.value),
+                                    onChange: (s)=>m(s.target.value),
                                     placeholder: "마크다운으로 문서를 작성하세요..."
                                 })
                             })
