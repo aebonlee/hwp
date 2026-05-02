@@ -124,6 +124,63 @@ interface SelectionRect {
   height: number;
 }
 
+type EditMode = 'body' | 'cell' | 'header' | 'footer' | 'footnote';
+
+interface CellContext {
+  secIdx: number;
+  parentParaIdx: number;
+  controlIdx: number;
+  cellIdx: number;
+  cellParaIdx: number;
+  charOffset: number;
+}
+
+interface HfContext {
+  secIdx: number;
+  isHeader: boolean;
+  applyTo: number;
+  hfParaIdx: number;
+  charOffset: number;
+}
+
+interface FnContext {
+  secIdx: number;
+  paraIdx: number;
+  controlIdx: number;
+  fnParaIdx: number;
+  charOffset: number;
+}
+
+interface ContextMenuState {
+  x: number;
+  y: number;
+  type: 'body' | 'table' | 'image';
+  tableInfo?: {
+    secIdx: number;
+    paraIdx: number;
+    controlIdx: number;
+    row: number;
+    col: number;
+    cellIdx: number;
+  };
+}
+
+interface PageDefState {
+  width: number;
+  height: number;
+  marginTop: number;
+  marginBottom: number;
+  marginLeft: number;
+  marginRight: number;
+  landscape: boolean;
+}
+
+interface StyleItem {
+  id: number;
+  name: string;
+  type: string;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Component
 // ─────────────────────────────────────────────────────────────────────────────
@@ -225,6 +282,40 @@ const HwpEditor: React.FC = () => {
   const [caseSensitive, setCaseSensitive] = useState(false);
   const [findInfo, setFindInfo] = useState('');
 
+  // Edit context (cell / header-footer / footnote)
+  const [editMode, setEditMode] = useState<EditMode>('body');
+  const cellCtxRef = useRef<CellContext | null>(null);
+  const hfCtxRef = useRef<HfContext | null>(null);
+  const fnCtxRef = useRef<FnContext | null>(null);
+
+  // Mouse drag selection
+  const [isDragSelecting, setIsDragSelecting] = useState(false);
+
+  // Context menu (right-click)
+  const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
+
+  // Page setup dialog
+  const [pageDefOpen, setPageDefOpen] = useState(false);
+  const [pageDef, setPageDef] = useState<PageDefState>({
+    width: 59528, height: 84188,
+    marginTop: 5669, marginBottom: 4252,
+    marginLeft: 4252, marginRight: 4252,
+    landscape: false,
+  });
+
+  // Style
+  const [styleList, setStyleList] = useState<StyleItem[]>([]);
+  const [styleOpen, setStyleOpen] = useState(false);
+
+  // Display options
+  const [showControlCodes, setShowControlCodes] = useState(false);
+  const [showParaMarks, setShowParaMarks] = useState(false);
+
+  // Bookmark
+  const [bookmarkOpen, setBookmarkOpen] = useState(false);
+  const [bookmarkName, setBookmarkName] = useState('');
+  const [bookmarkList, setBookmarkList] = useState<Array<{ name: string; secIdx: number; paraIdx: number; charOffset: number }>>([]);
+
   // Dropdown outside-click refs
   const fontBtnRef = useRef<HTMLButtonElement>(null);
   const fontDropRef = useRef<HTMLDivElement>(null);
@@ -240,6 +331,8 @@ const HwpEditor: React.FC = () => {
   const spacingDropRef = useRef<HTMLDivElement>(null);
   const tableDialogRef = useRef<HTMLDivElement>(null);
   const tableBtnRef = useRef<HTMLButtonElement>(null);
+  const styleBtnRef = useRef<HTMLButtonElement>(null);
+  const styleDropRef = useRef<HTMLDivElement>(null);
 
   // ── Cursor setter ────────────────────────────────────────────────────────
 
@@ -247,6 +340,31 @@ const HwpEditor: React.FC = () => {
     cursorRef.current = pos;
     setCursorState(pos);
   }, []);
+
+  // ── Hit-test → CursorPos helper ────────────────────────────────────────
+
+  const hitTestToPos = useCallback((e: React.MouseEvent, pageIdx: number): CursorPos | null => {
+    const doc = docRef.current;
+    if (!doc) return null;
+    const canvas = pageCanvasRefs.current[pageIdx];
+    if (!canvas) return null;
+    const scale = renderScaleRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const pageX = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
+    const pageY = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
+    try {
+      const hj = doc.hitTest(pageIdx, pageX, pageY);
+      const h = parseResult(hj);
+      if (!h) return null;
+      return {
+        secIdx: (h.sectionIndex as number) ?? 0,
+        paraIdx: ((h.paragraphIndex ?? h.paraIndex) as number) ?? 0,
+        charOffset: (h.charOffset as number) ?? 0,
+      };
+    } catch { return null; }
+  }, []);
+
+  // (exitToBody logic is inlined where needed)
 
   // ── Rerender ──────────────────────────────────────────────────────────────
 
@@ -438,6 +556,11 @@ const HwpEditor: React.FC = () => {
     setCurrentPage(0);
     setEditorError('');
     pageSizesRef.current = {};
+    setEditMode('body');
+    cellCtxRef.current = null;
+    hfCtxRef.current = null;
+    fnCtxRef.current = null;
+    setContextMenu(null);
     rerender();
     // Initial cursor from saved caret
     try {
@@ -855,6 +978,448 @@ const HwpEditor: React.FC = () => {
     rerender();
   }, [saveSnapshot, rerender]);
 
+  // ── Mouse drag selection ──────────────────────────────────────────────────
+
+  const handleCanvasMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+    if (e.button !== 0) return;
+    const pos = hitTestToPos(e, pageIdx);
+    if (!pos) return;
+    setIsDragSelecting(true);
+    selAnchorRef.current = { ...pos };
+    setCursor(pos);
+    setHasSelection(false);
+    setSelRects([]);
+    updateCursorDisplay(pos);
+    updateCharProps(pos);
+    hiddenInputRef.current?.focus();
+  }, [hitTestToPos, setCursor, updateCursorDisplay, updateCharProps]);
+
+  const handleCanvasMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+    if (!isDragSelecting) return;
+    const pos = hitTestToPos(e, pageIdx);
+    if (!pos || !selAnchorRef.current) return;
+    setCursor(pos);
+    updateSelectionRects(selAnchorRef.current, pos);
+    setHasSelection(true);
+    updateCursorDisplay(pos);
+  }, [isDragSelecting, hitTestToPos, setCursor, updateSelectionRects, updateCursorDisplay]);
+
+  const handleCanvasMouseUp = useCallback(() => {
+    setIsDragSelecting(false);
+  }, []);
+
+  // ── Context menu (right-click) ────────────────────────────────────────────
+
+  const handleContextMenu = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+    e.preventDefault();
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = hitTestToPos(e, pageIdx);
+    if (!pos) return;
+    let menuType: ContextMenuState['type'] = 'body';
+    let tableInfo: ContextMenuState['tableInfo'] = undefined;
+    try {
+      // Use getControlTextPositions to find controls at paragraph
+      const cpj = doc.getControlTextPositions(pos.secIdx, pos.paraIdx);
+      const controls = JSON.parse(cpj) as Array<{ type: string; controlIdx: number; charOffset: number }>;
+      const tableCtrl = controls?.find((c) => c.type === 'table' && c.charOffset <= pos.charOffset);
+      if (tableCtrl) {
+        menuType = 'table';
+        try {
+          const bboxJ = doc.getTableCellBboxes(pos.secIdx, pos.paraIdx, tableCtrl.controlIdx);
+          const bboxes = JSON.parse(bboxJ) as Array<{ cellIdx: number; row: number; col: number; x: number; y: number; w: number; h: number }>;
+          const canvas = pageCanvasRefs.current[pageIdx];
+          if (canvas) {
+            const scale = renderScaleRef.current;
+            const rect = canvas.getBoundingClientRect();
+            const px = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
+            const py = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
+            const cell = bboxes.find((b) => px >= b.x && px <= b.x + b.w && py >= b.y && py <= b.y + b.h);
+            if (cell) {
+              tableInfo = { secIdx: pos.secIdx, paraIdx: pos.paraIdx, controlIdx: tableCtrl.controlIdx, row: cell.row, col: cell.col, cellIdx: cell.cellIdx };
+            }
+          }
+        } catch { /* ignore */ }
+      }
+    } catch { /* ignore */ }
+    setContextMenu({ x: e.clientX, y: e.clientY, type: menuType, tableInfo });
+  }, [hitTestToPos]);
+
+  const closeContextMenu = useCallback(() => setContextMenu(null), []);
+
+  // ── Table cell editing ────────────────────────────────────────────────────
+
+  const enterCellMode = useCallback((secIdx: number, paraIdx: number, controlIdx: number, cellIdx: number) => {
+    setEditMode('cell');
+    cellCtxRef.current = { secIdx, parentParaIdx: paraIdx, controlIdx, cellIdx, cellParaIdx: 0, charOffset: 0 };
+    try {
+      const doc = docRef.current;
+      if (doc) {
+        const cr = parseResult(doc.getCursorRectInCell(secIdx, paraIdx, controlIdx, cellIdx, 0, 0));
+        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const insertTextInCell = useCallback((text: string) => {
+    const doc = docRef.current;
+    const ctx = cellCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      const rj = doc.insertTextInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset, text);
+      const r = parseResult(rj);
+      ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
+      rerender();
+      try {
+        const cr = parseResult(doc.getCursorRectInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset));
+        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+      } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerender]);
+
+  const deleteTextInCell = useCallback((forward: boolean) => {
+    const doc = docRef.current;
+    const ctx = cellCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      if (!forward && ctx.charOffset > 0) {
+        doc.deleteTextInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset - 1, 1);
+        ctx.charOffset--;
+      } else if (!forward && ctx.charOffset === 0 && ctx.cellParaIdx > 0) {
+        const rj = doc.mergeParagraphInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx);
+        const r = parseResult(rj);
+        ctx.cellParaIdx = (r?.paraIdx as number) ?? ctx.cellParaIdx - 1;
+        ctx.charOffset = (r?.charOffset as number) ?? 0;
+      } else if (forward) {
+        doc.deleteTextInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset, 1);
+      }
+      rerender();
+      try {
+        const cr = parseResult(doc.getCursorRectInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset));
+        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+      } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerender]);
+
+  const splitParagraphInCell = useCallback(() => {
+    const doc = docRef.current;
+    const ctx = cellCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      const rj = doc.splitParagraphInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset);
+      const r = parseResult(rj);
+      ctx.cellParaIdx = (r?.paraIdx as number) ?? ctx.cellParaIdx + 1;
+      ctx.charOffset = 0;
+      rerender();
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerender]);
+
+  const applyCharFormatInCell = useCallback((props: Record<string, unknown>) => {
+    const doc = docRef.current;
+    const ctx = cellCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try { doc.applyCharFormatInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset, ctx.charOffset + 1, JSON.stringify(props)); } catch { /* ignore */ }
+    rerender();
+  }, [saveSnapshot, rerender]);
+
+  // applyParaFormatInCell available via: doc.applyParaFormatInCell(sec, para, ctrl, cell, cellPara, json)
+
+  // ── Table structure operations ────────────────────────────────────────────
+
+  const handleInsertTableRow = useCallback((after: boolean) => {
+    const info = contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try { doc.insertTableRow(info.secIdx, info.paraIdx, info.controlIdx, info.row, after); } catch { /* ignore */ }
+    rerender(); setContextMenu(null);
+  }, [contextMenu, saveSnapshot, rerender]);
+
+  const handleDeleteTableRow = useCallback(() => {
+    const info = contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try { doc.deleteTableRow(info.secIdx, info.paraIdx, info.controlIdx, info.row); } catch { /* ignore */ }
+    rerender(); setContextMenu(null);
+  }, [contextMenu, saveSnapshot, rerender]);
+
+  const handleInsertTableColumn = useCallback((after: boolean) => {
+    const info = contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try { doc.insertTableColumn(info.secIdx, info.paraIdx, info.controlIdx, info.col, after); } catch { /* ignore */ }
+    rerender(); setContextMenu(null);
+  }, [contextMenu, saveSnapshot, rerender]);
+
+  const handleDeleteTableColumn = useCallback(() => {
+    const info = contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try { doc.deleteTableColumn(info.secIdx, info.paraIdx, info.controlIdx, info.col); } catch { /* ignore */ }
+    rerender(); setContextMenu(null);
+  }, [contextMenu, saveSnapshot, rerender]);
+
+  const handleMergeTableCells = useCallback(() => {
+    const info = contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try { doc.mergeTableCells(info.secIdx, info.paraIdx, info.controlIdx, info.row, info.col, info.row, info.col + 1); } catch { /* ignore */ }
+    rerender(); setContextMenu(null);
+  }, [contextMenu, saveSnapshot, rerender]);
+
+  const handleSplitTableCell = useCallback(() => {
+    const info = contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try { doc.splitTableCell(info.secIdx, info.paraIdx, info.controlIdx, info.row, info.col); } catch { /* ignore */ }
+    rerender(); setContextMenu(null);
+  }, [contextMenu, saveSnapshot, rerender]);
+
+  // ── Header/Footer editing ─────────────────────────────────────────────────
+
+  const enterHeaderFooterMode = useCallback((secIdx: number, isHeader: boolean) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try { doc.createHeaderFooter(secIdx, isHeader, 0); } catch { /* may already exist */ }
+    setEditMode(isHeader ? 'header' : 'footer');
+    hfCtxRef.current = { secIdx, isHeader, applyTo: 0, hfParaIdx: 0, charOffset: 0 };
+    try {
+      const cr = parseResult(doc.getCursorRectInHeaderFooter(secIdx, isHeader, 0, 0, 0, 0));
+      if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+    } catch { /* ignore */ }
+  }, []);
+
+  const insertTextInHf = useCallback((text: string) => {
+    const doc = docRef.current;
+    const ctx = hfCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      const rj = doc.insertTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, text);
+      const r = parseResult(rj);
+      ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
+      rerender();
+      try {
+        const cr = parseResult(doc.getCursorRectInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 0));
+        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+      } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerender]);
+
+  // ── Footnote ──────────────────────────────────────────────────────────────
+
+  const handleInsertFootnote = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try {
+      const rj = doc.insertFootnote(pos.secIdx, pos.paraIdx, pos.charOffset);
+      const r = parseResult(rj);
+      if (r?.ok) {
+        setEditMode('footnote');
+        fnCtxRef.current = { secIdx: pos.secIdx, paraIdx: pos.paraIdx, controlIdx: (r.controlIdx as number) ?? 0, fnParaIdx: 0, charOffset: 0 };
+      }
+    } catch { /* ignore */ }
+    rerender();
+  }, [saveSnapshot, rerender]);
+
+  const insertTextInFn = useCallback((text: string) => {
+    const doc = docRef.current;
+    const ctx = fnCtxRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try {
+      const rj = doc.insertTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset, text);
+      const r = parseResult(rj);
+      ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
+      rerender();
+      try {
+        const cr = parseResult(doc.getCursorRectInFootnote(0, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset));
+        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
+      } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }, [saveSnapshot, rerender]);
+
+  // ── Page setup ────────────────────────────────────────────────────────────
+
+  const loadPageDef = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const rj = doc.getPageDef(0);
+      const r = parseResult(rj);
+      if (r) setPageDef({ width: (r.width as number) ?? 59528, height: (r.height as number) ?? 84188, marginTop: (r.marginTop as number) ?? 5669, marginBottom: (r.marginBottom as number) ?? 4252, marginLeft: (r.marginLeft as number) ?? 4252, marginRight: (r.marginRight as number) ?? 4252, landscape: !!r.landscape });
+    } catch { /* ignore */ }
+  }, []);
+
+  const applyPageDef = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try { doc.setPageDef(0, JSON.stringify(pageDef)); } catch { /* ignore */ }
+    rerender(); setPageDefOpen(false);
+  }, [pageDef, saveSnapshot, rerender]);
+
+  // ── Styles ────────────────────────────────────────────────────────────────
+
+  const loadStyles = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const rj = doc.getStyleList();
+      const list = JSON.parse(rj) as StyleItem[];
+      setStyleList(Array.isArray(list) ? list : []);
+    } catch { setStyleList([]); }
+  }, []);
+
+  const applyStyle = useCallback((styleId: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.applyStyle(pos.secIdx, pos.paraIdx, styleId); } catch { /* ignore */ }
+    rerender(); updateCharProps(pos); setStyleOpen(false);
+  }, [saveSnapshot, rerender, updateCharProps]);
+
+  // ── Shape control ─────────────────────────────────────────────────────────
+
+  const handleInsertShape = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.createShapeControl(JSON.stringify({ sectionIdx: pos.secIdx, paraIdx: pos.paraIdx, charOffset: pos.charOffset, width: 14400, height: 7200 })); } catch { /* ignore */ }
+    rerender();
+  }, [saveSnapshot, rerender]);
+
+  // ── Bookmarks ─────────────────────────────────────────────────────────────
+
+  const loadBookmarks = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const rj = doc.getBookmarks();
+      const list = JSON.parse(rj) as Array<{ name: string; secIdx: number; paraIdx: number; charOffset: number; controlIdx?: number }>;
+      setBookmarkList(Array.isArray(list) ? list : []);
+    } catch { setBookmarkList([]); }
+  }, []);
+
+  const handleAddBookmark = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc || !bookmarkName.trim()) return;
+    const pos = cursorRef.current;
+    try { doc.addBookmark(pos.secIdx, pos.paraIdx, pos.charOffset, bookmarkName.trim()); } catch { /* ignore */ }
+    setBookmarkName(''); loadBookmarks();
+  }, [bookmarkName, loadBookmarks]);
+
+  const handleDeleteBookmark = useCallback((bm: { secIdx: number; paraIdx: number; controlIdx?: number }) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try { doc.deleteBookmark(bm.secIdx, bm.paraIdx, bm.controlIdx ?? 0); } catch { /* ignore */ }
+    loadBookmarks();
+  }, [loadBookmarks]);
+
+  const handleGotoBookmark = useCallback((bm: { secIdx: number; paraIdx: number; charOffset: number }) => {
+    moveCursor({ secIdx: bm.secIdx, paraIdx: bm.paraIdx, charOffset: bm.charOffset });
+    setBookmarkOpen(false);
+  }, [moveCursor]);
+
+  // ── Display options ───────────────────────────────────────────────────────
+
+  const toggleControlCodes = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const newVal = !showControlCodes;
+    try { doc.setShowControlCodes(newVal); } catch { /* ignore */ }
+    setShowControlCodes(newVal); rerender();
+  }, [showControlCodes, rerender]);
+
+  const toggleParaMarks = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const newVal = !showParaMarks;
+    try { doc.setShowParagraphMarks(newVal); } catch { /* ignore */ }
+    setShowParaMarks(newVal); rerender();
+  }, [showParaMarks, rerender]);
+
+  // ── HTML paste ────────────────────────────────────────────────────────────
+
+  const handleHtmlPaste = useCallback(async () => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const items = await navigator.clipboard.read();
+      for (const item of items) {
+        if (item.types.includes('text/html')) {
+          const blob = await item.getType('text/html');
+          const html = await blob.text();
+          saveSnapshot();
+          const pos = cursorRef.current;
+          if (selAnchorRef.current) { const np = deleteSelection(); if (np) setCursor(np); }
+          try {
+            const rj = doc.pasteHtml(cursorRef.current.secIdx, cursorRef.current.paraIdx, cursorRef.current.charOffset, html);
+            const r = parseResult(rj);
+            if (r?.ok) moveCursor({ secIdx: cursorRef.current.secIdx, paraIdx: (r.paraIdx as number) ?? pos.paraIdx, charOffset: (r.charOffset as number) ?? 0 });
+          } catch { /* fallback below */ }
+          rerender(); return;
+        }
+      }
+    } catch { /* ignore */ }
+    try { const text = await navigator.clipboard.readText(); if (text) insertText(text); } catch { /* ignore */ }
+  }, [saveSnapshot, deleteSelection, setCursor, moveCursor, insertText, rerender]);
+
+  // ── Keyboard handlers for cell/hf/fn modes ────────────────────────────────
+
+  const handleKeyDownCell = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const ctx = cellCtxRef.current;
+    if (!ctx) { setEditMode('body'); cellCtxRef.current = null; return; }
+    const ctrl = e.ctrlKey || e.metaKey;
+    if (ctrl) {
+      switch (e.key.toLowerCase()) {
+        case 'z': e.preventDefault(); handleUndo(); return;
+        case 'y': e.preventDefault(); handleRedo(); return;
+        case 'b': e.preventDefault(); applyCharFormatInCell({ bold: true }); return;
+        case 'i': e.preventDefault(); applyCharFormatInCell({ italic: true }); return;
+        case 'u': e.preventDefault(); applyCharFormatInCell({ underline: true }); return;
+      }
+      return;
+    }
+    switch (e.key) {
+      case 'Enter': e.preventDefault(); splitParagraphInCell(); break;
+      case 'Backspace': e.preventDefault(); deleteTextInCell(false); break;
+      case 'Delete': e.preventDefault(); deleteTextInCell(true); break;
+      case 'Escape': e.preventDefault(); setEditMode('body'); cellCtxRef.current = null; break;
+      case 'Tab': {
+        e.preventDefault();
+        const doc = docRef.current;
+        if (!doc) break;
+        try {
+          const dims = parseResult(doc.getTableDimensions(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx));
+          if (dims) { const total = (dims.rows as number) * (dims.cols as number); if (ctx.cellIdx + 1 < total) enterCellMode(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx + 1); }
+        } catch { /* ignore */ }
+        break;
+      }
+    }
+  }, [handleUndo, handleRedo, applyCharFormatInCell, splitParagraphInCell, deleteTextInCell, enterCellMode]);
+
+  const handleKeyDownHf = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Escape') { e.preventDefault(); setEditMode('body'); hfCtxRef.current = null; }
+  }, []);
+
+  const handleKeyDownFn = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Escape') { e.preventDefault(); setEditMode('body'); fnCtxRef.current = null; }
+  }, []);
+
   // ── Find / Replace ─────────────────────────────────────────────────────────
 
   const handleFindNext = useCallback(() => {
@@ -933,6 +1498,12 @@ const HwpEditor: React.FC = () => {
     if (composingRef.current) return;
     const doc = docRef.current;
     if (!doc || !cursorRef.current) return;
+
+    // Dispatch to edit-mode-specific handlers
+    if (editMode === 'cell') { handleKeyDownCell(e); return; }
+    if (editMode === 'header' || editMode === 'footer') { handleKeyDownHf(e); return; }
+    if (editMode === 'footnote') { handleKeyDownFn(e); return; }
+
     const pos = cursorRef.current;
     const ctrl = e.ctrlKey || e.metaKey;
 
@@ -993,7 +1564,7 @@ const HwpEditor: React.FC = () => {
         }
         case 'v': {
           e.preventDefault();
-          navigator.clipboard.readText().then((text) => { if (text) insertText(text); }).catch(() => {});
+          handleHtmlPaste();
           return;
         }
       }
@@ -1158,16 +1729,19 @@ const HwpEditor: React.FC = () => {
         setFindBarOpen(false); setFontOpen(false); setSizeOpen(false);
         setColorOpen(false); setHighlightOpen(false); setExportOpen(false);
         setSpacingOpen(false); setTableDialogOpen(false);
+        setContextMenu(null); setPageDefOpen(false); setStyleOpen(false);
+        setBookmarkOpen(false);
         break;
     }
   }, [
+    editMode, handleKeyDownCell, handleKeyDownHf, handleKeyDownFn,
     cursor, cursorRect,
     handleUndo, handleRedo,
     toggleBold, toggleItalic, toggleUnderline,
     insertText, deleteSelection, deleteCharBefore, deleteCharAfter,
     saveSnapshot, moveCursor, rerender,
     updateSelectionRects, updateCursorDisplay,
-    setCursor,
+    setCursor, handleHtmlPaste,
   ]);
 
   // ── IME handlers ──────────────────────────────────────────────────────────
@@ -1179,16 +1753,27 @@ const HwpEditor: React.FC = () => {
   const handleIMECompositionEnd = useCallback((e: React.CompositionEvent<HTMLTextAreaElement>) => {
     composingRef.current = false;
     const text = e.data;
-    if (text) insertText(text);
+    if (text) {
+      if (editMode === 'cell') insertTextInCell(text);
+      else if (editMode === 'header' || editMode === 'footer') insertTextInHf(text);
+      else if (editMode === 'footnote') insertTextInFn(text);
+      else insertText(text);
+    }
     if (hiddenInputRef.current) hiddenInputRef.current.value = '';
-  }, [insertText]);
+  }, [editMode, insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
 
   const handleIMEInput = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
     if (composingRef.current) return;
     const target = e.target as HTMLTextAreaElement;
     const val = target.value;
-    if (val) { insertText(val); target.value = ''; }
-  }, [insertText]);
+    if (val) {
+      if (editMode === 'cell') insertTextInCell(val);
+      else if (editMode === 'header' || editMode === 'footer') insertTextInHf(val);
+      else if (editMode === 'footnote') insertTextInFn(val);
+      else insertText(val);
+      target.value = '';
+    }
+  }, [editMode, insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
 
   // ── Page navigation ────────────────────────────────────────────────────────
 
@@ -1229,10 +1814,12 @@ const HwpEditor: React.FC = () => {
       if (exportOpen && outside(exportBtnRef, exportDropRef)) setExportOpen(false);
       if (spacingOpen && outside(spacingBtnRef, spacingDropRef)) setSpacingOpen(false);
       if (tableDialogOpen && outside(tableBtnRef, tableDialogRef)) setTableDialogOpen(false);
+      if (styleOpen && outside(styleBtnRef, styleDropRef)) setStyleOpen(false);
+      if (contextMenu) setContextMenu(null);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, [fontOpen, sizeOpen, colorOpen, highlightOpen, exportOpen, spacingOpen, tableDialogOpen]);
+  }, [fontOpen, sizeOpen, colorOpen, highlightOpen, exportOpen, spacingOpen, tableDialogOpen, styleOpen, contextMenu]);
 
   // ── Cleanup on unmount ─────────────────────────────────────────────────────
 
@@ -1864,6 +2451,93 @@ const HwpEditor: React.FC = () => {
                   </button>
                 </div>
 
+                <div className="hwp-toolbar-divider" />
+
+                {/* Page setup */}
+                <div className="hwp-toolbar-group">
+                  <button className="hwp-toolbar-btn" title="페이지 설정" onClick={() => { loadPageDef(); setPageDefOpen((o) => !o); }}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="5" y="2" width="14" height="20" rx="1" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="18" x2="16" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Style dropdown */}
+                <div className="hwp-toolbar-group">
+                  <div style={{ position: 'relative' }}>
+                    <button ref={styleBtnRef} className="hwp-toolbar-btn" title="스타일" onClick={() => { loadStyles(); setStyleOpen((o) => !o); }}>
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M4 7h16M4 12h10M4 17h14" />
+                      </svg>
+                      <span style={{ fontSize: '0.7rem' }}>스타일</span>
+                      <span style={{ fontSize: '10px', marginLeft: 1 }}>&#9662;</span>
+                    </button>
+                    {styleOpen && (
+                      <div ref={styleDropRef} className="hwp-toolbar-dropdown hwp-style-dropdown">
+                        {styleList.length === 0 && <div style={{ padding: 10, fontSize: '0.82rem', color: 'var(--text-secondary)' }}>스타일 없음</div>}
+                        {styleList.map((s) => (
+                          <button key={s.id} onClick={() => applyStyle(s.id)}>{s.name}</button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="hwp-toolbar-divider" />
+
+                {/* Header/Footer */}
+                <div className="hwp-toolbar-group">
+                  <button className="hwp-toolbar-btn" title="머리말" onClick={() => enterHeaderFooterMode(cursorRef.current.secIdx, true)}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="8" y1="6" x2="16" y2="6" />
+                    </svg>
+                  </button>
+                  <button className="hwp-toolbar-btn" title="꼬리말" onClick={() => enterHeaderFooterMode(cursorRef.current.secIdx, false)}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="15" x2="21" y2="15" /><line x1="8" y1="18" x2="16" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Footnote */}
+                <div className="hwp-toolbar-group">
+                  <button className="hwp-toolbar-btn" title="각주 삽입" onClick={handleInsertFootnote}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M4 20h16M12 4v12" /><text x="14" y="10" fontSize="8" fill="currentColor" stroke="none" fontWeight="bold">1</text>
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Shape */}
+                <div className="hwp-toolbar-group">
+                  <button className="hwp-toolbar-btn" title="글상자 삽입" onClick={handleInsertShape}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" /><text x="8" y="16" fontSize="10" fill="currentColor" stroke="none">T</text>
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Bookmark */}
+                <div className="hwp-toolbar-group">
+                  <button className="hwp-toolbar-btn" title="북마크" onClick={() => { loadBookmarks(); setBookmarkOpen((o) => !o); }}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="hwp-toolbar-divider" />
+
+                {/* Display options */}
+                <div className="hwp-toolbar-group">
+                  <button className={`hwp-toolbar-btn${showParaMarks ? ' active' : ''}`} title="조판부호 표시" onClick={toggleParaMarks}>
+                    <span style={{ fontFamily: 'monospace', fontSize: '14px', fontWeight: 'bold' }}>&#182;</span>
+                  </button>
+                  <button className={`hwp-toolbar-btn${showControlCodes ? ' active' : ''}`} title="제어코드 표시" onClick={toggleControlCodes}>
+                    <span style={{ fontFamily: 'monospace', fontSize: '12px', fontWeight: 'bold' }}>&#167;</span>
+                  </button>
+                </div>
+
                 <div className="hwp-toolbar-spacer" />
 
                 {/* Filename indicator */}
@@ -1911,10 +2585,23 @@ const HwpEditor: React.FC = () => {
                 </div>
               )}
 
+              {/* ── EDIT MODE INDICATOR ───────────────────────────────────── */}
+              {editMode !== 'body' && (
+                <div className="hwp-edit-mode-bar">
+                  <span>
+                    {editMode === 'cell' ? '표 셀 편집' : editMode === 'header' ? '머리말 편집' : editMode === 'footer' ? '꼬리말 편집' : '각주 편집'}
+                  </span>
+                  <button onClick={() => { setEditMode('body'); cellCtxRef.current = null; hfCtxRef.current = null; fnCtxRef.current = null; }}>
+                    ESC 나가기
+                  </button>
+                </div>
+              )}
+
               {/* ── CANVAS AREA ───────────────────────────────────────────── */}
               <div
                 className="hwp-canvas-wrapper"
                 onClick={() => hiddenInputRef.current?.focus()}
+                onMouseUp={handleCanvasMouseUp}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -1929,6 +2616,16 @@ const HwpEditor: React.FC = () => {
                       transformOrigin: 'top center',
                     }}
                     onClick={(e) => handleCanvasClick(e, pageIdx)}
+                    onMouseDown={(e) => handleCanvasMouseDown(e, pageIdx)}
+                    onMouseMove={(e) => handleCanvasMouseMove(e, pageIdx)}
+                    onContextMenu={(e) => handleContextMenu(e, pageIdx)}
+                    onDoubleClick={() => {
+                      // Double-click on header/footer area enters HF mode
+                      const pos = cursorRef.current;
+                      if (pos && editMode === 'body') {
+                        enterHeaderFooterMode(pos.secIdx, true);
+                      }
+                    }}
                   >
                     {/* Content canvas — rendered by WASM via renderPageToCanvas */}
                     <canvas
@@ -1943,6 +2640,103 @@ const HwpEditor: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              {/* ── CONTEXT MENU ──────────────────────────────────────────── */}
+              {contextMenu && (
+                <div
+                  className="hwp-context-menu"
+                  style={{ position: 'fixed', left: contextMenu.x, top: contextMenu.y, zIndex: 9999 }}
+                  onMouseDown={(e) => e.stopPropagation()}
+                >
+                  {contextMenu.type === 'table' && contextMenu.tableInfo ? (
+                    <>
+                      <button onClick={() => { if (contextMenu.tableInfo) enterCellMode(contextMenu.tableInfo.secIdx, contextMenu.tableInfo.paraIdx, contextMenu.tableInfo.controlIdx, contextMenu.tableInfo.cellIdx); closeContextMenu(); }}>셀 편집</button>
+                      <div className="hwp-ctx-divider" />
+                      <button onClick={() => handleInsertTableRow(false)}>위에 행 삽입</button>
+                      <button onClick={() => handleInsertTableRow(true)}>아래에 행 삽입</button>
+                      <button onClick={() => handleDeleteTableRow()}>행 삭제</button>
+                      <div className="hwp-ctx-divider" />
+                      <button onClick={() => handleInsertTableColumn(false)}>왼쪽에 열 삽입</button>
+                      <button onClick={() => handleInsertTableColumn(true)}>오른쪽에 열 삽입</button>
+                      <button onClick={() => handleDeleteTableColumn()}>열 삭제</button>
+                      <div className="hwp-ctx-divider" />
+                      <button onClick={() => handleMergeTableCells()}>셀 병합</button>
+                      <button onClick={() => handleSplitTableCell()}>셀 분할</button>
+                    </>
+                  ) : (
+                    <>
+                      <button onClick={() => { handleUndo(); closeContextMenu(); }}>실행 취소</button>
+                      <button onClick={() => { handleRedo(); closeContextMenu(); }}>다시 실행</button>
+                      <div className="hwp-ctx-divider" />
+                      <button onClick={() => { handleHtmlPaste(); closeContextMenu(); }}>붙여넣기</button>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* ── PAGE SETUP DIALOG ─────────────────────────────────── */}
+              {pageDefOpen && (
+                <div className="hwp-dialog-overlay" onClick={() => setPageDefOpen(false)}>
+                  <div className="hwp-dialog" onClick={(e) => e.stopPropagation()}>
+                    <h3>페이지 설정</h3>
+                    <div className="hwp-dialog-grid">
+                      <label>용지 폭 (HWPUNIT)</label>
+                      <input type="number" value={pageDef.width} onChange={(e) => setPageDef((p) => ({ ...p, width: Number(e.target.value) }))} />
+                      <label>용지 높이 (HWPUNIT)</label>
+                      <input type="number" value={pageDef.height} onChange={(e) => setPageDef((p) => ({ ...p, height: Number(e.target.value) }))} />
+                      <label>위 여백</label>
+                      <input type="number" value={pageDef.marginTop} onChange={(e) => setPageDef((p) => ({ ...p, marginTop: Number(e.target.value) }))} />
+                      <label>아래 여백</label>
+                      <input type="number" value={pageDef.marginBottom} onChange={(e) => setPageDef((p) => ({ ...p, marginBottom: Number(e.target.value) }))} />
+                      <label>왼쪽 여백</label>
+                      <input type="number" value={pageDef.marginLeft} onChange={(e) => setPageDef((p) => ({ ...p, marginLeft: Number(e.target.value) }))} />
+                      <label>오른쪽 여백</label>
+                      <input type="number" value={pageDef.marginRight} onChange={(e) => setPageDef((p) => ({ ...p, marginRight: Number(e.target.value) }))} />
+                      <label>가로 방향</label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                        <input type="checkbox" checked={pageDef.landscape} onChange={(e) => setPageDef((p) => ({ ...p, landscape: e.target.checked }))} />
+                        가로
+                      </label>
+                    </div>
+                    <div className="hwp-dialog-actions">
+                      <button onClick={() => setPageDefOpen(false)}>취소</button>
+                      <button className="primary" onClick={applyPageDef}>적용</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ── BOOKMARK DIALOG ───────────────────────────────────── */}
+              {bookmarkOpen && (
+                <div className="hwp-dialog-overlay" onClick={() => setBookmarkOpen(false)}>
+                  <div className="hwp-dialog" onClick={(e) => e.stopPropagation()}>
+                    <h3>북마크</h3>
+                    <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+                      <input
+                        type="text"
+                        placeholder="북마크 이름"
+                        value={bookmarkName}
+                        onChange={(e) => setBookmarkName(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === 'Enter') handleAddBookmark(); }}
+                        style={{ flex: 1, padding: '6px 10px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '0.85rem' }}
+                      />
+                      <button className="hwp-toolbar-btn" style={{ minWidth: 60 }} onClick={handleAddBookmark}>추가</button>
+                    </div>
+                    <div style={{ maxHeight: 200, overflowY: 'auto' }}>
+                      {bookmarkList.length === 0 && <div style={{ padding: 10, fontSize: '0.82rem', color: 'var(--text-secondary)' }}>북마크 없음</div>}
+                      {bookmarkList.map((bm) => (
+                        <div key={bm.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid var(--border-color)' }}>
+                          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary)', fontSize: '0.85rem' }} onClick={() => handleGotoBookmark(bm)}>{bm.name}</button>
+                          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#dc2626', fontSize: '0.8rem' }} onClick={() => handleDeleteBookmark(bm)}>삭제</button>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="hwp-dialog-actions">
+                      <button onClick={() => setBookmarkOpen(false)}>닫기</button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Hidden textarea for IME-safe keyboard input */}
               <textarea
