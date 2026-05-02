@@ -1,7 +1,7 @@
-import { u as Dn, r as s, _ as yr, j as r, __tla as __tla_0 } from "./index-BrMzuWn5.js";
-import { u as En, __tla as __tla_1 } from "./useRhwp-B8kAuW2M.js";
-import { S as Pn } from "./SEOHead-CntKNw5z.js";
-let An;
+import { u as An, r as a, _ as Dr, j as r, __tla as __tla_0 } from "./index-XUQ89LnN.js";
+import { u as Kn, __tla as __tla_1 } from "./useRhwp-b7diPa_E.js";
+import { S as Un } from "./SEOHead-B-Qd4pN6.js";
+let Gn;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -14,27 +14,27 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    function He(v) {
-        const V = parseInt(v.slice(1, 3), 16), Q = parseInt(v.slice(3, 5), 16);
-        return parseInt(v.slice(5, 7), 16) << 16 | Q << 8 | V;
+    function Ve(k) {
+        const te = parseInt(k.slice(1, 3), 16), ce = parseInt(k.slice(3, 5), 16);
+        return parseInt(k.slice(5, 7), 16) << 16 | ce << 8 | te;
     }
-    function wr(v) {
-        const V = v & 255, Q = v >> 8 & 255, u = v >> 16 & 255;
+    function Er(k) {
+        const te = k & 255, ce = k >> 8 & 255, u = k >> 16 & 255;
         return "#" + [
-            V,
-            Q,
+            te,
+            ce,
             u
         ].map((d)=>d.toString(16).padStart(2, "0")).join("");
     }
-    function g(v) {
+    function p(k) {
         try {
-            return JSON.parse(v);
+            return JSON.parse(k);
         } catch  {
             return null;
         }
     }
-    let Fn, Bn, Tn, Ln, Mn;
-    Fn = [
+    let $n, _n, Vn, Jn, Yn;
+    $n = [
         "맑은 고딕",
         "함초롬바탕",
         "함초롬돋움",
@@ -46,7 +46,7 @@ let __tla = Promise.all([
         "Arial",
         "Times New Roman"
     ];
-    Bn = [
+    _n = [
         8,
         9,
         10,
@@ -64,7 +64,7 @@ let __tla = Promise.all([
         48,
         72
     ];
-    Tn = [
+    Vn = [
         {
             label: "100%",
             value: 100
@@ -98,7 +98,7 @@ let __tla = Promise.all([
             value: 300
         }
     ];
-    Ln = [
+    Jn = [
         [
             "#000000",
             "#434343",
@@ -136,13 +136,13 @@ let __tla = Promise.all([
             "#EAD1DC"
         ]
     ];
-    Mn = 100;
-    An = ()=>{
-        const { ready: v, loading: V, error: Q } = En(), { t: u } = Dn(), d = s.useRef(null), [F, jr] = s.useState(0), [pt, mr] = s.useState(0), [G, ae] = s.useState(0), [We, Ae] = s.useState("1"), [fe, ft] = s.useState(100), [ce, Ir] = s.useState(""), [Cr, gt] = s.useState(!1), y = s.useRef({
+    Yn = 100;
+    Gn = ()=>{
+        const { ready: k, loading: te, error: ce } = Kn(), { t: u } = An(), d = a.useRef(null), [D, Nt] = a.useState(0), [St, Je] = a.useState(0), [J, ue] = a.useState(0), [Ye, Xe] = a.useState("1"), [me, Pt] = a.useState(100), [xe, Fr] = a.useState(""), [Tr, Rt] = a.useState(!1), I = a.useRef({
             secIdx: 0,
             paraIdx: 0,
             charOffset: 0
-        }), [vr, bt] = s.useState(null), [R, B] = s.useState(null), x = s.useRef(null), [, k] = s.useState(!1), [yt, $] = s.useState([]), [wt, $e] = s.useState(!0), oe = s.useRef({}), Ke = s.useRef({}), le = s.useRef(window.devicePixelRatio || 1), jt = s.useRef({}), [D, kr] = s.useState({
+        }), [Br, Dt] = a.useState(null), [R, F] = a.useState(null), x = a.useRef(null), [, S] = a.useState(!1), [Et, re] = a.useState([]), [Ft, Ze] = a.useState(!0), oe = a.useRef({}), je = a.useRef({}), le = a.useRef(window.devicePixelRatio || 1), Qe = a.useRef({}), [E, Lr] = a.useState({
             fontFamily: "맑은 고딕",
             fontSize: 1e3,
             bold: !1,
@@ -150,14 +150,16 @@ let __tla = Promise.all([
             underline: !1,
             strikethrough: !1,
             textColor: 0,
-            highlight: He("#FFFF00")
-        }), [ge, Or] = s.useState({
+            highlight: Ve("#FFFF00")
+        }), [Ce, Mr] = a.useState({
             alignment: "justify",
             lineSpacing: 160,
             marginLeft: 0,
             marginRight: 0,
             indent: 0
-        }), K = s.useRef([]), J = s.useRef([]), [Nr, be] = s.useState(!1), [Sr, ye] = s.useState(!1), we = s.useRef(!1), Y = s.useRef(null), Rr = s.useRef({}), [Dr, Ue] = s.useState(!1), [mt, L] = s.useState(""), [_e, je] = s.useState(!1), [Ve, me] = s.useState(!1), [Je, Ie] = s.useState(!1), [Ye, Ce] = s.useState(!1), [Xe, ve] = s.useState(!1), [Ze, ke] = s.useState(!1), [Qe, Oe] = s.useState(!1), [Ge, Er] = s.useState(3), [qe, Pr] = s.useState(3), [Fr, Br] = s.useState("#000000"), [Tr, Lr] = s.useState("#FFFF00"), [et, It] = s.useState("맑은 고딕"), [Ct, vt] = s.useState("10"), [kt, Ne] = s.useState(!1), [M, Mr] = s.useState(""), [ie, zr] = s.useState(""), [X, Hr] = s.useState(!1), [Ot, Z] = s.useState(""), [C, W] = s.useState("body"), z = s.useRef(null), de = s.useRef(null), he = s.useRef(null), [Nt, St] = s.useState(!1), [I, T] = s.useState(null), [Wr, ue] = s.useState(!1), [A, U] = s.useState({
+        }), Y = a.useRef([]), ne = a.useRef([]), [Hr, ve] = a.useState(!1), [zr, ke] = a.useState(!1), Oe = a.useRef(!1), ie = a.useRef(null), Wr = a.useRef({}), [Ar, Ge] = a.useState(!1), [Tt, M] = a.useState(""), [qe, Ne] = a.useState(!1), [et, Se] = a.useState(!1), [tt, Pe] = a.useState(!1), [rt, Re] = a.useState(!1), [nt, De] = a.useState(!1), [st, Ee] = a.useState(!1), [at, Fe] = a.useState(!1), [ct, Kr] = a.useState(3), [ot, Ur] = a.useState(3), [$r, _r] = a.useState("#000000"), [Vr, Jr] = a.useState("#FFFF00"), [lt, Bt] = a.useState("맑은 고딕"), [Lt, Mt] = a.useState("10"), [Ht, Te] = a.useState(!1), [z, Yr] = a.useState(""), [fe, Xr] = a.useState(""), [se, Zr] = a.useState(!1), [zt, ae] = a.useState(""), [W, Qr] = a.useState("body"), it = a.useRef("body"), T = a.useCallback((e)=>{
+            it.current = e, Qr(e);
+        }, []), A = a.useRef(null), X = a.useRef(null), Z = a.useRef(null), [de, dt] = a.useState(!1), Wt = a.useRef(null), [j, H] = a.useState(null), [Gr, pe] = a.useState(!1), [V, Q] = a.useState({
             width: 59528,
             height: 84188,
             marginTop: 5669,
@@ -165,182 +167,214 @@ let __tla = Promise.all([
             marginLeft: 4252,
             marginRight: 4252,
             landscape: !1
-        }), [Rt, Dt] = s.useState([]), [tt, Se] = s.useState(!1), [rt, Ar] = s.useState(!1), [nt, $r] = s.useState(!1), [Kr, xe] = s.useState(!1), [Re, Et] = s.useState(""), [Pt, Ft] = s.useState([]), Bt = s.useRef(null), Tt = s.useRef(null), Lt = s.useRef(null), Mt = s.useRef(null), zt = s.useRef(null), Ht = s.useRef(null), Wt = s.useRef(null), At = s.useRef(null), $t = s.useRef(null), Kt = s.useRef(null), Ut = s.useRef(null), _t = s.useRef(null), Vt = s.useRef(null), Jt = s.useRef(null), Yt = s.useRef(null), Xt = s.useRef(null), m = s.useCallback((e)=>{
-            y.current = e, bt(e);
-        }, []), q = s.useCallback((e, n)=>{
+        }), [At, Kt] = a.useState([]), [ht, Be] = a.useState(!1), [ut, qr] = a.useState(!1), [xt, en] = a.useState(!1), [tn, ge] = a.useState(!1), [Le, Ut] = a.useState(""), [$t, _t] = a.useState([]), Vt = a.useRef(null), Jt = a.useRef(null), Yt = a.useRef(null), Xt = a.useRef(null), Zt = a.useRef(null), Qt = a.useRef(null), Gt = a.useRef(null), qt = a.useRef(null), er = a.useRef(null), tr = a.useRef(null), rr = a.useRef(null), nr = a.useRef(null), sr = a.useRef(null), ar = a.useRef(null), cr = a.useRef(null), or = a.useRef(null), lr = a.useRef(null), m = a.useCallback((e)=>{
+            I.current = e, Dt(e);
+        }, []), G = a.useCallback((e, n)=>{
             const t = d.current;
             if (!t) return null;
-            const a = oe.current[n];
-            if (!a) return null;
-            const o = le.current, c = a.getBoundingClientRect(), l = (e.clientX - c.left) / c.width * a.width / o, p = (e.clientY - c.top) / c.height * a.height / o;
+            const s = oe.current[n];
+            if (!s) return null;
+            const o = le.current, c = s.getBoundingClientRect(), l = (e.clientX - c.left) / c.width * s.width / o, f = (e.clientY - c.top) / c.height * s.height / o;
             try {
-                const f = t.hitTest(n, l, p), w = g(f);
-                return w ? {
-                    secIdx: w.sectionIndex ?? 0,
-                    paraIdx: w.paragraphIndex ?? w.paraIndex ?? 0,
-                    charOffset: w.charOffset ?? 0
+                const g = t.hitTest(n, l, f), b = p(g);
+                return b ? {
+                    secIdx: b.sectionIndex ?? 0,
+                    paraIdx: b.paragraphIndex ?? b.paraIndex ?? 0,
+                    charOffset: b.charOffset ?? 0
                 } : null;
             } catch  {
                 return null;
             }
-        }, []), i = s.useCallback(()=>{
+        }, []), h = a.useCallback(()=>{
             const e = d.current;
             if (e) try {
                 const n = e.pageCount();
-                jr(n), mr((t)=>t + 1);
+                Nt(n), Je((t)=>t + 1);
             } catch (n) {
-                L(String(n));
+                M(String(n));
             }
-        }, []), j = s.useCallback((e)=>{
+        }, []), Me = a.useCallback((e)=>{
+            const n = d.current;
+            if (!n) return;
+            const t = oe.current[e];
+            if (!t) return;
+            const s = le.current;
+            try {
+                n.renderPageToCanvas(e, t, s);
+                const o = t.width / s, c = t.height / s;
+                t.style.width = o + "px", t.style.height = c + "px", Qe.current[e] = {
+                    w: o,
+                    h: c
+                };
+                const l = je.current[e];
+                l && (l.width = t.width, l.height = t.height, l.style.width = o + "px", l.style.height = c + "px");
+            } catch  {}
+        }, []), C = a.useCallback(()=>{
+            const e = d.current;
+            if (e) try {
+                const n = e.pageCount();
+                if (n !== D) Nt(n), Je((t)=>t + 1);
+                else {
+                    const t = J;
+                    Me(t), t > 0 && Me(t - 1), t < n - 1 && Me(t + 1), Je((s)=>s + 1);
+                }
+            } catch (n) {
+                M(String(n));
+            }
+        }, [
+            D,
+            J,
+            Me
+        ]), w = a.useCallback((e)=>{
             const n = d.current;
             if (!n) {
-                B(null);
+                F(null);
                 return;
             }
             try {
-                const t = g(n.getCursorRect(e.secIdx, e.paraIdx, e.charOffset));
-                t && t.x !== void 0 ? (B({
+                const t = p(n.getCursorRect(e.secIdx, e.paraIdx, e.charOffset));
+                t && t.x !== void 0 ? (F({
                     pageIndex: t.pageIndex ?? 0,
                     x: t.x,
                     y: t.y,
                     height: t.height
-                }), ae(t.pageIndex ?? 0)) : B(null);
+                }), ue(t.pageIndex ?? 0)) : F(null);
             } catch  {
-                B(null);
+                F(null);
             }
-        }, []), O = s.useCallback((e)=>{
+        }, []), O = a.useCallback((e)=>{
             const n = d.current;
             if (n) {
                 try {
-                    const t = n.getCharPropertiesAt(e.secIdx, e.paraIdx, e.charOffset), a = g(t);
-                    if (a) {
-                        const o = a.fontFamily || "맑은 고딕", c = a.fontSize || 1e3;
-                        It(o), vt(String(Math.round(c / 100))), kr({
+                    const t = n.getCharPropertiesAt(e.secIdx, e.paraIdx, e.charOffset), s = p(t);
+                    if (s) {
+                        const o = s.fontFamily || "맑은 고딕", c = s.fontSize || 1e3;
+                        Bt(o), Mt(String(Math.round(c / 100))), Lr({
                             fontFamily: o,
                             fontSize: c,
-                            bold: !!a.bold,
-                            italic: !!a.italic,
-                            underline: !!a.underline,
-                            strikethrough: !!a.strikethrough,
-                            textColor: a.textColor ?? 0,
-                            highlight: a.highlight ?? He("#FFFF00")
+                            bold: !!s.bold,
+                            italic: !!s.italic,
+                            underline: !!s.underline,
+                            strikethrough: !!s.strikethrough,
+                            textColor: s.textColor ?? 0,
+                            highlight: s.highlight ?? Ve("#FFFF00")
                         });
                     }
                 } catch  {}
                 try {
-                    const t = n.getParaPropertiesAt(e.secIdx, e.paraIdx), a = g(t);
-                    a && Or({
-                        alignment: a.alignment || "justify",
-                        lineSpacing: a.lineSpacing || 160,
-                        marginLeft: a.marginLeft || 0,
-                        marginRight: a.marginRight || 0,
-                        indent: a.indent || 0
+                    const t = n.getParaPropertiesAt(e.secIdx, e.paraIdx), s = p(t);
+                    s && Mr({
+                        alignment: s.alignment || "justify",
+                        lineSpacing: s.lineSpacing || 160,
+                        marginLeft: s.marginLeft || 0,
+                        marginRight: s.marginRight || 0,
+                        indent: s.indent || 0
                     });
                 } catch  {}
             }
-        }, []), N = s.useCallback((e, n)=>{
+        }, []), N = a.useCallback((e, n)=>{
             const t = d.current;
             if (!t) {
-                $([]);
+                re([]);
                 return;
             }
-            let a = e.paraIdx, o = e.charOffset, c = n.paraIdx, l = n.charOffset;
-            (a > c || a === c && o > l) && ([a, c] = [
+            let s = e.paraIdx, o = e.charOffset, c = n.paraIdx, l = n.charOffset;
+            (s > c || s === c && o > l) && ([s, c] = [
                 c,
-                a
+                s
             ], [o, l] = [
                 l,
                 o
             ]);
             try {
-                const p = t.getSelectionRects(e.secIdx, a, o, c, l), f = JSON.parse(p);
-                $(Array.isArray(f) ? f : []);
+                const f = t.getSelectionRects(e.secIdx, s, o, c, l), g = JSON.parse(f);
+                re(Array.isArray(g) ? g : []);
             } catch  {
-                $([]);
+                re([]);
             }
-        }, []), b = s.useCallback((e, n = !0)=>{
-            m(e), n ? (x.current = null, k(!1), $([])) : x.current && N(x.current, e), j(e), O(e), gt(!0), Y.current?.focus();
+        }, []), y = a.useCallback((e, n = !0)=>{
+            m(e), n ? (x.current = null, S(!1), re([])) : x.current && N(x.current, e), w(e), O(e), Rt(!0), ie.current?.focus();
         }, [
             m,
-            j,
+            w,
             O,
             N
-        ]), h = s.useCallback(()=>{
+        ]), i = a.useCallback(()=>{
             const e = d.current;
             if (e) try {
                 const n = e.saveSnapshot();
-                if (K.current.push(n), K.current.length > Mn) {
-                    const t = K.current.shift();
+                if (Y.current.push(n), Y.current.length > Yn) {
+                    const t = Y.current.shift();
                     if (t !== void 0) try {
                         e.discardSnapshot(t);
                     } catch  {}
                 }
-                J.current.forEach((t)=>{
+                ne.current.forEach((t)=>{
                     try {
                         e.discardSnapshot(t);
                     } catch  {}
-                }), J.current = [], be(!0), ye(!1);
+                }), ne.current = [], ve(!0), ke(!1);
             } catch  {}
-        }, []), ee = s.useCallback(()=>{
+        }, []), K = a.useCallback(()=>{
             const e = d.current;
-            if (!e || K.current.length === 0) return;
-            const n = K.current.pop();
+            if (!e || Y.current.length === 0) return;
+            const n = Y.current.pop();
             try {
-                const a = e.saveSnapshot();
-                J.current.push(a), e.restoreSnapshot(n);
+                const s = e.saveSnapshot();
+                ne.current.push(s), e.restoreSnapshot(n);
                 try {
                     e.discardSnapshot(n);
                 } catch  {}
             } catch  {}
-            i(), be(K.current.length > 0), ye(!0);
-            const t = y.current;
-            j(t), O(t);
+            h(), ve(Y.current.length > 0), ke(!0);
+            const t = I.current;
+            w(t), O(t);
         }, [
-            i,
-            j,
+            h,
+            w,
             O
-        ]), te = s.useCallback(()=>{
+        ]), U = a.useCallback(()=>{
             const e = d.current;
-            if (!e || J.current.length === 0) return;
-            const n = J.current.pop();
+            if (!e || ne.current.length === 0) return;
+            const n = ne.current.pop();
             try {
-                const a = e.saveSnapshot();
-                K.current.push(a), e.restoreSnapshot(n);
+                const s = e.saveSnapshot();
+                Y.current.push(s), e.restoreSnapshot(n);
                 try {
                     e.discardSnapshot(n);
                 } catch  {}
             } catch  {}
-            i(), be(!0), ye(J.current.length > 0);
-            const t = y.current;
-            j(t), O(t);
+            h(), ve(!0), ke(ne.current.length > 0);
+            const t = I.current;
+            w(t), O(t);
         }, [
-            i,
-            j,
+            h,
+            w,
             O
-        ]), De = s.useCallback((e, n)=>{
+        ]), He = a.useCallback((e, n)=>{
             try {
                 e.convertToEditable();
             } catch  {}
             if (d.current && d.current !== e) try {
                 d.current.free();
             } catch  {}
-            d.current = e, K.current = [], J.current = [], be(!1), ye(!1), Ir(n), gt(!1), bt(null), B(null), x.current = null, k(!1), $([]), ae(0), L(""), jt.current = {}, W("body"), z.current = null, de.current = null, he.current = null, T(null), i();
+            d.current = e, Y.current = [], ne.current = [], ve(!1), ke(!1), Fr(n), Rt(!1), Dt(null), F(null), x.current = null, S(!1), re([]), ue(0), M(""), Qe.current = {}, T("body"), A.current = null, X.current = null, Z.current = null, H(null), h();
             try {
-                const t = g(e.getCaretPosition());
+                const t = p(e.getCaretPosition());
                 if (t && t.paragraphIndex !== void 0) {
-                    const a = {
+                    const s = {
                         secIdx: t.sectionIndex ?? 0,
                         paraIdx: t.paragraphIndex,
                         charOffset: t.charOffset ?? 0
                     };
-                    m(a), setTimeout(()=>j(a), 80);
+                    m(s), setTimeout(()=>w(s), 80);
                 } else {
-                    const a = {
+                    const s = {
                         secIdx: 0,
                         paraIdx: 0,
                         charOffset: 0
                     };
-                    m(a), setTimeout(()=>j(a), 80);
+                    m(s), setTimeout(()=>w(s), 80);
                 }
             } catch  {
                 const t = {
@@ -348,157 +382,132 @@ let __tla = Promise.all([
                     paraIdx: 0,
                     charOffset: 0
                 };
-                m(t), setTimeout(()=>j(t), 80);
+                m(t), setTimeout(()=>w(t), 80);
             }
         }, [
-            i,
+            h,
             m,
-            j
-        ]), Zt = s.useCallback(async ()=>{
-            if (v) try {
-                const { HwpDocument: e } = await yr(async ()=>{
+            w
+        ]), ir = a.useCallback(async ()=>{
+            if (k) try {
+                const { HwpDocument: e } = await Dr(async ()=>{
                     const { HwpDocument: t } = await import("./rhwp-BgOEd_j0.js");
                     return {
                         HwpDocument: t
                     };
                 }, []), n = e.createEmpty();
-                g(n.createBlankDocument()), De(n, "새 문서.hwp");
+                p(n.createBlankDocument()), He(n, "새 문서.hwp");
             } catch (e) {
-                L(`새 문서 생성 실패: ${e.message}`);
+                M(`새 문서 생성 실패: ${e.message}`);
             }
         }, [
-            v,
-            De
-        ]), Ee = s.useCallback(async (e)=>{
-            if (!v) return;
+            k,
+            He
+        ]), ze = a.useCallback(async (e)=>{
+            if (!k) return;
             const n = e.name.split(".").pop()?.toLowerCase();
             if (n !== "hwp" && n !== "hwpx") {
-                L(".hwp 또는 .hwpx 파일만 지원합니다.");
+                M(".hwp 또는 .hwpx 파일만 지원합니다.");
                 return;
             }
             try {
-                const { HwpDocument: t } = await yr(async ()=>{
+                const { HwpDocument: t } = await Dr(async ()=>{
                     const { HwpDocument: c } = await import("./rhwp-BgOEd_j0.js");
                     return {
                         HwpDocument: c
                     };
-                }, []), a = new Uint8Array(await e.arrayBuffer()), o = new t(a);
-                De(o, e.name);
+                }, []), s = new Uint8Array(await e.arrayBuffer()), o = new t(s);
+                He(o, e.name);
             } catch (t) {
-                L(`파일 열기 실패: ${t.message}`);
+                M(`파일 열기 실패: ${t.message}`);
             }
         }, [
-            v,
-            De
-        ]), Qt = s.useCallback(()=>{
+            k,
+            He
+        ]), dr = a.useCallback(()=>{
             const e = document.createElement("input");
             e.type = "file", e.accept = ".hwp,.hwpx", e.onchange = ()=>{
-                e.files?.[0] && Ee(e.files[0]);
+                e.files?.[0] && ze(e.files[0]);
             }, e.click();
         }, [
-            Ee
-        ]), Gt = s.useCallback((e)=>{
-            e.preventDefault(), Ue(!0);
-        }, []), qt = s.useCallback(()=>Ue(!1), []), er = s.useCallback((e)=>{
-            e.preventDefault(), Ue(!1);
+            ze
+        ]), hr = a.useCallback((e)=>{
+            e.preventDefault(), Ge(!0);
+        }, []), ur = a.useCallback(()=>Ge(!1), []), xr = a.useCallback((e)=>{
+            e.preventDefault(), Ge(!1);
             const n = e.dataTransfer.files[0];
-            n && Ee(n);
+            n && ze(n);
         }, [
-            Ee
-        ]), Ur = s.useCallback((e, n)=>{
-            const t = d.current;
-            if (!t) return;
-            const a = oe.current[n];
-            if (!a) return;
-            const o = le.current, c = a.getBoundingClientRect(), l = (e.clientX - c.left) / c.width * a.width / o, p = (e.clientY - c.top) / c.height * a.height / o;
-            try {
-                const f = t.hitTest(n, l, p), w = g(f);
-                if (!w) return;
-                const E = w.paragraphIndex ?? w.paraIndex ?? 0, P = {
-                    secIdx: w.sectionIndex ?? 0,
-                    paraIdx: E,
-                    charOffset: w.charOffset ?? 0
-                };
-                e.shiftKey && x.current ? (m(P), N(x.current, P), k(!0), j(P), O(P)) : (x.current = {
-                    ...P
-                }, b(P, !0));
-            } catch  {}
-            Y.current?.focus();
-        }, [
-            m,
-            b,
-            N,
-            j,
-            O
-        ]), H = s.useCallback(()=>{
-            const e = d.current, n = x.current, t = y.current;
+            ze
+        ]), $ = a.useCallback(()=>{
+            const e = d.current, n = x.current, t = I.current;
             if (!e || !n) return null;
-            let a = n.paraIdx, o = n.charOffset, c = t.paraIdx, l = t.charOffset;
-            (a > c || a === c && o > l) && ([a, c] = [
+            let s = n.paraIdx, o = n.charOffset, c = t.paraIdx, l = t.charOffset;
+            (s > c || s === c && o > l) && ([s, c] = [
                 c,
-                a
+                s
             ], [o, l] = [
                 l,
                 o
             ]);
             try {
-                const p = e.deleteRange(t.secIdx, a, o, c, l), f = g(p);
-                return x.current = null, k(!1), $([]), f?.ok ? {
+                const f = e.deleteRange(t.secIdx, s, o, c, l), g = p(f);
+                return x.current = null, S(!1), re([]), g?.ok ? {
                     secIdx: t.secIdx,
-                    paraIdx: f.paraIdx,
-                    charOffset: f.charOffset
+                    paraIdx: g.paraIdx,
+                    charOffset: g.charOffset
                 } : {
                     ...n
                 };
             } catch  {
-                return x.current = null, k(!1), $([]), {
+                return x.current = null, S(!1), re([]), {
                     ...n
                 };
             }
-        }, []), _ = s.useCallback((e)=>{
+        }, []), q = a.useCallback((e)=>{
             const n = d.current;
             if (!n) return;
-            h();
-            let t = y.current;
+            i();
+            let t = I.current;
             if (x.current) {
-                const a = H();
-                a && (t = a);
+                const s = $();
+                s && (t = s);
             }
             try {
-                const a = n.insertText(t.secIdx, t.paraIdx, t.charOffset, e), c = g(a)?.charOffset ?? t.charOffset + e.length, l = {
+                const s = n.insertText(t.secIdx, t.paraIdx, t.charOffset, e), c = p(s)?.charOffset ?? t.charOffset + e.length, l = {
                     ...t,
                     charOffset: c
                 };
-                i(), b(l);
-            } catch (a) {
-                console.error("insertText failed:", a);
+                C(), y(l);
+            } catch (s) {
+                console.error("insertText failed:", s);
             }
         }, [
-            h,
-            H,
-            b,
-            i
-        ]), st = s.useCallback(()=>{
+            i,
+            $,
+            y,
+            C
+        ]), ft = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
             if (x.current) {
-                h();
-                const t = H();
-                t && b(t), i();
+                i();
+                const t = $();
+                t && y(t), C();
                 return;
             }
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
                 if (n.charOffset > 0) {
-                    const t = e.deleteText(n.secIdx, n.paraIdx, n.charOffset - 1, 1), o = g(t)?.charOffset ?? n.charOffset - 1;
-                    b({
+                    const t = e.deleteText(n.secIdx, n.paraIdx, n.charOffset - 1, 1), o = p(t)?.charOffset ?? n.charOffset - 1;
+                    y({
                         ...n,
                         charOffset: o
                     });
                 } else if (n.paraIdx > 0) {
-                    const t = e.getParagraphLength(n.secIdx, n.paraIdx - 1), a = e.mergeParagraph(n.secIdx, n.paraIdx), o = g(a);
-                    b({
+                    const t = e.getParagraphLength(n.secIdx, n.paraIdx - 1), s = e.mergeParagraph(n.secIdx, n.paraIdx), o = p(s);
+                    y({
                         secIdx: n.secIdx,
                         paraIdx: o?.paraIdx ?? n.paraIdx - 1,
                         charOffset: o?.charOffset ?? t
@@ -507,33 +516,33 @@ let __tla = Promise.all([
             } catch (t) {
                 console.error("deleteCharBefore failed:", t);
             }
-            i();
+            C();
         }, [
-            H,
-            h,
-            b,
-            i
-        ]), tr = s.useCallback(()=>{
+            $,
+            i,
+            y,
+            C
+        ]), fr = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
             if (x.current) {
-                h();
-                const t = H();
-                t && b(t), i();
+                i();
+                const t = $();
+                t && y(t), C();
                 return;
             }
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
                 const t = e.getParagraphLength(n.secIdx, n.paraIdx);
-                if (n.charOffset < t) e.deleteText(n.secIdx, n.paraIdx, n.charOffset, 1), b({
+                if (n.charOffset < t) e.deleteText(n.secIdx, n.paraIdx, n.charOffset, 1), y({
                     ...n
                 });
                 else {
-                    const a = e.getParagraphCount(n.secIdx);
-                    if (n.paraIdx < a - 1) {
-                        const o = e.mergeParagraph(n.secIdx, n.paraIdx + 1), c = g(o);
-                        b({
+                    const s = e.getParagraphCount(n.secIdx);
+                    if (n.paraIdx < s - 1) {
+                        const o = e.mergeParagraph(n.secIdx, n.paraIdx + 1), c = p(o);
+                        y({
                             secIdx: n.secIdx,
                             paraIdx: c?.paraIdx ?? n.paraIdx,
                             charOffset: c?.charOffset ?? n.charOffset
@@ -543,31 +552,31 @@ let __tla = Promise.all([
             } catch (t) {
                 console.error("deleteCharAfter failed:", t);
             }
-            i();
+            C();
         }, [
-            H,
-            h,
-            b,
-            i
-        ]), S = s.useCallback((e)=>{
+            $,
+            i,
+            y,
+            C
+        ]), P = a.useCallback((e)=>{
             const n = d.current;
             if (!n) return;
-            const t = y.current;
-            if (h(), x.current) {
-                const a = x.current;
-                let o = a.paraIdx, c = a.charOffset, l = t.paraIdx, p = t.charOffset;
-                (o > l || o === l && c > p) && ([o, l] = [
+            const t = I.current;
+            if (i(), x.current) {
+                const s = x.current;
+                let o = s.paraIdx, c = s.charOffset, l = t.paraIdx, f = t.charOffset;
+                (o > l || o === l && c > f) && ([o, l] = [
                     l,
                     o
-                ], [c, p] = [
-                    p,
+                ], [c, f] = [
+                    f,
                     c
                 ]);
                 try {
                     n.beginBatch();
-                    for(let f = o; f <= l; f++){
-                        const w = f === o ? c : 0, E = f === l ? p : n.getParagraphLength(t.secIdx, f);
-                        n.applyCharFormat(t.secIdx, f, w, E, JSON.stringify(e));
+                    for(let g = o; g <= l; g++){
+                        const b = g === o ? c : 0, v = g === l ? f : n.getParagraphLength(t.secIdx, g);
+                        n.applyCharFormat(t.secIdx, g, b, v, JSON.stringify(e));
                     }
                     n.endBatch();
                 } catch  {
@@ -576,84 +585,85 @@ let __tla = Promise.all([
                     } catch  {}
                 }
             } else try {
-                const a = n.getParagraphLength(t.secIdx, t.paraIdx), o = Math.min(t.charOffset + 1, a);
-                t.charOffset < o && n.applyCharFormat(t.secIdx, t.paraIdx, t.charOffset, o, JSON.stringify(e));
+                const s = n.getParagraphLength(t.secIdx, t.paraIdx);
+                let o = t.charOffset, c = t.charOffset + 1;
+                t.charOffset >= s && t.charOffset > 0 && (o = t.charOffset - 1, c = t.charOffset), o < c && n.applyCharFormat(t.secIdx, t.paraIdx, o, c, JSON.stringify(e));
             } catch  {}
-            i(), O(t);
+            C(), O(t);
         }, [
-            h,
             i,
+            C,
             O
-        ]), re = s.useCallback((e)=>{
+        ]), he = a.useCallback((e)=>{
             const n = d.current;
             if (!n) return;
-            const t = y.current;
-            h();
+            const t = I.current;
+            i();
             try {
                 n.applyParaFormat(t.secIdx, t.paraIdx, JSON.stringify(e));
             } catch  {}
-            i(), O(t);
+            h(), O(t);
         }, [
-            h,
             i,
+            h,
             O
-        ]), at = s.useCallback(()=>S({
-                bold: !D.bold
+        ]), pt = a.useCallback(()=>P({
+                bold: !E.bold
             }), [
-            S,
-            D.bold
-        ]), ct = s.useCallback(()=>S({
-                italic: !D.italic
+            P,
+            E.bold
+        ]), gt = a.useCallback(()=>P({
+                italic: !E.italic
             }), [
-            S,
-            D.italic
-        ]), ot = s.useCallback(()=>S({
-                underline: !D.underline
+            P,
+            E.italic
+        ]), yt = a.useCallback(()=>P({
+                underline: !E.underline
             }), [
-            S,
-            D.underline
-        ]), _r = s.useCallback(()=>S({
-                strikethrough: !D.strikethrough
+            P,
+            E.underline
+        ]), rn = a.useCallback(()=>P({
+                strikethrough: !E.strikethrough
             }), [
-            S,
-            D.strikethrough
-        ]), Vr = s.useCallback((e)=>{
-            S({
+            P,
+            E.strikethrough
+        ]), nn = a.useCallback((e)=>{
+            P({
                 fontFamily: e
-            }), It(e), je(!1);
+            }), Bt(e), Ne(!1);
         }, [
-            S
-        ]), Jr = s.useCallback((e)=>{
-            S({
+            P
+        ]), sn = a.useCallback((e)=>{
+            P({
                 fontSize: Math.round(e * 100)
-            }), vt(String(e)), me(!1);
+            }), Mt(String(e)), Se(!1);
         }, [
-            S
-        ]), Yr = s.useCallback((e)=>{
-            re({
+            P
+        ]), an = a.useCallback((e)=>{
+            he({
                 alignment: e
             });
         }, [
-            re
-        ]), Xr = s.useCallback((e)=>{
-            re({
+            he
+        ]), cn = a.useCallback((e)=>{
+            he({
                 lineSpacing: e
-            }), ke(!1);
+            }), Ee(!1);
         }, [
-            re
-        ]), rr = s.useCallback((e)=>{
-            const n = Math.max(0, ge.marginLeft + e * 800);
-            re({
+            he
+        ]), pr = a.useCallback((e)=>{
+            const n = Math.max(0, Ce.marginLeft + e * 800);
+            he({
                 marginLeft: n
             });
         }, [
-            re,
-            ge.marginLeft
-        ]), Zr = s.useCallback(()=>{
+            he,
+            Ce.marginLeft
+        ]), on = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
                 const t = e.ensureDefaultBullet("●");
                 e.applyParaFormat(n.secIdx, n.paraIdx, JSON.stringify({
@@ -661,15 +671,15 @@ let __tla = Promise.all([
                     numberingLevel: 0
                 }));
             } catch  {}
-            i();
+            h();
         }, [
-            h,
-            i
-        ]), Qr = s.useCallback(()=>{
+            i,
+            h
+        ]), ln = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
                 const t = e.ensureDefaultNumbering();
                 e.applyParaFormat(n.secIdx, n.paraIdx, JSON.stringify({
@@ -677,160 +687,173 @@ let __tla = Promise.all([
                     numberingLevel: 0
                 }));
             } catch  {}
-            i();
+            h();
         }, [
-            h,
-            i
-        ]), Gr = s.useCallback((e)=>{
-            S({
-                textColor: He(e)
-            }), Ie(!1);
+            i,
+            h
+        ]), dn = a.useCallback((e)=>{
+            P({
+                textColor: Ve(e)
+            }), Pe(!1);
         }, [
-            S
-        ]), qr = s.useCallback((e)=>{
-            S({
-                highlight: He(e)
-            }), Ce(!1);
+            P
+        ]), hn = a.useCallback((e)=>{
+            P({
+                highlight: Ve(e)
+            }), Re(!1);
         }, [
-            S
-        ]), en = s.useCallback(()=>{
+            P
+        ]), un = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
-                const t = e.createTable(n.secIdx, n.paraIdx, n.charOffset, Ge, qe), a = g(t);
-                a?.ok && b({
+                const t = e.createTable(n.secIdx, n.paraIdx, n.charOffset, ct, ot), s = p(t);
+                s?.ok && y({
                     ...n,
-                    paraIdx: a.paraIdx ?? n.paraIdx,
+                    paraIdx: s.paraIdx ?? n.paraIdx,
                     charOffset: 0
                 });
             } catch (t) {
-                L(t.message);
+                M(t.message);
             }
-            i(), Oe(!1);
+            h(), Fe(!1);
         }, [
-            h,
-            b,
             i,
-            Ge,
-            qe
-        ]), tn = s.useCallback(()=>{
+            y,
+            h,
+            ct,
+            ot
+        ]), xn = a.useCallback(()=>{
             const e = document.createElement("input");
             e.type = "file", e.accept = "image/*", e.onchange = async (n)=>{
                 const t = n.target.files?.[0];
                 if (!t) return;
-                const a = d.current;
-                if (!a) return;
-                const o = y.current;
-                h();
+                const s = d.current;
+                if (!s) return;
+                const o = I.current;
+                i();
                 try {
-                    const c = new Uint8Array(await t.arrayBuffer()), l = new Image, p = URL.createObjectURL(t);
+                    const c = new Uint8Array(await t.arrayBuffer()), l = new Image, f = URL.createObjectURL(t);
                     l.onload = ()=>{
-                        URL.revokeObjectURL(p);
-                        const f = l.naturalWidth, w = l.naturalHeight, E = Math.min(Math.round(f / 96 * 7200), 48e3), P = Math.round(w / f * E), Me = t.name.split(".").pop()?.toLowerCase() || "png";
+                        URL.revokeObjectURL(f);
+                        const g = l.naturalWidth, b = l.naturalHeight, v = Math.min(Math.round(g / 96 * 7200), 48e3), ee = Math.round(b / g * v), be = t.name.split(".").pop()?.toLowerCase() || "png";
                         try {
-                            a.insertPicture(o.secIdx, o.paraIdx, o.charOffset, c, E, P, f, w, Me, t.name), b({
+                            s.insertPicture(o.secIdx, o.paraIdx, o.charOffset, c, v, ee, g, b, be, t.name), y({
                                 ...o,
                                 charOffset: o.charOffset + 1
                             });
-                        } catch (ne) {
-                            L(ne.message);
+                        } catch (B) {
+                            M(B.message);
                         }
-                        i();
-                    }, l.src = p;
+                        h();
+                    }, l.src = f;
                 } catch (c) {
-                    L(c.message);
+                    M(c.message);
                 }
             }, e.click();
         }, [
-            h,
-            b,
-            i
-        ]), rn = s.useCallback(()=>{
+            i,
+            y,
+            h
+        ]), fn = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
                 e.insertPageBreak(n.secIdx, n.paraIdx, n.charOffset);
             } catch  {}
-            i();
+            h();
         }, [
-            h,
-            i
-        ]), nn = s.useCallback((e, n)=>{
+            i,
+            h
+        ]), pn = a.useCallback((e, n)=>{
             if (e.button !== 0) return;
-            const t = q(e, n);
-            t && (St(!0), x.current = {
+            const t = G(e, n);
+            t && (dt(!0), Wt.current = {
                 ...t
-            }, m(t), k(!1), $([]), j(t), O(t), Y.current?.focus());
+            }, x.current = {
+                ...t
+            }, m(t), w(t), O(t), ie.current?.focus());
         }, [
-            q,
+            G,
             m,
-            j,
+            w,
             O
-        ]), sn = s.useCallback((e, n)=>{
-            if (!Nt) return;
-            const t = q(e, n);
-            !t || !x.current || (m(t), N(x.current, t), k(!0), j(t));
+        ]), gn = a.useCallback((e, n)=>{
+            if (!de) return;
+            const t = G(e, n);
+            !t || !x.current || (m(t), N(x.current, t), S(!0), w(t));
         }, [
-            Nt,
-            q,
+            de,
+            G,
             m,
             N,
-            j
-        ]), an = s.useCallback(()=>{
-            St(!1);
-        }, []), cn = s.useCallback((e, n)=>{
+            w
+        ]), yn = a.useCallback((e, n)=>{
+            if (!de) return;
+            dt(!1);
+            const t = G(e, n), s = Wt.current;
+            s && t && s.secIdx === t.secIdx && s.paraIdx === t.paraIdx && s.charOffset === t.charOffset ? e.shiftKey && x.current ? (m(t), N(x.current, t), S(!0), w(t), O(t)) : y(t, !0) : t && (m(t), w(t), O(t));
+        }, [
+            de,
+            G,
+            m,
+            y,
+            N,
+            w,
+            O
+        ]), bn = a.useCallback((e, n)=>{
             e.preventDefault();
             const t = d.current;
             if (!t) return;
-            const a = q(e, n);
-            if (!a) return;
+            const s = G(e, n);
+            if (!s) return;
             let o = "body", c;
             try {
-                const l = t.getControlTextPositions(a.secIdx, a.paraIdx), f = JSON.parse(l)?.find((w)=>w.type === "table" && w.charOffset <= a.charOffset);
-                if (f) {
+                const l = t.getControlTextPositions(s.secIdx, s.paraIdx), g = JSON.parse(l)?.find((b)=>b.type === "table" && b.charOffset <= s.charOffset);
+                if (g) {
                     o = "table";
                     try {
-                        const w = t.getTableCellBboxes(a.secIdx, a.paraIdx, f.controlIdx), E = JSON.parse(w), P = oe.current[n];
-                        if (P) {
-                            const Me = le.current, ne = P.getBoundingClientRect(), gr = (e.clientX - ne.left) / ne.width * P.width / Me, br = (e.clientY - ne.top) / ne.height * P.height / Me, ze = E.find((se)=>gr >= se.x && gr <= se.x + se.w && br >= se.y && br <= se.y + se.h);
-                            ze && (c = {
-                                secIdx: a.secIdx,
-                                paraIdx: a.paraIdx,
-                                controlIdx: f.controlIdx,
-                                row: ze.row,
-                                col: ze.col,
-                                cellIdx: ze.cellIdx
+                        const b = t.getTableCellBboxes(s.secIdx, s.paraIdx, g.controlIdx), v = JSON.parse(b), ee = oe.current[n];
+                        if (ee) {
+                            const be = le.current, B = ee.getBoundingClientRect(), Ie = (e.clientX - B.left) / B.width * ee.width / be, we = (e.clientY - B.top) / B.height * ee.height / be, _ = v.find((L)=>Ie >= L.x && Ie <= L.x + L.w && we >= L.y && we <= L.y + L.h);
+                            _ && (c = {
+                                secIdx: s.secIdx,
+                                paraIdx: s.paraIdx,
+                                controlIdx: g.controlIdx,
+                                row: _.row,
+                                col: _.col,
+                                cellIdx: _.cellIdx
                             });
                         }
                     } catch  {}
                 }
             } catch  {}
-            T({
+            H({
                 x: e.clientX,
                 y: e.clientY,
                 type: o,
                 tableInfo: c
             });
         }, [
-            q
-        ]), Pe = s.useCallback(()=>T(null), []), lt = s.useCallback((e, n, t, a)=>{
-            W("cell"), z.current = {
+            G
+        ]), We = a.useCallback(()=>H(null), []), bt = a.useCallback((e, n, t, s)=>{
+            T("cell"), A.current = {
                 secIdx: e,
                 parentParaIdx: n,
                 controlIdx: t,
-                cellIdx: a,
+                cellIdx: s,
                 cellParaIdx: 0,
                 charOffset: 0
             };
             try {
                 const o = d.current;
                 if (o) {
-                    const c = g(o.getCursorRectInCell(e, n, t, a, 0, 0));
-                    c && c.x !== void 0 && B({
+                    const c = p(o.getCursorRectInCell(e, n, t, s, 0, 0));
+                    c && c.x !== void 0 && F({
                         pageIndex: c.pageIndex ?? 0,
                         x: c.x,
                         y: c.y,
@@ -838,16 +861,16 @@ let __tla = Promise.all([
                     });
                 }
             } catch  {}
-        }, []), Fe = s.useCallback((e)=>{
-            const n = d.current, t = z.current;
+        }, []), Ae = a.useCallback((e)=>{
+            const n = d.current, t = A.current;
             if (!(!n || !t)) {
-                h();
+                i();
                 try {
-                    const a = n.insertTextInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset, e), o = g(a);
-                    t.charOffset = o?.charOffset ?? t.charOffset + e.length, i();
+                    const s = n.insertTextInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset, e), o = p(s);
+                    t.charOffset = o?.charOffset ?? t.charOffset + e.length, h();
                     try {
-                        const c = g(n.getCursorRectInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset));
-                        c && c.x !== void 0 && B({
+                        const c = p(n.getCursorRectInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset));
+                        c && c.x !== void 0 && F({
                             pageIndex: c.pageIndex ?? 0,
                             x: c.x,
                             y: c.y,
@@ -857,142 +880,142 @@ let __tla = Promise.all([
                 } catch  {}
             }
         }, [
-            h,
-            i
-        ]), it = s.useCallback((e)=>{
-            const n = d.current, t = z.current;
+            i,
+            h
+        ]), It = a.useCallback((e)=>{
+            const n = d.current, t = A.current;
             if (!(!n || !t)) {
-                h();
+                i();
                 try {
                     if (!e && t.charOffset > 0) n.deleteTextInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset - 1, 1), t.charOffset--;
                     else if (!e && t.charOffset === 0 && t.cellParaIdx > 0) {
-                        const a = n.mergeParagraphInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx), o = g(a);
+                        const s = n.mergeParagraphInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx), o = p(s);
                         t.cellParaIdx = o?.paraIdx ?? t.cellParaIdx - 1, t.charOffset = o?.charOffset ?? 0;
                     } else e && n.deleteTextInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset, 1);
-                    i();
+                    h();
                     try {
-                        const a = g(n.getCursorRectInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset));
-                        a && a.x !== void 0 && B({
-                            pageIndex: a.pageIndex ?? 0,
-                            x: a.x,
-                            y: a.y,
-                            height: a.height
+                        const s = p(n.getCursorRectInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset));
+                        s && s.x !== void 0 && F({
+                            pageIndex: s.pageIndex ?? 0,
+                            x: s.x,
+                            y: s.y,
+                            height: s.height
                         });
                     } catch  {}
                 } catch  {}
             }
         }, [
-            h,
-            i
-        ]), nr = s.useCallback(()=>{
-            const e = d.current, n = z.current;
+            i,
+            h
+        ]), gr = a.useCallback(()=>{
+            const e = d.current, n = A.current;
             if (!(!e || !n)) {
-                h();
+                i();
                 try {
-                    const t = e.splitParagraphInCell(n.secIdx, n.parentParaIdx, n.controlIdx, n.cellIdx, n.cellParaIdx, n.charOffset), a = g(t);
-                    n.cellParaIdx = a?.paraIdx ?? n.cellParaIdx + 1, n.charOffset = 0, i();
+                    const t = e.splitParagraphInCell(n.secIdx, n.parentParaIdx, n.controlIdx, n.cellIdx, n.cellParaIdx, n.charOffset), s = p(t);
+                    n.cellParaIdx = s?.paraIdx ?? n.cellParaIdx + 1, n.charOffset = 0, h();
                 } catch  {}
             }
         }, [
-            h,
-            i
-        ]), Be = s.useCallback((e)=>{
-            const n = d.current, t = z.current;
+            i,
+            h
+        ]), Ke = a.useCallback((e)=>{
+            const n = d.current, t = A.current;
             if (!(!n || !t)) {
-                h();
+                i();
                 try {
                     n.applyCharFormatInCell(t.secIdx, t.parentParaIdx, t.controlIdx, t.cellIdx, t.cellParaIdx, t.charOffset, t.charOffset + 1, JSON.stringify(e));
                 } catch  {}
-                i();
+                h();
             }
         }, [
-            h,
-            i
-        ]), sr = s.useCallback((e)=>{
-            const n = I?.tableInfo, t = d.current;
+            i,
+            h
+        ]), yr = a.useCallback((e)=>{
+            const n = j?.tableInfo, t = d.current;
             if (!(!t || !n)) {
-                h();
+                i();
                 try {
                     t.insertTableRow(n.secIdx, n.paraIdx, n.controlIdx, n.row, e);
                 } catch  {}
-                i(), T(null);
+                h(), H(null);
             }
         }, [
-            I,
-            h,
-            i
-        ]), on = s.useCallback(()=>{
-            const e = I?.tableInfo, n = d.current;
+            j,
+            i,
+            h
+        ]), In = a.useCallback(()=>{
+            const e = j?.tableInfo, n = d.current;
             if (!(!n || !e)) {
-                h();
+                i();
                 try {
                     n.deleteTableRow(e.secIdx, e.paraIdx, e.controlIdx, e.row);
                 } catch  {}
-                i(), T(null);
+                h(), H(null);
             }
         }, [
-            I,
-            h,
-            i
-        ]), ar = s.useCallback((e)=>{
-            const n = I?.tableInfo, t = d.current;
+            j,
+            i,
+            h
+        ]), br = a.useCallback((e)=>{
+            const n = j?.tableInfo, t = d.current;
             if (!(!t || !n)) {
-                h();
+                i();
                 try {
                     t.insertTableColumn(n.secIdx, n.paraIdx, n.controlIdx, n.col, e);
                 } catch  {}
-                i(), T(null);
+                h(), H(null);
             }
         }, [
-            I,
-            h,
-            i
-        ]), ln = s.useCallback(()=>{
-            const e = I?.tableInfo, n = d.current;
+            j,
+            i,
+            h
+        ]), wn = a.useCallback(()=>{
+            const e = j?.tableInfo, n = d.current;
             if (!(!n || !e)) {
-                h();
+                i();
                 try {
                     n.deleteTableColumn(e.secIdx, e.paraIdx, e.controlIdx, e.col);
                 } catch  {}
-                i(), T(null);
+                h(), H(null);
             }
         }, [
-            I,
-            h,
-            i
-        ]), dn = s.useCallback(()=>{
-            const e = I?.tableInfo, n = d.current;
+            j,
+            i,
+            h
+        ]), mn = a.useCallback(()=>{
+            const e = j?.tableInfo, n = d.current;
             if (!(!n || !e)) {
-                h();
+                i();
                 try {
                     n.mergeTableCells(e.secIdx, e.paraIdx, e.controlIdx, e.row, e.col, e.row, e.col + 1);
                 } catch  {}
-                i(), T(null);
+                h(), H(null);
             }
         }, [
-            I,
-            h,
-            i
-        ]), hn = s.useCallback(()=>{
-            const e = I?.tableInfo, n = d.current;
+            j,
+            i,
+            h
+        ]), jn = a.useCallback(()=>{
+            const e = j?.tableInfo, n = d.current;
             if (!(!n || !e)) {
-                h();
+                i();
                 try {
                     n.splitTableCell(e.secIdx, e.paraIdx, e.controlIdx, e.row, e.col);
                 } catch  {}
-                i(), T(null);
+                h(), H(null);
             }
         }, [
-            I,
-            h,
-            i
-        ]), dt = s.useCallback((e, n)=>{
+            j,
+            i,
+            h
+        ]), wt = a.useCallback((e, n)=>{
             const t = d.current;
             if (t) {
                 try {
                     t.createHeaderFooter(e, n, 0);
                 } catch  {}
-                W(n ? "header" : "footer"), de.current = {
+                T(n ? "header" : "footer"), X.current = {
                     secIdx: e,
                     isHeader: n,
                     applyTo: 0,
@@ -1000,25 +1023,25 @@ let __tla = Promise.all([
                     charOffset: 0
                 };
                 try {
-                    const a = g(t.getCursorRectInHeaderFooter(e, n, 0, 0, 0, 0));
-                    a && a.x !== void 0 && B({
-                        pageIndex: a.pageIndex ?? 0,
-                        x: a.x,
-                        y: a.y,
-                        height: a.height
+                    const s = p(t.getCursorRectInHeaderFooter(e, n, 0, 0, 0, 0));
+                    s && s.x !== void 0 && F({
+                        pageIndex: s.pageIndex ?? 0,
+                        x: s.x,
+                        y: s.y,
+                        height: s.height
                     });
                 } catch  {}
             }
-        }, []), Te = s.useCallback((e)=>{
-            const n = d.current, t = de.current;
+        }, []), Ue = a.useCallback((e)=>{
+            const n = d.current, t = X.current;
             if (!(!n || !t)) {
-                h();
+                i();
                 try {
-                    const a = n.insertTextInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx, t.charOffset, e), o = g(a);
-                    t.charOffset = o?.charOffset ?? t.charOffset + e.length, i();
+                    const s = n.insertTextInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx, t.charOffset, e), o = p(s);
+                    t.charOffset = o?.charOffset ?? t.charOffset + e.length, h();
                     try {
-                        const c = g(n.getCursorRectInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx, t.charOffset, 0));
-                        c && c.x !== void 0 && B({
+                        const c = p(n.getCursorRectInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx, t.charOffset, 0));
+                        c && c.x !== void 0 && F({
                             pageIndex: c.pageIndex ?? 0,
                             x: c.x,
                             y: c.y,
@@ -1028,37 +1051,37 @@ let __tla = Promise.all([
                 } catch  {}
             }
         }, [
-            h,
-            i
-        ]), un = s.useCallback(()=>{
+            i,
+            h
+        ]), Cn = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
-                const t = e.insertFootnote(n.secIdx, n.paraIdx, n.charOffset), a = g(t);
-                a?.ok && (W("footnote"), he.current = {
+                const t = e.insertFootnote(n.secIdx, n.paraIdx, n.charOffset), s = p(t);
+                s?.ok && (T("footnote"), Z.current = {
                     secIdx: n.secIdx,
                     paraIdx: n.paraIdx,
-                    controlIdx: a.controlIdx ?? 0,
+                    controlIdx: s.controlIdx ?? 0,
                     fnParaIdx: 0,
                     charOffset: 0
                 });
             } catch  {}
-            i();
+            h();
         }, [
-            h,
-            i
-        ]), Le = s.useCallback((e)=>{
-            const n = d.current, t = he.current;
+            i,
+            h
+        ]), $e = a.useCallback((e)=>{
+            const n = d.current, t = Z.current;
             if (!(!n || !t)) {
-                h();
+                i();
                 try {
-                    const a = n.insertTextInFootnote(t.secIdx, t.paraIdx, t.controlIdx, t.fnParaIdx, t.charOffset, e), o = g(a);
-                    t.charOffset = o?.charOffset ?? t.charOffset + e.length, i();
+                    const s = n.insertTextInFootnote(t.secIdx, t.paraIdx, t.controlIdx, t.fnParaIdx, t.charOffset, e), o = p(s);
+                    t.charOffset = o?.charOffset ?? t.charOffset + e.length, h();
                     try {
-                        const c = g(n.getCursorRectInFootnote(0, t.controlIdx, t.fnParaIdx, t.charOffset));
-                        c && c.x !== void 0 && B({
+                        const c = p(n.getCursorRectInFootnote(0, t.controlIdx, t.fnParaIdx, t.charOffset));
+                        c && c.x !== void 0 && F({
                             pageIndex: c.pageIndex ?? 0,
                             x: c.x,
                             y: c.y,
@@ -1068,13 +1091,13 @@ let __tla = Promise.all([
                 } catch  {}
             }
         }, [
-            h,
-            i
-        ]), xn = s.useCallback(()=>{
+            i,
+            h
+        ]), vn = a.useCallback(()=>{
             const e = d.current;
             if (e) try {
-                const n = e.getPageDef(0), t = g(n);
-                t && U({
+                const n = e.getPageDef(0), t = p(n);
+                t && Q({
                     width: t.width ?? 59528,
                     height: t.height ?? 84188,
                     marginTop: t.marginTop ?? 5669,
@@ -1084,45 +1107,45 @@ let __tla = Promise.all([
                     landscape: !!t.landscape
                 });
             } catch  {}
-        }, []), pn = s.useCallback(()=>{
+        }, []), kn = a.useCallback(()=>{
             const e = d.current;
             if (e) {
-                h();
+                i();
                 try {
-                    e.setPageDef(0, JSON.stringify(A));
+                    e.setPageDef(0, JSON.stringify(V));
                 } catch  {}
-                i(), ue(!1);
+                h(), pe(!1);
             }
         }, [
-            A,
-            h,
-            i
-        ]), fn = s.useCallback(()=>{
+            V,
+            i,
+            h
+        ]), On = a.useCallback(()=>{
             const e = d.current;
             if (e) try {
                 const n = e.getStyleList(), t = JSON.parse(n);
-                Dt(Array.isArray(t) ? t : []);
+                Kt(Array.isArray(t) ? t : []);
             } catch  {
-                Dt([]);
+                Kt([]);
             }
-        }, []), gn = s.useCallback((e)=>{
+        }, []), Nn = a.useCallback((e)=>{
             const n = d.current;
             if (!n) return;
-            const t = y.current;
-            h();
+            const t = I.current;
+            i();
             try {
                 n.applyStyle(t.secIdx, t.paraIdx, e);
             } catch  {}
-            i(), O(t), Se(!1);
+            h(), O(t), Be(!1);
         }, [
-            h,
             i,
+            h,
             O
-        ]), bn = s.useCallback(()=>{
+        ]), Sn = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = y.current;
-            h();
+            const n = I.current;
+            i();
             try {
                 e.createShapeControl(JSON.stringify({
                     sectionIdx: n.secIdx,
@@ -1132,132 +1155,132 @@ let __tla = Promise.all([
                     height: 7200
                 }));
             } catch  {}
-            i();
+            h();
         }, [
-            h,
-            i
-        ]), pe = s.useCallback(()=>{
+            i,
+            h
+        ]), ye = a.useCallback(()=>{
             const e = d.current;
             if (e) try {
                 const n = e.getBookmarks(), t = JSON.parse(n);
-                Ft(Array.isArray(t) ? t : []);
+                _t(Array.isArray(t) ? t : []);
             } catch  {
-                Ft([]);
+                _t([]);
             }
-        }, []), cr = s.useCallback(()=>{
+        }, []), Ir = a.useCallback(()=>{
             const e = d.current;
-            if (!e || !Re.trim()) return;
-            const n = y.current;
+            if (!e || !Le.trim()) return;
+            const n = I.current;
             try {
-                e.addBookmark(n.secIdx, n.paraIdx, n.charOffset, Re.trim());
+                e.addBookmark(n.secIdx, n.paraIdx, n.charOffset, Le.trim());
             } catch  {}
-            Et(""), pe();
+            Ut(""), ye();
         }, [
-            Re,
-            pe
-        ]), yn = s.useCallback((e)=>{
+            Le,
+            ye
+        ]), Pn = a.useCallback((e)=>{
             const n = d.current;
             if (n) {
                 try {
                     n.deleteBookmark(e.secIdx, e.paraIdx, e.controlIdx ?? 0);
                 } catch  {}
-                pe();
+                ye();
             }
         }, [
-            pe
-        ]), wn = s.useCallback((e)=>{
-            b({
+            ye
+        ]), Rn = a.useCallback((e)=>{
+            y({
                 secIdx: e.secIdx,
                 paraIdx: e.paraIdx,
                 charOffset: e.charOffset
-            }), xe(!1);
+            }), ge(!1);
         }, [
-            b
-        ]), jn = s.useCallback(()=>{
+            y
+        ]), Dn = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = !rt;
+            const n = !ut;
             try {
                 e.setShowControlCodes(n);
             } catch  {}
-            Ar(n), i();
+            qr(n), h();
         }, [
-            rt,
-            i
-        ]), mn = s.useCallback(()=>{
+            ut,
+            h
+        ]), En = a.useCallback(()=>{
             const e = d.current;
             if (!e) return;
-            const n = !nt;
+            const n = !xt;
             try {
                 e.setShowParagraphMarks(n);
             } catch  {}
-            $r(n), i();
+            en(n), h();
         }, [
-            nt,
-            i
-        ]), ht = s.useCallback(async ()=>{
+            xt,
+            h
+        ]), mt = a.useCallback(async ()=>{
             const e = d.current;
             if (e) {
                 try {
                     const n = await navigator.clipboard.read();
                     for (const t of n)if (t.types.includes("text/html")) {
                         const o = await (await t.getType("text/html")).text();
-                        h();
-                        const c = y.current;
+                        i();
+                        const c = I.current;
                         if (x.current) {
-                            const l = H();
+                            const l = $();
                             l && m(l);
                         }
                         try {
-                            const l = e.pasteHtml(y.current.secIdx, y.current.paraIdx, y.current.charOffset, o), p = g(l);
-                            p?.ok && b({
-                                secIdx: y.current.secIdx,
-                                paraIdx: p.paraIdx ?? c.paraIdx,
-                                charOffset: p.charOffset ?? 0
+                            const l = e.pasteHtml(I.current.secIdx, I.current.paraIdx, I.current.charOffset, o), f = p(l);
+                            f?.ok && y({
+                                secIdx: I.current.secIdx,
+                                paraIdx: f.paraIdx ?? c.paraIdx,
+                                charOffset: f.charOffset ?? 0
                             });
                         } catch  {}
-                        i();
+                        h();
                         return;
                     }
                 } catch  {}
                 try {
                     const n = await navigator.clipboard.readText();
-                    n && _(n);
+                    n && q(n);
                 } catch  {}
             }
         }, [
-            h,
-            H,
+            i,
+            $,
             m,
-            b,
-            _,
-            i
-        ]), or = s.useCallback((e)=>{
-            const n = z.current;
+            y,
+            q,
+            h
+        ]), wr = a.useCallback((e)=>{
+            const n = A.current;
             if (!n) {
-                W("body"), z.current = null;
+                T("body"), A.current = null;
                 return;
             }
             if (e.ctrlKey || e.metaKey) {
                 switch(e.key.toLowerCase()){
                     case "z":
-                        e.preventDefault(), ee();
+                        e.preventDefault(), K();
                         return;
                     case "y":
-                        e.preventDefault(), te();
+                        e.preventDefault(), U();
                         return;
                     case "b":
-                        e.preventDefault(), Be({
+                        e.preventDefault(), Ke({
                             bold: !0
                         });
                         return;
                     case "i":
-                        e.preventDefault(), Be({
+                        e.preventDefault(), Ke({
                             italic: !0
                         });
                         return;
                     case "u":
-                        e.preventDefault(), Be({
+                        e.preventDefault(), Ke({
                             underline: !0
                         });
                         return;
@@ -1266,150 +1289,287 @@ let __tla = Promise.all([
             }
             switch(e.key){
                 case "Enter":
-                    e.preventDefault(), nr();
+                    e.preventDefault(), gr();
                     break;
                 case "Backspace":
-                    e.preventDefault(), it(!1);
+                    e.preventDefault(), It(!1);
                     break;
                 case "Delete":
-                    e.preventDefault(), it(!0);
+                    e.preventDefault(), It(!0);
                     break;
                 case "Escape":
-                    e.preventDefault(), W("body"), z.current = null;
+                    e.preventDefault(), T("body"), A.current = null;
                     break;
                 case "Tab":
                     {
                         e.preventDefault();
-                        const a = d.current;
-                        if (!a) break;
+                        const s = d.current;
+                        if (!s) break;
                         try {
-                            const o = g(a.getTableDimensions(n.secIdx, n.parentParaIdx, n.controlIdx));
+                            const o = p(s.getTableDimensions(n.secIdx, n.parentParaIdx, n.controlIdx));
                             if (o) {
                                 const c = o.rows * o.cols;
-                                n.cellIdx + 1 < c && lt(n.secIdx, n.parentParaIdx, n.controlIdx, n.cellIdx + 1);
+                                n.cellIdx + 1 < c && bt(n.secIdx, n.parentParaIdx, n.controlIdx, n.cellIdx + 1);
                             }
                         } catch  {}
                         break;
                     }
             }
         }, [
-            ee,
-            te,
-            Be,
-            nr,
-            it,
-            lt
-        ]), lr = s.useCallback((e)=>{
-            e.key === "Escape" && (e.preventDefault(), W("body"), de.current = null);
-        }, []), ir = s.useCallback((e)=>{
-            e.key === "Escape" && (e.preventDefault(), W("body"), he.current = null);
-        }, []), dr = s.useCallback(()=>{
-            const e = d.current;
-            if (!e || !M) return;
-            const n = y.current;
-            try {
-                const t = e.searchText(M, n.secIdx, n.paraIdx, n.charOffset, !0, X), a = g(t);
-                if (a?.found) {
-                    const o = {
-                        secIdx: a.sectionIndex ?? n.secIdx,
-                        paraIdx: a.paragraphIndex ?? a.paraIdx ?? n.paraIdx,
-                        charOffset: a.charOffset ?? 0
-                    };
-                    b(o), Z("");
-                } else Z(u("site.hwpEditor.noResults"));
-            } catch  {}
-        }, [
-            M,
-            X,
-            b,
-            u
-        ]), hr = s.useCallback(()=>{
-            const e = d.current;
-            if (!(!e || !M)) {
-                h();
+            K,
+            U,
+            Ke,
+            gr,
+            It,
+            bt
+        ]), jt = a.useCallback((e)=>{
+            const n = d.current, t = X.current;
+            if (!(!n || !t)) {
+                i();
                 try {
-                    const n = e.replaceOne(M, ie, X);
-                    g(n)?.ok ? (i(), Z(u("site.hwpEditor.replaced"))) : Z(u("site.hwpEditor.noResults"));
+                    if (!e && t.charOffset > 0) n.deleteTextInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx, t.charOffset - 1, 1), t.charOffset--;
+                    else if (!e && t.charOffset === 0 && t.hfParaIdx > 0) {
+                        const s = n.mergeParagraphInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx), o = p(s);
+                        t.hfParaIdx = o?.paraIdx ?? t.hfParaIdx - 1, t.charOffset = o?.charOffset ?? 0;
+                    } else e && n.deleteTextInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx, t.charOffset, 1);
+                    C();
+                    try {
+                        const s = p(n.getCursorRectInHeaderFooter(t.secIdx, t.isHeader, t.applyTo, t.hfParaIdx, t.charOffset, 0));
+                        s && s.x !== void 0 && F({
+                            pageIndex: s.pageIndex ?? 0,
+                            x: s.x,
+                            y: s.y,
+                            height: s.height
+                        });
+                    } catch  {}
                 } catch  {}
             }
         }, [
-            M,
-            ie,
-            X,
-            h,
             i,
-            u
-        ]), In = s.useCallback(()=>{
-            const e = d.current;
-            if (!(!e || !M)) {
-                h();
+            C
+        ]), mr = a.useCallback(()=>{
+            const e = d.current, n = X.current;
+            if (!(!e || !n)) {
+                i();
                 try {
-                    const n = e.replaceAll(M, ie, X), t = g(n);
-                    i(), Z(`${u("site.hwpEditor.replaced")} ${t?.count ?? 0}`);
+                    const t = e.splitParagraphInHeaderFooter(n.secIdx, n.isHeader, n.applyTo, n.hfParaIdx, n.charOffset), s = p(t);
+                    n.hfParaIdx = s?.paraIdx ?? n.hfParaIdx + 1, n.charOffset = 0, C();
                 } catch  {}
             }
         }, [
-            M,
-            ie,
-            X,
-            h,
             i,
-            u
-        ]), ur = s.useCallback((e)=>{
-            const n = d.current;
-            if (n) {
-                try {
-                    const t = e === "hwp" ? n.exportHwp() : n.exportHwpx(), a = new Blob([
-                        t
-                    ], {
-                        type: "application/octet-stream"
-                    }), o = URL.createObjectURL(a), c = document.createElement("a");
-                    c.href = o;
-                    const l = ce ? ce.replace(/\.[^.]+$/, "") : "document";
-                    c.download = `${l}.${e}`, c.click(), URL.revokeObjectURL(o);
-                } catch (t) {
-                    L(`내보내기 실패: ${t.message}`);
-                }
-                ve(!1);
-            }
-        }, [
-            ce
-        ]), Cn = s.useCallback((e)=>{
-            if (we.current) return;
-            const n = d.current;
-            if (!n || !y.current) return;
-            if (C === "cell") {
-                or(e);
+            C
+        ]), jr = a.useCallback((e)=>{
+            if (!X.current) {
+                T("body");
                 return;
             }
-            if (C === "header" || C === "footer") {
-                lr(e);
-                return;
-            }
-            if (C === "footnote") {
-                ir(e);
-                return;
-            }
-            const t = y.current;
             if (e.ctrlKey || e.metaKey) {
                 switch(e.key.toLowerCase()){
                     case "z":
-                        e.preventDefault(), ee();
+                        e.preventDefault(), K();
                         return;
                     case "y":
-                        e.preventDefault(), te();
+                        e.preventDefault(), U();
+                        return;
+                }
+                return;
+            }
+            switch(e.key){
+                case "Escape":
+                    e.preventDefault(), T("body"), X.current = null;
+                    break;
+                case "Enter":
+                    e.preventDefault(), mr();
+                    break;
+                case "Backspace":
+                    e.preventDefault(), jt(!1);
+                    break;
+                case "Delete":
+                    e.preventDefault(), jt(!0);
+                    break;
+            }
+        }, [
+            T,
+            K,
+            U,
+            mr,
+            jt
+        ]), Ct = a.useCallback((e)=>{
+            const n = d.current, t = Z.current;
+            if (!(!n || !t)) {
+                i();
+                try {
+                    !e && t.charOffset > 0 ? (n.deleteTextInFootnote(t.secIdx, t.paraIdx, t.controlIdx, t.fnParaIdx, t.charOffset - 1, 1), t.charOffset--) : e && n.deleteTextInFootnote(t.secIdx, t.paraIdx, t.controlIdx, t.fnParaIdx, t.charOffset, 1), C();
+                    try {
+                        const s = p(n.getCursorRectInFootnote(0, t.controlIdx, t.fnParaIdx, t.charOffset));
+                        s && s.x !== void 0 && F({
+                            pageIndex: s.pageIndex ?? 0,
+                            x: s.x,
+                            y: s.y,
+                            height: s.height
+                        });
+                    } catch  {}
+                } catch  {}
+            }
+        }, [
+            i,
+            C
+        ]), Cr = a.useCallback(()=>{
+            const e = d.current, n = Z.current;
+            if (!(!e || !n)) {
+                i();
+                try {
+                    const t = e.splitParagraphInFootnote(n.secIdx, n.paraIdx, n.controlIdx, n.fnParaIdx, n.charOffset), s = p(t);
+                    n.fnParaIdx = s?.paraIdx ?? n.fnParaIdx + 1, n.charOffset = 0, C();
+                } catch  {}
+            }
+        }, [
+            i,
+            C
+        ]), vr = a.useCallback((e)=>{
+            if (!Z.current) {
+                T("body");
+                return;
+            }
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key.toLowerCase()){
+                    case "z":
+                        e.preventDefault(), K();
+                        return;
+                    case "y":
+                        e.preventDefault(), U();
+                        return;
+                }
+                return;
+            }
+            switch(e.key){
+                case "Escape":
+                    e.preventDefault(), T("body"), Z.current = null;
+                    break;
+                case "Enter":
+                    e.preventDefault(), Cr();
+                    break;
+                case "Backspace":
+                    e.preventDefault(), Ct(!1);
+                    break;
+                case "Delete":
+                    e.preventDefault(), Ct(!0);
+                    break;
+            }
+        }, [
+            T,
+            K,
+            U,
+            Cr,
+            Ct
+        ]), kr = a.useCallback(()=>{
+            const e = d.current;
+            if (!e || !z) return;
+            const n = I.current;
+            try {
+                const t = e.searchText(z, n.secIdx, n.paraIdx, n.charOffset, !0, se), s = p(t);
+                if (s?.found) {
+                    const o = {
+                        secIdx: s.sectionIndex ?? n.secIdx,
+                        paraIdx: s.paragraphIndex ?? s.paraIdx ?? n.paraIdx,
+                        charOffset: s.charOffset ?? 0
+                    };
+                    y(o), ae("");
+                } else ae(u("site.hwpEditor.noResults"));
+            } catch  {}
+        }, [
+            z,
+            se,
+            y,
+            u
+        ]), Or = a.useCallback(()=>{
+            const e = d.current;
+            if (!(!e || !z)) {
+                i();
+                try {
+                    const n = e.replaceOne(z, fe, se);
+                    p(n)?.ok ? (h(), ae(u("site.hwpEditor.replaced"))) : ae(u("site.hwpEditor.noResults"));
+                } catch  {}
+            }
+        }, [
+            z,
+            fe,
+            se,
+            i,
+            h,
+            u
+        ]), Fn = a.useCallback(()=>{
+            const e = d.current;
+            if (!(!e || !z)) {
+                i();
+                try {
+                    const n = e.replaceAll(z, fe, se), t = p(n);
+                    h(), ae(`${u("site.hwpEditor.replaced")} ${t?.count ?? 0}`);
+                } catch  {}
+            }
+        }, [
+            z,
+            fe,
+            se,
+            i,
+            h,
+            u
+        ]), Nr = a.useCallback((e)=>{
+            const n = d.current;
+            if (n) {
+                try {
+                    const t = e === "hwp" ? n.exportHwp() : n.exportHwpx(), s = new Blob([
+                        t
+                    ], {
+                        type: "application/octet-stream"
+                    }), o = URL.createObjectURL(s), c = document.createElement("a");
+                    c.href = o;
+                    const l = xe ? xe.replace(/\.[^.]+$/, "") : "document";
+                    c.download = `${l}.${e}`, c.click(), URL.revokeObjectURL(o);
+                } catch (t) {
+                    M(`내보내기 실패: ${t.message}`);
+                }
+                De(!1);
+            }
+        }, [
+            xe
+        ]), Tn = a.useCallback((e)=>{
+            if (Oe.current) return;
+            const n = d.current;
+            if (!n || !I.current) return;
+            if (W === "cell") {
+                wr(e);
+                return;
+            }
+            if (W === "header" || W === "footer") {
+                jr(e);
+                return;
+            }
+            if (W === "footnote") {
+                vr(e);
+                return;
+            }
+            const t = I.current;
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key.toLowerCase()){
+                    case "z":
+                        e.preventDefault(), K();
+                        return;
+                    case "y":
+                        e.preventDefault(), U();
                         return;
                     case "b":
-                        e.preventDefault(), at();
+                        e.preventDefault(), pt();
                         return;
                     case "i":
-                        e.preventDefault(), ct();
+                        e.preventDefault(), gt();
                         return;
                     case "u":
-                        e.preventDefault(), ot();
+                        e.preventDefault(), yt();
                         return;
                     case "f":
-                        e.preventDefault(), Ne(!0);
+                        e.preventDefault(), Te(!0);
                         return;
                     case "a":
                         {
@@ -1417,16 +1577,16 @@ let __tla = Promise.all([
                             try {
                                 const o = n.getSectionCount();
                                 if (o === 0) return;
-                                const c = o - 1, l = n.getParagraphCount(c) - 1, p = n.getParagraphLength(c, l), f = {
+                                const c = o - 1, l = n.getParagraphCount(c) - 1, f = n.getParagraphLength(c, l), g = {
                                     secIdx: 0,
                                     paraIdx: 0,
                                     charOffset: 0
-                                }, w = {
+                                }, b = {
                                     secIdx: c,
                                     paraIdx: l,
-                                    charOffset: p
+                                    charOffset: f
                                 };
-                                x.current = f, m(w), N(f, w), k(!0), j(w);
+                                x.current = g, m(b), N(g, b), S(!0), w(b);
                             } catch  {}
                             return;
                         }
@@ -1435,17 +1595,17 @@ let __tla = Promise.all([
                             e.preventDefault();
                             const o = x.current;
                             if (!o) return;
-                            let c = o.paraIdx, l = o.charOffset, p = t.paraIdx, f = t.charOffset;
-                            (c > p || c === p && l > f) && ([c, p] = [
-                                p,
-                                c
-                            ], [l, f] = [
+                            let c = o.paraIdx, l = o.charOffset, f = t.paraIdx, g = t.charOffset;
+                            (c > f || c === f && l > g) && ([c, f] = [
                                 f,
+                                c
+                            ], [l, g] = [
+                                g,
                                 l
                             ]);
                             try {
-                                const w = n.copySelection(t.secIdx, c, l, p, f), E = g(w);
-                                E?.text && navigator.clipboard.writeText(E.text).catch(()=>{});
+                                const b = n.copySelection(t.secIdx, c, l, f, g), v = p(b);
+                                v?.text && navigator.clipboard.writeText(v.text).catch(()=>{});
                             } catch  {}
                             return;
                         }
@@ -1454,24 +1614,24 @@ let __tla = Promise.all([
                             e.preventDefault();
                             const o = x.current;
                             if (!o) return;
-                            let c = o.paraIdx, l = o.charOffset, p = t.paraIdx, f = t.charOffset;
-                            (c > p || c === p && l > f) && ([c, p] = [
-                                p,
-                                c
-                            ], [l, f] = [
+                            let c = o.paraIdx, l = o.charOffset, f = t.paraIdx, g = t.charOffset;
+                            (c > f || c === f && l > g) && ([c, f] = [
                                 f,
+                                c
+                            ], [l, g] = [
+                                g,
                                 l
                             ]);
                             try {
-                                const w = n.copySelection(t.secIdx, c, l, p, f), E = g(w);
-                                E?.text && navigator.clipboard.writeText(E.text).catch(()=>{});
+                                const b = n.copySelection(t.secIdx, c, l, f, g), v = p(b);
+                                v?.text && navigator.clipboard.writeText(v.text).catch(()=>{});
                             } catch  {}
-                            st();
+                            ft();
                             return;
                         }
                     case "v":
                         {
-                            e.preventDefault(), ht();
+                            e.preventDefault(), mt();
                             return;
                         }
                 }
@@ -1480,27 +1640,27 @@ let __tla = Promise.all([
             switch(e.key){
                 case "Enter":
                     {
-                        if (e.preventDefault(), h(), x.current) {
-                            const c = H();
+                        if (e.preventDefault(), i(), x.current) {
+                            const c = $();
                             c && m(c);
                         }
-                        const o = y.current;
+                        const o = I.current;
                         try {
-                            const c = n.splitParagraph(o.secIdx, o.paraIdx, o.charOffset), l = g(c), p = {
+                            const c = n.splitParagraph(o.secIdx, o.paraIdx, o.charOffset), l = p(c), f = {
                                 secIdx: o.secIdx,
                                 paraIdx: l?.paraIdx ?? o.paraIdx + 1,
                                 charOffset: 0
                             };
-                            b(p);
+                            y(f);
                         } catch  {}
-                        i();
+                        C();
                         break;
                     }
                 case "Backspace":
-                    e.preventDefault(), st();
+                    e.preventDefault(), ft();
                     break;
                 case "Delete":
-                    e.preventDefault(), tr();
+                    e.preventDefault(), fr();
                     break;
                 case "ArrowLeft":
                     {
@@ -1519,7 +1679,7 @@ let __tla = Promise.all([
                         } else break;
                         e.shiftKey ? (x.current || (x.current = {
                             ...t
-                        }), m(o), N(x.current, o), k(!0), j(o)) : b(o);
+                        }), m(o), N(x.current, o), S(!0), w(o)) : y(o);
                         break;
                     }
                 case "ArrowRight":
@@ -1541,7 +1701,7 @@ let __tla = Promise.all([
                         }
                         e.shiftKey ? (x.current || (x.current = {
                             ...t
-                        }), m(o), N(x.current, o), k(!0), j(o)) : b(o);
+                        }), m(o), N(x.current, o), S(!0), w(o)) : y(o);
                         break;
                     }
                 case "ArrowUp":
@@ -1549,16 +1709,16 @@ let __tla = Promise.all([
                         e.preventDefault();
                         const o = R ? R.x : 0;
                         try {
-                            const c = n.moveVertical(t.secIdx, t.paraIdx, t.charOffset, -1, o, 4294967295, 4294967295, 4294967295, 4294967295), l = g(c);
+                            const c = n.moveVertical(t.secIdx, t.paraIdx, t.charOffset, -1, o, 4294967295, 4294967295, 4294967295, 4294967295), l = p(c);
                             if (l) {
-                                const p = {
+                                const f = {
                                     secIdx: l.sectionIndex ?? t.secIdx,
                                     paraIdx: l.paragraphIndex ?? l.paraIdx ?? t.paraIdx,
                                     charOffset: l.charOffset ?? t.charOffset
                                 };
                                 e.shiftKey ? (x.current || (x.current = {
                                     ...t
-                                }), m(p), N(x.current, p), k(!0), j(p)) : b(p);
+                                }), m(f), N(x.current, f), S(!0), w(f)) : y(f);
                             }
                         } catch  {
                             if (t.paraIdx > 0) {
@@ -1573,7 +1733,7 @@ let __tla = Promise.all([
                                 }
                                 e.shiftKey ? (x.current || (x.current = {
                                     ...t
-                                }), m(c), N(x.current, c), k(!0), j(c)) : b(c);
+                                }), m(c), N(x.current, c), S(!0), w(c)) : y(c);
                             }
                         }
                         break;
@@ -1583,16 +1743,16 @@ let __tla = Promise.all([
                         e.preventDefault();
                         const o = R ? R.x : 0;
                         try {
-                            const c = n.moveVertical(t.secIdx, t.paraIdx, t.charOffset, 1, o, 4294967295, 4294967295, 4294967295, 4294967295), l = g(c);
+                            const c = n.moveVertical(t.secIdx, t.paraIdx, t.charOffset, 1, o, 4294967295, 4294967295, 4294967295, 4294967295), l = p(c);
                             if (l) {
-                                const p = {
+                                const f = {
                                     secIdx: l.sectionIndex ?? t.secIdx,
                                     paraIdx: l.paragraphIndex ?? l.paraIdx ?? t.paraIdx,
                                     charOffset: l.charOffset ?? t.charOffset
                                 };
                                 e.shiftKey ? (x.current || (x.current = {
                                     ...t
-                                }), m(p), N(x.current, p), k(!0), j(p)) : b(p);
+                                }), m(f), N(x.current, f), S(!0), w(f)) : y(f);
                             }
                         } catch  {
                             try {
@@ -1604,7 +1764,7 @@ let __tla = Promise.all([
                                     };
                                     l.charOffset = Math.min(t.charOffset, n.getParagraphLength(t.secIdx, l.paraIdx)), e.shiftKey ? (x.current || (x.current = {
                                         ...t
-                                    }), m(l), N(x.current, l), k(!0), j(l)) : b(l);
+                                    }), m(l), N(x.current, l), S(!0), w(l)) : y(l);
                                 }
                             } catch  {}
                         }
@@ -1614,13 +1774,13 @@ let __tla = Promise.all([
                     {
                         e.preventDefault();
                         try {
-                            const o = g(n.getLineInfo(t.secIdx, t.paraIdx, t.charOffset)), c = {
+                            const o = p(n.getLineInfo(t.secIdx, t.paraIdx, t.charOffset)), c = {
                                 ...t,
                                 charOffset: o ? o.charStart : 0
                             };
                             e.shiftKey ? (x.current || (x.current = {
                                 ...t
-                            }), m(c), N(x.current, c), k(!0), j(c)) : b(c);
+                            }), m(c), N(x.current, c), S(!0), w(c)) : y(c);
                         } catch  {}
                         break;
                     }
@@ -1628,165 +1788,176 @@ let __tla = Promise.all([
                     {
                         e.preventDefault();
                         try {
-                            const o = g(n.getLineInfo(t.secIdx, t.paraIdx, t.charOffset)), c = n.getParagraphLength(t.secIdx, t.paraIdx), l = {
+                            const o = p(n.getLineInfo(t.secIdx, t.paraIdx, t.charOffset)), c = n.getParagraphLength(t.secIdx, t.paraIdx), l = {
                                 ...t,
                                 charOffset: o ? Math.min(o.charEnd, c) : c
                             };
                             e.shiftKey ? (x.current || (x.current = {
                                 ...t
-                            }), m(l), N(x.current, l), k(!0), j(l)) : b(l);
+                            }), m(l), N(x.current, l), S(!0), w(l)) : y(l);
                         } catch  {}
                         break;
                     }
                 case "Tab":
-                    e.preventDefault(), _("	");
+                    e.preventDefault(), q("	");
                     break;
                 case "Escape":
-                    Ne(!1), je(!1), me(!1), Ie(!1), Ce(!1), ve(!1), ke(!1), Oe(!1), T(null), ue(!1), Se(!1), xe(!1);
+                    Te(!1), Ne(!1), Se(!1), Pe(!1), Re(!1), De(!1), Ee(!1), Fe(!1), H(null), pe(!1), Be(!1), ge(!1);
                     break;
             }
         }, [
-            C,
-            or,
-            lr,
-            ir,
+            W,
+            wr,
+            jr,
             vr,
+            Br,
             R,
-            ee,
-            te,
-            at,
-            ct,
-            ot,
-            _,
-            H,
-            st,
-            tr,
-            h,
-            b,
+            K,
+            U,
+            pt,
+            gt,
+            yt,
+            q,
+            $,
+            ft,
+            fr,
             i,
+            y,
+            C,
             N,
-            j,
+            w,
             m,
-            ht
-        ]), vn = s.useCallback(()=>{
-            we.current = !0;
-        }, []), kn = s.useCallback((e)=>{
-            we.current = !1;
+            mt
+        ]), Bn = a.useCallback(()=>{
+            Oe.current = !0;
+        }, []), Ln = a.useCallback((e)=>{
+            Oe.current = !1;
             const n = e.data;
-            n && (C === "cell" ? Fe(n) : C === "header" || C === "footer" ? Te(n) : C === "footnote" ? Le(n) : _(n)), Y.current && (Y.current.value = "");
+            if (n) {
+                const t = it.current;
+                t === "cell" ? Ae(n) : t === "header" || t === "footer" ? Ue(n) : t === "footnote" ? $e(n) : q(n);
+            }
+            ie.current && (ie.current.value = "");
         }, [
-            C,
-            _,
-            Fe,
-            Te,
-            Le
-        ]), On = s.useCallback((e)=>{
-            if (we.current) return;
+            q,
+            Ae,
+            Ue,
+            $e
+        ]), Mn = a.useCallback((e)=>{
+            if (Oe.current) return;
             const n = e.target, t = n.value;
-            t && (C === "cell" ? Fe(t) : C === "header" || C === "footer" ? Te(t) : C === "footnote" ? Le(t) : _(t), n.value = "");
+            if (t) {
+                const s = it.current;
+                s === "cell" ? Ae(t) : s === "header" || s === "footer" ? Ue(t) : s === "footnote" ? $e(t) : q(t), n.value = "";
+            }
         }, [
-            C,
-            _,
-            Fe,
-            Te,
-            Le
-        ]), Nn = s.useCallback((e)=>{
-            Ae(e.target.value);
-        }, []), xr = s.useCallback(()=>{
-            const e = parseInt(We, 10);
-            !isNaN(e) && e >= 1 && e <= F ? ae(e - 1) : Ae(String(G + 1));
+            q,
+            Ae,
+            Ue,
+            $e
+        ]), Hn = a.useCallback((e)=>{
+            Xe(e.target.value);
+        }, []), Sr = a.useCallback(()=>{
+            const e = parseInt(Ye, 10);
+            !isNaN(e) && e >= 1 && e <= D ? ue(e - 1) : Xe(String(J + 1));
         }, [
-            We,
-            F,
-            G
-        ]), Sn = s.useCallback(()=>ft((e)=>Math.min(e + 10, 200)), []), Rn = s.useCallback(()=>ft((e)=>Math.max(e - 10, 30)), []);
-        s.useEffect(()=>{
-            Ae(String(G + 1));
+            Ye,
+            D,
+            J
+        ]), zn = a.useCallback(()=>Pt((e)=>Math.min(e + 10, 200)), []), Wn = a.useCallback(()=>Pt((e)=>Math.max(e - 10, 30)), []);
+        a.useEffect(()=>{
+            Xe(String(J + 1));
         }, [
-            G
-        ]), s.useEffect(()=>{
+            J
+        ]), a.useEffect(()=>{
             const e = (n)=>{
-                const t = n.target, a = (o, c)=>!o.current?.contains(t) && !c.current?.contains(t);
-                _e && a(Bt, Tt) && je(!1), Ve && a(Lt, Mt) && me(!1), Je && a(zt, Ht) && Ie(!1), Ye && a(Wt, At) && Ce(!1), Xe && a($t, Kt) && ve(!1), Ze && a(Ut, _t) && ke(!1), Qe && a(Jt, Vt) && Oe(!1), tt && a(Yt, Xt) && Se(!1), I && T(null);
+                const t = n.target, s = (o, c)=>!o.current?.contains(t) && !c.current?.contains(t);
+                qe && s(Vt, Jt) && Ne(!1), et && s(Yt, Xt) && Se(!1), tt && s(Zt, Qt) && Pe(!1), rt && s(Gt, qt) && Re(!1), nt && s(er, tr) && De(!1), st && s(rr, nr) && Ee(!1), at && s(ar, sr) && Fe(!1), ht && s(cr, or) && Be(!1), j && !lr.current?.contains(t) && H(null);
             };
             return document.addEventListener("mousedown", e), ()=>document.removeEventListener("mousedown", e);
         }, [
-            _e,
-            Ve,
-            Je,
-            Ye,
-            Xe,
-            Ze,
-            Qe,
+            qe,
+            et,
             tt,
-            I
-        ]), s.useEffect(()=>()=>{
+            rt,
+            nt,
+            st,
+            at,
+            ht,
+            j
+        ]), a.useEffect(()=>{
+            if (!de) return;
+            const e = ()=>dt(!1);
+            return document.addEventListener("mouseup", e), ()=>document.removeEventListener("mouseup", e);
+        }, [
+            de
+        ]), a.useEffect(()=>()=>{
                 if (d.current) {
                     try {
                         d.current.free();
                     } catch  {}
                     d.current = null;
                 }
-            }, []), s.useEffect(()=>{
+            }, []), a.useEffect(()=>{
             const e = d.current;
-            if (!e || F === 0) return;
+            if (!e || D === 0) return;
             const n = le.current;
-            for(let t = 0; t < F; t++){
-                const a = oe.current[t];
-                if (a) try {
-                    e.renderPageToCanvas(t, a, n);
-                    const o = a.width / n, c = a.height / n;
-                    a.style.width = o + "px", a.style.height = c + "px", jt.current[t] = {
+            for(let t = 0; t < D; t++){
+                const s = oe.current[t];
+                if (s) try {
+                    e.renderPageToCanvas(t, s, n);
+                    const o = s.width / n, c = s.height / n;
+                    s.style.width = o + "px", s.style.height = c + "px", Qe.current[t] = {
                         w: o,
                         h: c
                     };
-                    const l = Ke.current[t];
-                    l && (l.width = a.width, l.height = a.height, l.style.width = o + "px", l.style.height = c + "px");
+                    const l = je.current[t];
+                    l && (l.width = s.width, l.height = s.height, l.style.width = o + "px", l.style.height = c + "px");
                 } catch (o) {
                     console.error("renderPageToCanvas failed for page", t, o);
                 }
             }
         }, [
-            pt,
-            F
-        ]), s.useEffect(()=>{
+            St,
+            D
+        ]), a.useEffect(()=>{
             const e = le.current;
-            for(let n = 0; n < F; n++){
-                const t = Ke.current[n];
+            for(let n = 0; n < D; n++){
+                const t = je.current[n];
                 if (!t) continue;
-                const a = t.getContext("2d");
-                if (!a) continue;
-                a.clearRect(0, 0, t.width, t.height);
-                const o = yt.filter((c)=>c.pageIndex === n);
+                const s = t.getContext("2d");
+                if (!s) continue;
+                s.clearRect(0, 0, t.width, t.height);
+                const o = Et.filter((c)=>c.pageIndex === n);
                 if (o.length > 0) {
-                    a.fillStyle = "rgba(0, 70, 200, 0.25)";
-                    for (const c of o)a.fillRect(c.x * e, c.y * e, c.width * e, c.height * e);
+                    s.fillStyle = "rgba(0, 70, 200, 0.25)";
+                    for (const c of o)s.fillRect(c.x * e, c.y * e, c.width * e, c.height * e);
                 }
-                R && R.pageIndex === n && wt && (a.strokeStyle = "#0046C8", a.lineWidth = Math.max(1.5, 2 * e), a.beginPath(), a.moveTo(R.x * e, R.y * e), a.lineTo(R.x * e, (R.y + R.height) * e), a.stroke());
+                R && R.pageIndex === n && Ft && (s.strokeStyle = "#0046C8", s.lineWidth = Math.max(1.5, 2 * e), s.beginPath(), s.moveTo(R.x * e, R.y * e), s.lineTo(R.x * e, (R.y + R.height) * e), s.stroke());
             }
         }, [
-            F,
+            D,
             R,
-            yt,
-            wt,
-            pt
-        ]), s.useEffect(()=>{
+            Et,
+            Ft,
+            St
+        ]), a.useEffect(()=>{
             if (!R) {
-                $e(!0);
+                Ze(!0);
                 return;
             }
-            $e(!0);
-            const e = setInterval(()=>$e((n)=>!n), 530);
+            Ze(!0);
+            const e = setInterval(()=>Ze((n)=>!n), 530);
             return ()=>clearInterval(e);
         }, [
             R
         ]);
-        const pr = F > 0, ut = wr(D.textColor), xt = wr(D.highlight), fr = (e, n, t, a)=>r.jsxs("div", {
+        const Pr = D > 0, vt = Er(E.textColor), kt = Er(E.highlight), Rr = (e, n, t, s)=>r.jsxs("div", {
                 className: "hwp-color-picker",
                 children: [
                     r.jsx("div", {
                         className: "hwp-color-grid",
-                        children: Ln.map((o, c)=>r.jsx("div", {
+                        children: Jn.map((o, c)=>r.jsx("div", {
                                 style: {
                                     display: "flex"
                                 },
@@ -1796,7 +1967,7 @@ let __tla = Promise.all([
                                             backgroundColor: l
                                         },
                                         title: l,
-                                        onClick: ()=>a(l)
+                                        onClick: ()=>s(l)
                                     }, l))
                             }, c))
                     }),
@@ -1809,7 +1980,7 @@ let __tla = Promise.all([
                                 onChange: (o)=>t(o.target.value)
                             }),
                             r.jsx("button", {
-                                onClick: ()=>a(n),
+                                onClick: ()=>s(n),
                                 children: "OK"
                             })
                         ]
@@ -1818,7 +1989,7 @@ let __tla = Promise.all([
             });
         return r.jsxs(r.Fragment, {
             children: [
-                r.jsx(Pn, {
+                r.jsx(Un, {
                     title: u("site.hwpEditor.title"),
                     description: u("site.hwpEditor.subtitle")
                 }),
@@ -1841,7 +2012,7 @@ let __tla = Promise.all([
                     children: r.jsxs("div", {
                         className: "container",
                         children: [
-                            mt && r.jsxs("div", {
+                            Tt && r.jsxs("div", {
                                 className: "hwp-editor-error",
                                 children: [
                                     r.jsxs("svg", {
@@ -1872,10 +2043,10 @@ let __tla = Promise.all([
                                         ]
                                     }),
                                     r.jsx("span", {
-                                        children: mt
+                                        children: Tt
                                     }),
                                     r.jsx("button", {
-                                        onClick: ()=>L(""),
+                                        onClick: ()=>M(""),
                                         style: {
                                             marginLeft: "auto",
                                             background: "none",
@@ -1888,7 +2059,7 @@ let __tla = Promise.all([
                                     })
                                 ]
                             }),
-                            Q && !V && r.jsxs("div", {
+                            ce && !te && r.jsxs("div", {
                                 className: "hwp-editor-error",
                                 children: [
                                     r.jsxs("svg", {
@@ -1922,12 +2093,12 @@ let __tla = Promise.all([
                                         children: [
                                             u("site.hwpEditor.wasmError"),
                                             ": ",
-                                            Q
+                                            ce
                                         ]
                                     })
                                 ]
                             }),
-                            V && r.jsxs("div", {
+                            te && r.jsxs("div", {
                                 className: "hwp-editor-loading",
                                 children: [
                                     r.jsx("div", {
@@ -1938,11 +2109,11 @@ let __tla = Promise.all([
                                     })
                                 ]
                             }),
-                            v && !pr && !V && r.jsx("div", {
-                                className: `hwp-editor-container${Dr ? " drag-over" : ""}`,
-                                onDragOver: Gt,
-                                onDragLeave: qt,
-                                onDrop: er,
+                            k && !Pr && !te && r.jsx("div", {
+                                className: `hwp-editor-container${Ar ? " drag-over" : ""}`,
+                                onDragOver: hr,
+                                onDragLeave: ur,
+                                onDrop: xr,
                                 children: r.jsxs("div", {
                                     className: "hwp-editor-empty",
                                     children: [
@@ -1985,8 +2156,8 @@ let __tla = Promise.all([
                                             children: [
                                                 r.jsxs("button", {
                                                     className: "hwp-empty-btn primary",
-                                                    onClick: Zt,
-                                                    disabled: !v,
+                                                    onClick: ir,
+                                                    disabled: !k,
                                                     children: [
                                                         r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
@@ -2009,8 +2180,8 @@ let __tla = Promise.all([
                                                 }),
                                                 r.jsxs("button", {
                                                     className: "hwp-empty-btn",
-                                                    onClick: Qt,
-                                                    disabled: !v,
+                                                    onClick: dr,
+                                                    disabled: !k,
                                                     children: [
                                                         r.jsx("svg", {
                                                             viewBox: "0 0 24 24",
@@ -2031,7 +2202,7 @@ let __tla = Promise.all([
                                     ]
                                 })
                             }),
-                            pr && r.jsxs("div", {
+                            Pr && r.jsxs("div", {
                                 className: "hwp-editor-container",
                                 children: [
                                     r.jsxs("div", {
@@ -2043,7 +2214,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.newDoc"),
-                                                        onClick: Zt,
+                                                        onClick: ir,
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2064,7 +2235,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.openFile"),
-                                                        onClick: Qt,
+                                                        onClick: dr,
                                                         children: r.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2081,10 +2252,10 @@ let __tla = Promise.all([
                                                         className: "hwp-export-wrapper",
                                                         children: [
                                                             r.jsxs("button", {
-                                                                ref: $t,
+                                                                ref: er,
                                                                 className: "hwp-toolbar-btn",
                                                                 title: u("site.hwpEditor.export"),
-                                                                onClick: ()=>ve((e)=>!e),
+                                                                onClick: ()=>De((e)=>!e),
                                                                 children: [
                                                                     r.jsxs("svg", {
                                                                         viewBox: "0 0 24 24",
@@ -2116,16 +2287,16 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            Xe && r.jsxs("div", {
-                                                                ref: Kt,
+                                                            nt && r.jsxs("div", {
+                                                                ref: tr,
                                                                 className: "hwp-export-dropdown",
                                                                 children: [
                                                                     r.jsx("button", {
-                                                                        onClick: ()=>ur("hwp"),
+                                                                        onClick: ()=>Nr("hwp"),
                                                                         children: u("site.hwpEditor.exportHwp")
                                                                     }),
                                                                     r.jsx("button", {
-                                                                        onClick: ()=>ur("hwpx"),
+                                                                        onClick: ()=>Nr("hwpx"),
                                                                         children: u("site.hwpEditor.exportHwpx")
                                                                     })
                                                                 ]
@@ -2143,8 +2314,8 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: `${u("site.hwpEditor.undo")} (Ctrl+Z)`,
-                                                        onClick: ee,
-                                                        disabled: !Nr,
+                                                        onClick: K,
+                                                        disabled: !Hr,
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2165,8 +2336,8 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: `${u("site.hwpEditor.redo")} (Ctrl+Y)`,
-                                                        onClick: te,
-                                                        disabled: !Sr,
+                                                        onClick: U,
+                                                        disabled: !zr,
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2198,21 +2369,21 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             r.jsxs("button", {
-                                                                ref: Bt,
+                                                                ref: Vt,
                                                                 className: "hwp-font-btn hwp-toolbar-btn",
                                                                 title: u("site.hwpEditor.font"),
-                                                                onClick: ()=>je((e)=>!e),
+                                                                onClick: ()=>Ne((e)=>!e),
                                                                 children: [
                                                                     r.jsx("span", {
                                                                         style: {
-                                                                            fontFamily: et,
+                                                                            fontFamily: lt,
                                                                             maxWidth: 96,
                                                                             overflow: "hidden",
                                                                             textOverflow: "ellipsis",
                                                                             whiteSpace: "nowrap",
                                                                             display: "inline-block"
                                                                         },
-                                                                        children: et
+                                                                        children: lt
                                                                     }),
                                                                     r.jsx("span", {
                                                                         style: {
@@ -2223,15 +2394,15 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            _e && r.jsx("div", {
-                                                                ref: Tt,
+                                                            qe && r.jsx("div", {
+                                                                ref: Jt,
                                                                 className: "hwp-toolbar-dropdown hwp-font-dropdown",
-                                                                children: Fn.map((e)=>r.jsx("button", {
+                                                                children: $n.map((e)=>r.jsx("button", {
                                                                         style: {
                                                                             fontFamily: e
                                                                         },
-                                                                        className: et === e ? "active" : "",
-                                                                        onClick: ()=>Vr(e),
+                                                                        className: lt === e ? "active" : "",
+                                                                        onClick: ()=>nn(e),
                                                                         children: e
                                                                     }, e))
                                                             })
@@ -2243,13 +2414,13 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             r.jsxs("button", {
-                                                                ref: Lt,
+                                                                ref: Yt,
                                                                 className: "hwp-size-btn hwp-toolbar-btn",
                                                                 title: u("site.hwpEditor.fontSize"),
-                                                                onClick: ()=>me((e)=>!e),
+                                                                onClick: ()=>Se((e)=>!e),
                                                                 children: [
                                                                     r.jsx("span", {
-                                                                        children: Ct
+                                                                        children: Lt
                                                                     }),
                                                                     r.jsx("span", {
                                                                         style: {
@@ -2260,12 +2431,12 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            Ve && r.jsx("div", {
-                                                                ref: Mt,
+                                                            et && r.jsx("div", {
+                                                                ref: Xt,
                                                                 className: "hwp-toolbar-dropdown hwp-size-dropdown",
-                                                                children: Bn.map((e)=>r.jsx("button", {
-                                                                        className: parseFloat(Ct) === e ? "active" : "",
-                                                                        onClick: ()=>Jr(e),
+                                                                children: _n.map((e)=>r.jsx("button", {
+                                                                        className: parseFloat(Lt) === e ? "active" : "",
+                                                                        onClick: ()=>sn(e),
                                                                         children: e
                                                                     }, e))
                                                             })
@@ -2280,36 +2451,36 @@ let __tla = Promise.all([
                                                 className: "hwp-toolbar-group",
                                                 children: [
                                                     r.jsx("button", {
-                                                        className: `hwp-toolbar-btn${D.bold ? " active" : ""}`,
+                                                        className: `hwp-toolbar-btn${E.bold ? " active" : ""}`,
                                                         title: `${u("site.hwpEditor.bold")} (Ctrl+B)`,
-                                                        onClick: at,
+                                                        onClick: pt,
                                                         style: {
                                                             fontWeight: "bold"
                                                         },
                                                         children: "B"
                                                     }),
                                                     r.jsx("button", {
-                                                        className: `hwp-toolbar-btn${D.italic ? " active" : ""}`,
+                                                        className: `hwp-toolbar-btn${E.italic ? " active" : ""}`,
                                                         title: `${u("site.hwpEditor.italic")} (Ctrl+I)`,
-                                                        onClick: ct,
+                                                        onClick: gt,
                                                         style: {
                                                             fontStyle: "italic"
                                                         },
                                                         children: "I"
                                                     }),
                                                     r.jsx("button", {
-                                                        className: `hwp-toolbar-btn${D.underline ? " active" : ""}`,
+                                                        className: `hwp-toolbar-btn${E.underline ? " active" : ""}`,
                                                         title: `${u("site.hwpEditor.underline")} (Ctrl+U)`,
-                                                        onClick: ot,
+                                                        onClick: yt,
                                                         style: {
                                                             textDecoration: "underline"
                                                         },
                                                         children: "U"
                                                     }),
                                                     r.jsx("button", {
-                                                        className: `hwp-toolbar-btn${D.strikethrough ? " active" : ""}`,
+                                                        className: `hwp-toolbar-btn${E.strikethrough ? " active" : ""}`,
                                                         title: u("site.hwpEditor.strikethrough"),
-                                                        onClick: _r,
+                                                        onClick: rn,
                                                         style: {
                                                             textDecoration: "line-through"
                                                         },
@@ -2329,15 +2500,15 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             r.jsxs("button", {
-                                                                ref: zt,
+                                                                ref: Zt,
                                                                 className: "hwp-toolbar-btn",
                                                                 title: u("site.hwpEditor.textColor"),
-                                                                onClick: ()=>Ie((e)=>!e),
+                                                                onClick: ()=>Pe((e)=>!e),
                                                                 children: [
                                                                     r.jsx("span", {
                                                                         style: {
                                                                             fontWeight: "bold",
-                                                                            color: ut,
+                                                                            color: vt,
                                                                             fontSize: "14px",
                                                                             lineHeight: 1
                                                                         },
@@ -2346,7 +2517,7 @@ let __tla = Promise.all([
                                                                     r.jsx("div", {
                                                                         className: "hwp-color-indicator",
                                                                         style: {
-                                                                            backgroundColor: ut
+                                                                            backgroundColor: vt
                                                                         }
                                                                     }),
                                                                     r.jsx("span", {
@@ -2358,15 +2529,15 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            Je && r.jsx("div", {
-                                                                ref: Ht,
+                                                            tt && r.jsx("div", {
+                                                                ref: Qt,
                                                                 style: {
                                                                     position: "absolute",
                                                                     zIndex: 1e3,
                                                                     top: "100%",
                                                                     left: 0
                                                                 },
-                                                                children: fr(ut, Fr, Br, Gr)
+                                                                children: Rr(vt, $r, _r, dn)
                                                             })
                                                         ]
                                                     }),
@@ -2376,15 +2547,15 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             r.jsxs("button", {
-                                                                ref: Wt,
+                                                                ref: Gt,
                                                                 className: "hwp-toolbar-btn",
                                                                 title: u("site.hwpEditor.highlight"),
-                                                                onClick: ()=>Ce((e)=>!e),
+                                                                onClick: ()=>Re((e)=>!e),
                                                                 children: [
                                                                     r.jsx("span", {
                                                                         style: {
                                                                             fontWeight: "bold",
-                                                                            backgroundColor: xt,
+                                                                            backgroundColor: kt,
                                                                             padding: "0 2px",
                                                                             fontSize: "13px",
                                                                             lineHeight: 1
@@ -2394,7 +2565,7 @@ let __tla = Promise.all([
                                                                     r.jsx("div", {
                                                                         className: "hwp-color-indicator",
                                                                         style: {
-                                                                            backgroundColor: xt
+                                                                            backgroundColor: kt
                                                                         }
                                                                     }),
                                                                     r.jsx("span", {
@@ -2406,15 +2577,15 @@ let __tla = Promise.all([
                                                                     })
                                                                 ]
                                                             }),
-                                                            Ye && r.jsx("div", {
-                                                                ref: At,
+                                                            rt && r.jsx("div", {
+                                                                ref: qt,
                                                                 style: {
                                                                     position: "absolute",
                                                                     zIndex: 1e3,
                                                                     top: "100%",
                                                                     left: 0
                                                                 },
-                                                                children: fr(xt, Tr, Lr, qr)
+                                                                children: Rr(kt, Vr, Jr, hn)
                                                             })
                                                         ]
                                                     })
@@ -2583,9 +2754,9 @@ let __tla = Promise.all([
                                                         })
                                                     };
                                                     return r.jsx("button", {
-                                                        className: `hwp-toolbar-btn${ge.alignment === e ? " active" : ""}`,
+                                                        className: `hwp-toolbar-btn${Ce.alignment === e ? " active" : ""}`,
                                                         title: n[e],
-                                                        onClick: ()=>Yr(e),
+                                                        onClick: ()=>an(e),
                                                         children: t[e]
                                                     }, e);
                                                 })
@@ -2601,10 +2772,10 @@ let __tla = Promise.all([
                                                     },
                                                     children: [
                                                         r.jsxs("button", {
-                                                            ref: Ut,
+                                                            ref: rr,
                                                             className: "hwp-toolbar-btn",
                                                             title: u("site.hwpEditor.lineSpacing"),
-                                                            onClick: ()=>ke((e)=>!e),
+                                                            onClick: ()=>Ee((e)=>!e),
                                                             children: [
                                                                 r.jsxs("svg", {
                                                                     viewBox: "0 0 24 24",
@@ -2655,12 +2826,12 @@ let __tla = Promise.all([
                                                                 })
                                                             ]
                                                         }),
-                                                        Ze && r.jsx("div", {
-                                                            ref: _t,
+                                                        st && r.jsx("div", {
+                                                            ref: nr,
                                                             className: "hwp-toolbar-dropdown hwp-spacing-dropdown",
-                                                            children: Tn.map((e)=>r.jsx("button", {
-                                                                    className: ge.lineSpacing === e.value ? "active" : "",
-                                                                    onClick: ()=>Xr(e.value),
+                                                            children: Vn.map((e)=>r.jsx("button", {
+                                                                    className: Ce.lineSpacing === e.value ? "active" : "",
+                                                                    onClick: ()=>cn(e.value),
                                                                     children: e.label
                                                                 }, e.value))
                                                         })
@@ -2676,7 +2847,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.outdent"),
-                                                        onClick: ()=>rr(-1),
+                                                        onClick: ()=>pr(-1),
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2718,7 +2889,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.indent"),
-                                                        onClick: ()=>rr(1),
+                                                        onClick: ()=>pr(1),
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2768,7 +2939,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.bulletList"),
-                                                        onClick: Zr,
+                                                        onClick: on,
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2822,7 +2993,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.numberedList"),
-                                                        onClick: Qr,
+                                                        onClick: ln,
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -2893,10 +3064,10 @@ let __tla = Promise.all([
                                                         },
                                                         children: [
                                                             r.jsx("button", {
-                                                                ref: Jt,
+                                                                ref: ar,
                                                                 className: "hwp-toolbar-btn",
                                                                 title: u("site.hwpEditor.insertTable"),
-                                                                onClick: ()=>Oe((e)=>!e),
+                                                                onClick: ()=>Fe((e)=>!e),
                                                                 children: r.jsxs("svg", {
                                                                     viewBox: "0 0 24 24",
                                                                     width: "16",
@@ -2939,8 +3110,8 @@ let __tla = Promise.all([
                                                                     ]
                                                                 })
                                                             }),
-                                                            Qe && r.jsxs("div", {
-                                                                ref: Vt,
+                                                            at && r.jsxs("div", {
+                                                                ref: sr,
                                                                 className: "hwp-table-dialog",
                                                                 children: [
                                                                     r.jsxs("div", {
@@ -2953,8 +3124,8 @@ let __tla = Promise.all([
                                                                                 type: "number",
                                                                                 min: 1,
                                                                                 max: 50,
-                                                                                value: Ge,
-                                                                                onChange: (e)=>Er(Number(e.target.value))
+                                                                                value: ct,
+                                                                                onChange: (e)=>Kr(Number(e.target.value))
                                                                             })
                                                                         ]
                                                                     }),
@@ -2968,8 +3139,8 @@ let __tla = Promise.all([
                                                                                 type: "number",
                                                                                 min: 1,
                                                                                 max: 20,
-                                                                                value: qe,
-                                                                                onChange: (e)=>Pr(Number(e.target.value))
+                                                                                value: ot,
+                                                                                onChange: (e)=>Ur(Number(e.target.value))
                                                                             })
                                                                         ]
                                                                     }),
@@ -2979,7 +3150,7 @@ let __tla = Promise.all([
                                                                             width: "100%",
                                                                             justifyContent: "center"
                                                                         },
-                                                                        onClick: en,
+                                                                        onClick: un,
                                                                         children: u("site.hwpEditor.insertTable")
                                                                     })
                                                                 ]
@@ -2989,7 +3160,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.insertImage"),
-                                                        onClick: tn,
+                                                        onClick: xn,
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -3019,7 +3190,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: u("site.hwpEditor.pageBreak"),
-                                                        onClick: rn,
+                                                        onClick: fn,
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -3049,9 +3220,9 @@ let __tla = Promise.all([
                                             r.jsx("div", {
                                                 className: "hwp-toolbar-group",
                                                 children: r.jsx("button", {
-                                                    className: `hwp-toolbar-btn${kt ? " active" : ""}`,
+                                                    className: `hwp-toolbar-btn${Ht ? " active" : ""}`,
                                                     title: `${u("site.hwpEditor.findReplace")} (Ctrl+F)`,
-                                                    onClick: ()=>Ne((e)=>!e),
+                                                    onClick: ()=>Te((e)=>!e),
                                                     children: r.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
                                                         width: "16",
@@ -3084,7 +3255,7 @@ let __tla = Promise.all([
                                                     className: "hwp-toolbar-btn",
                                                     title: "페이지 설정",
                                                     onClick: ()=>{
-                                                        xn(), ue((e)=>!e);
+                                                        vn(), pe((e)=>!e);
                                                     },
                                                     children: r.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -3125,11 +3296,11 @@ let __tla = Promise.all([
                                                     },
                                                     children: [
                                                         r.jsxs("button", {
-                                                            ref: Yt,
+                                                            ref: cr,
                                                             className: "hwp-toolbar-btn",
                                                             title: "스타일",
                                                             onClick: ()=>{
-                                                                fn(), Se((e)=>!e);
+                                                                On(), Be((e)=>!e);
                                                             },
                                                             children: [
                                                                 r.jsx("svg", {
@@ -3158,11 +3329,11 @@ let __tla = Promise.all([
                                                                 })
                                                             ]
                                                         }),
-                                                        tt && r.jsxs("div", {
-                                                            ref: Xt,
+                                                        ht && r.jsxs("div", {
+                                                            ref: or,
                                                             className: "hwp-toolbar-dropdown hwp-style-dropdown",
                                                             children: [
-                                                                Rt.length === 0 && r.jsx("div", {
+                                                                At.length === 0 && r.jsx("div", {
                                                                     style: {
                                                                         padding: 10,
                                                                         fontSize: "0.82rem",
@@ -3170,8 +3341,8 @@ let __tla = Promise.all([
                                                                     },
                                                                     children: "스타일 없음"
                                                                 }),
-                                                                Rt.map((e)=>r.jsx("button", {
-                                                                        onClick: ()=>gn(e.id),
+                                                                At.map((e)=>r.jsx("button", {
+                                                                        onClick: ()=>Nn(e.id),
                                                                         children: e.name
                                                                     }, e.id))
                                                             ]
@@ -3188,7 +3359,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: "머리말",
-                                                        onClick: ()=>dt(y.current.secIdx, !0),
+                                                        onClick: ()=>wt(I.current.secIdx, !0),
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -3222,7 +3393,7 @@ let __tla = Promise.all([
                                                     r.jsx("button", {
                                                         className: "hwp-toolbar-btn",
                                                         title: "꼬리말",
-                                                        onClick: ()=>dt(y.current.secIdx, !1),
+                                                        onClick: ()=>wt(I.current.secIdx, !1),
                                                         children: r.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -3260,7 +3431,7 @@ let __tla = Promise.all([
                                                 children: r.jsx("button", {
                                                     className: "hwp-toolbar-btn",
                                                     title: "각주 삽입",
-                                                    onClick: un,
+                                                    onClick: Cn,
                                                     children: r.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
                                                         width: "16",
@@ -3290,7 +3461,7 @@ let __tla = Promise.all([
                                                 children: r.jsx("button", {
                                                     className: "hwp-toolbar-btn",
                                                     title: "글상자 삽입",
-                                                    onClick: bn,
+                                                    onClick: Sn,
                                                     children: r.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
                                                         width: "16",
@@ -3324,7 +3495,7 @@ let __tla = Promise.all([
                                                     className: "hwp-toolbar-btn",
                                                     title: "북마크",
                                                     onClick: ()=>{
-                                                        pe(), xe((e)=>!e);
+                                                        ye(), ge((e)=>!e);
                                                     },
                                                     children: r.jsx("svg", {
                                                         viewBox: "0 0 24 24",
@@ -3346,9 +3517,9 @@ let __tla = Promise.all([
                                                 className: "hwp-toolbar-group",
                                                 children: [
                                                     r.jsx("button", {
-                                                        className: `hwp-toolbar-btn${nt ? " active" : ""}`,
+                                                        className: `hwp-toolbar-btn${xt ? " active" : ""}`,
                                                         title: "조판부호 표시",
-                                                        onClick: mn,
+                                                        onClick: En,
                                                         children: r.jsx("span", {
                                                             style: {
                                                                 fontFamily: "monospace",
@@ -3359,9 +3530,9 @@ let __tla = Promise.all([
                                                         })
                                                     }),
                                                     r.jsx("button", {
-                                                        className: `hwp-toolbar-btn${rt ? " active" : ""}`,
+                                                        className: `hwp-toolbar-btn${ut ? " active" : ""}`,
                                                         title: "제어코드 표시",
-                                                        onClick: jn,
+                                                        onClick: Dn,
                                                         children: r.jsx("span", {
                                                             style: {
                                                                 fontFamily: "monospace",
@@ -3376,7 +3547,7 @@ let __tla = Promise.all([
                                             r.jsx("div", {
                                                 className: "hwp-toolbar-spacer"
                                             }),
-                                            ce && r.jsxs("span", {
+                                            xe && r.jsxs("span", {
                                                 style: {
                                                     fontSize: "0.8rem",
                                                     color: "var(--text-secondary)",
@@ -3387,49 +3558,49 @@ let __tla = Promise.all([
                                                     whiteSpace: "nowrap"
                                                 },
                                                 children: [
-                                                    ce,
-                                                    Cr ? " *" : ""
+                                                    xe,
+                                                    Tr ? " *" : ""
                                                 ]
                                             })
                                         ]
                                     }),
-                                    kt && r.jsxs("div", {
+                                    Ht && r.jsxs("div", {
                                         className: "hwp-find-bar",
                                         children: [
                                             r.jsx("input", {
                                                 type: "text",
                                                 placeholder: u("site.hwpEditor.find"),
-                                                value: M,
+                                                value: z,
                                                 onChange: (e)=>{
-                                                    Mr(e.target.value), Z("");
+                                                    Yr(e.target.value), ae("");
                                                 },
                                                 onKeyDown: (e)=>{
-                                                    e.key === "Enter" && dr();
+                                                    e.key === "Enter" && kr();
                                                 },
                                                 autoFocus: !0
                                             }),
                                             r.jsx("input", {
                                                 type: "text",
                                                 placeholder: u("site.hwpEditor.replace"),
-                                                value: ie,
-                                                onChange: (e)=>zr(e.target.value),
+                                                value: fe,
+                                                onChange: (e)=>Xr(e.target.value),
                                                 onKeyDown: (e)=>{
-                                                    e.key === "Enter" && hr();
+                                                    e.key === "Enter" && Or();
                                                 }
                                             }),
                                             r.jsx("button", {
                                                 className: "hwp-toolbar-btn",
-                                                onClick: dr,
+                                                onClick: kr,
                                                 children: u("site.hwpEditor.findNext")
                                             }),
                                             r.jsx("button", {
                                                 className: "hwp-toolbar-btn",
-                                                onClick: hr,
+                                                onClick: Or,
                                                 children: u("site.hwpEditor.replaceOne")
                                             }),
                                             r.jsx("button", {
                                                 className: "hwp-toolbar-btn",
-                                                onClick: In,
+                                                onClick: Fn,
                                                 children: u("site.hwpEditor.replaceAllBtn")
                                             }),
                                             r.jsxs("label", {
@@ -3443,34 +3614,34 @@ let __tla = Promise.all([
                                                 children: [
                                                     r.jsx("input", {
                                                         type: "checkbox",
-                                                        checked: X,
-                                                        onChange: (e)=>Hr(e.target.checked)
+                                                        checked: se,
+                                                        onChange: (e)=>Zr(e.target.checked)
                                                     }),
                                                     u("site.hwpEditor.caseSensitive")
                                                 ]
                                             }),
-                                            Ot && r.jsx("span", {
+                                            zt && r.jsx("span", {
                                                 className: "hwp-find-info",
-                                                children: Ot
+                                                children: zt
                                             }),
                                             r.jsx("button", {
                                                 className: "hwp-find-close",
                                                 onClick: ()=>{
-                                                    Ne(!1), Z("");
+                                                    Te(!1), ae("");
                                                 },
                                                 children: "✕"
                                             })
                                         ]
                                     }),
-                                    C !== "body" && r.jsxs("div", {
+                                    W !== "body" && r.jsxs("div", {
                                         className: "hwp-edit-mode-bar",
                                         children: [
                                             r.jsx("span", {
-                                                children: C === "cell" ? "표 셀 편집" : C === "header" ? "머리말 편집" : C === "footer" ? "꼬리말 편집" : "각주 편집"
+                                                children: W === "cell" ? "표 셀 편집" : W === "header" ? "머리말 편집" : W === "footer" ? "꼬리말 편집" : "각주 편집"
                                             }),
                                             r.jsx("button", {
                                                 onClick: ()=>{
-                                                    W("body"), z.current = null, de.current = null, he.current = null;
+                                                    T("body"), A.current = null, X.current = null, Z.current = null;
                                                 },
                                                 children: "ESC 나가기"
                                             })
@@ -3478,29 +3649,61 @@ let __tla = Promise.all([
                                     }),
                                     r.jsx("div", {
                                         className: "hwp-canvas-wrapper",
-                                        onClick: ()=>Y.current?.focus(),
-                                        onMouseUp: an,
-                                        onDragOver: Gt,
-                                        onDragLeave: qt,
-                                        onDrop: er,
+                                        onClick: ()=>ie.current?.focus(),
+                                        onDragOver: hr,
+                                        onDragLeave: ur,
+                                        onDrop: xr,
                                         children: Array.from({
-                                            length: F
+                                            length: D
                                         }, (e, n)=>r.jsxs("div", {
                                                 ref: (t)=>{
-                                                    Rr.current[n] = t;
+                                                    Wr.current[n] = t;
                                                 },
                                                 className: "hwp-canvas",
                                                 style: {
-                                                    transform: `scale(${fe / 100})`,
+                                                    transform: `scale(${me / 100})`,
                                                     transformOrigin: "top center"
                                                 },
-                                                onClick: (t)=>Ur(t, n),
-                                                onMouseDown: (t)=>nn(t, n),
-                                                onMouseMove: (t)=>sn(t, n),
-                                                onContextMenu: (t)=>cn(t, n),
-                                                onDoubleClick: ()=>{
-                                                    const t = y.current;
-                                                    t && C === "body" && dt(t.secIdx, !0);
+                                                onMouseDown: (t)=>pn(t, n),
+                                                onMouseMove: (t)=>gn(t, n),
+                                                onMouseUp: (t)=>yn(t, n),
+                                                onContextMenu: (t)=>bn(t, n),
+                                                onDoubleClick: (t)=>{
+                                                    const s = d.current;
+                                                    if (!s || W !== "body") return;
+                                                    const o = oe.current[n];
+                                                    if (!o) return;
+                                                    const c = le.current, l = o.getBoundingClientRect(), f = (t.clientX - l.left) / l.width * o.width / c, g = (t.clientY - l.top) / l.height * o.height / c;
+                                                    try {
+                                                        const v = p(s.hitTestHeaderFooter(n, f, g));
+                                                        if (v?.hit) {
+                                                            wt(v.sectionIndex ?? 0, !!v.isHeader);
+                                                            return;
+                                                        }
+                                                    } catch  {}
+                                                    const b = I.current;
+                                                    if (b) try {
+                                                        const v = s.getParagraphLength(b.secIdx, b.paraIdx);
+                                                        if (v > 0) {
+                                                            const ee = s.getTextRange(b.secIdx, b.paraIdx, 0, v), B = p(ee)?.text ?? "";
+                                                            if (B) {
+                                                                const Ie = Math.min(b.charOffset, B.length), we = (_e)=>/[\w\u3131-\uD79D]/.test(_e);
+                                                                let _ = Ie, L = Ie;
+                                                                for(; _ > 0 && we(B[_ - 1]);)_--;
+                                                                for(; L < B.length && we(B[L]);)L++;
+                                                                if (_ < L) {
+                                                                    const _e = {
+                                                                        ...b,
+                                                                        charOffset: _
+                                                                    }, Ot = {
+                                                                        ...b,
+                                                                        charOffset: L
+                                                                    };
+                                                                    x.current = _e, m(Ot), N(_e, Ot), S(!0), w(Ot);
+                                                                }
+                                                            }
+                                                        }
+                                                    } catch  {}
                                                 },
                                                 children: [
                                                     r.jsx("canvas", {
@@ -3511,27 +3714,27 @@ let __tla = Promise.all([
                                                     }),
                                                     r.jsx("canvas", {
                                                         ref: (t)=>{
-                                                            Ke.current[n] = t;
+                                                            je.current[n] = t;
                                                         },
                                                         className: "hwp-overlay-canvas"
                                                     })
                                                 ]
                                             }, n))
                                     }),
-                                    I && r.jsx("div", {
+                                    j && r.jsx("div", {
+                                        ref: lr,
                                         className: "hwp-context-menu",
                                         style: {
                                             position: "fixed",
-                                            left: I.x,
-                                            top: I.y,
+                                            left: j.x,
+                                            top: j.y,
                                             zIndex: 9999
                                         },
-                                        onMouseDown: (e)=>e.stopPropagation(),
-                                        children: I.type === "table" && I.tableInfo ? r.jsxs(r.Fragment, {
+                                        children: j.type === "table" && j.tableInfo ? r.jsxs(r.Fragment, {
                                             children: [
                                                 r.jsx("button", {
                                                     onClick: ()=>{
-                                                        I.tableInfo && lt(I.tableInfo.secIdx, I.tableInfo.paraIdx, I.tableInfo.controlIdx, I.tableInfo.cellIdx), Pe();
+                                                        j.tableInfo && bt(j.tableInfo.secIdx, j.tableInfo.paraIdx, j.tableInfo.controlIdx, j.tableInfo.cellIdx), We();
                                                     },
                                                     children: "셀 편집"
                                                 }),
@@ -3539,41 +3742,41 @@ let __tla = Promise.all([
                                                     className: "hwp-ctx-divider"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>sr(!1),
+                                                    onClick: ()=>yr(!1),
                                                     children: "위에 행 삽입"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>sr(!0),
+                                                    onClick: ()=>yr(!0),
                                                     children: "아래에 행 삽입"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>on(),
+                                                    onClick: ()=>In(),
                                                     children: "행 삭제"
                                                 }),
                                                 r.jsx("div", {
                                                     className: "hwp-ctx-divider"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>ar(!1),
+                                                    onClick: ()=>br(!1),
                                                     children: "왼쪽에 열 삽입"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>ar(!0),
+                                                    onClick: ()=>br(!0),
                                                     children: "오른쪽에 열 삽입"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>ln(),
+                                                    onClick: ()=>wn(),
                                                     children: "열 삭제"
                                                 }),
                                                 r.jsx("div", {
                                                     className: "hwp-ctx-divider"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>dn(),
+                                                    onClick: ()=>mn(),
                                                     children: "셀 병합"
                                                 }),
                                                 r.jsx("button", {
-                                                    onClick: ()=>hn(),
+                                                    onClick: ()=>jn(),
                                                     children: "셀 분할"
                                                 })
                                             ]
@@ -3581,13 +3784,13 @@ let __tla = Promise.all([
                                             children: [
                                                 r.jsx("button", {
                                                     onClick: ()=>{
-                                                        ee(), Pe();
+                                                        K(), We();
                                                     },
                                                     children: "실행 취소"
                                                 }),
                                                 r.jsx("button", {
                                                     onClick: ()=>{
-                                                        te(), Pe();
+                                                        U(), We();
                                                     },
                                                     children: "다시 실행"
                                                 }),
@@ -3596,16 +3799,16 @@ let __tla = Promise.all([
                                                 }),
                                                 r.jsx("button", {
                                                     onClick: ()=>{
-                                                        ht(), Pe();
+                                                        mt(), We();
                                                     },
                                                     children: "붙여넣기"
                                                 })
                                             ]
                                         })
                                     }),
-                                    Wr && r.jsx("div", {
+                                    Gr && r.jsx("div", {
                                         className: "hwp-dialog-overlay",
-                                        onClick: ()=>ue(!1),
+                                        onClick: ()=>pe(!1),
                                         children: r.jsxs("div", {
                                             className: "hwp-dialog",
                                             onClick: (e)=>e.stopPropagation(),
@@ -3621,8 +3824,8 @@ let __tla = Promise.all([
                                                         }),
                                                         r.jsx("input", {
                                                             type: "number",
-                                                            value: A.width,
-                                                            onChange: (e)=>U((n)=>({
+                                                            value: V.width,
+                                                            onChange: (e)=>Q((n)=>({
                                                                         ...n,
                                                                         width: Number(e.target.value)
                                                                     }))
@@ -3632,8 +3835,8 @@ let __tla = Promise.all([
                                                         }),
                                                         r.jsx("input", {
                                                             type: "number",
-                                                            value: A.height,
-                                                            onChange: (e)=>U((n)=>({
+                                                            value: V.height,
+                                                            onChange: (e)=>Q((n)=>({
                                                                         ...n,
                                                                         height: Number(e.target.value)
                                                                     }))
@@ -3643,8 +3846,8 @@ let __tla = Promise.all([
                                                         }),
                                                         r.jsx("input", {
                                                             type: "number",
-                                                            value: A.marginTop,
-                                                            onChange: (e)=>U((n)=>({
+                                                            value: V.marginTop,
+                                                            onChange: (e)=>Q((n)=>({
                                                                         ...n,
                                                                         marginTop: Number(e.target.value)
                                                                     }))
@@ -3654,8 +3857,8 @@ let __tla = Promise.all([
                                                         }),
                                                         r.jsx("input", {
                                                             type: "number",
-                                                            value: A.marginBottom,
-                                                            onChange: (e)=>U((n)=>({
+                                                            value: V.marginBottom,
+                                                            onChange: (e)=>Q((n)=>({
                                                                         ...n,
                                                                         marginBottom: Number(e.target.value)
                                                                     }))
@@ -3665,8 +3868,8 @@ let __tla = Promise.all([
                                                         }),
                                                         r.jsx("input", {
                                                             type: "number",
-                                                            value: A.marginLeft,
-                                                            onChange: (e)=>U((n)=>({
+                                                            value: V.marginLeft,
+                                                            onChange: (e)=>Q((n)=>({
                                                                         ...n,
                                                                         marginLeft: Number(e.target.value)
                                                                     }))
@@ -3676,8 +3879,8 @@ let __tla = Promise.all([
                                                         }),
                                                         r.jsx("input", {
                                                             type: "number",
-                                                            value: A.marginRight,
-                                                            onChange: (e)=>U((n)=>({
+                                                            value: V.marginRight,
+                                                            onChange: (e)=>Q((n)=>({
                                                                         ...n,
                                                                         marginRight: Number(e.target.value)
                                                                     }))
@@ -3694,8 +3897,8 @@ let __tla = Promise.all([
                                                             children: [
                                                                 r.jsx("input", {
                                                                     type: "checkbox",
-                                                                    checked: A.landscape,
-                                                                    onChange: (e)=>U((n)=>({
+                                                                    checked: V.landscape,
+                                                                    onChange: (e)=>Q((n)=>({
                                                                                 ...n,
                                                                                 landscape: e.target.checked
                                                                             }))
@@ -3709,12 +3912,12 @@ let __tla = Promise.all([
                                                     className: "hwp-dialog-actions",
                                                     children: [
                                                         r.jsx("button", {
-                                                            onClick: ()=>ue(!1),
+                                                            onClick: ()=>pe(!1),
                                                             children: "취소"
                                                         }),
                                                         r.jsx("button", {
                                                             className: "primary",
-                                                            onClick: pn,
+                                                            onClick: kn,
                                                             children: "적용"
                                                         })
                                                     ]
@@ -3722,9 +3925,9 @@ let __tla = Promise.all([
                                             ]
                                         })
                                     }),
-                                    Kr && r.jsx("div", {
+                                    tn && r.jsx("div", {
                                         className: "hwp-dialog-overlay",
-                                        onClick: ()=>xe(!1),
+                                        onClick: ()=>ge(!1),
                                         children: r.jsxs("div", {
                                             className: "hwp-dialog",
                                             onClick: (e)=>e.stopPropagation(),
@@ -3742,10 +3945,10 @@ let __tla = Promise.all([
                                                         r.jsx("input", {
                                                             type: "text",
                                                             placeholder: "북마크 이름",
-                                                            value: Re,
-                                                            onChange: (e)=>Et(e.target.value),
+                                                            value: Le,
+                                                            onChange: (e)=>Ut(e.target.value),
                                                             onKeyDown: (e)=>{
-                                                                e.key === "Enter" && cr();
+                                                                e.key === "Enter" && Ir();
                                                             },
                                                             style: {
                                                                 flex: 1,
@@ -3762,7 +3965,7 @@ let __tla = Promise.all([
                                                             style: {
                                                                 minWidth: 60
                                                             },
-                                                            onClick: cr,
+                                                            onClick: Ir,
                                                             children: "추가"
                                                         })
                                                     ]
@@ -3773,7 +3976,7 @@ let __tla = Promise.all([
                                                         overflowY: "auto"
                                                     },
                                                     children: [
-                                                        Pt.length === 0 && r.jsx("div", {
+                                                        $t.length === 0 && r.jsx("div", {
                                                             style: {
                                                                 padding: 10,
                                                                 fontSize: "0.82rem",
@@ -3781,7 +3984,7 @@ let __tla = Promise.all([
                                                             },
                                                             children: "북마크 없음"
                                                         }),
-                                                        Pt.map((e)=>r.jsxs("div", {
+                                                        $t.map((e)=>r.jsxs("div", {
                                                                 style: {
                                                                     display: "flex",
                                                                     alignItems: "center",
@@ -3798,7 +4001,7 @@ let __tla = Promise.all([
                                                                             color: "var(--primary)",
                                                                             fontSize: "0.85rem"
                                                                         },
-                                                                        onClick: ()=>wn(e),
+                                                                        onClick: ()=>Rn(e),
                                                                         children: e.name
                                                                     }),
                                                                     r.jsx("button", {
@@ -3809,7 +4012,7 @@ let __tla = Promise.all([
                                                                             color: "#dc2626",
                                                                             fontSize: "0.8rem"
                                                                         },
-                                                                        onClick: ()=>yn(e),
+                                                                        onClick: ()=>Pn(e),
                                                                         children: "삭제"
                                                                     })
                                                                 ]
@@ -3819,7 +4022,7 @@ let __tla = Promise.all([
                                                 r.jsx("div", {
                                                     className: "hwp-dialog-actions",
                                                     children: r.jsx("button", {
-                                                        onClick: ()=>xe(!1),
+                                                        onClick: ()=>ge(!1),
                                                         children: "닫기"
                                                     })
                                                 })
@@ -3827,17 +4030,17 @@ let __tla = Promise.all([
                                         })
                                     }),
                                     r.jsx("textarea", {
-                                        ref: Y,
+                                        ref: ie,
                                         className: "hwp-hidden-input",
                                         "aria-label": "HWP Editor input",
                                         autoComplete: "off",
                                         autoCorrect: "off",
                                         autoCapitalize: "off",
                                         spellCheck: !1,
-                                        onCompositionStart: vn,
-                                        onCompositionEnd: kn,
-                                        onInput: On,
-                                        onKeyDown: Cn,
+                                        onCompositionStart: Bn,
+                                        onCompositionEnd: Ln,
+                                        onInput: Mn,
+                                        onKeyDown: Tn,
                                         style: {
                                             position: "fixed",
                                             left: "-9999px",
@@ -3857,8 +4060,8 @@ let __tla = Promise.all([
                                                 children: [
                                                     r.jsx("button", {
                                                         className: "hwp-page-btn",
-                                                        disabled: G <= 0,
-                                                        onClick: ()=>ae((e)=>Math.max(0, e - 1)),
+                                                        disabled: J <= 0,
+                                                        onClick: ()=>ue((e)=>Math.max(0, e - 1)),
                                                         children: r.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "14",
@@ -3879,21 +4082,21 @@ let __tla = Promise.all([
                                                             r.jsx("input", {
                                                                 className: "hwp-page-input",
                                                                 type: "text",
-                                                                value: We,
-                                                                onChange: Nn,
-                                                                onBlur: xr,
+                                                                value: Ye,
+                                                                onChange: Hn,
+                                                                onBlur: Sr,
                                                                 onKeyDown: (e)=>{
-                                                                    e.key === "Enter" && xr();
+                                                                    e.key === "Enter" && Sr();
                                                                 }
                                                             }),
                                                             " / ",
-                                                            F
+                                                            D
                                                         ]
                                                     }),
                                                     r.jsx("button", {
                                                         className: "hwp-page-btn",
-                                                        disabled: G >= F - 1,
-                                                        onClick: ()=>ae((e)=>Math.min(F - 1, e + 1)),
+                                                        disabled: J >= D - 1,
+                                                        onClick: ()=>ue((e)=>Math.min(D - 1, e + 1)),
                                                         children: r.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "14",
@@ -3913,21 +4116,21 @@ let __tla = Promise.all([
                                                 children: [
                                                     r.jsx("button", {
                                                         className: "hwp-zoom-btn",
-                                                        onClick: Rn,
-                                                        disabled: fe <= 30,
+                                                        onClick: Wn,
+                                                        disabled: me <= 30,
                                                         children: "−"
                                                     }),
                                                     r.jsxs("span", {
                                                         className: "hwp-zoom-label",
                                                         children: [
-                                                            fe,
+                                                            me,
                                                             "%"
                                                         ]
                                                     }),
                                                     r.jsx("button", {
                                                         className: "hwp-zoom-btn",
-                                                        onClick: Sn,
-                                                        disabled: fe >= 200,
+                                                        onClick: zn,
+                                                        disabled: me >= 200,
                                                         children: "+"
                                                     })
                                                 ]
@@ -3943,4 +4146,4 @@ let __tla = Promise.all([
         });
     };
 });
-export { An as default, __tla };
+export { Gn as default, __tla };
