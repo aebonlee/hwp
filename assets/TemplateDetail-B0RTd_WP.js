@@ -1,6 +1,6 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-DhBOH3JZ.js","assets/jszip.min-CF_QwUG1.js","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import { e as $, u as S, b as _, d as C, r, j as e, g as L, T as R, _ as F, __tla as __tla_0 } from "./index-XUQ89LnN.js";
-import { S as T } from "./SEOHead-B-Qd4pN6.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-CKooloIg.js","assets/jszip.min-DgD-IvAb.js","assets/index-BrMjFUwD.js","assets/index-BQpJajZU.css","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
+import { e as $, u as S, b as _, d as C, r, j as e, g as L, T as R, _ as F, __tla as __tla_0 } from "./index-BrMjFUwD.js";
+import { S as T } from "./SEOHead-Dx23o3or.js";
 import { d as A } from "./fileUtils-1h3TEy09.js";
 let I;
 let __tla = Promise.all([
@@ -77,11 +77,11 @@ let __tla = Promise.all([
             if (s === "md") A(m, `${a}.md`, "text/markdown");
             else try {
                 const { generateHwpx: n } = await F(async ()=>{
-                    const { generateHwpx: E } = await import("./generator-DhBOH3JZ.js");
+                    const { generateHwpx: E } = await import("./generator-CKooloIg.js");
                     return {
                         generateHwpx: E
                     };
-                }, __vite__mapDeps([0,1,2])), x = await n(m, a), y = URL.createObjectURL(x), u = document.createElement("a");
+                }, __vite__mapDeps([0,1,2,3,4])), x = await n(m, a), y = URL.createObjectURL(x), u = document.createElement("a");
                 u.href = y, u.download = `${a}.hwpx`, u.click(), URL.revokeObjectURL(y);
             } catch (n) {
                 console.error("HWPX export error:", n);

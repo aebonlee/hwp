@@ -1,6 +1,6 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-DhBOH3JZ.js","assets/jszip.min-CF_QwUG1.js","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import { u as L, b as I, c as z, d as U, r as d, j as e, _ as H, g as W, T as G, __tla as __tla_0 } from "./index-XUQ89LnN.js";
-import { S as _ } from "./SEOHead-B-Qd4pN6.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-CKooloIg.js","assets/jszip.min-DgD-IvAb.js","assets/index-BrMjFUwD.js","assets/index-BQpJajZU.css","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
+import { u as L, b as I, c as z, d as U, r as d, j as e, _ as H, g as W, T as G, __tla as __tla_0 } from "./index-BrMjFUwD.js";
+import { S as _ } from "./SEOHead-Dx23o3or.js";
 let Y;
 let __tla = Promise.all([
     (()=>{
@@ -1310,11 +1310,11 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
         }, B = async ()=>{
             try {
                 const { generateHwpx: t } = await H(async ()=>{
-                    const { generateHwpx: A } = await import("./generator-DhBOH3JZ.js");
+                    const { generateHwpx: A } = await import("./generator-CKooloIg.js");
                     return {
                         generateHwpx: A
                     };
-                }, __vite__mapDeps([0,1,2])), a = l.businessName || l.companyName || l.invCompanyName || l.projectTitle || "business-plan", n = await t(b, a), p = URL.createObjectURL(n), x = document.createElement("a");
+                }, __vite__mapDeps([0,1,2,3,4])), a = l.businessName || l.companyName || l.invCompanyName || l.projectTitle || "business-plan", n = await t(b, a), p = URL.createObjectURL(n), x = document.createElement("a");
                 x.href = p, x.download = `${l.businessName || l.companyName || l.invCompanyName || l.projectTitle || "business-plan"}.hwpx`, x.click(), URL.revokeObjectURL(p);
             } catch (t) {
                 u(t.message || "HWPX export failed", "error");

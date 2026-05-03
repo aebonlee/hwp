@@ -1,4 +1,4 @@
-import{J as x}from"./jszip.min-CF_QwUG1.js";import{c as w,b as u,n as y,d as g}from"./types-dbiTllwl.js";function $(e){const a={version:"1.0",metadata:{},content:[]},n=e.split(`
+import{J as x}from"./jszip.min-DgD-IvAb.js";import{c as w,b as u,n as y,d as g}from"./types-dbiTllwl.js";import"./index-BrMjFUwD.js";function $(e){const a={version:"1.0",metadata:{},content:[]},n=e.split(`
 `);let t=0;if(n[0]==="---"){for(t=1;t<n.length&&n[t]!=="---";){const o=n[t].match(/^(\w+):\s*(.+)$/);if(o){const[,s,i]=o;s==="title"?a.metadata.title=i:s==="author"&&(a.metadata.author=i)}t++}t++}for(;t<n.length;){const o=n[t];if(!o.trim()){t++;continue}const s=o.match(/^(#{1,6})\s+(.+)$/);if(s){const p=s[1].length,r=s[2],c=u(r);c.style.headingLevel=p,a.content.push({type:"paragraph",paragraph:c}),t++;continue}if(o.startsWith("|")){const p=[];for(;t<n.length&&n[t].startsWith("|");)p.push(n[t]),t++;const r=T(p);r&&a.content.push(r);continue}if(o.match(/^\s*[-*+]\s/)){const p=[];for(;t<n.length&&n[t].match(/^\s*[-*+]\s/);){const c=n[t].match(/^(\s*)[-*+]\s(.+)$/);if(c){const m=Math.floor(c[1].length/2);p.push({text:c[2],level:m})}t++}const r=g(!1);r.items=p,a.content.push({type:"list",list:r});continue}if(o.match(/^\s*\d+\.\s/)){const p=[];for(;t<n.length&&n[t].match(/^\s*\d+\.\s/);){const c=n[t].match(/^(\s*)\d+\.\s(.+)$/);if(c){const m=Math.floor(c[1].length/2);p.push({text:c[2],level:m})}t++}const r=g(!0);r.items=p,a.content.push({type:"list",list:r});continue}const i=o.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);if(i){const p=w(i[2]);p.alt=i[1],p.path=i[2],a.content.push({type:"image",image:p}),t++;continue}let l="";for(;t<n.length&&n[t].trim()&&!n[t].startsWith("#")&&!n[t].startsWith("|")&&!n[t].match(/^\s*[-*+]\s/)&&!n[t].match(/^\s*\d+\.\s/);)l&&(l+=`
 `),l+=n[t],t++;l.trim()&&a.content.push({type:"paragraph",paragraph:u(l)})}return a}function T(e){if(e.length<2)return null;const a=e.filter(i=>!i.match(/^\|[\s-:|]+\|$/));if(a.length===0)return null;const n=a.map(i=>i.replace(/^\|/,"").replace(/\|$/,"").split("|").map(l=>l.trim())),t=n.length,o=Math.max(...n.map(i=>i.length)),s=y(t,o);s.hasHeader=!0;for(let i=0;i<t;i++)for(let l=0;l<o;l++)s.cells[i][l].text=n[i][l]||"",i===0&&(s.cells[i][l].style.isHeader=!0);return{type:"table",table:s}}function b(e){let a="";for(const n of e.content)a+=v(n);return`<?xml version="1.0" encoding="UTF-8"?>
 <hs:sec xmlns:hs="urn:hancom:hwp:section"
@@ -42,7 +42,7 @@ ${a}
   <opf:spine>
     <opf:itemref idref="section0"/>
   </opf:spine>
-</opf:package>`}function h(e){return e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;")}async function F(e,a){const n=$(e);a&&(n.metadata.title=a);const t=new x;return t.file("mimetype","application/hwp+zip",{compression:"STORE"}),t.file("META-INF/container.xml",C()),t.file("Contents/content.hpf",M(n.metadata)),t.file("Contents/header.xml",L()),t.file("Contents/section0.xml",b(n)),t.generateAsync({type:"blob",mimeType:"application/hwp+zip",compression:"DEFLATE",compressionOptions:{level:6}})}function C(){return`<?xml version="1.0" encoding="UTF-8"?>
+</opf:package>`}function h(e){return e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;")}async function I(e,a){const n=$(e);a&&(n.metadata.title=a);const t=new x;return t.file("mimetype","application/hwp+zip",{compression:"STORE"}),t.file("META-INF/container.xml",C()),t.file("Contents/content.hpf",M(n.metadata)),t.file("Contents/header.xml",L()),t.file("Contents/section0.xml",b(n)),t.generateAsync({type:"blob",mimeType:"application/hwp+zip",compression:"DEFLATE",compressionOptions:{level:6}})}function C(){return`<?xml version="1.0" encoding="UTF-8"?>
 <container version="1.0">
   <rootfiles>
     <rootfile full-path="Contents/content.hpf" media-type="application/hwpml-package+xml"/>
@@ -50,4 +50,4 @@ ${a}
 </container>`}function L(){return`<?xml version="1.0" encoding="UTF-8"?>
 <ha:HWPDocumentHeaderType xmlns:ha="urn:hancom:hwp:header"
   version="1.1" secCnt="1">
-</ha:HWPDocumentHeaderType>`}export{F as generateHwpx};
+</ha:HWPDocumentHeaderType>`}export{I as generateHwpx};
