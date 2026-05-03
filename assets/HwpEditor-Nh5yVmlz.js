@@ -1,6 +1,6 @@
-import { R as pt, r as n, j as e, u as Er, _ as Rr, __tla as __tla_0 } from "./index-D_kY49ud.js";
-import { u as Br, __tla as __tla_1 } from "./useRhwp-BJZvJvuj.js";
-import { S as zr } from "./SEOHead-BozDvPyR.js";
+import { R as pt, r as n, j as e, u as Er, _ as Rr, __tla as __tla_0 } from "./index-B4CSoVQG.js";
+import { u as Br, __tla as __tla_1 } from "./useRhwp-DnWhA6O1.js";
+import { S as zr } from "./SEOHead-BWvs9I22.js";
 let Ln;
 let __tla = Promise.all([
     (()=>{
@@ -11375,27 +11375,31 @@ let __tla = Promise.all([
                                             viewBox: "0 0 24 24",
                                             width: "56",
                                             height: "56",
-                                            fill: "none",
-                                            stroke: "currentColor",
                                             strokeWidth: "1.5",
                                             children: [
                                                 e.jsx("path", {
-                                                    d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                                                    d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z",
+                                                    fill: "rgba(74,143,231,0.15)",
+                                                    stroke: "var(--primary, #0046C8)"
                                                 }),
                                                 e.jsx("polyline", {
-                                                    points: "14 2 14 8 20 8"
+                                                    points: "14 2 14 8 20 8",
+                                                    fill: "rgba(74,143,231,0.25)",
+                                                    stroke: "var(--primary, #0046C8)"
                                                 }),
                                                 e.jsx("line", {
                                                     x1: "12",
                                                     y1: "18",
                                                     x2: "12",
-                                                    y2: "12"
+                                                    y2: "12",
+                                                    stroke: "var(--primary, #0046C8)"
                                                 }),
                                                 e.jsx("line", {
                                                     x1: "9",
                                                     y1: "15",
                                                     x2: "15",
-                                                    y2: "15"
+                                                    y2: "15",
+                                                    stroke: "var(--primary, #0046C8)"
                                                 })
                                             ]
                                         }),
@@ -11415,17 +11419,35 @@ let __tla = Promise.all([
                                                     children: [
                                                         e.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
-                                                            width: "16",
-                                                            height: "16",
-                                                            fill: "none",
-                                                            stroke: "currentColor",
+                                                            width: "18",
+                                                            height: "18",
                                                             strokeWidth: "2",
                                                             children: [
                                                                 e.jsx("path", {
-                                                                    d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                                                                    d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z",
+                                                                    fill: "rgba(255,255,255,0.25)",
+                                                                    stroke: "white"
                                                                 }),
                                                                 e.jsx("polyline", {
-                                                                    points: "14 2 14 8 20 8"
+                                                                    points: "14 2 14 8 20 8",
+                                                                    fill: "rgba(255,255,255,0.15)",
+                                                                    stroke: "white"
+                                                                }),
+                                                                e.jsx("line", {
+                                                                    x1: "12",
+                                                                    y1: "18",
+                                                                    x2: "12",
+                                                                    y2: "11",
+                                                                    stroke: "white",
+                                                                    strokeWidth: "1.5"
+                                                                }),
+                                                                e.jsx("line", {
+                                                                    x1: "9",
+                                                                    y1: "14.5",
+                                                                    x2: "15",
+                                                                    y2: "14.5",
+                                                                    stroke: "white",
+                                                                    strokeWidth: "1.5"
                                                                 })
                                                             ]
                                                         }),
@@ -11439,13 +11461,13 @@ let __tla = Promise.all([
                                                     children: [
                                                         e.jsx("svg", {
                                                             viewBox: "0 0 24 24",
-                                                            width: "16",
-                                                            height: "16",
-                                                            fill: "none",
-                                                            stroke: "currentColor",
+                                                            width: "18",
+                                                            height: "18",
                                                             strokeWidth: "2",
                                                             children: e.jsx("path", {
-                                                                d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                                                                d: "M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z",
+                                                                fill: "rgba(234,179,8,0.25)",
+                                                                stroke: "currentColor"
                                                             })
                                                         }),
                                                         k("site.hwpEditor.openFile")
