@@ -1,19 +1,53 @@
 import React, {
-  useRef,
-  useState,
   useEffect,
   useCallback,
   type ChangeEvent,
   type DragEvent,
-  type KeyboardEvent,
 } from 'react';
 import type { HwpDocument as RhwpDoc } from '@rhwp/core';
 import { useRhwp } from '../hooks/useRhwp';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEOHead from '../components/SEOHead';
 
+// ── Extracted components ────────────────────────────────────────────────────
+import EditorToolbar from '../components/hwp/EditorToolbar';
+import EditorCanvas from '../components/hwp/EditorCanvas';
+import FindReplaceBar from '../components/hwp/FindReplaceBar';
+import ContextMenu from '../components/hwp/ContextMenu';
+import EditorSidebar from '../components/hwp/EditorSidebar';
+
+// ── Dialogs ─────────────────────────────────────────────────────────────────
+import TablePropsDialog from '../components/hwp/dialogs/TablePropsDialog';
+import CellPropsDialog from '../components/hwp/dialogs/CellPropsDialog';
+import ShapeDialog from '../components/hwp/dialogs/ShapeDialog';
+import PicturePropsDialog from '../components/hwp/dialogs/PicturePropsDialog';
+import StyleDialog from '../components/hwp/dialogs/StyleDialog';
+import HeaderFooterDialog from '../components/hwp/dialogs/HeaderFooterDialog';
+import FieldDialog from '../components/hwp/dialogs/FieldDialog';
+import BookmarkDialog from '../components/hwp/dialogs/BookmarkDialog';
+import ColumnDialog from '../components/hwp/dialogs/ColumnDialog';
+import FormDialog from '../components/hwp/dialogs/FormDialog';
+import NumberingDialog from '../components/hwp/dialogs/NumberingDialog';
+import EquationDialog from '../components/hwp/dialogs/EquationDialog';
+import PageSetupDialog from '../components/hwp/dialogs/PageSetupDialog';
+
+// ── Hooks ───────────────────────────────────────────────────────────────────
+import {
+  useEditorState,
+  type CursorPos,
+  type ContextMenuState,
+  type StyleItem,
+} from '../components/hwp/hooks/useEditorState';
+import { useKeyboard } from '../components/hwp/hooks/useKeyboard';
+import { useClipboard } from '../components/hwp/hooks/useClipboard';
+import { useCellEditing } from '../components/hwp/hooks/useCellEditing';
+import { useNavigation } from '../components/hwp/hooks/useNavigation';
+
+// ── CSS ─────────────────────────────────────────────────────────────────────
+import '../styles/hwp-dialogs.css';
+
 // ─────────────────────────────────────────────────────────────────────────────
-// Helpers
+// Module-level helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
 function hexToHwpColor(hex: string): number {
@@ -38,497 +72,242 @@ function parseResult(json: string): Record<string, unknown> | null {
   }
 }
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Constants
-// ─────────────────────────────────────────────────────────────────────────────
-
-const KOREAN_FONTS = [
-  '맑은 고딕',
-  '함초롬바탕',
-  '함초롬돋움',
-  '나눔고딕',
-  '나눔명조',
-  '바탕',
-  '돋움',
-  '굴림',
-  'Arial',
-  'Times New Roman',
-];
-
-const FONT_SIZES = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 28, 36, 48, 72];
-
-const LINE_SPACINGS = [
-  { label: '100%', value: 100 },
-  { label: '115%', value: 115 },
-  { label: '130%', value: 130 },
-  { label: '150%', value: 150 },
-  { label: '160%', value: 160 },
-  { label: '200%', value: 200 },
-  { label: '250%', value: 250 },
-  { label: '300%', value: 300 },
-];
-
-const COLOR_PALETTE = [
-  [
-    '#000000', '#434343', '#666666', '#999999', '#B7B7B7',
-    '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF',
-  ],
-  [
-    '#980000', '#FF0000', '#FF9900', '#FFFF00', '#00FF00',
-    '#00FFFF', '#4A86E8', '#0000FF', '#9900FF', '#FF00FF',
-  ],
-  [
-    '#E6B8AF', '#F4CCCC', '#FCE5CD', '#FFF2CC', '#D9EAD3',
-    '#D0E0E3', '#C9DAF8', '#CFE2F3', '#D9D2E9', '#EAD1DC',
-  ],
-];
-
 const MAX_UNDO = 100;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Types
-// ─────────────────────────────────────────────────────────────────────────────
-
-interface CursorPos {
-  secIdx: number;
-  paraIdx: number;
-  charOffset: number;
-}
-
-interface CharProps {
-  fontFamily: string;
-  fontSize: number; // HWPUNIT (1pt = 100)
-  bold: boolean;
-  italic: boolean;
-  underline: boolean;
-  strikethrough: boolean;
-  textColor: number;  // COLORREF BGR
-  highlight: number;  // COLORREF BGR
-}
-
-interface ParaProps {
-  alignment: string;
-  lineSpacing: number;
-  marginLeft: number;
-  marginRight: number;
-  indent: number;
-}
-
-interface SelectionRect {
-  pageIndex: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-type EditMode = 'body' | 'cell' | 'header' | 'footer' | 'footnote';
-
-interface CellContext {
-  secIdx: number;
-  parentParaIdx: number;
-  controlIdx: number;
-  cellIdx: number;
-  cellParaIdx: number;
-  charOffset: number;
-}
-
-interface HfContext {
-  secIdx: number;
-  isHeader: boolean;
-  applyTo: number;
-  hfParaIdx: number;
-  charOffset: number;
-}
-
-interface FnContext {
-  secIdx: number;
-  paraIdx: number;
-  controlIdx: number;
-  fnParaIdx: number;
-  charOffset: number;
-}
-
-interface ContextMenuState {
-  x: number;
-  y: number;
-  type: 'body' | 'table' | 'image';
-  tableInfo?: {
-    secIdx: number;
-    paraIdx: number;
-    controlIdx: number;
-    row: number;
-    col: number;
-    cellIdx: number;
-  };
-}
-
-interface PageDefState {
-  width: number;
-  height: number;
-  marginTop: number;
-  marginBottom: number;
-  marginLeft: number;
-  marginRight: number;
-  landscape: boolean;
-}
-
-interface StyleItem {
-  id: number;
-  name: string;
-  type: string;
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Component
 // ─────────────────────────────────────────────────────────────────────────────
 
 const HwpEditor: React.FC = () => {
+  // ── External hooks ──────────────────────────────────────────────────────
   const { ready, loading: wasmLoading, error: wasmError } = useRhwp();
   const { t } = useLanguage();
 
-  // Document
-  const docRef = useRef<RhwpDoc | null>(null);
-  const [pageCount, setPageCount] = useState(0);
-  const [renderVer, setRenderVer] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageInputVal, setPageInputVal] = useState('1');
-  const [zoom, setZoom] = useState(100);
-  const [fileName, setFileName] = useState('');
-  const [dirty, setDirty] = useState(false);
+  // ── Centralized state ───────────────────────────────────────────────────
+  const st = useEditorState();
+  const {
+    docRef, cursorRef, selAnchorRef, cellCtxRef, hfCtxRef, fnCtxRef,
+    pageCanvasRefs, overlayCanvasRefs, renderScaleRef, pageSizesRef,
+    undoStack, redoStack, dragStartPos,
+  } = st;
 
-  // Cursor / Selection
-  const cursorRef = useRef<CursorPos>({ secIdx: 0, paraIdx: 0, charOffset: 0 });
-  const [cursor, setCursorState] = useState<CursorPos | null>(null);
-  const [cursorRect, setCursorRect] = useState<{
-    pageIndex: number; x: number; y: number; height: number;
-  } | null>(null);
-  const selAnchorRef = useRef<CursorPos | null>(null);
-  const [, setHasSelection] = useState(false);
-  const [selRects, setSelRects] = useState<SelectionRect[]>([]);
-  const [cursorVisible, setCursorVisible] = useState(true);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CORE CALLBACKS
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  // Canvas refs per page (content + overlay)
-  const pageCanvasRefs = useRef<Record<number, HTMLCanvasElement | null>>({});
-  const overlayCanvasRefs = useRef<Record<number, HTMLCanvasElement | null>>({});
-  const renderScaleRef = useRef(window.devicePixelRatio || 1);
-  const pageSizesRef = useRef<Record<number, { w: number; h: number }>>({});
+  // ── Hit-test -> CursorPos ─────────────────────────────────────────────
+  const hitTestToPos = useCallback(
+    (e: React.MouseEvent, pageIdx: number): CursorPos | null => {
+      const doc = docRef.current;
+      if (!doc) return null;
+      const canvas = pageCanvasRefs.current[pageIdx];
+      if (!canvas) return null;
+      const scale = renderScaleRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const pageX = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
+      const pageY = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
+      try {
+        const hj = doc.hitTest(pageIdx, pageX, pageY);
+        const h = parseResult(hj);
+        if (!h) return null;
+        return {
+          secIdx: (h.sectionIndex as number) ?? 0,
+          paraIdx: ((h.paragraphIndex ?? h.paraIndex) as number) ?? 0,
+          charOffset: (h.charOffset as number) ?? 0,
+        };
+      } catch {
+        return null;
+      }
+    },
+    [docRef, pageCanvasRefs, renderScaleRef],
+  );
 
-  // Char / para display props
-  const [charProps, setCharProps] = useState<CharProps>({
-    fontFamily: '맑은 고딕',
-    fontSize: 1000,
-    bold: false,
-    italic: false,
-    underline: false,
-    strikethrough: false,
-    textColor: 0,
-    highlight: hexToHwpColor('#FFFF00'),
-  });
-  const [paraProps, setParaProps] = useState<ParaProps>({
-    alignment: 'justify',
-    lineSpacing: 160,
-    marginLeft: 0,
-    marginRight: 0,
-    indent: 0,
-  });
-
-  // Undo / Redo stacks
-  const undoStack = useRef<number[]>([]);
-  const redoStack = useRef<number[]>([]);
-  const [canUndo, setCanUndo] = useState(false);
-  const [canRedo, setCanRedo] = useState(false);
-
-  // Korean IME composing
-  const composingRef = useRef(false);
-  const hiddenInputRef = useRef<HTMLTextAreaElement>(null);
-
-  // Canvas container refs (for hit-test querySelector)
-  const canvasRefs = useRef<Record<number, HTMLDivElement | null>>({});
-
-  // Drag-drop
-  const [isDragging, setIsDragging] = useState(false);
-
-  // Error
-  const [editorError, setEditorError] = useState('');
-
-  // Toolbar dropdowns
-  const [fontOpen, setFontOpen] = useState(false);
-  const [sizeOpen, setSizeOpen] = useState(false);
-  const [colorOpen, setColorOpen] = useState(false);
-  const [highlightOpen, setHighlightOpen] = useState(false);
-  const [exportOpen, setExportOpen] = useState(false);
-  const [spacingOpen, setSpacingOpen] = useState(false);
-  const [tableDialogOpen, setTableDialogOpen] = useState(false);
-
-  // Table dialog state
-  const [tableRows, setTableRows] = useState(3);
-  const [tableCols, setTableCols] = useState(3);
-
-  // Custom color inputs
-  const [customTextColor, setCustomTextColor] = useState('#000000');
-  const [customHighlight, setCustomHighlight] = useState('#FFFF00');
-
-  // Toolbar display strings
-  const [fontInput, setFontInput] = useState('맑은 고딕');
-  const [sizeInput, setSizeInput] = useState('10');
-
-  // Find/Replace
-  const [findBarOpen, setFindBarOpen] = useState(false);
-  const [findQuery, setFindQuery] = useState('');
-  const [replaceQuery, setReplaceQuery] = useState('');
-  const [caseSensitive, setCaseSensitive] = useState(false);
-  const [findInfo, setFindInfo] = useState('');
-
-  // Edit context (cell / header-footer / footnote)
-  const [editMode, setEditModeState] = useState<EditMode>('body');
-  const editModeRef = useRef<EditMode>('body');
-  const setEditMode = useCallback((mode: EditMode) => {
-    editModeRef.current = mode;
-    setEditModeState(mode);
-  }, []);
-  const cellCtxRef = useRef<CellContext | null>(null);
-  const hfCtxRef = useRef<HfContext | null>(null);
-  const fnCtxRef = useRef<FnContext | null>(null);
-
-  // Mouse drag selection
-  const [isDragSelecting, setIsDragSelecting] = useState(false);
-  const dragStartPos = useRef<CursorPos | null>(null);
-
-  // Context menu (right-click)
-  const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
-
-  // Page setup dialog
-  const [pageDefOpen, setPageDefOpen] = useState(false);
-  const [pageDef, setPageDef] = useState<PageDefState>({
-    width: 59528, height: 84188,
-    marginTop: 5669, marginBottom: 4252,
-    marginLeft: 4252, marginRight: 4252,
-    landscape: false,
-  });
-
-  // Style
-  const [styleList, setStyleList] = useState<StyleItem[]>([]);
-  const [styleOpen, setStyleOpen] = useState(false);
-
-  // Display options
-  const [showControlCodes, setShowControlCodes] = useState(false);
-  const [showParaMarks, setShowParaMarks] = useState(false);
-
-  // Bookmark
-  const [bookmarkOpen, setBookmarkOpen] = useState(false);
-  const [bookmarkName, setBookmarkName] = useState('');
-  const [bookmarkList, setBookmarkList] = useState<Array<{ name: string; secIdx: number; paraIdx: number; charOffset: number }>>([]);
-
-  // Dropdown outside-click refs
-  const fontBtnRef = useRef<HTMLButtonElement>(null);
-  const fontDropRef = useRef<HTMLDivElement>(null);
-  const sizeBtnRef = useRef<HTMLButtonElement>(null);
-  const sizeDropRef = useRef<HTMLDivElement>(null);
-  const colorBtnRef = useRef<HTMLButtonElement>(null);
-  const colorDropRef = useRef<HTMLDivElement>(null);
-  const hlBtnRef = useRef<HTMLButtonElement>(null);
-  const hlDropRef = useRef<HTMLDivElement>(null);
-  const exportBtnRef = useRef<HTMLButtonElement>(null);
-  const exportDropRef = useRef<HTMLDivElement>(null);
-  const spacingBtnRef = useRef<HTMLButtonElement>(null);
-  const spacingDropRef = useRef<HTMLDivElement>(null);
-  const tableDialogRef = useRef<HTMLDivElement>(null);
-  const tableBtnRef = useRef<HTMLButtonElement>(null);
-  const styleBtnRef = useRef<HTMLButtonElement>(null);
-  const styleDropRef = useRef<HTMLDivElement>(null);
-  const contextMenuRef = useRef<HTMLDivElement>(null);
-
-  // ── Cursor setter ────────────────────────────────────────────────────────
-
-  const setCursor = useCallback((pos: CursorPos) => {
-    cursorRef.current = pos;
-    setCursorState(pos);
-  }, []);
-
-  // ── Hit-test → CursorPos helper ────────────────────────────────────────
-
-  const hitTestToPos = useCallback((e: React.MouseEvent, pageIdx: number): CursorPos | null => {
-    const doc = docRef.current;
-    if (!doc) return null;
-    const canvas = pageCanvasRefs.current[pageIdx];
-    if (!canvas) return null;
-    const scale = renderScaleRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const pageX = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
-    const pageY = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
-    try {
-      const hj = doc.hitTest(pageIdx, pageX, pageY);
-      const h = parseResult(hj);
-      if (!h) return null;
-      return {
-        secIdx: (h.sectionIndex as number) ?? 0,
-        paraIdx: ((h.paragraphIndex ?? h.paraIndex) as number) ?? 0,
-        charOffset: (h.charOffset as number) ?? 0,
-      };
-    } catch { return null; }
-  }, []);
-
-  // (exitToBody logic is inlined where needed)
-
-  // ── Rerender ──────────────────────────────────────────────────────────────
-
+  // ── Rerender ──────────────────────────────────────────────────────────
   const rerender = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
     try {
       const count = doc.pageCount();
-      setPageCount(count);
-      setRenderVer((v) => v + 1);
+      st.setPageCount(count);
+      st.setRenderVer((v) => v + 1);
     } catch (e) {
-      setEditorError(String(e));
+      st.setEditorError(String(e));
     }
-  }, []);
+  }, [docRef, st]);
 
-  const rerenderPage = useCallback((pageIdx: number) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const canvas = pageCanvasRefs.current[pageIdx];
-    if (!canvas) return;
-    const scale = renderScaleRef.current;
-    try {
-      doc.renderPageToCanvas(pageIdx, canvas, scale);
-      const cssW = canvas.width / scale;
-      const cssH = canvas.height / scale;
-      canvas.style.width = cssW + 'px';
-      canvas.style.height = cssH + 'px';
-      pageSizesRef.current[pageIdx] = { w: cssW, h: cssH };
-      const overlay = overlayCanvasRefs.current[pageIdx];
-      if (overlay) {
-        overlay.width = canvas.width;
-        overlay.height = canvas.height;
-        overlay.style.width = cssW + 'px';
-        overlay.style.height = cssH + 'px';
+  const rerenderPage = useCallback(
+    (pageIdx: number) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      const canvas = pageCanvasRefs.current[pageIdx];
+      if (!canvas) return;
+      const scale = renderScaleRef.current;
+      try {
+        doc.renderPageToCanvas(pageIdx, canvas, scale);
+        const cssW = canvas.width / scale;
+        const cssH = canvas.height / scale;
+        canvas.style.width = cssW + 'px';
+        canvas.style.height = cssH + 'px';
+        pageSizesRef.current[pageIdx] = { w: cssW, h: cssH };
+        const overlay = overlayCanvasRefs.current[pageIdx];
+        if (overlay) {
+          overlay.width = canvas.width;
+          overlay.height = canvas.height;
+          overlay.style.width = cssW + 'px';
+          overlay.style.height = cssH + 'px';
+        }
+      } catch {
+        /* ignore */
       }
-    } catch { /* ignore */ }
-  }, []);
+    },
+    [docRef, pageCanvasRefs, overlayCanvasRefs, renderScaleRef, pageSizesRef],
+  );
 
   const rerenderCurrentPage = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
     try {
       const count = doc.pageCount();
-      if (count !== pageCount) {
-        setPageCount(count);
-        setRenderVer((v) => v + 1);
+      if (count !== st.pageCount) {
+        st.setPageCount(count);
+        st.setRenderVer((v) => v + 1);
       } else {
-        const cur = currentPage;
+        const cur = st.currentPage;
         rerenderPage(cur);
         if (cur > 0) rerenderPage(cur - 1);
         if (cur < count - 1) rerenderPage(cur + 1);
-        setRenderVer((v) => v + 1);
+        st.setRenderVer((v) => v + 1);
       }
     } catch (e) {
-      setEditorError(String(e));
+      st.setEditorError(String(e));
     }
-  }, [pageCount, currentPage, rerenderPage]);
+  }, [docRef, st, rerenderPage]);
 
-  // ── Cursor display ────────────────────────────────────────────────────────
-
-  const updateCursorDisplay = useCallback((pos: CursorPos) => {
-    const doc = docRef.current;
-    if (!doc) { setCursorRect(null); return; }
-    try {
-      const r = parseResult(doc.getCursorRect(pos.secIdx, pos.paraIdx, pos.charOffset));
-      if (r && r.x !== undefined) {
-        setCursorRect({
-          pageIndex: (r.pageIndex as number) ?? 0,
-          x: r.x as number,
-          y: r.y as number,
-          height: r.height as number,
-        });
-        setCurrentPage((r.pageIndex as number) ?? 0);
-      } else {
-        setCursorRect(null);
+  // ── Cursor display ────────────────────────────────────────────────────
+  const updateCursorDisplay = useCallback(
+    (pos: CursorPos) => {
+      const doc = docRef.current;
+      if (!doc) {
+        st.setCursorRect(null);
+        return;
       }
-    } catch {
-      setCursorRect(null);
-    }
-  }, []);
-
-  // ── Char/Para props update ────────────────────────────────────────────────
-
-  const updateCharProps = useCallback((pos: CursorPos) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    try {
-      const cj = doc.getCharPropertiesAt(pos.secIdx, pos.paraIdx, pos.charOffset);
-      const cp = parseResult(cj);
-      if (cp) {
-        const ff = (cp.fontFamily as string) || '맑은 고딕';
-        const fs = (cp.fontSize as number) || 1000;
-        setFontInput(ff);
-        setSizeInput(String(Math.round(fs / 100)));
-        setCharProps({
-          fontFamily: ff,
-          fontSize: fs,
-          bold: !!cp.bold,
-          italic: !!cp.italic,
-          underline: !!cp.underline,
-          strikethrough: !!cp.strikethrough,
-          textColor: (cp.textColor as number) ?? 0,
-          highlight: (cp.highlight as number) ?? hexToHwpColor('#FFFF00'),
-        });
+      try {
+        const r = parseResult(
+          doc.getCursorRect(pos.secIdx, pos.paraIdx, pos.charOffset),
+        );
+        if (r && r.x !== undefined) {
+          st.setCursorRect({
+            pageIndex: (r.pageIndex as number) ?? 0,
+            x: r.x as number,
+            y: r.y as number,
+            height: r.height as number,
+          });
+          st.setCurrentPage((r.pageIndex as number) ?? 0);
+        } else {
+          st.setCursorRect(null);
+        }
+      } catch {
+        st.setCursorRect(null);
       }
-    } catch { /* ignore */ }
-    try {
-      const pj = doc.getParaPropertiesAt(pos.secIdx, pos.paraIdx);
-      const pp = parseResult(pj);
-      if (pp) {
-        setParaProps({
-          alignment: (pp.alignment as string) || 'justify',
-          lineSpacing: (pp.lineSpacing as number) || 160,
-          marginLeft: (pp.marginLeft as number) || 0,
-          marginRight: (pp.marginRight as number) || 0,
-          indent: (pp.indent as number) || 0,
-        });
+    },
+    [docRef, st],
+  );
+
+  // ── Char/Para props update ────────────────────────────────────────────
+  const updateCharProps = useCallback(
+    (pos: CursorPos) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      try {
+        const cj = doc.getCharPropertiesAt(pos.secIdx, pos.paraIdx, pos.charOffset);
+        const cp = parseResult(cj);
+        if (cp) {
+          const ff = (cp.fontFamily as string) || '\uB9D1\uC740 \uACE0\uB515';
+          const fs = (cp.fontSize as number) || 1000;
+          st.setFontInput(ff);
+          st.setSizeInput(String(Math.round(fs / 100)));
+          st.setCharProps({
+            fontFamily: ff,
+            fontSize: fs,
+            bold: !!cp.bold,
+            italic: !!cp.italic,
+            underline: !!cp.underline,
+            strikethrough: !!cp.strikethrough,
+            textColor: (cp.textColor as number) ?? 0,
+            highlight: (cp.highlight as number) ?? hexToHwpColor('#FFFF00'),
+          });
+        }
+      } catch {
+        /* ignore */
       }
-    } catch { /* ignore */ }
-  }, []);
+      try {
+        const pj = doc.getParaPropertiesAt(pos.secIdx, pos.paraIdx);
+        const pp = parseResult(pj);
+        if (pp) {
+          st.setParaProps({
+            alignment: (pp.alignment as string) || 'justify',
+            lineSpacing: (pp.lineSpacing as number) || 160,
+            marginLeft: (pp.marginLeft as number) || 0,
+            marginRight: (pp.marginRight as number) || 0,
+            indent: (pp.indent as number) || 0,
+          });
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [docRef, st],
+  );
 
-  // ── Selection rects ────────────────────────────────────────────────────────
+  // ── Selection rects ───────────────────────────────────────────────────
+  const updateSelectionRects = useCallback(
+    (anchor: CursorPos, end: CursorPos) => {
+      const doc = docRef.current;
+      if (!doc) {
+        st.setSelRects([]);
+        return;
+      }
+      let sp = anchor.paraIdx;
+      let so = anchor.charOffset;
+      let ep = end.paraIdx;
+      let eo = end.charOffset;
+      if (sp > ep || (sp === ep && so > eo)) {
+        [sp, ep] = [ep, sp];
+        [so, eo] = [eo, so];
+      }
+      try {
+        const rj = doc.getSelectionRects(anchor.secIdx, sp, so, ep, eo);
+        const rects = JSON.parse(rj);
+        st.setSelRects(Array.isArray(rects) ? rects : []);
+      } catch {
+        st.setSelRects([]);
+      }
+    },
+    [docRef, st],
+  );
 
-  const updateSelectionRects = useCallback((anchor: CursorPos, end: CursorPos) => {
-    const doc = docRef.current;
-    if (!doc) { setSelRects([]); return; }
-    let sp = anchor.paraIdx; let so = anchor.charOffset;
-    let ep = end.paraIdx; let eo = end.charOffset;
-    if (sp > ep || (sp === ep && so > eo)) {
-      [sp, ep] = [ep, sp]; [so, eo] = [eo, so];
-    }
-    try {
-      const rj = doc.getSelectionRects(anchor.secIdx, sp, so, ep, eo);
-      const rects = JSON.parse(rj) as SelectionRect[];
-      setSelRects(Array.isArray(rects) ? rects : []);
-    } catch {
-      setSelRects([]);
-    }
-  }, []);
+  // ── Move cursor ───────────────────────────────────────────────────────
+  const moveCursor = useCallback(
+    (pos: CursorPos, clearSel = true) => {
+      st.setCursor(pos);
+      if (clearSel) {
+        selAnchorRef.current = null;
+        st.setHasSelection(false);
+        st.setSelRects([]);
+      } else if (selAnchorRef.current) {
+        updateSelectionRects(selAnchorRef.current, pos);
+      }
+      updateCursorDisplay(pos);
+      updateCharProps(pos);
+      st.setDirty(true);
+      st.hiddenInputRef.current?.focus();
+    },
+    [st, selAnchorRef, updateCursorDisplay, updateCharProps, updateSelectionRects],
+  );
 
-  // ── Move cursor (with optional selection) ────────────────────────────────
-
-  const moveCursor = useCallback((pos: CursorPos, clearSel = true) => {
-    setCursor(pos);
-    if (clearSel) {
-      selAnchorRef.current = null;
-      setHasSelection(false);
-      setSelRects([]);
-    } else if (selAnchorRef.current) {
-      updateSelectionRects(selAnchorRef.current, pos);
-    }
-    updateCursorDisplay(pos);
-    updateCharProps(pos);
-    setDirty(true);
-    hiddenInputRef.current?.focus();
-  }, [setCursor, updateCursorDisplay, updateCharProps, updateSelectionRects]);
-
-  // ── Snapshot helpers ──────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // UNDO / REDO
+  // ═══════════════════════════════════════════════════════════════════════════
 
   const saveSnapshot = useCallback(() => {
     const doc = docRef.current;
@@ -538,14 +317,28 @@ const HwpEditor: React.FC = () => {
       undoStack.current.push(id);
       if (undoStack.current.length > MAX_UNDO) {
         const old = undoStack.current.shift();
-        if (old !== undefined) { try { doc.discardSnapshot(old); } catch { /* ignore */ } }
+        if (old !== undefined) {
+          try {
+            doc.discardSnapshot(old);
+          } catch {
+            /* ignore */
+          }
+        }
       }
-      redoStack.current.forEach((sid) => { try { doc.discardSnapshot(sid); } catch { /* ignore */ } });
+      redoStack.current.forEach((sid) => {
+        try {
+          doc.discardSnapshot(sid);
+        } catch {
+          /* ignore */
+        }
+      });
       redoStack.current = [];
-      setCanUndo(true);
-      setCanRedo(false);
-    } catch { /* ignore */ }
-  }, []);
+      st.setCanUndo(true);
+      st.setCanRedo(false);
+    } catch {
+      /* ignore */
+    }
+  }, [docRef, undoStack, redoStack, st]);
 
   const handleUndo = useCallback(() => {
     const doc = docRef.current;
@@ -555,15 +348,21 @@ const HwpEditor: React.FC = () => {
       const redoId = doc.saveSnapshot();
       redoStack.current.push(redoId);
       doc.restoreSnapshot(id);
-      try { doc.discardSnapshot(id); } catch { /* ignore */ }
-    } catch { /* ignore */ }
+      try {
+        doc.discardSnapshot(id);
+      } catch {
+        /* ignore */
+      }
+    } catch {
+      /* ignore */
+    }
     rerender();
-    setCanUndo(undoStack.current.length > 0);
-    setCanRedo(true);
+    st.setCanUndo(undoStack.current.length > 0);
+    st.setCanRedo(true);
     const pos = cursorRef.current;
     updateCursorDisplay(pos);
     updateCharProps(pos);
-  }, [rerender, updateCursorDisplay, updateCharProps]);
+  }, [docRef, undoStack, redoStack, st, rerender, cursorRef, updateCursorDisplay, updateCharProps]);
 
   const handleRedo = useCallback(() => {
     const doc = docRef.current;
@@ -573,66 +372,85 @@ const HwpEditor: React.FC = () => {
       const undoId = doc.saveSnapshot();
       undoStack.current.push(undoId);
       doc.restoreSnapshot(id);
-      try { doc.discardSnapshot(id); } catch { /* ignore */ }
-    } catch { /* ignore */ }
+      try {
+        doc.discardSnapshot(id);
+      } catch {
+        /* ignore */
+      }
+    } catch {
+      /* ignore */
+    }
     rerender();
-    setCanUndo(true);
-    setCanRedo(redoStack.current.length > 0);
+    st.setCanUndo(true);
+    st.setCanRedo(redoStack.current.length > 0);
     const pos = cursorRef.current;
     updateCursorDisplay(pos);
     updateCharProps(pos);
-  }, [rerender, updateCursorDisplay, updateCharProps]);
+  }, [docRef, undoStack, redoStack, st, rerender, cursorRef, updateCursorDisplay, updateCharProps]);
 
-  // ── Document lifecycle ────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DOCUMENT LIFECYCLE
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  const initDoc = useCallback((doc: RhwpDoc, name: string) => {
-    try { doc.convertToEditable(); } catch { /* ignore */ }
-    if (docRef.current && docRef.current !== doc) {
-      try { docRef.current.free(); } catch { /* ignore */ }
-    }
-    docRef.current = doc;
-    undoStack.current = [];
-    redoStack.current = [];
-    setCanUndo(false);
-    setCanRedo(false);
-    setFileName(name);
-    setDirty(false);
-    setCursorState(null);
-    setCursorRect(null);
-    selAnchorRef.current = null;
-    setHasSelection(false);
-    setSelRects([]);
-    setCurrentPage(0);
-    setEditorError('');
-    pageSizesRef.current = {};
-    setEditMode('body');
-    cellCtxRef.current = null;
-    hfCtxRef.current = null;
-    fnCtxRef.current = null;
-    setContextMenu(null);
-    rerender();
-    // Initial cursor from saved caret
-    try {
-      const cp = parseResult(doc.getCaretPosition());
-      if (cp && cp.paragraphIndex !== undefined) {
-        const pos: CursorPos = {
-          secIdx: (cp.sectionIndex as number) ?? 0,
-          paraIdx: cp.paragraphIndex as number,
-          charOffset: (cp.charOffset as number) ?? 0,
-        };
-        setCursor(pos);
-        setTimeout(() => updateCursorDisplay(pos), 80);
-      } else {
+  const initDoc = useCallback(
+    (doc: RhwpDoc, name: string) => {
+      try {
+        doc.convertToEditable();
+      } catch {
+        /* ignore */
+      }
+      if (docRef.current && docRef.current !== doc) {
+        try {
+          docRef.current.free();
+        } catch {
+          /* ignore */
+        }
+      }
+      docRef.current = doc;
+      undoStack.current = [];
+      redoStack.current = [];
+      st.setCanUndo(false);
+      st.setCanRedo(false);
+      st.setFileName(name);
+      st.setDirty(false);
+      st.setCursor({ secIdx: 0, paraIdx: 0, charOffset: 0 });
+      st.setCursorRect(null);
+      selAnchorRef.current = null;
+      st.setHasSelection(false);
+      st.setSelRects([]);
+      st.setCurrentPage(0);
+      st.setEditorError('');
+      pageSizesRef.current = {};
+      st.setEditMode('body');
+      cellCtxRef.current = null;
+      hfCtxRef.current = null;
+      fnCtxRef.current = null;
+      st.setContextMenu(null);
+      rerender();
+      // Initial cursor from saved caret
+      try {
+        const cp = parseResult(doc.getCaretPosition());
+        if (cp && cp.paragraphIndex !== undefined) {
+          const pos: CursorPos = {
+            secIdx: (cp.sectionIndex as number) ?? 0,
+            paraIdx: cp.paragraphIndex as number,
+            charOffset: (cp.charOffset as number) ?? 0,
+          };
+          st.setCursor(pos);
+          setTimeout(() => updateCursorDisplay(pos), 80);
+        } else {
+          const initPos: CursorPos = { secIdx: 0, paraIdx: 0, charOffset: 0 };
+          st.setCursor(initPos);
+          setTimeout(() => updateCursorDisplay(initPos), 80);
+        }
+      } catch {
         const initPos: CursorPos = { secIdx: 0, paraIdx: 0, charOffset: 0 };
-        setCursor(initPos);
+        st.setCursor(initPos);
         setTimeout(() => updateCursorDisplay(initPos), 80);
       }
-    } catch {
-      const initPos: CursorPos = { secIdx: 0, paraIdx: 0, charOffset: 0 };
-      setCursor(initPos);
-      setTimeout(() => updateCursorDisplay(initPos), 80);
-    }
-  }, [rerender, setCursor, updateCursorDisplay]);
+    },
+    [docRef, undoStack, redoStack, selAnchorRef, cellCtxRef, hfCtxRef, fnCtxRef, pageSizesRef, st, rerender, updateCursorDisplay],
+  );
 
   const handleNewDoc = useCallback(async () => {
     if (!ready) return;
@@ -640,28 +458,31 @@ const HwpEditor: React.FC = () => {
       const { HwpDocument } = await import('@rhwp/core');
       const doc = HwpDocument.createEmpty();
       parseResult(doc.createBlankDocument());
-      initDoc(doc, '새 문서.hwp');
+      initDoc(doc, '\uC0C8 \uBB38\uC11C.hwp');
     } catch (e) {
-      setEditorError(`새 문서 생성 실패: ${(e as Error).message}`);
+      st.setEditorError(`\uC0C8 \uBB38\uC11C \uC0DD\uC131 \uC2E4\uD328: ${(e as Error).message}`);
     }
-  }, [ready, initDoc]);
+  }, [ready, initDoc, st]);
 
-  const openFile = useCallback(async (file: File) => {
-    if (!ready) return;
-    const ext = file.name.split('.').pop()?.toLowerCase();
-    if (ext !== 'hwp' && ext !== 'hwpx') {
-      setEditorError('.hwp 또는 .hwpx 파일만 지원합니다.');
-      return;
-    }
-    try {
-      const { HwpDocument } = await import('@rhwp/core');
-      const bytes = new Uint8Array(await file.arrayBuffer());
-      const doc = new HwpDocument(bytes);
-      initDoc(doc, file.name);
-    } catch (e) {
-      setEditorError(`파일 열기 실패: ${(e as Error).message}`);
-    }
-  }, [ready, initDoc]);
+  const openFile = useCallback(
+    async (file: File) => {
+      if (!ready) return;
+      const ext = file.name.split('.').pop()?.toLowerCase();
+      if (ext !== 'hwp' && ext !== 'hwpx') {
+        st.setEditorError('.hwp \uB610\uB294 .hwpx \uD30C\uC77C\uB9CC \uC9C0\uC6D0\uD569\uB2C8\uB2E4.');
+        return;
+      }
+      try {
+        const { HwpDocument } = await import('@rhwp/core');
+        const bytes = new Uint8Array(await file.arrayBuffer());
+        const doc = new HwpDocument(bytes);
+        initDoc(doc, file.name);
+      } catch (e) {
+        st.setEditorError(`\uD30C\uC77C \uC5F4\uAE30 \uC2E4\uD328: ${(e as Error).message}`);
+      }
+    },
+    [ready, initDoc, st],
+  );
 
   const triggerFileOpen = useCallback(() => {
     const input = document.createElement('input');
@@ -673,79 +494,97 @@ const HwpEditor: React.FC = () => {
     input.click();
   }, [openFile]);
 
-  // ── Drag-drop ─────────────────────────────────────────────────────────────
-
+  // ── Drag-drop ─────────────────────────────────────────────────────────
   const handleDragOver = useCallback((e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setIsDragging(true);
-  }, []);
+    st.setIsDragging(true);
+  }, [st]);
 
-  const handleDragLeave = useCallback(() => setIsDragging(false), []);
+  const handleDragLeave = useCallback(() => st.setIsDragging(false), [st]);
 
-  const handleDrop = useCallback((e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file) openFile(file);
-  }, [openFile]);
+  const handleDrop = useCallback(
+    (e: DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      st.setIsDragging(false);
+      const file = e.dataTransfer.files[0];
+      if (file) openFile(file);
+    },
+    [st, openFile],
+  );
 
-  // ── Delete selection ──────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // TEXT OPERATIONS (body mode)
+  // ═══════════════════════════════════════════════════════════════════════════
 
   const deleteSelection = useCallback((): CursorPos | null => {
     const doc = docRef.current;
     const anchor = selAnchorRef.current;
     const cur = cursorRef.current;
     if (!doc || !anchor) return null;
-    let sp = anchor.paraIdx; let so = anchor.charOffset;
-    let ep = cur.paraIdx; let eo = cur.charOffset;
+    let sp = anchor.paraIdx;
+    let so = anchor.charOffset;
+    let ep = cur.paraIdx;
+    let eo = cur.charOffset;
     if (sp > ep || (sp === ep && so > eo)) {
-      [sp, ep] = [ep, sp]; [so, eo] = [eo, so];
+      [sp, ep] = [ep, sp];
+      [so, eo] = [eo, so];
     }
     try {
       const rj = doc.deleteRange(cur.secIdx, sp, so, ep, eo);
       const r = parseResult(rj);
       selAnchorRef.current = null;
-      setHasSelection(false);
-      setSelRects([]);
+      st.setHasSelection(false);
+      st.setSelRects([]);
       if (r?.ok) {
-        return { secIdx: cur.secIdx, paraIdx: r.paraIdx as number, charOffset: r.charOffset as number };
+        return {
+          secIdx: cur.secIdx,
+          paraIdx: r.paraIdx as number,
+          charOffset: r.charOffset as number,
+        };
       }
       return { ...anchor };
     } catch {
       selAnchorRef.current = null;
-      setHasSelection(false);
-      setSelRects([]);
+      st.setHasSelection(false);
+      st.setSelRects([]);
       return { ...anchor };
     }
-  }, []);
+  }, [docRef, selAnchorRef, cursorRef, st]);
 
-  // ── Insert text ───────────────────────────────────────────────────────────
-
-  const insertText = useCallback((text: string) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    saveSnapshot();
-    let pos = cursorRef.current;
-    if (selAnchorRef.current) {
-      const np = deleteSelection();
-      if (np) pos = np;
-    }
-    try {
-      const rj = doc.insertText(pos.secIdx, pos.paraIdx, pos.charOffset, text);
-      const r = parseResult(rj);
-      const newOff = (r?.charOffset as number) ?? pos.charOffset + text.length;
-      const newPos: CursorPos = { ...pos, charOffset: newOff };
-      rerenderCurrentPage();
-      moveCursor(newPos);
-    } catch (e) { console.error('insertText failed:', e); }
-  }, [saveSnapshot, deleteSelection, moveCursor, rerenderCurrentPage]);
-
-  // ── Delete before/after cursor ─────────────────────────────────────────────
+  const insertText = useCallback(
+    (text: string) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      saveSnapshot();
+      let pos = cursorRef.current;
+      if (selAnchorRef.current) {
+        const np = deleteSelection();
+        if (np) pos = np;
+      }
+      try {
+        const rj = doc.insertText(pos.secIdx, pos.paraIdx, pos.charOffset, text);
+        const r = parseResult(rj);
+        const newOff = (r?.charOffset as number) ?? pos.charOffset + text.length;
+        const newPos: CursorPos = { ...pos, charOffset: newOff };
+        rerenderCurrentPage();
+        moveCursor(newPos);
+      } catch (e) {
+        console.error('insertText failed:', e);
+      }
+    },
+    [docRef, cursorRef, selAnchorRef, saveSnapshot, deleteSelection, moveCursor, rerenderCurrentPage],
+  );
 
   const deleteCharBefore = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
-    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerenderCurrentPage(); return; }
+    if (selAnchorRef.current) {
+      saveSnapshot();
+      const np = deleteSelection();
+      if (np) moveCursor(np);
+      rerenderCurrentPage();
+      return;
+    }
     const pos = cursorRef.current;
     saveSnapshot();
     try {
@@ -764,14 +603,22 @@ const HwpEditor: React.FC = () => {
           charOffset: (r?.charOffset as number) ?? prevLen,
         });
       }
-    } catch (e) { console.error('deleteCharBefore failed:', e); }
+    } catch (e) {
+      console.error('deleteCharBefore failed:', e);
+    }
     rerenderCurrentPage();
-  }, [deleteSelection, saveSnapshot, moveCursor, rerenderCurrentPage]);
+  }, [docRef, cursorRef, selAnchorRef, deleteSelection, saveSnapshot, moveCursor, rerenderCurrentPage]);
 
   const deleteCharAfter = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
-    if (selAnchorRef.current) { saveSnapshot(); const np = deleteSelection(); if (np) moveCursor(np); rerenderCurrentPage(); return; }
+    if (selAnchorRef.current) {
+      saveSnapshot();
+      const np = deleteSelection();
+      if (np) moveCursor(np);
+      rerenderCurrentPage();
+      return;
+    }
     const pos = cursorRef.current;
     saveSnapshot();
     try {
@@ -791,96 +638,141 @@ const HwpEditor: React.FC = () => {
           });
         }
       }
-    } catch (e) { console.error('deleteCharAfter failed:', e); }
-    rerenderCurrentPage();
-  }, [deleteSelection, saveSnapshot, moveCursor, rerenderCurrentPage]);
-
-  // ── Formatting ─────────────────────────────────────────────────────────────
-
-  const applyCharFormat = useCallback((props: Record<string, unknown>) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const pos = cursorRef.current;
-    saveSnapshot();
-    if (selAnchorRef.current) {
-      const anchor = selAnchorRef.current;
-      let sp = anchor.paraIdx; let so = anchor.charOffset;
-      let ep = pos.paraIdx; let eo = pos.charOffset;
-      if (sp > ep || (sp === ep && so > eo)) {
-        [sp, ep] = [ep, sp]; [so, eo] = [eo, so];
-      }
-      try {
-        doc.beginBatch();
-        for (let pi = sp; pi <= ep; pi++) {
-          const startO = pi === sp ? so : 0;
-          const endO = pi === ep ? eo : doc.getParagraphLength(pos.secIdx, pi);
-          doc.applyCharFormat(pos.secIdx, pi, startO, endO, JSON.stringify(props));
-        }
-        doc.endBatch();
-      } catch {
-        try { doc.endBatch(); } catch { /* ignore */ }
-      }
-    } else {
-      // Apply at single char near cursor (prefer char before cursor at end)
-      try {
-        const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
-        let startO = pos.charOffset;
-        let endO = pos.charOffset + 1;
-        if (pos.charOffset >= pLen && pos.charOffset > 0) {
-          startO = pos.charOffset - 1;
-          endO = pos.charOffset;
-        }
-        if (startO < endO) {
-          doc.applyCharFormat(pos.secIdx, pos.paraIdx, startO, endO, JSON.stringify(props));
-        }
-      } catch { /* ignore */ }
+    } catch (e) {
+      console.error('deleteCharAfter failed:', e);
     }
     rerenderCurrentPage();
-    updateCharProps(pos);
-  }, [saveSnapshot, rerenderCurrentPage, updateCharProps]);
+  }, [docRef, cursorRef, selAnchorRef, deleteSelection, saveSnapshot, moveCursor, rerenderCurrentPage]);
 
-  const applyParaFormat = useCallback((props: Record<string, unknown>) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const pos = cursorRef.current;
-    saveSnapshot();
-    try {
-      doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify(props));
-    } catch { /* ignore */ }
-    rerender();
-    updateCharProps(pos);
-  }, [saveSnapshot, rerender, updateCharProps]);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // FORMATTING (body mode)
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  const toggleBold = useCallback(() => applyCharFormat({ bold: !charProps.bold }), [applyCharFormat, charProps.bold]);
-  const toggleItalic = useCallback(() => applyCharFormat({ italic: !charProps.italic }), [applyCharFormat, charProps.italic]);
-  const toggleUnderline = useCallback(() => applyCharFormat({ underline: !charProps.underline }), [applyCharFormat, charProps.underline]);
-  const toggleStrikethrough = useCallback(() => applyCharFormat({ strikethrough: !charProps.strikethrough }), [applyCharFormat, charProps.strikethrough]);
+  const applyCharFormat = useCallback(
+    (props: Record<string, unknown>) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      const pos = cursorRef.current;
+      saveSnapshot();
+      if (selAnchorRef.current) {
+        const anchor = selAnchorRef.current;
+        let sp = anchor.paraIdx;
+        let so = anchor.charOffset;
+        let ep = pos.paraIdx;
+        let eo = pos.charOffset;
+        if (sp > ep || (sp === ep && so > eo)) {
+          [sp, ep] = [ep, sp];
+          [so, eo] = [eo, so];
+        }
+        try {
+          doc.beginBatch();
+          for (let pi = sp; pi <= ep; pi++) {
+            const startO = pi === sp ? so : 0;
+            const endO = pi === ep ? eo : doc.getParagraphLength(pos.secIdx, pi);
+            doc.applyCharFormat(pos.secIdx, pi, startO, endO, JSON.stringify(props));
+          }
+          doc.endBatch();
+        } catch {
+          try {
+            doc.endBatch();
+          } catch {
+            /* ignore */
+          }
+        }
+      } else {
+        try {
+          const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
+          let startO = pos.charOffset;
+          let endO = pos.charOffset + 1;
+          if (pos.charOffset >= pLen && pos.charOffset > 0) {
+            startO = pos.charOffset - 1;
+            endO = pos.charOffset;
+          }
+          if (startO < endO) {
+            doc.applyCharFormat(pos.secIdx, pos.paraIdx, startO, endO, JSON.stringify(props));
+          }
+        } catch {
+          /* ignore */
+        }
+      }
+      rerenderCurrentPage();
+      updateCharProps(pos);
+    },
+    [docRef, cursorRef, selAnchorRef, saveSnapshot, rerenderCurrentPage, updateCharProps],
+  );
 
-  const applyFont = useCallback((fontName: string) => {
-    applyCharFormat({ fontFamily: fontName });
-    setFontInput(fontName);
-    setFontOpen(false);
-  }, [applyCharFormat]);
+  const applyParaFormat = useCallback(
+    (props: Record<string, unknown>) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      const pos = cursorRef.current;
+      saveSnapshot();
+      try {
+        doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify(props));
+      } catch {
+        /* ignore */
+      }
+      rerender();
+      updateCharProps(pos);
+    },
+    [docRef, cursorRef, saveSnapshot, rerender, updateCharProps],
+  );
 
-  const applySize = useCallback((pt: number) => {
-    applyCharFormat({ fontSize: Math.round(pt * 100) });
-    setSizeInput(String(pt));
-    setSizeOpen(false);
-  }, [applyCharFormat]);
+  const toggleBold = useCallback(
+    () => applyCharFormat({ bold: !st.charProps.bold }),
+    [applyCharFormat, st.charProps.bold],
+  );
+  const toggleItalic = useCallback(
+    () => applyCharFormat({ italic: !st.charProps.italic }),
+    [applyCharFormat, st.charProps.italic],
+  );
+  const toggleUnderline = useCallback(
+    () => applyCharFormat({ underline: !st.charProps.underline }),
+    [applyCharFormat, st.charProps.underline],
+  );
+  const toggleStrikethrough = useCallback(
+    () => applyCharFormat({ strikethrough: !st.charProps.strikethrough }),
+    [applyCharFormat, st.charProps.strikethrough],
+  );
 
-  const applyAlignment = useCallback((alignment: string) => {
-    applyParaFormat({ alignment });
-  }, [applyParaFormat]);
+  const applyFont = useCallback(
+    (fontName: string) => {
+      applyCharFormat({ fontFamily: fontName });
+      st.setFontInput(fontName);
+      st.setFontOpen(false);
+    },
+    [applyCharFormat, st],
+  );
 
-  const applyLineSpacing = useCallback((spacing: number) => {
-    applyParaFormat({ lineSpacing: spacing });
-    setSpacingOpen(false);
-  }, [applyParaFormat]);
+  const applySize = useCallback(
+    (pt: number) => {
+      applyCharFormat({ fontSize: Math.round(pt * 100) });
+      st.setSizeInput(String(pt));
+      st.setSizeOpen(false);
+    },
+    [applyCharFormat, st],
+  );
 
-  const applyIndentChange = useCallback((delta: number) => {
-    const newMargin = Math.max(0, paraProps.marginLeft + delta * 800);
-    applyParaFormat({ marginLeft: newMargin });
-  }, [applyParaFormat, paraProps.marginLeft]);
+  const applyAlignment = useCallback(
+    (alignment: string) => applyParaFormat({ alignment }),
+    [applyParaFormat],
+  );
+
+  const applyLineSpacing = useCallback(
+    (spacing: number) => {
+      applyParaFormat({ lineSpacing: spacing });
+      st.setSpacingOpen(false);
+    },
+    [applyParaFormat, st],
+  );
+
+  const applyIndentChange = useCallback(
+    (delta: number) => {
+      const newMargin = Math.max(0, st.paraProps.marginLeft + delta * 800);
+      applyParaFormat({ marginLeft: newMargin });
+    },
+    [applyParaFormat, st.paraProps.marginLeft],
+  );
 
   const applyBulletList = useCallback(() => {
     const doc = docRef.current;
@@ -888,11 +780,13 @@ const HwpEditor: React.FC = () => {
     const pos = cursorRef.current;
     saveSnapshot();
     try {
-      const bulletId = doc.ensureDefaultBullet('●');
+      const bulletId = doc.ensureDefaultBullet('\u25CF');
       doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify({ numberingId: bulletId, numberingLevel: 0 }));
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
     rerender();
-  }, [saveSnapshot, rerender]);
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
 
   const applyNumberedList = useCallback(() => {
     const doc = docRef.current;
@@ -902,21 +796,31 @@ const HwpEditor: React.FC = () => {
     try {
       const numbId = doc.ensureDefaultNumbering();
       doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify({ numberingId: numbId, numberingLevel: 0 }));
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
     rerender();
-  }, [saveSnapshot, rerender]);
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
 
-  const applyTextColor = useCallback((hex: string) => {
-    applyCharFormat({ textColor: hexToHwpColor(hex) });
-    setColorOpen(false);
-  }, [applyCharFormat]);
+  const applyTextColor = useCallback(
+    (hex: string) => {
+      applyCharFormat({ textColor: hexToHwpColor(hex) });
+      st.setColorOpen(false);
+    },
+    [applyCharFormat, st],
+  );
 
-  const applyHighlight = useCallback((hex: string) => {
-    applyCharFormat({ highlight: hexToHwpColor(hex) });
-    setHighlightOpen(false);
-  }, [applyCharFormat]);
+  const applyHighlight = useCallback(
+    (hex: string) => {
+      applyCharFormat({ highlight: hexToHwpColor(hex) });
+      st.setHighlightOpen(false);
+    },
+    [applyCharFormat, st],
+  );
 
-  // ── Insert table ───────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // INSERT OPERATIONS
+  // ═══════════════════════════════════════════════════════════════════════════
 
   const handleInsertTable = useCallback(() => {
     const doc = docRef.current;
@@ -924,19 +828,17 @@ const HwpEditor: React.FC = () => {
     const pos = cursorRef.current;
     saveSnapshot();
     try {
-      const rj = doc.createTable(pos.secIdx, pos.paraIdx, pos.charOffset, tableRows, tableCols);
+      const rj = doc.createTable(pos.secIdx, pos.paraIdx, pos.charOffset, st.tableRows, st.tableCols);
       const r = parseResult(rj);
       if (r?.ok) {
         moveCursor({ ...pos, paraIdx: (r.paraIdx as number) ?? pos.paraIdx, charOffset: 0 });
       }
     } catch (e) {
-      setEditorError((e as Error).message);
+      st.setEditorError((e as Error).message);
     }
     rerender();
-    setTableDialogOpen(false);
-  }, [saveSnapshot, moveCursor, rerender, tableRows, tableCols]);
-
-  // ── Insert image ───────────────────────────────────────────────────────────
+    st.setTableDialogOpen(false);
+  }, [docRef, cursorRef, saveSnapshot, moveCursor, rerender, st]);
 
   const handleInsertImage = useCallback(() => {
     const input = document.createElement('input');
@@ -959,24 +861,22 @@ const HwpEditor: React.FC = () => {
           const natH = img.naturalHeight;
           const hwpW = Math.min(Math.round((natW / 96) * 7200), 48000);
           const hwpH = Math.round((natH / natW) * hwpW);
-          const ext = (file.name.split('.').pop()?.toLowerCase()) || 'png';
+          const ext = file.name.split('.').pop()?.toLowerCase() || 'png';
           try {
             doc.insertPicture(pos.secIdx, pos.paraIdx, pos.charOffset, bytes, hwpW, hwpH, natW, natH, ext, file.name);
             moveCursor({ ...pos, charOffset: pos.charOffset + 1 });
           } catch (e2) {
-            setEditorError((e2 as Error).message);
+            st.setEditorError((e2 as Error).message);
           }
           rerender();
         };
         img.src = url;
       } catch (e) {
-        setEditorError((e as Error).message);
+        st.setEditorError((e as Error).message);
       }
     };
     input.click();
-  }, [saveSnapshot, moveCursor, rerender]);
-
-  // ── Page break ─────────────────────────────────────────────────────────────
+  }, [docRef, cursorRef, saveSnapshot, moveCursor, rerender, st]);
 
   const handlePageBreak = useCallback(() => {
     const doc = docRef.current;
@@ -985,491 +885,187 @@ const HwpEditor: React.FC = () => {
     saveSnapshot();
     try {
       doc.insertPageBreak(pos.secIdx, pos.paraIdx, pos.charOffset);
-    } catch { /* ignore */ }
-    rerender();
-  }, [saveSnapshot, rerender]);
-
-  // ── Mouse drag selection ──────────────────────────────────────────────────
-
-  const handleCanvasMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
-    if (e.button !== 0) return;
-    const pos = hitTestToPos(e, pageIdx);
-    if (!pos) return;
-    setIsDragSelecting(true);
-    dragStartPos.current = { ...pos };
-    selAnchorRef.current = { ...pos };
-    setCursor(pos);
-    updateCursorDisplay(pos);
-    updateCharProps(pos);
-    hiddenInputRef.current?.focus();
-  }, [hitTestToPos, setCursor, updateCursorDisplay, updateCharProps]);
-
-  const handleCanvasMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
-    if (!isDragSelecting) return;
-    const pos = hitTestToPos(e, pageIdx);
-    if (!pos || !selAnchorRef.current) return;
-    setCursor(pos);
-    updateSelectionRects(selAnchorRef.current, pos);
-    setHasSelection(true);
-    updateCursorDisplay(pos);
-  }, [isDragSelecting, hitTestToPos, setCursor, updateSelectionRects, updateCursorDisplay]);
-
-  const handleCanvasMouseUp = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
-    if (!isDragSelecting) return;
-    setIsDragSelecting(false);
-    const endPos = hitTestToPos(e, pageIdx);
-    const start = dragStartPos.current;
-
-    if (start && endPos &&
-        start.secIdx === endPos.secIdx &&
-        start.paraIdx === endPos.paraIdx &&
-        start.charOffset === endPos.charOffset) {
-      // Single click (no drag): move cursor or extend selection
-      if (e.shiftKey && selAnchorRef.current) {
-        setCursor(endPos);
-        updateSelectionRects(selAnchorRef.current, endPos);
-        setHasSelection(true);
-        updateCursorDisplay(endPos);
-        updateCharProps(endPos);
-      } else {
-        moveCursor(endPos, true);
-      }
-    } else if (endPos) {
-      // Drag completed: keep selection
-      setCursor(endPos);
-      updateCursorDisplay(endPos);
-      updateCharProps(endPos);
+    } catch {
+      /* ignore */
     }
-  }, [isDragSelecting, hitTestToPos, setCursor, moveCursor, updateSelectionRects, updateCursorDisplay, updateCharProps]);
-
-  // ── Context menu (right-click) ────────────────────────────────────────────
-
-  const handleContextMenu = useCallback((e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
-    e.preventDefault();
-    const doc = docRef.current;
-    if (!doc) return;
-    const pos = hitTestToPos(e, pageIdx);
-    if (!pos) return;
-    let menuType: ContextMenuState['type'] = 'body';
-    let tableInfo: ContextMenuState['tableInfo'] = undefined;
-    try {
-      // Use getControlTextPositions to find controls at paragraph
-      const cpj = doc.getControlTextPositions(pos.secIdx, pos.paraIdx);
-      const controls = JSON.parse(cpj) as Array<{ type: string; controlIdx: number; charOffset: number }>;
-      const tableCtrl = controls?.find((c) => c.type === 'table' && c.charOffset <= pos.charOffset);
-      if (tableCtrl) {
-        menuType = 'table';
-        try {
-          const bboxJ = doc.getTableCellBboxes(pos.secIdx, pos.paraIdx, tableCtrl.controlIdx);
-          const bboxes = JSON.parse(bboxJ) as Array<{ cellIdx: number; row: number; col: number; x: number; y: number; w: number; h: number }>;
-          const canvas = pageCanvasRefs.current[pageIdx];
-          if (canvas) {
-            const scale = renderScaleRef.current;
-            const rect = canvas.getBoundingClientRect();
-            const px = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
-            const py = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
-            const cell = bboxes.find((b) => px >= b.x && px <= b.x + b.w && py >= b.y && py <= b.y + b.h);
-            if (cell) {
-              tableInfo = { secIdx: pos.secIdx, paraIdx: pos.paraIdx, controlIdx: tableCtrl.controlIdx, row: cell.row, col: cell.col, cellIdx: cell.cellIdx };
-            }
-          }
-        } catch { /* ignore */ }
-      }
-    } catch { /* ignore */ }
-    setContextMenu({ x: e.clientX, y: e.clientY, type: menuType, tableInfo });
-  }, [hitTestToPos]);
-
-  const closeContextMenu = useCallback(() => setContextMenu(null), []);
-
-  // ── Table cell editing ────────────────────────────────────────────────────
-
-  const enterCellMode = useCallback((secIdx: number, paraIdx: number, controlIdx: number, cellIdx: number) => {
-    setEditMode('cell');
-    cellCtxRef.current = { secIdx, parentParaIdx: paraIdx, controlIdx, cellIdx, cellParaIdx: 0, charOffset: 0 };
-    try {
-      const doc = docRef.current;
-      if (doc) {
-        const cr = parseResult(doc.getCursorRectInCell(secIdx, paraIdx, controlIdx, cellIdx, 0, 0));
-        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-      }
-    } catch { /* ignore */ }
-  }, []);
-
-  const insertTextInCell = useCallback((text: string) => {
-    const doc = docRef.current;
-    const ctx = cellCtxRef.current;
-    if (!doc || !ctx) return;
-    saveSnapshot();
-    try {
-      const rj = doc.insertTextInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset, text);
-      const r = parseResult(rj);
-      ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
-      rerender();
-      try {
-        const cr = parseResult(doc.getCursorRectInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset));
-        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-      } catch { /* ignore */ }
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerender]);
-
-  const deleteTextInCell = useCallback((forward: boolean) => {
-    const doc = docRef.current;
-    const ctx = cellCtxRef.current;
-    if (!doc || !ctx) return;
-    saveSnapshot();
-    try {
-      if (!forward && ctx.charOffset > 0) {
-        doc.deleteTextInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset - 1, 1);
-        ctx.charOffset--;
-      } else if (!forward && ctx.charOffset === 0 && ctx.cellParaIdx > 0) {
-        const rj = doc.mergeParagraphInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx);
-        const r = parseResult(rj);
-        ctx.cellParaIdx = (r?.paraIdx as number) ?? ctx.cellParaIdx - 1;
-        ctx.charOffset = (r?.charOffset as number) ?? 0;
-      } else if (forward) {
-        doc.deleteTextInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset, 1);
-      }
-      rerender();
-      try {
-        const cr = parseResult(doc.getCursorRectInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset));
-        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-      } catch { /* ignore */ }
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerender]);
-
-  const splitParagraphInCell = useCallback(() => {
-    const doc = docRef.current;
-    const ctx = cellCtxRef.current;
-    if (!doc || !ctx) return;
-    saveSnapshot();
-    try {
-      const rj = doc.splitParagraphInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset);
-      const r = parseResult(rj);
-      ctx.cellParaIdx = (r?.paraIdx as number) ?? ctx.cellParaIdx + 1;
-      ctx.charOffset = 0;
-      rerender();
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerender]);
-
-  const applyCharFormatInCell = useCallback((props: Record<string, unknown>) => {
-    const doc = docRef.current;
-    const ctx = cellCtxRef.current;
-    if (!doc || !ctx) return;
-    saveSnapshot();
-    try { doc.applyCharFormatInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, ctx.charOffset, ctx.charOffset + 1, JSON.stringify(props)); } catch { /* ignore */ }
     rerender();
-  }, [saveSnapshot, rerender]);
-
-  // applyParaFormatInCell available via: doc.applyParaFormatInCell(sec, para, ctrl, cell, cellPara, json)
-
-  // ── Table structure operations ────────────────────────────────────────────
-
-  const handleInsertTableRow = useCallback((after: boolean) => {
-    const info = contextMenu?.tableInfo;
-    const doc = docRef.current;
-    if (!doc || !info) return;
-    saveSnapshot();
-    try { doc.insertTableRow(info.secIdx, info.paraIdx, info.controlIdx, info.row, after); } catch { /* ignore */ }
-    rerender(); setContextMenu(null);
-  }, [contextMenu, saveSnapshot, rerender]);
-
-  const handleDeleteTableRow = useCallback(() => {
-    const info = contextMenu?.tableInfo;
-    const doc = docRef.current;
-    if (!doc || !info) return;
-    saveSnapshot();
-    try { doc.deleteTableRow(info.secIdx, info.paraIdx, info.controlIdx, info.row); } catch { /* ignore */ }
-    rerender(); setContextMenu(null);
-  }, [contextMenu, saveSnapshot, rerender]);
-
-  const handleInsertTableColumn = useCallback((after: boolean) => {
-    const info = contextMenu?.tableInfo;
-    const doc = docRef.current;
-    if (!doc || !info) return;
-    saveSnapshot();
-    try { doc.insertTableColumn(info.secIdx, info.paraIdx, info.controlIdx, info.col, after); } catch { /* ignore */ }
-    rerender(); setContextMenu(null);
-  }, [contextMenu, saveSnapshot, rerender]);
-
-  const handleDeleteTableColumn = useCallback(() => {
-    const info = contextMenu?.tableInfo;
-    const doc = docRef.current;
-    if (!doc || !info) return;
-    saveSnapshot();
-    try { doc.deleteTableColumn(info.secIdx, info.paraIdx, info.controlIdx, info.col); } catch { /* ignore */ }
-    rerender(); setContextMenu(null);
-  }, [contextMenu, saveSnapshot, rerender]);
-
-  const handleMergeTableCells = useCallback(() => {
-    const info = contextMenu?.tableInfo;
-    const doc = docRef.current;
-    if (!doc || !info) return;
-    saveSnapshot();
-    try { doc.mergeTableCells(info.secIdx, info.paraIdx, info.controlIdx, info.row, info.col, info.row, info.col + 1); } catch { /* ignore */ }
-    rerender(); setContextMenu(null);
-  }, [contextMenu, saveSnapshot, rerender]);
-
-  const handleSplitTableCell = useCallback(() => {
-    const info = contextMenu?.tableInfo;
-    const doc = docRef.current;
-    if (!doc || !info) return;
-    saveSnapshot();
-    try { doc.splitTableCell(info.secIdx, info.paraIdx, info.controlIdx, info.row, info.col); } catch { /* ignore */ }
-    rerender(); setContextMenu(null);
-  }, [contextMenu, saveSnapshot, rerender]);
-
-  // ── Header/Footer editing ─────────────────────────────────────────────────
-
-  const enterHeaderFooterMode = useCallback((secIdx: number, isHeader: boolean) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    try { doc.createHeaderFooter(secIdx, isHeader, 0); } catch { /* may already exist */ }
-    setEditMode(isHeader ? 'header' : 'footer');
-    hfCtxRef.current = { secIdx, isHeader, applyTo: 0, hfParaIdx: 0, charOffset: 0 };
-    try {
-      const cr = parseResult(doc.getCursorRectInHeaderFooter(secIdx, isHeader, 0, 0, 0, 0));
-      if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-    } catch { /* ignore */ }
-  }, []);
-
-  const insertTextInHf = useCallback((text: string) => {
-    const doc = docRef.current;
-    const ctx = hfCtxRef.current;
-    if (!doc || !ctx) return;
-    saveSnapshot();
-    try {
-      const rj = doc.insertTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, text);
-      const r = parseResult(rj);
-      ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
-      rerender();
-      try {
-        const cr = parseResult(doc.getCursorRectInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 0));
-        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-      } catch { /* ignore */ }
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerender]);
-
-  // ── Footnote ──────────────────────────────────────────────────────────────
-
-  const handleInsertFootnote = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const pos = cursorRef.current;
-    saveSnapshot();
-    try {
-      const rj = doc.insertFootnote(pos.secIdx, pos.paraIdx, pos.charOffset);
-      const r = parseResult(rj);
-      if (r?.ok) {
-        setEditMode('footnote');
-        fnCtxRef.current = { secIdx: pos.secIdx, paraIdx: pos.paraIdx, controlIdx: (r.controlIdx as number) ?? 0, fnParaIdx: 0, charOffset: 0 };
-      }
-    } catch { /* ignore */ }
-    rerender();
-  }, [saveSnapshot, rerender]);
-
-  const insertTextInFn = useCallback((text: string) => {
-    const doc = docRef.current;
-    const ctx = fnCtxRef.current;
-    if (!doc || !ctx) return;
-    saveSnapshot();
-    try {
-      const rj = doc.insertTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset, text);
-      const r = parseResult(rj);
-      ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
-      rerender();
-      try {
-        const cr = parseResult(doc.getCursorRectInFootnote(0, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset));
-        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-      } catch { /* ignore */ }
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerender]);
-
-  // ── Page setup ────────────────────────────────────────────────────────────
-
-  const loadPageDef = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc) return;
-    try {
-      const rj = doc.getPageDef(0);
-      const r = parseResult(rj);
-      if (r) setPageDef({ width: (r.width as number) ?? 59528, height: (r.height as number) ?? 84188, marginTop: (r.marginTop as number) ?? 5669, marginBottom: (r.marginBottom as number) ?? 4252, marginLeft: (r.marginLeft as number) ?? 4252, marginRight: (r.marginRight as number) ?? 4252, landscape: !!r.landscape });
-    } catch { /* ignore */ }
-  }, []);
-
-  const applyPageDef = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc) return;
-    saveSnapshot();
-    try { doc.setPageDef(0, JSON.stringify(pageDef)); } catch { /* ignore */ }
-    rerender(); setPageDefOpen(false);
-  }, [pageDef, saveSnapshot, rerender]);
-
-  // ── Styles ────────────────────────────────────────────────────────────────
-
-  const loadStyles = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc) return;
-    try {
-      const rj = doc.getStyleList();
-      const list = JSON.parse(rj) as StyleItem[];
-      setStyleList(Array.isArray(list) ? list : []);
-    } catch { setStyleList([]); }
-  }, []);
-
-  const applyStyle = useCallback((styleId: number) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const pos = cursorRef.current;
-    saveSnapshot();
-    try { doc.applyStyle(pos.secIdx, pos.paraIdx, styleId); } catch { /* ignore */ }
-    rerender(); updateCharProps(pos); setStyleOpen(false);
-  }, [saveSnapshot, rerender, updateCharProps]);
-
-  // ── Shape control ─────────────────────────────────────────────────────────
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
 
   const handleInsertShape = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
     const pos = cursorRef.current;
     saveSnapshot();
-    try { doc.createShapeControl(JSON.stringify({ sectionIdx: pos.secIdx, paraIdx: pos.paraIdx, charOffset: pos.charOffset, width: 14400, height: 7200 })); } catch { /* ignore */ }
+    try {
+      doc.createShapeControl(
+        JSON.stringify({
+          sectionIdx: pos.secIdx,
+          paraIdx: pos.paraIdx,
+          charOffset: pos.charOffset,
+          width: 14400,
+          height: 7200,
+        }),
+      );
+    } catch {
+      /* ignore */
+    }
     rerender();
-  }, [saveSnapshot, rerender]);
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
 
-  // ── Bookmarks ─────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CELL EDITING
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  const loadBookmarks = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc) return;
-    try {
-      const rj = doc.getBookmarks();
-      const list = JSON.parse(rj) as Array<{ name: string; secIdx: number; paraIdx: number; charOffset: number; controlIdx?: number }>;
-      setBookmarkList(Array.isArray(list) ? list : []);
-    } catch { setBookmarkList([]); }
-  }, []);
-
-  const handleAddBookmark = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc || !bookmarkName.trim()) return;
-    const pos = cursorRef.current;
-    try { doc.addBookmark(pos.secIdx, pos.paraIdx, pos.charOffset, bookmarkName.trim()); } catch { /* ignore */ }
-    setBookmarkName(''); loadBookmarks();
-  }, [bookmarkName, loadBookmarks]);
-
-  const handleDeleteBookmark = useCallback((bm: { secIdx: number; paraIdx: number; controlIdx?: number }) => {
-    const doc = docRef.current;
-    if (!doc) return;
-    try { doc.deleteBookmark(bm.secIdx, bm.paraIdx, bm.controlIdx ?? 0); } catch { /* ignore */ }
-    loadBookmarks();
-  }, [loadBookmarks]);
-
-  const handleGotoBookmark = useCallback((bm: { secIdx: number; paraIdx: number; charOffset: number }) => {
-    moveCursor({ secIdx: bm.secIdx, paraIdx: bm.paraIdx, charOffset: bm.charOffset });
-    setBookmarkOpen(false);
-  }, [moveCursor]);
-
-  // ── Display options ───────────────────────────────────────────────────────
-
-  const toggleControlCodes = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const newVal = !showControlCodes;
-    try { doc.setShowControlCodes(newVal); } catch { /* ignore */ }
-    setShowControlCodes(newVal); rerender();
-  }, [showControlCodes, rerender]);
-
-  const toggleParaMarks = useCallback(() => {
-    const doc = docRef.current;
-    if (!doc) return;
-    const newVal = !showParaMarks;
-    try { doc.setShowParagraphMarks(newVal); } catch { /* ignore */ }
-    setShowParaMarks(newVal); rerender();
-  }, [showParaMarks, rerender]);
-
-  // ── HTML paste ────────────────────────────────────────────────────────────
-
-  const handleHtmlPaste = useCallback(async () => {
-    const doc = docRef.current;
-    if (!doc) return;
-    try {
-      const items = await navigator.clipboard.read();
-      for (const item of items) {
-        if (item.types.includes('text/html')) {
-          const blob = await item.getType('text/html');
-          const html = await blob.text();
-          saveSnapshot();
-          const pos = cursorRef.current;
-          if (selAnchorRef.current) { const np = deleteSelection(); if (np) setCursor(np); }
-          try {
-            const rj = doc.pasteHtml(cursorRef.current.secIdx, cursorRef.current.paraIdx, cursorRef.current.charOffset, html);
-            const r = parseResult(rj);
-            if (r?.ok) moveCursor({ secIdx: cursorRef.current.secIdx, paraIdx: (r.paraIdx as number) ?? pos.paraIdx, charOffset: (r.charOffset as number) ?? 0 });
-          } catch { /* fallback below */ }
-          rerender(); return;
-        }
-      }
-    } catch { /* ignore */ }
-    try { const text = await navigator.clipboard.readText(); if (text) insertText(text); } catch { /* ignore */ }
-  }, [saveSnapshot, deleteSelection, setCursor, moveCursor, insertText, rerender]);
-
-  // ── Keyboard handlers for cell/hf/fn modes ────────────────────────────────
-
-  const handleKeyDownCell = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
-    const ctx = cellCtxRef.current;
-    if (!ctx) { setEditMode('body'); cellCtxRef.current = null; return; }
-    const ctrl = e.ctrlKey || e.metaKey;
-    if (ctrl) {
-      switch (e.key.toLowerCase()) {
-        case 'z': e.preventDefault(); handleUndo(); return;
-        case 'y': e.preventDefault(); handleRedo(); return;
-        case 'b': e.preventDefault(); applyCharFormatInCell({ bold: true }); return;
-        case 'i': e.preventDefault(); applyCharFormatInCell({ italic: true }); return;
-        case 'u': e.preventDefault(); applyCharFormatInCell({ underline: true }); return;
-      }
-      return;
-    }
-    switch (e.key) {
-      case 'Enter': e.preventDefault(); splitParagraphInCell(); break;
-      case 'Backspace': e.preventDefault(); deleteTextInCell(false); break;
-      case 'Delete': e.preventDefault(); deleteTextInCell(true); break;
-      case 'Escape': e.preventDefault(); setEditMode('body'); cellCtxRef.current = null; break;
-      case 'Tab': {
-        e.preventDefault();
-        const doc = docRef.current;
-        if (!doc) break;
-        try {
-          const dims = parseResult(doc.getTableDimensions(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx));
-          if (dims) { const total = (dims.rows as number) * (dims.cols as number); if (ctx.cellIdx + 1 < total) enterCellMode(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx + 1); }
-        } catch { /* ignore */ }
-        break;
-      }
-    }
-  }, [handleUndo, handleRedo, applyCharFormatInCell, splitParagraphInCell, deleteTextInCell, enterCellMode]);
-
-  const deleteTextInHf = useCallback((forward: boolean) => {
-    const doc = docRef.current;
-    const ctx = hfCtxRef.current;
-    if (!doc || !ctx) return;
-    saveSnapshot();
-    try {
-      if (!forward && ctx.charOffset > 0) {
-        doc.deleteTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset - 1, 1);
-        ctx.charOffset--;
-      } else if (!forward && ctx.charOffset === 0 && ctx.hfParaIdx > 0) {
-        const rj = doc.mergeParagraphInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx);
-        const r = parseResult(rj);
-        ctx.hfParaIdx = (r?.paraIdx as number) ?? ctx.hfParaIdx - 1;
-        ctx.charOffset = (r?.charOffset as number) ?? 0;
-      } else if (forward) {
-        doc.deleteTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 1);
-      }
-      rerenderCurrentPage();
+  const enterCellMode = useCallback(
+    (secIdx: number, paraIdx: number, controlIdx: number, cellIdx: number) => {
+      st.setEditMode('cell');
+      cellCtxRef.current = {
+        secIdx,
+        parentParaIdx: paraIdx,
+        controlIdx,
+        cellIdx,
+        cellParaIdx: 0,
+        charOffset: 0,
+      };
       try {
-        const cr = parseResult(doc.getCursorRectInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 0));
-        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-      } catch { /* ignore */ }
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerenderCurrentPage]);
+        const doc = docRef.current;
+        if (doc) {
+          const cr = parseResult(
+            doc.getCursorRectInCell(secIdx, paraIdx, controlIdx, cellIdx, 0, 0),
+          );
+          if (cr && cr.x !== undefined)
+            st.setCursorRect({
+              pageIndex: (cr.pageIndex as number) ?? 0,
+              x: cr.x as number,
+              y: cr.y as number,
+              height: cr.height as number,
+            });
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [st, cellCtxRef, docRef],
+  );
+
+  // ── Wire useCellEditing hook ──────────────────────────────────────────
+  const cellEditing = useCellEditing({
+    getDoc: () => docRef.current,
+    getCellCtx: () => cellCtxRef.current,
+    updateCellCtx: (updates) => {
+      const ctx = cellCtxRef.current;
+      if (ctx) Object.assign(ctx, updates);
+    },
+    saveSnapshot,
+    rerender,
+    rerenderCurrentPage,
+    setCursorRect: st.setCursorRect,
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // HEADER / FOOTER EDITING
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const enterHeaderFooterMode = useCallback(
+    (secIdx: number, isHeader: boolean) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      try {
+        doc.createHeaderFooter(secIdx, isHeader, 0);
+      } catch {
+        /* may already exist */
+      }
+      st.setEditMode(isHeader ? 'header' : 'footer');
+      hfCtxRef.current = { secIdx, isHeader, applyTo: 0, hfParaIdx: 0, charOffset: 0 };
+      try {
+        const cr = parseResult(
+          doc.getCursorRectInHeaderFooter(secIdx, isHeader, 0, 0, 0, 0),
+        );
+        if (cr && cr.x !== undefined)
+          st.setCursorRect({
+            pageIndex: (cr.pageIndex as number) ?? 0,
+            x: cr.x as number,
+            y: cr.y as number,
+            height: cr.height as number,
+          });
+      } catch {
+        /* ignore */
+      }
+    },
+    [docRef, st, hfCtxRef],
+  );
+
+  const insertTextInHf = useCallback(
+    (text: string) => {
+      const doc = docRef.current;
+      const ctx = hfCtxRef.current;
+      if (!doc || !ctx) return;
+      saveSnapshot();
+      try {
+        const rj = doc.insertTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, text);
+        const r = parseResult(rj);
+        ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
+        rerender();
+        try {
+          const cr = parseResult(
+            doc.getCursorRectInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 0),
+          );
+          if (cr && cr.x !== undefined)
+            st.setCursorRect({
+              pageIndex: (cr.pageIndex as number) ?? 0,
+              x: cr.x as number,
+              y: cr.y as number,
+              height: cr.height as number,
+            });
+        } catch {
+          /* ignore */
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [docRef, hfCtxRef, saveSnapshot, rerender, st],
+  );
+
+  const deleteTextInHf = useCallback(
+    (forward: boolean) => {
+      const doc = docRef.current;
+      const ctx = hfCtxRef.current;
+      if (!doc || !ctx) return;
+      saveSnapshot();
+      try {
+        if (!forward && ctx.charOffset > 0) {
+          doc.deleteTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset - 1, 1);
+          ctx.charOffset--;
+        } else if (!forward && ctx.charOffset === 0 && ctx.hfParaIdx > 0) {
+          const rj = doc.mergeParagraphInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx);
+          const r = parseResult(rj);
+          ctx.hfParaIdx = (r?.paraIdx as number) ?? ctx.hfParaIdx - 1;
+          ctx.charOffset = (r?.charOffset as number) ?? 0;
+        } else if (forward) {
+          doc.deleteTextInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 1);
+        }
+        rerenderCurrentPage();
+        try {
+          const cr = parseResult(
+            doc.getCursorRectInHeaderFooter(ctx.secIdx, ctx.isHeader, ctx.applyTo, ctx.hfParaIdx, ctx.charOffset, 0),
+          );
+          if (cr && cr.x !== undefined)
+            st.setCursorRect({
+              pageIndex: (cr.pageIndex as number) ?? 0,
+              x: cr.x as number,
+              y: cr.y as number,
+              height: cr.height as number,
+            });
+        } catch {
+          /* ignore */
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [docRef, hfCtxRef, saveSnapshot, rerenderCurrentPage, st],
+  );
 
   const splitParagraphInHf = useCallback(() => {
     const doc = docRef.current;
@@ -1482,47 +1078,105 @@ const HwpEditor: React.FC = () => {
       ctx.hfParaIdx = (r?.paraIdx as number) ?? ctx.hfParaIdx + 1;
       ctx.charOffset = 0;
       rerenderCurrentPage();
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerenderCurrentPage]);
-
-  const handleKeyDownHf = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
-    const ctx = hfCtxRef.current;
-    if (!ctx) { setEditMode('body'); return; }
-    const ctrl = e.ctrlKey || e.metaKey;
-    if (ctrl) {
-      switch (e.key.toLowerCase()) {
-        case 'z': e.preventDefault(); handleUndo(); return;
-        case 'y': e.preventDefault(); handleRedo(); return;
-      }
-      return;
+    } catch {
+      /* ignore */
     }
-    switch (e.key) {
-      case 'Escape': e.preventDefault(); setEditMode('body'); hfCtxRef.current = null; break;
-      case 'Enter': e.preventDefault(); splitParagraphInHf(); break;
-      case 'Backspace': e.preventDefault(); deleteTextInHf(false); break;
-      case 'Delete': e.preventDefault(); deleteTextInHf(true); break;
-    }
-  }, [setEditMode, handleUndo, handleRedo, splitParagraphInHf, deleteTextInHf]);
+  }, [docRef, hfCtxRef, saveSnapshot, rerenderCurrentPage]);
 
-  const deleteTextInFn = useCallback((forward: boolean) => {
+  // ═══════════════════════════════════════════════════════════════════════════
+  // FOOTNOTE EDITING
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleInsertFootnote = useCallback(() => {
     const doc = docRef.current;
-    const ctx = fnCtxRef.current;
-    if (!doc || !ctx) return;
+    if (!doc) return;
+    const pos = cursorRef.current;
     saveSnapshot();
     try {
-      if (!forward && ctx.charOffset > 0) {
-        doc.deleteTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset - 1, 1);
-        ctx.charOffset--;
-      } else if (forward) {
-        doc.deleteTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset, 1);
+      const rj = doc.insertFootnote(pos.secIdx, pos.paraIdx, pos.charOffset);
+      const r = parseResult(rj);
+      if (r?.ok) {
+        st.setEditMode('footnote');
+        fnCtxRef.current = {
+          secIdx: pos.secIdx,
+          paraIdx: pos.paraIdx,
+          controlIdx: (r.controlIdx as number) ?? 0,
+          fnParaIdx: 0,
+          charOffset: 0,
+        };
       }
-      rerenderCurrentPage();
+    } catch {
+      /* ignore */
+    }
+    rerender();
+  }, [docRef, cursorRef, saveSnapshot, rerender, st, fnCtxRef]);
+
+  const insertTextInFn = useCallback(
+    (text: string) => {
+      const doc = docRef.current;
+      const ctx = fnCtxRef.current;
+      if (!doc || !ctx) return;
+      saveSnapshot();
       try {
-        const cr = parseResult(doc.getCursorRectInFootnote(0, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset));
-        if (cr && cr.x !== undefined) setCursorRect({ pageIndex: (cr.pageIndex as number) ?? 0, x: cr.x as number, y: cr.y as number, height: cr.height as number });
-      } catch { /* ignore */ }
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerenderCurrentPage]);
+        const rj = doc.insertTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset, text);
+        const r = parseResult(rj);
+        ctx.charOffset = (r?.charOffset as number) ?? ctx.charOffset + text.length;
+        rerender();
+        try {
+          const cr = parseResult(
+            doc.getCursorRectInFootnote(0, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset),
+          );
+          if (cr && cr.x !== undefined)
+            st.setCursorRect({
+              pageIndex: (cr.pageIndex as number) ?? 0,
+              x: cr.x as number,
+              y: cr.y as number,
+              height: cr.height as number,
+            });
+        } catch {
+          /* ignore */
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [docRef, fnCtxRef, saveSnapshot, rerender, st],
+  );
+
+  const deleteTextInFn = useCallback(
+    (forward: boolean) => {
+      const doc = docRef.current;
+      const ctx = fnCtxRef.current;
+      if (!doc || !ctx) return;
+      saveSnapshot();
+      try {
+        if (!forward && ctx.charOffset > 0) {
+          doc.deleteTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset - 1, 1);
+          ctx.charOffset--;
+        } else if (forward) {
+          doc.deleteTextInFootnote(ctx.secIdx, ctx.paraIdx, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset, 1);
+        }
+        rerenderCurrentPage();
+        try {
+          const cr = parseResult(
+            doc.getCursorRectInFootnote(0, ctx.controlIdx, ctx.fnParaIdx, ctx.charOffset),
+          );
+          if (cr && cr.x !== undefined)
+            st.setCursorRect({
+              pageIndex: (cr.pageIndex as number) ?? 0,
+              x: cr.x as number,
+              y: cr.y as number,
+              height: cr.height as number,
+            });
+        } catch {
+          /* ignore */
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [docRef, fnCtxRef, saveSnapshot, rerenderCurrentPage, st],
+  );
 
   const splitParagraphInFn = useCallback(() => {
     const doc = docRef.current;
@@ -1535,36 +1189,416 @@ const HwpEditor: React.FC = () => {
       ctx.fnParaIdx = (r?.paraIdx as number) ?? ctx.fnParaIdx + 1;
       ctx.charOffset = 0;
       rerenderCurrentPage();
-    } catch { /* ignore */ }
-  }, [saveSnapshot, rerenderCurrentPage]);
+    } catch {
+      /* ignore */
+    }
+  }, [docRef, fnCtxRef, saveSnapshot, rerenderCurrentPage]);
 
-  const handleKeyDownFn = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
-    const ctx = fnCtxRef.current;
-    if (!ctx) { setEditMode('body'); return; }
-    const ctrl = e.ctrlKey || e.metaKey;
-    if (ctrl) {
-      switch (e.key.toLowerCase()) {
-        case 'z': e.preventDefault(); handleUndo(); return;
-        case 'y': e.preventDefault(); handleRedo(); return;
+  // ═══════════════════════════════════════════════════════════════════════════
+  // TABLE STRUCTURE OPERATIONS (from context menu)
+  // ════════════════════════════════════════════════════════════════════��══════
+
+  const handleInsertTableRow = useCallback(
+    (after: boolean) => {
+      const info = st.contextMenu?.tableInfo;
+      const doc = docRef.current;
+      if (!doc || !info) return;
+      saveSnapshot();
+      try {
+        doc.insertTableRow(info.secIdx, info.paraIdx, info.controlIdx, info.row, after);
+      } catch {
+        /* ignore */
       }
-      return;
-    }
-    switch (e.key) {
-      case 'Escape': e.preventDefault(); setEditMode('body'); fnCtxRef.current = null; break;
-      case 'Enter': e.preventDefault(); splitParagraphInFn(); break;
-      case 'Backspace': e.preventDefault(); deleteTextInFn(false); break;
-      case 'Delete': e.preventDefault(); deleteTextInFn(true); break;
-    }
-  }, [setEditMode, handleUndo, handleRedo, splitParagraphInFn, deleteTextInFn]);
+      rerender();
+      st.setContextMenu(null);
+    },
+    [st, docRef, saveSnapshot, rerender],
+  );
 
-  // ── Find / Replace ─────────────────────────────────────────────────────────
+  const handleDeleteTableRow = useCallback(() => {
+    const info = st.contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try {
+      doc.deleteTableRow(info.secIdx, info.paraIdx, info.controlIdx, info.row);
+    } catch {
+      /* ignore */
+    }
+    rerender();
+    st.setContextMenu(null);
+  }, [st, docRef, saveSnapshot, rerender]);
+
+  const handleInsertTableColumn = useCallback(
+    (after: boolean) => {
+      const info = st.contextMenu?.tableInfo;
+      const doc = docRef.current;
+      if (!doc || !info) return;
+      saveSnapshot();
+      try {
+        doc.insertTableColumn(info.secIdx, info.paraIdx, info.controlIdx, info.col, after);
+      } catch {
+        /* ignore */
+      }
+      rerender();
+      st.setContextMenu(null);
+    },
+    [st, docRef, saveSnapshot, rerender],
+  );
+
+  const handleDeleteTableColumn = useCallback(() => {
+    const info = st.contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try {
+      doc.deleteTableColumn(info.secIdx, info.paraIdx, info.controlIdx, info.col);
+    } catch {
+      /* ignore */
+    }
+    rerender();
+    st.setContextMenu(null);
+  }, [st, docRef, saveSnapshot, rerender]);
+
+  const handleMergeTableCells = useCallback(() => {
+    const info = st.contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try {
+      doc.mergeTableCells(info.secIdx, info.paraIdx, info.controlIdx, info.row, info.col, info.row, info.col + 1);
+    } catch {
+      /* ignore */
+    }
+    rerender();
+    st.setContextMenu(null);
+  }, [st, docRef, saveSnapshot, rerender]);
+
+  const handleSplitTableCell = useCallback(() => {
+    const info = st.contextMenu?.tableInfo;
+    const doc = docRef.current;
+    if (!doc || !info) return;
+    saveSnapshot();
+    try {
+      doc.splitTableCell(info.secIdx, info.paraIdx, info.controlIdx, info.row, info.col);
+    } catch {
+      /* ignore */
+    }
+    rerender();
+    st.setContextMenu(null);
+  }, [st, docRef, saveSnapshot, rerender]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CLIPBOARD (wire useClipboard hook)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const clipboard = useClipboard({
+    getDoc: () => docRef.current,
+    getCursor: () => cursorRef.current,
+    getSelAnchor: () => selAnchorRef.current,
+    getCellCtx: () => cellCtxRef.current,
+    editMode: st.editMode,
+    saveSnapshot,
+    deleteSelection,
+    setCursor: st.setCursor,
+    moveCursor,
+    rerender,
+    rerenderCurrentPage,
+    insertText,
+    setHasSelection: st.setHasSelection,
+    setSelRects: st.setSelRects,
+    setSelAnchor: (pos) => {
+      selAnchorRef.current = pos;
+    },
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // NAVIGATION (wire useNavigation hook)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const navigation = useNavigation({
+    getDoc: () => docRef.current,
+    getCursor: () => cursorRef.current,
+    moveCursor,
+    editMode: st.editMode,
+    setEditMode: st.setEditMode,
+    enterCellMode,
+    rerender,
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // KEYBOARD (wire useKeyboard hook)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const keyboard = useKeyboard({
+    editMode: st.editMode,
+    getDoc: () => docRef.current,
+    getCursor: () => cursorRef.current,
+    getCursorRect: () => st.cursorRect,
+    setCursor: st.setCursor,
+    setCursorRect: st.setCursorRect,
+    moveCursor,
+    updateCursorDisplay,
+    updateCharProps,
+    updateSelectionRects,
+    getSelAnchor: () => selAnchorRef.current,
+    setSelAnchor: (pos) => {
+      selAnchorRef.current = pos;
+    },
+    setHasSelection: st.setHasSelection,
+    saveSnapshot,
+    handleUndo,
+    handleRedo,
+    deleteSelection,
+    insertText,
+    deleteCharBefore,
+    deleteCharAfter,
+    toggleBold,
+    toggleItalic,
+    toggleUnderline,
+    insertTextInCell: cellEditing.insertTextInCell,
+    deleteTextInCell: cellEditing.deleteTextInCell,
+    splitParagraphInCell: cellEditing.splitParagraphInCell,
+    applyCharFormatInCell: cellEditing.applyCharFormatInCell,
+    getCellCtx: () => cellCtxRef.current,
+    enterCellMode,
+    insertTextInHf,
+    deleteTextInHf,
+    splitParagraphInHf,
+    insertTextInFn,
+    deleteTextInFn,
+    splitParagraphInFn,
+    setEditMode: st.setEditMode,
+    clearCellCtx: () => {
+      cellCtxRef.current = null;
+    },
+    clearHfCtx: () => {
+      hfCtxRef.current = null;
+    },
+    clearFnCtx: () => {
+      fnCtxRef.current = null;
+    },
+    rerenderCurrentPage,
+    rerender,
+    handleHtmlPaste: clipboard.handlePasteHtml,
+    handleCopy: clipboard.handleCopy,
+    handleCut: clipboard.handleCut,
+    setFindBarOpen: st.setFindBarOpen,
+    closeAllDropdowns: () => {
+      st.setFindBarOpen(false);
+      st.setContextMenu(null);
+    },
+    findNextControl: navigation.findNextControl,
+    findPrevControl: navigation.findPrevControl,
+    navigateNextEditable: navigation.navigateNextEditable,
+    composingRef: st.composingRef,
+    editModeRef: st.editModeRef,
+    hiddenInputRef: st.hiddenInputRef,
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MOUSE HANDLERS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleCanvasMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+      if (e.button !== 0) return;
+      const pos = hitTestToPos(e, pageIdx);
+      if (!pos) return;
+      st.setIsDragSelecting(true);
+      dragStartPos.current = { ...pos };
+      selAnchorRef.current = { ...pos };
+      st.setCursor(pos);
+      updateCursorDisplay(pos);
+      updateCharProps(pos);
+      st.hiddenInputRef.current?.focus();
+    },
+    [hitTestToPos, st, dragStartPos, selAnchorRef, updateCursorDisplay, updateCharProps],
+  );
+
+  const handleCanvasMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+      if (!st.isDragSelecting) return;
+      const pos = hitTestToPos(e, pageIdx);
+      if (!pos || !selAnchorRef.current) return;
+      st.setCursor(pos);
+      updateSelectionRects(selAnchorRef.current, pos);
+      st.setHasSelection(true);
+      updateCursorDisplay(pos);
+    },
+    [st, hitTestToPos, selAnchorRef, updateSelectionRects, updateCursorDisplay],
+  );
+
+  const handleCanvasMouseUp = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+      if (!st.isDragSelecting) return;
+      st.setIsDragSelecting(false);
+      const endPos = hitTestToPos(e, pageIdx);
+      const start = dragStartPos.current;
+
+      if (
+        start &&
+        endPos &&
+        start.secIdx === endPos.secIdx &&
+        start.paraIdx === endPos.paraIdx &&
+        start.charOffset === endPos.charOffset
+      ) {
+        // Single click (no drag)
+        if (e.shiftKey && selAnchorRef.current) {
+          st.setCursor(endPos);
+          updateSelectionRects(selAnchorRef.current, endPos);
+          st.setHasSelection(true);
+          updateCursorDisplay(endPos);
+          updateCharProps(endPos);
+        } else {
+          moveCursor(endPos, true);
+        }
+      } else if (endPos) {
+        // Drag completed: keep selection
+        st.setCursor(endPos);
+        updateCursorDisplay(endPos);
+        updateCharProps(endPos);
+      }
+    },
+    [st, hitTestToPos, dragStartPos, selAnchorRef, moveCursor, updateSelectionRects, updateCursorDisplay, updateCharProps],
+  );
+
+  // ── Context menu ──────────────────────────────────────────────────────
+  const handleContextMenu = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+      e.preventDefault();
+      const doc = docRef.current;
+      if (!doc) return;
+      const pos = hitTestToPos(e, pageIdx);
+      if (!pos) return;
+      let menuType: ContextMenuState['type'] = 'body';
+      let tableInfo: ContextMenuState['tableInfo'] = undefined;
+      try {
+        const cpj = doc.getControlTextPositions(pos.secIdx, pos.paraIdx);
+        const controls = JSON.parse(cpj) as Array<{
+          type: string;
+          controlIdx: number;
+          charOffset: number;
+        }>;
+        const tableCtrl = controls?.find(
+          (c) => c.type === 'table' && c.charOffset <= pos.charOffset,
+        );
+        if (tableCtrl) {
+          menuType = 'table';
+          try {
+            const bboxJ = doc.getTableCellBboxes(pos.secIdx, pos.paraIdx, tableCtrl.controlIdx);
+            const bboxes = JSON.parse(bboxJ) as Array<{
+              cellIdx: number;
+              row: number;
+              col: number;
+              x: number;
+              y: number;
+              w: number;
+              h: number;
+            }>;
+            const canvas = pageCanvasRefs.current[pageIdx];
+            if (canvas) {
+              const scale = renderScaleRef.current;
+              const rect = canvas.getBoundingClientRect();
+              const px = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
+              const py = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
+              const cell = bboxes.find(
+                (b) => px >= b.x && px <= b.x + b.w && py >= b.y && py <= b.y + b.h,
+              );
+              if (cell) {
+                tableInfo = {
+                  secIdx: pos.secIdx,
+                  paraIdx: pos.paraIdx,
+                  controlIdx: tableCtrl.controlIdx,
+                  row: cell.row,
+                  col: cell.col,
+                  cellIdx: cell.cellIdx,
+                };
+              }
+            }
+          } catch {
+            /* ignore */
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+      st.setContextMenu({ x: e.clientX, y: e.clientY, type: menuType, tableInfo });
+    },
+    [docRef, hitTestToPos, st, pageCanvasRefs, renderScaleRef],
+  );
+
+  // ── Double-click (word selection / header-footer enter) ───────────────
+  const handleDoubleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>, pageIdx: number) => {
+      const doc = docRef.current;
+      if (!doc || st.editMode !== 'body') return;
+      const canvas = pageCanvasRefs.current[pageIdx];
+      if (!canvas) return;
+      const scale = renderScaleRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const px = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
+      const py = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
+
+      // Check header/footer hit
+      try {
+        const hfResult = parseResult(doc.hitTestHeaderFooter(pageIdx, px, py));
+        if (hfResult?.hit) {
+          enterHeaderFooterMode(
+            (hfResult.sectionIndex as number) ?? 0,
+            !!hfResult.isHeader,
+          );
+          return;
+        }
+      } catch {
+        /* ignore */
+      }
+
+      // Body double-click: word selection
+      const pos = cursorRef.current;
+      if (pos) {
+        try {
+          const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
+          if (pLen > 0) {
+            const textJson = doc.getTextRange(pos.secIdx, pos.paraIdx, 0, pLen);
+            const textResult = parseResult(textJson);
+            const text = (textResult?.text as string) ?? '';
+            if (text) {
+              const off = Math.min(pos.charOffset, text.length);
+              const isWordChar = (c: string) => /[\w\u3131-\uD79D]/.test(c);
+              let wStart = off;
+              let wEnd = off;
+              while (wStart > 0 && isWordChar(text[wStart - 1])) wStart--;
+              while (wEnd < text.length && isWordChar(text[wEnd])) wEnd++;
+              if (wStart < wEnd) {
+                const startPos = { ...pos, charOffset: wStart };
+                const endPos = { ...pos, charOffset: wEnd };
+                selAnchorRef.current = startPos;
+                st.setCursor(endPos);
+                updateSelectionRects(startPos, endPos);
+                st.setHasSelection(true);
+                updateCursorDisplay(endPos);
+              }
+            }
+          }
+        } catch {
+          /* ignore */
+        }
+      }
+    },
+    [docRef, st, cursorRef, selAnchorRef, pageCanvasRefs, renderScaleRef, enterHeaderFooterMode, updateSelectionRects, updateCursorDisplay],
+  );
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // FIND / REPLACE
+  // ═══════════════════════════════════════════════════════════════════════════
 
   const handleFindNext = useCallback(() => {
     const doc = docRef.current;
-    if (!doc || !findQuery) return;
+    if (!doc || !st.findQuery) return;
     const pos = cursorRef.current;
     try {
-      const rj = doc.searchText(findQuery, pos.secIdx, pos.paraIdx, pos.charOffset, true, caseSensitive);
+      const rj = doc.searchText(st.findQuery, pos.secIdx, pos.paraIdx, pos.charOffset, true, st.caseSensitive);
       const r = parseResult(rj);
       if (r?.found) {
         const np: CursorPos = {
@@ -1573,435 +1607,299 @@ const HwpEditor: React.FC = () => {
           charOffset: (r.charOffset as number) ?? 0,
         };
         moveCursor(np);
-        setFindInfo('');
+        st.setFindInfo('');
       } else {
-        setFindInfo(t('site.hwpEditor.noResults'));
+        st.setFindInfo(t('site.hwpEditor.noResults'));
       }
-    } catch { /* ignore */ }
-  }, [findQuery, caseSensitive, moveCursor, t]);
+    } catch {
+      /* ignore */
+    }
+  }, [docRef, st, cursorRef, moveCursor, t]);
 
   const handleReplaceOne = useCallback(() => {
     const doc = docRef.current;
-    if (!doc || !findQuery) return;
+    if (!doc || !st.findQuery) return;
     saveSnapshot();
     try {
-      const rj = doc.replaceOne(findQuery, replaceQuery, caseSensitive);
+      const rj = doc.replaceOne(st.findQuery, st.replaceQuery, st.caseSensitive);
       const r = parseResult(rj);
       if (r?.ok) {
         rerender();
-        setFindInfo(t('site.hwpEditor.replaced'));
+        st.setFindInfo(t('site.hwpEditor.replaced'));
       } else {
-        setFindInfo(t('site.hwpEditor.noResults'));
+        st.setFindInfo(t('site.hwpEditor.noResults'));
       }
-    } catch { /* ignore */ }
-  }, [findQuery, replaceQuery, caseSensitive, saveSnapshot, rerender, t]);
+    } catch {
+      /* ignore */
+    }
+  }, [docRef, st, saveSnapshot, rerender, t]);
 
   const handleReplaceAll = useCallback(() => {
     const doc = docRef.current;
-    if (!doc || !findQuery) return;
+    if (!doc || !st.findQuery) return;
     saveSnapshot();
     try {
-      const rj = doc.replaceAll(findQuery, replaceQuery, caseSensitive);
+      const rj = doc.replaceAll(st.findQuery, st.replaceQuery, st.caseSensitive);
       const r = parseResult(rj);
       rerender();
-      setFindInfo(`${t('site.hwpEditor.replaced')} ${r?.count ?? 0}`);
-    } catch { /* ignore */ }
-  }, [findQuery, replaceQuery, caseSensitive, saveSnapshot, rerender, t]);
+      st.setFindInfo(`${t('site.hwpEditor.replaced')} ${r?.count ?? 0}`);
+    } catch {
+      /* ignore */
+    }
+  }, [docRef, st, saveSnapshot, rerender, t]);
 
-  // ── Export ─────────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // EXPORT
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  const handleExport = useCallback((format: 'hwp' | 'hwpx') => {
+  const handleExport = useCallback(
+    (format: 'hwp' | 'hwpx') => {
+      const doc = docRef.current;
+      if (!doc) return;
+      try {
+        const bytes = format === 'hwp' ? doc.exportHwp() : doc.exportHwpx();
+        const blob = new Blob([bytes], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const baseName = st.fileName ? st.fileName.replace(/\.[^.]+$/, '') : 'document';
+        a.download = `${baseName}.${format}`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        st.setEditorError(`\uB0B4\uBCF4\uB0B4\uAE30 \uC2E4\uD328: ${(e as Error).message}`);
+      }
+      st.setExportOpen(false);
+    },
+    [docRef, st],
+  );
+
+  // ══════════════════════════════════════════════════════════════════���════════
+  // PAGE SETUP
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const loadPageDef = useCallback(() => {
     const doc = docRef.current;
     if (!doc) return;
     try {
-      const bytes = format === 'hwp' ? doc.exportHwp() : doc.exportHwpx();
-      const blob = new Blob([bytes], { type: 'application/octet-stream' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      const baseName = fileName ? fileName.replace(/\.[^.]+$/, '') : 'document';
-      a.download = `${baseName}.${format}`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      setEditorError(`내보내기 실패: ${(e as Error).message}`);
+      const rj = doc.getPageDef(0);
+      const r = parseResult(rj);
+      if (r)
+        st.setPageDef({
+          width: (r.width as number) ?? 59528,
+          height: (r.height as number) ?? 84188,
+          marginTop: (r.marginTop as number) ?? 5669,
+          marginBottom: (r.marginBottom as number) ?? 4252,
+          marginLeft: (r.marginLeft as number) ?? 4252,
+          marginRight: (r.marginRight as number) ?? 4252,
+          landscape: !!r.landscape,
+        });
+    } catch {
+      /* ignore */
     }
-    setExportOpen(false);
-  }, [fileName]);
+  }, [docRef, st]);
 
-  // ── Keyboard handler ──────────────────────────────────────────────────────
+  const applyPageDef = useCallback(
+    (def: Record<string, unknown>) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      saveSnapshot();
+      try {
+        doc.setPageDef(0, JSON.stringify(def));
+      } catch {
+        /* ignore */
+      }
+      rerender();
+      st.setPageDefOpen(false);
+    },
+    [docRef, saveSnapshot, rerender, st],
+  );
 
-  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (composingRef.current) return;
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STYLES
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const loadStyles = useCallback(() => {
     const doc = docRef.current;
-    if (!doc || !cursorRef.current) return;
-
-    // Dispatch to edit-mode-specific handlers
-    if (editMode === 'cell') { handleKeyDownCell(e); return; }
-    if (editMode === 'header' || editMode === 'footer') { handleKeyDownHf(e); return; }
-    if (editMode === 'footnote') { handleKeyDownFn(e); return; }
-
-    const pos = cursorRef.current;
-    const ctrl = e.ctrlKey || e.metaKey;
-
-    if (ctrl) {
-      switch (e.key.toLowerCase()) {
-        case 'z': e.preventDefault(); handleUndo(); return;
-        case 'y': e.preventDefault(); handleRedo(); return;
-        case 'b': e.preventDefault(); toggleBold(); return;
-        case 'i': e.preventDefault(); toggleItalic(); return;
-        case 'u': e.preventDefault(); toggleUnderline(); return;
-        case 'f': e.preventDefault(); setFindBarOpen(true); return;
-        case 'a': {
-          e.preventDefault();
-          try {
-            const sc = doc.getSectionCount();
-            if (sc === 0) return;
-            const lastSec = sc - 1;
-            const lastPara = doc.getParagraphCount(lastSec) - 1;
-            const lastChar = doc.getParagraphLength(lastSec, lastPara);
-            const startPos: CursorPos = { secIdx: 0, paraIdx: 0, charOffset: 0 };
-            const endPos: CursorPos = { secIdx: lastSec, paraIdx: lastPara, charOffset: lastChar };
-            selAnchorRef.current = startPos;
-            setCursor(endPos);
-            updateSelectionRects(startPos, endPos);
-            setHasSelection(true);
-            updateCursorDisplay(endPos);
-          } catch { /* ignore */ }
-          return;
-        }
-        case 'c': {
-          e.preventDefault();
-          const anchor = selAnchorRef.current;
-          if (!anchor) return;
-          let sp = anchor.paraIdx; let so = anchor.charOffset;
-          let ep = pos.paraIdx; let eo = pos.charOffset;
-          if (sp > ep || (sp === ep && so > eo)) { [sp, ep] = [ep, sp]; [so, eo] = [eo, so]; }
-          try {
-            const rj = doc.copySelection(pos.secIdx, sp, so, ep, eo);
-            const r = parseResult(rj);
-            if (r?.text) navigator.clipboard.writeText(r.text as string).catch(() => {});
-          } catch { /* ignore */ }
-          return;
-        }
-        case 'x': {
-          e.preventDefault();
-          const anchor2 = selAnchorRef.current;
-          if (!anchor2) return;
-          let sp2 = anchor2.paraIdx; let so2 = anchor2.charOffset;
-          let ep2 = pos.paraIdx; let eo2 = pos.charOffset;
-          if (sp2 > ep2 || (sp2 === ep2 && so2 > eo2)) { [sp2, ep2] = [ep2, sp2]; [so2, eo2] = [eo2, so2]; }
-          try {
-            const rj2 = doc.copySelection(pos.secIdx, sp2, so2, ep2, eo2);
-            const r2 = parseResult(rj2);
-            if (r2?.text) navigator.clipboard.writeText(r2.text as string).catch(() => {});
-          } catch { /* ignore */ }
-          deleteCharBefore(); // will handle selection because hasSelection=true
-          return;
-        }
-        case 'v': {
-          e.preventDefault();
-          handleHtmlPaste();
-          return;
-        }
-      }
-      return;
+    if (!doc) return;
+    try {
+      const rj = doc.getStyleList();
+      const list = JSON.parse(rj) as StyleItem[];
+      st.setStyleList(Array.isArray(list) ? list : []);
+    } catch {
+      st.setStyleList([]);
     }
+  }, [docRef, st]);
 
-    switch (e.key) {
-      case 'Enter': {
-        e.preventDefault();
-        saveSnapshot();
-        if (selAnchorRef.current) { const np = deleteSelection(); if (np) setCursor(np); }
-        const curP = cursorRef.current;
-        try {
-          const rj = doc.splitParagraph(curP.secIdx, curP.paraIdx, curP.charOffset);
-          const r = parseResult(rj);
-          const np: CursorPos = {
-            secIdx: curP.secIdx,
-            paraIdx: (r?.paraIdx as number) ?? curP.paraIdx + 1,
-            charOffset: 0,
-          };
-          moveCursor(np);
-        } catch { /* ignore */ }
-        rerenderCurrentPage();
-        break;
+  const applyStyle = useCallback(
+    (styleId: number) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      const pos = cursorRef.current;
+      saveSnapshot();
+      try {
+        doc.applyStyle(pos.secIdx, pos.paraIdx, styleId);
+      } catch {
+        /* ignore */
       }
-      case 'Backspace': e.preventDefault(); deleteCharBefore(); break;
-      case 'Delete': e.preventDefault(); deleteCharAfter(); break;
-      case 'ArrowLeft': {
-        e.preventDefault();
-        const np = { ...pos };
-        if (pos.charOffset > 0) {
-          np.charOffset = pos.charOffset - 1;
-        } else if (pos.paraIdx > 0) {
-          np.paraIdx = pos.paraIdx - 1;
-          try { np.charOffset = doc.getParagraphLength(pos.secIdx, np.paraIdx); } catch { np.charOffset = 0; }
-        } else break;
-        if (e.shiftKey) {
-          if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-          setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-        } else {
-          moveCursor(np);
-        }
-        break;
-      }
-      case 'ArrowRight': {
-        e.preventDefault();
-        const np = { ...pos };
-        try {
-          const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
-          if (pos.charOffset < pLen) {
-            np.charOffset = pos.charOffset + 1;
-          } else {
-            const pCount = doc.getParagraphCount(pos.secIdx);
-            if (pos.paraIdx < pCount - 1) { np.paraIdx = pos.paraIdx + 1; np.charOffset = 0; }
-            else break;
-          }
-        } catch { break; }
-        if (e.shiftKey) {
-          if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-          setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-        } else {
-          moveCursor(np);
-        }
-        break;
-      }
-      case 'ArrowUp': {
-        e.preventDefault();
-        const cx = cursorRect ? cursorRect.x : 0;
-        try {
-          const rj = doc.moveVertical(
-            pos.secIdx, pos.paraIdx, pos.charOffset,
-            -1, cx, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
-          );
-          const r = parseResult(rj);
-          if (r) {
-            const np: CursorPos = {
-              secIdx: (r.sectionIndex as number) ?? pos.secIdx,
-              paraIdx: ((r.paragraphIndex ?? r.paraIdx) as number) ?? pos.paraIdx,
-              charOffset: (r.charOffset as number) ?? pos.charOffset,
-            };
-            if (e.shiftKey) {
-              if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-              setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-            } else { moveCursor(np); }
-          }
-        } catch {
-          // fallback: move to previous paragraph
-          if (pos.paraIdx > 0) {
-            const np: CursorPos = { ...pos, paraIdx: pos.paraIdx - 1 };
-            try { np.charOffset = Math.min(pos.charOffset, doc.getParagraphLength(pos.secIdx, np.paraIdx)); } catch { np.charOffset = 0; }
-            if (e.shiftKey) {
-              if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-              setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-            } else { moveCursor(np); }
-          }
-        }
-        break;
-      }
-      case 'ArrowDown': {
-        e.preventDefault();
-        const cx2 = cursorRect ? cursorRect.x : 0;
-        try {
-          const rj = doc.moveVertical(
-            pos.secIdx, pos.paraIdx, pos.charOffset,
-            1, cx2, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff
-          );
-          const r = parseResult(rj);
-          if (r) {
-            const np: CursorPos = {
-              secIdx: (r.sectionIndex as number) ?? pos.secIdx,
-              paraIdx: ((r.paragraphIndex ?? r.paraIdx) as number) ?? pos.paraIdx,
-              charOffset: (r.charOffset as number) ?? pos.charOffset,
-            };
-            if (e.shiftKey) {
-              if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-              setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-            } else { moveCursor(np); }
-          }
-        } catch {
-          // fallback: move to next paragraph
-          try {
-            const pCount = doc.getParagraphCount(pos.secIdx);
-            if (pos.paraIdx < pCount - 1) {
-              const np: CursorPos = { ...pos, paraIdx: pos.paraIdx + 1 };
-              np.charOffset = Math.min(pos.charOffset, doc.getParagraphLength(pos.secIdx, np.paraIdx));
-              if (e.shiftKey) {
-                if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-                setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-              } else { moveCursor(np); }
-            }
-          } catch { /* ignore */ }
-        }
-        break;
-      }
-      case 'Home': {
-        e.preventDefault();
-        try {
-          const li = parseResult(doc.getLineInfo(pos.secIdx, pos.paraIdx, pos.charOffset));
-          const np: CursorPos = { ...pos, charOffset: li ? (li.charStart as number) : 0 };
-          if (e.shiftKey) {
-            if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-            setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-          } else { moveCursor(np); }
-        } catch { /* ignore */ }
-        break;
-      }
-      case 'End': {
-        e.preventDefault();
-        try {
-          const li = parseResult(doc.getLineInfo(pos.secIdx, pos.paraIdx, pos.charOffset));
-          const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
-          const np: CursorPos = { ...pos, charOffset: li ? Math.min(li.charEnd as number, pLen) : pLen };
-          if (e.shiftKey) {
-            if (!selAnchorRef.current) selAnchorRef.current = { ...pos };
-            setCursor(np); updateSelectionRects(selAnchorRef.current, np); setHasSelection(true); updateCursorDisplay(np);
-          } else { moveCursor(np); }
-        } catch { /* ignore */ }
-        break;
-      }
-      case 'Tab': e.preventDefault(); insertText('\t'); break;
-      case 'Escape':
-        setFindBarOpen(false); setFontOpen(false); setSizeOpen(false);
-        setColorOpen(false); setHighlightOpen(false); setExportOpen(false);
-        setSpacingOpen(false); setTableDialogOpen(false);
-        setContextMenu(null); setPageDefOpen(false); setStyleOpen(false);
-        setBookmarkOpen(false);
-        break;
+      rerender();
+      updateCharProps(pos);
+      st.setStyleOpen(false);
+    },
+    [docRef, cursorRef, saveSnapshot, rerender, updateCharProps, st],
+  );
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // BOOKMARKS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const loadBookmarks = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const rj = doc.getBookmarks();
+      const list = JSON.parse(rj) as Array<{
+        name: string;
+        secIdx: number;
+        paraIdx: number;
+        charOffset: number;
+        controlIdx?: number;
+      }>;
+      st.setBookmarkList(Array.isArray(list) ? list : []);
+    } catch {
+      st.setBookmarkList([]);
     }
-  }, [
-    editMode, handleKeyDownCell, handleKeyDownHf, handleKeyDownFn,
-    cursor, cursorRect,
-    handleUndo, handleRedo,
-    toggleBold, toggleItalic, toggleUnderline,
-    insertText, deleteSelection, deleteCharBefore, deleteCharAfter,
-    saveSnapshot, moveCursor, rerenderCurrentPage,
-    updateSelectionRects, updateCursorDisplay,
-    setCursor, handleHtmlPaste,
-  ]);
+  }, [docRef, st]);
 
-  // ── IME handlers ──────────────────────────────────────────────────────────
+  const handleAddBookmark = useCallback(
+    (name: string) => {
+      const doc = docRef.current;
+      if (!doc || !name.trim()) return;
+      const pos = cursorRef.current;
+      try {
+        doc.addBookmark(pos.secIdx, pos.paraIdx, pos.charOffset, name.trim());
+      } catch {
+        /* ignore */
+      }
+      loadBookmarks();
+    },
+    [docRef, cursorRef, loadBookmarks],
+  );
 
-  const handleIMECompositionStart = useCallback(() => {
-    composingRef.current = true;
-  }, []);
+  const handleDeleteBookmark = useCallback(
+    (bm: { secIdx: number; paraIdx: number; controlIdx?: number }) => {
+      const doc = docRef.current;
+      if (!doc) return;
+      try {
+        doc.deleteBookmark(bm.secIdx, bm.paraIdx, bm.controlIdx ?? 0);
+      } catch {
+        /* ignore */
+      }
+      loadBookmarks();
+    },
+    [docRef, loadBookmarks],
+  );
 
-  const handleIMECompositionEnd = useCallback((e: React.CompositionEvent<HTMLTextAreaElement>) => {
-    composingRef.current = false;
-    const text = e.data;
-    if (text) {
-      const mode = editModeRef.current;
-      if (mode === 'cell') insertTextInCell(text);
-      else if (mode === 'header' || mode === 'footer') insertTextInHf(text);
-      else if (mode === 'footnote') insertTextInFn(text);
-      else insertText(text);
+  const handleGotoBookmark = useCallback(
+    (bm: { secIdx: number; paraIdx: number; charOffset: number }) => {
+      moveCursor({ secIdx: bm.secIdx, paraIdx: bm.paraIdx, charOffset: bm.charOffset });
+      st.setBookmarkDialogOpen(false);
+    },
+    [moveCursor, st],
+  );
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DISPLAY TOGGLES
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const toggleControlCodes = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const newVal = !st.showControlCodes;
+    try {
+      doc.setShowControlCodes(newVal);
+    } catch {
+      /* ignore */
     }
-    if (hiddenInputRef.current) hiddenInputRef.current.value = '';
-  }, [insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
+    st.setShowControlCodes(newVal);
+    rerender();
+  }, [docRef, st, rerender]);
 
-  const handleIMEInput = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
-    if (composingRef.current) return;
-    const target = e.target as HTMLTextAreaElement;
-    const val = target.value;
-    if (val) {
-      const mode = editModeRef.current;
-      if (mode === 'cell') insertTextInCell(val);
-      else if (mode === 'header' || mode === 'footer') insertTextInHf(val);
-      else if (mode === 'footnote') insertTextInFn(val);
-      else insertText(val);
-      target.value = '';
+  const toggleParaMarks = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const newVal = !st.showParaMarks;
+    try {
+      doc.setShowParagraphMarks(newVal);
+    } catch {
+      /* ignore */
     }
-  }, [insertText, insertTextInCell, insertTextInHf, insertTextInFn]);
+    st.setShowParaMarks(newVal);
+    rerender();
+  }, [docRef, st, rerender]);
 
-  // ── Page navigation ────────────────────────────────────────────────────────
+  const toggleTransparentBorders = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const newVal = !st.showTransparentBorders;
+    try {
+      doc.setShowTransparentBorders(newVal);
+    } catch {
+      /* ignore */
+    }
+    st.setShowTransparentBorders(newVal);
+    rerender();
+  }, [docRef, st, rerender]);
 
-  const handlePageInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPageInputVal(e.target.value);
-  }, []);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PAGE NAVIGATION
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handlePageInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      st.setPageInputVal(e.target.value);
+    },
+    [st],
+  );
 
   const handlePageInputCommit = useCallback(() => {
-    const n = parseInt(pageInputVal, 10);
-    if (!isNaN(n) && n >= 1 && n <= pageCount) {
-      setCurrentPage(n - 1);
+    const n = parseInt(st.pageInputVal, 10);
+    if (!isNaN(n) && n >= 1 && n <= st.pageCount) {
+      st.setCurrentPage(n - 1);
     } else {
-      setPageInputVal(String(currentPage + 1));
+      st.setPageInputVal(String(st.currentPage + 1));
     }
-  }, [pageInputVal, pageCount, currentPage]);
+  }, [st]);
 
-  const handleZoomIn = useCallback(() => setZoom((z) => Math.min(z + 10, 200)), []);
-  const handleZoomOut = useCallback(() => setZoom((z) => Math.max(z - 10, 30)), []);
+  const handleZoomIn = useCallback(() => st.setZoom((z) => Math.min(z + 10, 200)), [st]);
+  const handleZoomOut = useCallback(() => st.setZoom((z) => Math.max(z - 10, 30)), [st]);
 
-  // ── Sync page input with current page ─────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // EFFECTS
+  // ═══════════════════════════════════════════════════════════════════════════
 
+  // ── Page input sync ───────────────────────────────────────────────────
   useEffect(() => {
-    setPageInputVal(String(currentPage + 1));
-  }, [currentPage]);
+    st.setPageInputVal(String(st.currentPage + 1));
+  }, [st.currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Outside-click to close dropdowns ──────────────────────────────────────
-
-  useEffect(() => {
-    const handler = (e: globalThis.MouseEvent) => {
-      const target = e.target as Node;
-      const outside = (btn: React.RefObject<HTMLElement | null>, drop: React.RefObject<HTMLElement | null>) =>
-        (!btn.current?.contains(target)) && (!drop.current?.contains(target));
-
-      if (fontOpen && outside(fontBtnRef, fontDropRef)) setFontOpen(false);
-      if (sizeOpen && outside(sizeBtnRef, sizeDropRef)) setSizeOpen(false);
-      if (colorOpen && outside(colorBtnRef, colorDropRef)) setColorOpen(false);
-      if (highlightOpen && outside(hlBtnRef, hlDropRef)) setHighlightOpen(false);
-      if (exportOpen && outside(exportBtnRef, exportDropRef)) setExportOpen(false);
-      if (spacingOpen && outside(spacingBtnRef, spacingDropRef)) setSpacingOpen(false);
-      if (tableDialogOpen && outside(tableBtnRef, tableDialogRef)) setTableDialogOpen(false);
-      if (styleOpen && outside(styleBtnRef, styleDropRef)) setStyleOpen(false);
-      if (contextMenu && !contextMenuRef.current?.contains(target)) setContextMenu(null);
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [fontOpen, sizeOpen, colorOpen, highlightOpen, exportOpen, spacingOpen, tableDialogOpen, styleOpen, contextMenu]);
-
-  // ── Global mouseup for drag selection (Bug 8) ─────────────────────────────
-
-  useEffect(() => {
-    if (!isDragSelecting) return;
-    const handleGlobalMouseUp = () => setIsDragSelecting(false);
-    document.addEventListener('mouseup', handleGlobalMouseUp);
-    return () => document.removeEventListener('mouseup', handleGlobalMouseUp);
-  }, [isDragSelecting]);
-
-  // ── Cleanup on unmount ─────────────────────────────────────────────────────
-
-  useEffect(() => {
-    return () => {
-      if (docRef.current) {
-        try { docRef.current.free(); } catch { /* ignore */ }
-        docRef.current = null;
-      }
-    };
-  }, []);
-
-  // ── Canvas rendering effect ─────────────────────────────────────────────────
-  // When renderVer changes (document modified), re-draw all page canvases.
-
+  // ── Canvas rendering effect ───────────────────────────────────────────
   useEffect(() => {
     const doc = docRef.current;
-    if (!doc || pageCount === 0) return;
+    if (!doc || st.pageCount === 0) return;
     const scale = renderScaleRef.current;
 
-    for (let i = 0; i < pageCount; i++) {
+    for (let i = 0; i < st.pageCount; i++) {
       const canvas = pageCanvasRefs.current[i];
       if (!canvas) continue;
       try {
         doc.renderPageToCanvas(i, canvas, scale);
-        // renderPageToCanvas sets canvas.width/height = page_size * scale
-        // Set CSS display size = page_size in CSS pixels
         const cssW = canvas.width / scale;
         const cssH = canvas.height / scale;
         canvas.style.width = cssW + 'px';
         canvas.style.height = cssH + 'px';
         pageSizesRef.current[i] = { w: cssW, h: cssH };
 
-        // Setup overlay canvas with matching buffer size
         const overlay = overlayCanvasRefs.current[i];
         if (overlay) {
           overlay.width = canvas.width;
@@ -2014,14 +1912,12 @@ const HwpEditor: React.FC = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [renderVer, pageCount]);
+  }, [st.renderVer, st.pageCount]);
 
-  // ── Overlay drawing effect ──────────────────────────────────────────────────
-  // Draws cursor and selection rects on overlay canvases.
-
+  // ── Overlay drawing effect (cursor + selection) ───────────────────────
   useEffect(() => {
     const scale = renderScaleRef.current;
-    for (let i = 0; i < pageCount; i++) {
+    for (let i = 0; i < st.pageCount; i++) {
       const overlay = overlayCanvasRefs.current[i];
       if (!overlay) continue;
       const ctx = overlay.getContext('2d');
@@ -2029,7 +1925,7 @@ const HwpEditor: React.FC = () => {
       ctx.clearRect(0, 0, overlay.width, overlay.height);
 
       // Selection rects for this page
-      const pageRects = selRects.filter((r) => r.pageIndex === i);
+      const pageRects = st.selRects.filter((r) => r.pageIndex === i);
       if (pageRects.length > 0) {
         ctx.fillStyle = 'rgba(0, 70, 200, 0.25)';
         for (const sr of pageRects) {
@@ -2038,74 +1934,629 @@ const HwpEditor: React.FC = () => {
       }
 
       // Cursor line for this page
-      if (cursorRect && cursorRect.pageIndex === i && cursorVisible) {
+      if (st.cursorRect && st.cursorRect.pageIndex === i && st.cursorVisible) {
         ctx.strokeStyle = '#0046C8';
         ctx.lineWidth = Math.max(1.5, 2 * scale);
         ctx.beginPath();
-        ctx.moveTo(cursorRect.x * scale, cursorRect.y * scale);
-        ctx.lineTo(cursorRect.x * scale, (cursorRect.y + cursorRect.height) * scale);
+        ctx.moveTo(st.cursorRect.x * scale, st.cursorRect.y * scale);
+        ctx.lineTo(st.cursorRect.x * scale, (st.cursorRect.y + st.cursorRect.height) * scale);
         ctx.stroke();
       }
     }
-  }, [pageCount, cursorRect, selRects, cursorVisible, renderVer]);
+  }, [st.pageCount, st.cursorRect, st.selRects, st.cursorVisible, st.renderVer]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Cursor blink ────────────────────────────────────────────────────────────
-
+  // ── Cursor blink ──────────────────────────────────────────────────────
   useEffect(() => {
-    if (!cursorRect) {
-      setCursorVisible(true);
+    if (!st.cursorRect) {
+      st.setCursorVisible(true);
       return;
     }
-    setCursorVisible(true);
-    const interval = setInterval(() => setCursorVisible((v) => !v), 530);
+    st.setCursorVisible(true);
+    const interval = setInterval(() => st.setCursorVisible((v) => !v), 530);
     return () => clearInterval(interval);
-  }, [cursorRect]);
+  }, [st.cursorRect]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Derived values ─────────────────────────────────────────────────────────
+  // ── Global mouseup for drag selection ─────────────────────────────────
+  useEffect(() => {
+    if (!st.isDragSelecting) return;
+    const handleGlobalMouseUp = () => st.setIsDragSelecting(false);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => document.removeEventListener('mouseup', handleGlobalMouseUp);
+  }, [st.isDragSelecting]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const hasDoc = pageCount > 0;
-  const textColorHex = hwpColorToHex(charProps.textColor);
-  const highlightHex = hwpColorToHex(charProps.highlight);
+  // ── Context menu outside-click close ──────────────────────────────────
+  useEffect(() => {
+    if (!st.contextMenu) return;
+    const handler = (e: globalThis.MouseEvent) => {
+      const target = e.target as Node;
+      if (!st.contextMenuRef.current?.contains(target)) {
+        st.setContextMenu(null);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [st.contextMenu]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // ── Cleanup on unmount ────────────────────────────────────────────────
+  useEffect(() => {
+    return () => {
+      if (docRef.current) {
+        try {
+          docRef.current.free();
+        } catch {
+          /* ignore */
+        }
+        docRef.current = null;
+      }
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Color picker renderer ─────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DERIVED VALUES
+  // ═══════════════════════════════════════════════════════════════════════════
 
-  const renderColorPicker = (
-    currentHex: string,
-    customVal: string,
-    setCustomVal: (v: string) => void,
-    onApply: (hex: string) => void,
-  ) => (
-    <div className="hwp-color-picker">
-      <div className="hwp-color-grid">
-        {COLOR_PALETTE.map((row, ri) => (
-          <div key={ri} style={{ display: 'flex' }}>
-            {row.map((hex) => (
-              <div
-                key={hex}
-                className={`hwp-color-swatch${currentHex.toUpperCase() === hex.toUpperCase() ? ' active' : ''}`}
-                style={{ backgroundColor: hex }}
-                title={hex}
-                onClick={() => onApply(hex)}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="hwp-color-custom">
-        <input
-          type="color"
-          value={customVal}
-          onChange={(e) => setCustomVal(e.target.value)}
-        />
-        <button onClick={() => onApply(customVal)}>OK</button>
-      </div>
-    </div>
-  );
+  const hasDoc = st.pageCount > 0;
+  const textColorHex = hwpColorToHex(st.charProps.textColor);
+  const highlightHex = hwpColorToHex(st.charProps.highlight);
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // Render
-  // ─────────────────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 3: TABLE EXTENSION
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const loadTableProps = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return null;
+    const pos = cursorRef.current;
+    try {
+      const rj = doc.getTableProperties(pos.secIdx, pos.paraIdx, 0);
+      return parseResult(rj);
+    } catch { return null; }
+  }, [docRef, cursorRef]);
+
+  const handleApplyTableProps = useCallback((props: Record<string, unknown>) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.setTableProperties(pos.secIdx, pos.paraIdx, 0, JSON.stringify(props)); } catch { /* */ }
+    rerender();
+    st.setTablePropsOpen(false);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleTableFormula = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc || !st.contextMenu?.tableInfo) return;
+    const ti = st.contextMenu.tableInfo;
+    const formula = prompt('\uC218\uC2DD \uC785\uB825 (\uC608: SUM(A1:A5))');
+    if (!formula) { st.setContextMenu(null); return; }
+    saveSnapshot();
+    try { doc.evaluateTableFormula(ti.secIdx, ti.paraIdx, ti.controlIdx, ti.row, ti.col, formula, true); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, st, saveSnapshot, rerender]);
+
+  const handleDeleteTable = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc || !st.contextMenu?.tableInfo) return;
+    const ti = st.contextMenu.tableInfo;
+    saveSnapshot();
+    try { doc.deleteTableControl(ti.secIdx, ti.paraIdx, ti.controlIdx); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, st, saveSnapshot, rerender]);
+
+  const loadCellProps = useCallback(() => {
+    const ctx = cellCtxRef.current;
+    const doc = docRef.current;
+    if (!doc || !ctx) return null;
+    try {
+      const rj = doc.getCellProperties(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx);
+      return parseResult(rj);
+    } catch { return null; }
+  }, [docRef, cellCtxRef]);
+
+  const handleApplyCellProps = useCallback((props: Record<string, unknown>) => {
+    const ctx = cellCtxRef.current;
+    const doc = docRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try { doc.setCellProperties(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, JSON.stringify(props)); } catch { /* */ }
+    rerender();
+    st.setCellPropsOpen(false);
+  }, [docRef, cellCtxRef, saveSnapshot, rerender, st]);
+
+  const handleUpdateSidebarCellProps = useCallback((props: Record<string, unknown>) => {
+    const ctx = cellCtxRef.current;
+    const doc = docRef.current;
+    if (!doc || !ctx) return;
+    saveSnapshot();
+    try { doc.setCellProperties(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, JSON.stringify(props)); } catch { /* */ }
+    rerender();
+  }, [docRef, cellCtxRef, saveSnapshot, rerender]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 4: SHAPE / PICTURE
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleApplyShapeProps = useCallback((props: Record<string, unknown>) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.setShapeProperties(pos.secIdx, pos.paraIdx, 0, JSON.stringify(props)); } catch { /* */ }
+    rerender();
+    st.setShapeDialogOpen(false);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleDeleteShape = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.deleteShapeControl(pos.secIdx, pos.paraIdx, 0); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleApplyPictureProps = useCallback((props: Record<string, unknown>) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.setPictureProperties(pos.secIdx, pos.paraIdx, 0, JSON.stringify(props)); } catch { /* */ }
+    rerender();
+    st.setPicturePropsOpen(false);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleDeletePicture = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.deletePictureControl(pos.secIdx, pos.paraIdx, 0); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleDownloadImage = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    try {
+      const data = doc.getControlImageData(pos.secIdx, pos.paraIdx, 0);
+      const mime = doc.getControlImageMime(pos.secIdx, pos.paraIdx, 0);
+      const ext = mime.includes('png') ? 'png' : mime.includes('jpeg') ? 'jpg' : 'bin';
+      const blob = new Blob([data], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `image.${ext}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch { /* */ }
+    st.setContextMenu(null);
+  }, [docRef, cursorRef, st]);
+
+  const makeZOrderHandler = useCallback((order: string) => () => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.changeShapeZOrder(pos.secIdx, pos.paraIdx, 0, order); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleZOrderFront = makeZOrderHandler('front');
+  const handleZOrderBack = makeZOrderHandler('back');
+  const handleZOrderForward = makeZOrderHandler('forward');
+  const handleZOrderBackward = makeZOrderHandler('backward');
+
+  const handleGroupShapes = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.groupShapes(JSON.stringify({ sectionIdx: pos.secIdx, controls: [{ paraIdx: pos.paraIdx, controlIdx: 0 }] })); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleUngroupShape = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.ungroupShape(pos.secIdx, pos.paraIdx, 0); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 5: FIELD / FORM
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleRefreshFieldList = useCallback(() => {
+    // FieldDialog manages its own list; this is a placeholder for refresh trigger
+  }, []);
+
+  const handleGetFieldValue = useCallback((name: string): string => {
+    const doc = docRef.current;
+    if (!doc) return '';
+    try { return doc.getFieldValueByName(name) ?? ''; } catch { return ''; }
+  }, [docRef]);
+
+  const handleSetFieldValue = useCallback((name: string, value: string) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try { doc.setFieldValueByName(name, value); } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  const handleSetActiveField = useCallback((index: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      // Look up field position from list, then activate
+      const listJson = doc.getFieldList();
+      const list = JSON.parse(listJson) as Array<{ secIdx?: number; paraIdx?: number; charOffset?: number }>;
+      const f = list[index];
+      if (f) doc.setActiveField(f.secIdx ?? 0, f.paraIdx ?? 0, f.charOffset ?? 0);
+    } catch { /* */ }
+    rerender();
+  }, [docRef, rerender]);
+
+  const handleClearActiveField = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try { doc.clearActiveField(); } catch { /* */ }
+    rerender();
+  }, [docRef, rerender]);
+
+  const handleRemoveFieldCtxMenu = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.removeFieldAt(pos.secIdx, pos.paraIdx, pos.charOffset); } catch { /* */ }
+    rerender();
+    st.setContextMenu(null);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleRemoveFieldDialog = useCallback((secIdx: number, paraIdx: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try { doc.removeFieldAt(secIdx, paraIdx, 0); } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  const handleUpdateClickHere = useCallback((props: Record<string, unknown>) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try {
+      doc.updateClickHereProps(
+        (props.fieldId as number) ?? 0,
+        (props.guide as string) ?? '',
+        (props.memo as string) ?? '',
+        (props.name as string) ?? '',
+        (props.editable as boolean) ?? true,
+      );
+    } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  const handleGotoField = useCallback((index: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      // Look up field position from list
+      const listJson = doc.getFieldList();
+      const list = JSON.parse(listJson) as Array<{ secIdx?: number; paraIdx?: number; charOffset?: number }>;
+      const f = list[index];
+      if (f) {
+        const pos: CursorPos = {
+          secIdx: f.secIdx ?? 0,
+          paraIdx: f.paraIdx ?? 0,
+          charOffset: f.charOffset ?? 0,
+        };
+        moveCursor(pos);
+      }
+    } catch { /* */ }
+    st.setFieldDialogOpen(false);
+  }, [docRef, moveCursor, st]);
+
+  const handleRefreshForms = useCallback(() => {
+    // FormDialog manages its own list
+  }, []);
+
+  const handleSetFormValue = useCallback((index: number, value: string) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.setFormValue(pos.secIdx, pos.paraIdx, index, JSON.stringify({ value })); } catch { /* */ }
+    rerender();
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
+
+  const handleSetFormValueInCell = useCallback((index: number, value: string) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const ctx = cellCtxRef.current;
+    if (!ctx) return;
+    saveSnapshot();
+    try { doc.setFormValueInCell(ctx.secIdx, ctx.parentParaIdx, ctx.controlIdx, ctx.cellIdx, ctx.cellParaIdx, index, JSON.stringify({ value })); } catch { /* */ }
+    rerender();
+  }, [docRef, cellCtxRef, saveSnapshot, rerender]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 6: HEADER/FOOTER EXTENSION
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleRefreshHfList = useCallback(() => {
+    // HF dialog manages its own list
+  }, []);
+
+  const handleDeleteHf = useCallback((secIdx: number, isHeader: boolean, applyTo: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try { doc.deleteHeaderFooter(secIdx, isHeader, applyTo); } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  const handleToggleHideHf = useCallback((_secIdx: number, isHeader: boolean, _applyTo: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try { doc.toggleHideHeaderFooter(st.currentPage, isHeader); } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender, st]);
+
+  const handleNavigateHfByPage = useCallback((_secIdx: number, isHeader: boolean, pageNum: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    // direction: +1 forward, -1 backward; use pageNum as target
+    try { doc.navigateHeaderFooterByPage(pageNum, isHeader, 1); } catch { /* */ }
+    rerender();
+  }, [docRef, rerender]);
+
+  const handleApplyHfTemplate = useCallback((secIdx: number, isHeader: boolean, applyTo: number, templateId: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try { doc.applyHfTemplate(secIdx, isHeader, applyTo, templateId); } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  const handleInsertFieldInHf = useCallback((secIdx: number, isHeader: boolean, applyTo: number, fieldType: string) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    // WASM signature: (section_idx, is_header, apply_to, hf_para_idx, char_offset, field_type_num)
+    const fieldTypeNum = ['page_number', 'total_pages', 'date', 'time', 'filename'].indexOf(fieldType);
+    try { doc.insertFieldInHf(secIdx, isHeader, applyTo, 0, 0, fieldTypeNum >= 0 ? fieldTypeNum : 0); } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 7: STYLE SYSTEM
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleCreateStyle = useCallback((opts: { name: string; engName: string; type: string; nextStyleId: number }) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try { doc.createStyle(JSON.stringify(opts)); } catch { /* */ }
+    loadStyles();
+  }, [docRef, loadStyles]);
+
+  const handleUpdateStyle = useCallback((id: number, props: Record<string, unknown>) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try {
+      doc.updateStyle(id, JSON.stringify(props));
+      if (props.charShape || props.paraShape) {
+        doc.updateStyleShapes(id, JSON.stringify(props.charShape ?? {}), JSON.stringify(props.paraShape ?? {}));
+      }
+    } catch { /* */ }
+    loadStyles();
+    rerender();
+  }, [docRef, saveSnapshot, loadStyles, rerender]);
+
+  const handleDeleteStyle = useCallback((id: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try { doc.deleteStyle(id); } catch { /* */ }
+    loadStyles();
+  }, [docRef, loadStyles]);
+
+  const handleGetStyleDetail = useCallback((id: number): Record<string, unknown> | null => {
+    const doc = docRef.current;
+    if (!doc) return null;
+    try {
+      const rj = doc.getStyleDetail(id);
+      return parseResult(rj);
+    } catch { return null; }
+  }, [docRef]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 9: DOCUMENT STRUCTURE
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleApplySectionDef = useCallback((def: Record<string, unknown>) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try { doc.setSectionDef(0, JSON.stringify(def)); } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  const handleApplyPageHide = useCallback((hide: Record<string, boolean>) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    try {
+      doc.setPageHide(
+        0, 0,
+        !!hide.hideHeader, !!hide.hideFooter, !!hide.hideMasterPage,
+        !!hide.hideBorder, !!hide.hideFill, !!hide.hidePageNumber,
+      );
+    } catch { /* */ }
+    rerender();
+  }, [docRef, saveSnapshot, rerender]);
+
+  const handleRenameBookmark = useCallback((bm: { secIdx: number; paraIdx: number; controlIdx?: number }, newName: string) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try { doc.renameBookmark(bm.secIdx, bm.paraIdx, bm.controlIdx ?? 0, newName); } catch { /* */ }
+    loadBookmarks();
+  }, [docRef, loadBookmarks]);
+
+  const handleApplyColumnDef = useCallback((def: { count: number; type: string; gap: number; widths?: number[]; separatorType: string }) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    saveSnapshot();
+    const colType = def.type === 'equal' ? 0 : 1;
+    const sameWidth = def.type === 'equal' ? 1 : 0;
+    try { doc.setColumnDef(cursorRef.current.secIdx, def.count, colType, sameWidth, def.gap); } catch { /* */ }
+    rerender();
+    st.setColumnDialogOpen(false);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleInsertColumnBreak = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try { doc.insertColumnBreak(pos.secIdx, pos.paraIdx, pos.charOffset); } catch { /* */ }
+    rerender();
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
+
+  const handleRefreshNumberingLists = useCallback(() => {
+    // NumberingDialog manages its own lists
+  }, []);
+
+  const handleCreateNumbering = useCallback((opts: { format: string; startNumber: number }) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try { doc.createNumbering(JSON.stringify(opts)); } catch { /* */ }
+  }, [docRef]);
+
+  const handleApplyNumbering = useCallback((id: number, level: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try {
+      doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify({ numbering: { id, level } }));
+    } catch { /* */ }
+    rerender();
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
+
+  const handleApplyBullet = useCallback((id: number, level: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try {
+      doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify({ bullet: { id, level } }));
+    } catch { /* */ }
+    rerender();
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
+
+  const handleRestartNumbering = useCallback((id: number, startNumber: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    // WASM: setNumberingRestart(section_idx, para_idx, mode, start_num)
+    try { doc.setNumberingRestart(pos.secIdx, pos.paraIdx, id, startNumber); } catch { /* */ }
+    rerender();
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
+
+  const handleRemoveNumbering = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try {
+      doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify({ numbering: null, bullet: null }));
+    } catch { /* */ }
+    rerender();
+  }, [docRef, cursorRef, saveSnapshot, rerender]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 10: EXPORT / EQUATION
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const handleExportSelectionHtml = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const anchor = selAnchorRef.current;
+      const end = cursorRef.current;
+      if (!anchor) return;
+      const html = st.editMode === 'cell' && cellCtxRef.current
+        ? doc.exportSelectionInCellHtml(
+            cellCtxRef.current.secIdx, cellCtxRef.current.parentParaIdx,
+            cellCtxRef.current.controlIdx, cellCtxRef.current.cellIdx,
+            anchor.paraIdx, anchor.charOffset, end.paraIdx, end.charOffset,
+          )
+        : doc.exportSelectionHtml(
+            anchor.secIdx, anchor.paraIdx, anchor.charOffset,
+            end.paraIdx, end.charOffset,
+          );
+      navigator.clipboard.writeText(html).catch(() => { /* */ });
+    } catch { /* */ }
+  }, [docRef, selAnchorRef, cursorRef, st, cellCtxRef]);
+
+  const handleExportVerify = useCallback(() => {
+    const doc = docRef.current;
+    if (!doc) return;
+    try {
+      const rj = doc.exportHwpVerify();
+      const r = parseResult(rj);
+      if (r) {
+        const msg = r.ok
+          ? `\uAC80\uC99D \uC131\uACF5 (${r.pageCount}\uD398\uC774\uC9C0)`
+          : `\uAC80\uC99D \uC2E4\uD328: ${r.message}`;
+        st.setEditorError(msg);
+      }
+    } catch (e) { st.setEditorError(`\uAC80\uC99D \uC624\uB958: ${(e as Error).message}`); }
+  }, [docRef, st]);
+
+  const handleInsertEquation = useCallback((script: string, fontSize: number) => {
+    const doc = docRef.current;
+    if (!doc) return;
+    const pos = cursorRef.current;
+    saveSnapshot();
+    try {
+      // Insert equation as a shape control with equation data
+      doc.createShapeControl(JSON.stringify({
+        sectionIdx: pos.secIdx,
+        paraIdx: pos.paraIdx,
+        charOffset: pos.charOffset,
+        type: 'equation',
+        script,
+        fontSize,
+      }));
+    } catch { /* */ }
+    rerender();
+    st.setEquationDialogOpen(false);
+  }, [docRef, cursorRef, saveSnapshot, rerender, st]);
+
+  const handleRenderEquationPreview = useCallback((script: string): string | null => {
+    const doc = docRef.current;
+    if (!doc) return null;
+    try { return doc.renderEquationPreview(script, 1000, 0); } catch { return null; }
+  }, [docRef]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // RENDER
+  // ═══════════════════════════════════════════════════════════════════════════
 
   return (
     <>
@@ -2125,16 +2576,17 @@ const HwpEditor: React.FC = () => {
       {/* Main editor section */}
       <section className="section hwp-editor-page">
         <div className="container">
-
-          {/* Error banner */}
-          {editorError && (
+          {/* Error banners */}
+          {st.editorError && (
             <div className="hwp-editor-error">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" />
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
               </svg>
-              <span>{editorError}</span>
+              <span>{st.editorError}</span>
               <button
-                onClick={() => setEditorError('')}
+                onClick={() => st.setEditorError('')}
                 style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: '1.1rem' }}
               >
                 &times;
@@ -2142,17 +2594,17 @@ const HwpEditor: React.FC = () => {
             </div>
           )}
 
-          {/* WASM error */}
           {wasmError && !wasmLoading && (
             <div className="hwp-editor-error">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" />
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
               </svg>
               <span>{t('site.hwpEditor.wasmError')}: {wasmError}</span>
             </div>
           )}
 
-          {/* WASM loading */}
           {wasmLoading && (
             <div className="hwp-editor-loading">
               <div className="loading-spinner" />
@@ -2160,10 +2612,10 @@ const HwpEditor: React.FC = () => {
             </div>
           )}
 
-          {/* Empty / drop zone */}
+          {/* Empty / drop zone (when no document loaded) */}
           {ready && !hasDoc && !wasmLoading && (
             <div
-              className={`hwp-editor-container${isDragging ? ' drag-over' : ''}`}
+              className={`hwp-editor-container${st.isDragging ? ' drag-over' : ''}`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
@@ -2199,751 +2651,440 @@ const HwpEditor: React.FC = () => {
           {/* Editor with document loaded */}
           {hasDoc && (
             <div className="hwp-editor-container">
+              {/* ── TOOLBAR ─────────────────────────────────────────── */}
+              <EditorToolbar
+                t={t}
+                onNewDoc={handleNewDoc}
+                onOpenFile={triggerFileOpen}
+                onExport={handleExport}
+                canUndo={st.canUndo}
+                canRedo={st.canRedo}
+                onUndo={handleUndo}
+                onRedo={handleRedo}
+                fontInput={st.fontInput}
+                sizeInput={st.sizeInput}
+                onApplyFont={applyFont}
+                onApplySize={applySize}
+                charProps={st.charProps}
+                onToggleBold={toggleBold}
+                onToggleItalic={toggleItalic}
+                onToggleUnderline={toggleUnderline}
+                onToggleStrikethrough={toggleStrikethrough}
+                textColorHex={textColorHex}
+                highlightHex={highlightHex}
+                onApplyTextColor={applyTextColor}
+                onApplyHighlight={applyHighlight}
+                paraProps={st.paraProps}
+                onApplyAlignment={applyAlignment}
+                onApplyLineSpacing={applyLineSpacing}
+                onApplyIndentChange={applyIndentChange}
+                onApplyBulletList={applyBulletList}
+                onApplyNumberedList={applyNumberedList}
+                onInsertTable={() => st.setTableDialogOpen((o) => !o)}
+                tableRows={st.tableRows}
+                tableCols={st.tableCols}
+                onSetTableRows={st.setTableRows}
+                onSetTableCols={st.setTableCols}
+                onConfirmInsertTable={handleInsertTable}
+                onInsertImage={handleInsertImage}
+                onPageBreak={handlePageBreak}
+                onInsertShape={handleInsertShape}
+                onInsertFootnote={handleInsertFootnote}
+                onEnterHeader={() => enterHeaderFooterMode(cursorRef.current.secIdx, true)}
+                onEnterFooter={() => enterHeaderFooterMode(cursorRef.current.secIdx, false)}
+                findBarOpen={st.findBarOpen}
+                onToggleFindBar={() => st.setFindBarOpen((o) => !o)}
+                onOpenPageSetup={() => {
+                  loadPageDef();
+                  st.setPageDefOpen(true);
+                }}
+                styleList={st.styleList}
+                onLoadStyles={loadStyles}
+                onApplyStyle={applyStyle}
+                onOpenBookmarks={() => {
+                  loadBookmarks();
+                  st.setBookmarkDialogOpen(true);
+                }}
+                showParaMarks={st.showParaMarks}
+                showControlCodes={st.showControlCodes}
+                showTransparentBorders={st.showTransparentBorders}
+                onToggleParaMarks={toggleParaMarks}
+                onToggleControlCodes={toggleControlCodes}
+                onToggleTransparentBorders={toggleTransparentBorders}
+                fileName={st.fileName}
+                dirty={st.dirty}
+                clipboardHasContent={clipboard.clipboardHasContent}
+                onCopy={clipboard.handleCopy}
+                onCut={clipboard.handleCut}
+                onPaste={clipboard.handlePaste}
+                sidebarOpen={st.sidebarOpen}
+                onToggleSidebar={() => st.setSidebarOpen((o) => !o)}
+                onOpenTableProps={() => st.setTablePropsOpen(true)}
+                onOpenStyleDialog={() => {
+                  loadStyles();
+                  st.setStyleDialogOpen(true);
+                }}
+                onOpenHeaderFooterDialog={() => st.setHeaderFooterDialogOpen(true)}
+                onOpenFieldDialog={() => st.setFieldDialogOpen(true)}
+                onOpenColumnDialog={() => st.setColumnDialogOpen(true)}
+                onOpenNumberingDialog={() => st.setNumberingDialogOpen(true)}
+                onOpenEquationDialog={() => st.setEquationDialogOpen(true)}
+                onOpenFormDialog={() => st.setFormDialogOpen(true)}
+                onExportSelectionHtml={handleExportSelectionHtml}
+                onExportVerify={handleExportVerify}
+              />
 
-              {/* ── TOOLBAR ──────────────────────────────────────────────── */}
-              <div className="hwp-editor-toolbar">
-
-                {/* File group */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.newDoc')} onClick={handleNewDoc}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
-                  </button>
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.openFile')} onClick={triggerFileOpen}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                    </svg>
-                  </button>
-                  {/* Export dropdown */}
-                  <div className="hwp-export-wrapper">
-                    <button
-                      ref={exportBtnRef}
-                      className="hwp-toolbar-btn"
-                      title={t('site.hwpEditor.export')}
-                      onClick={() => setExportOpen((o) => !o)}
-                    >
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                        <polyline points="7 10 12 15 17 10" />
-                        <line x1="12" y1="15" x2="12" y2="3" />
-                      </svg>
-                      <span style={{ fontSize: '10px' }}>&#9662;</span>
-                    </button>
-                    {exportOpen && (
-                      <div ref={exportDropRef} className="hwp-export-dropdown">
-                        <button onClick={() => handleExport('hwp')}>{t('site.hwpEditor.exportHwp')}</button>
-                        <button onClick={() => handleExport('hwpx')}>{t('site.hwpEditor.exportHwpx')}</button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Undo / Redo */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title={`${t('site.hwpEditor.undo')} (Ctrl+Z)`} onClick={handleUndo} disabled={!canUndo}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                    </svg>
-                  </button>
-                  <button className="hwp-toolbar-btn" title={`${t('site.hwpEditor.redo')} (Ctrl+Y)`} onClick={handleRedo} disabled={!canRedo}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="23 4 23 10 17 10" /><path d="M20.49 15a9 9 0 1 1-2.13-9.36L23 10" />
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Font family */}
-                <div className="hwp-toolbar-group">
-                  <div style={{ position: 'relative' }}>
-                    <button
-                      ref={fontBtnRef}
-                      className="hwp-font-btn hwp-toolbar-btn"
-                      title={t('site.hwpEditor.font')}
-                      onClick={() => setFontOpen((o) => !o)}
-                    >
-                      <span style={{ fontFamily: fontInput, maxWidth: 96, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'inline-block' }}>
-                        {fontInput}
-                      </span>
-                      <span style={{ fontSize: '10px', marginLeft: 2 }}>&#9662;</span>
-                    </button>
-                    {fontOpen && (
-                      <div ref={fontDropRef} className="hwp-toolbar-dropdown hwp-font-dropdown">
-                        {KOREAN_FONTS.map((f) => (
-                          <button
-                            key={f}
-                            style={{ fontFamily: f }}
-                            className={fontInput === f ? 'active' : ''}
-                            onClick={() => applyFont(f)}
-                          >
-                            {f}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Font size */}
-                  <div style={{ position: 'relative' }}>
-                    <button
-                      ref={sizeBtnRef}
-                      className="hwp-size-btn hwp-toolbar-btn"
-                      title={t('site.hwpEditor.fontSize')}
-                      onClick={() => setSizeOpen((o) => !o)}
-                    >
-                      <span>{sizeInput}</span>
-                      <span style={{ fontSize: '10px', marginLeft: 2 }}>&#9662;</span>
-                    </button>
-                    {sizeOpen && (
-                      <div ref={sizeDropRef} className="hwp-toolbar-dropdown hwp-size-dropdown">
-                        {FONT_SIZES.map((s) => (
-                          <button
-                            key={s}
-                            className={parseFloat(sizeInput) === s ? 'active' : ''}
-                            onClick={() => applySize(s)}
-                          >
-                            {s}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Text styles */}
-                <div className="hwp-toolbar-group">
-                  <button
-                    className={`hwp-toolbar-btn${charProps.bold ? ' active' : ''}`}
-                    title={`${t('site.hwpEditor.bold')} (Ctrl+B)`}
-                    onClick={toggleBold}
-                    style={{ fontWeight: 'bold' }}
-                  >B</button>
-                  <button
-                    className={`hwp-toolbar-btn${charProps.italic ? ' active' : ''}`}
-                    title={`${t('site.hwpEditor.italic')} (Ctrl+I)`}
-                    onClick={toggleItalic}
-                    style={{ fontStyle: 'italic' }}
-                  >I</button>
-                  <button
-                    className={`hwp-toolbar-btn${charProps.underline ? ' active' : ''}`}
-                    title={`${t('site.hwpEditor.underline')} (Ctrl+U)`}
-                    onClick={toggleUnderline}
-                    style={{ textDecoration: 'underline' }}
-                  >U</button>
-                  <button
-                    className={`hwp-toolbar-btn${charProps.strikethrough ? ' active' : ''}`}
-                    title={t('site.hwpEditor.strikethrough')}
-                    onClick={toggleStrikethrough}
-                    style={{ textDecoration: 'line-through' }}
-                  >S</button>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Text color */}
-                <div className="hwp-toolbar-group">
-                  <div style={{ position: 'relative' }}>
-                    <button
-                      ref={colorBtnRef}
-                      className="hwp-toolbar-btn"
-                      title={t('site.hwpEditor.textColor')}
-                      onClick={() => setColorOpen((o) => !o)}
-                    >
-                      <span style={{ fontWeight: 'bold', color: textColorHex, fontSize: '14px', lineHeight: 1 }}>A</span>
-                      <div className="hwp-color-indicator" style={{ backgroundColor: textColorHex }} />
-                      <span style={{ fontSize: '10px', marginLeft: 1 }}>&#9662;</span>
-                    </button>
-                    {colorOpen && (
-                      <div ref={colorDropRef} style={{ position: 'absolute', zIndex: 1000, top: '100%', left: 0 }}>
-                        {renderColorPicker(textColorHex, customTextColor, setCustomTextColor, applyTextColor)}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Highlight */}
-                  <div style={{ position: 'relative' }}>
-                    <button
-                      ref={hlBtnRef}
-                      className="hwp-toolbar-btn"
-                      title={t('site.hwpEditor.highlight')}
-                      onClick={() => setHighlightOpen((o) => !o)}
-                    >
-                      <span style={{ fontWeight: 'bold', backgroundColor: highlightHex, padding: '0 2px', fontSize: '13px', lineHeight: 1 }}>H</span>
-                      <div className="hwp-color-indicator" style={{ backgroundColor: highlightHex }} />
-                      <span style={{ fontSize: '10px', marginLeft: 1 }}>&#9662;</span>
-                    </button>
-                    {highlightOpen && (
-                      <div ref={hlDropRef} style={{ position: 'absolute', zIndex: 1000, top: '100%', left: 0 }}>
-                        {renderColorPicker(highlightHex, customHighlight, setCustomHighlight, applyHighlight)}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Alignment */}
-                <div className="hwp-toolbar-group">
-                  {(['left', 'center', 'right', 'justify'] as const).map((align) => {
-                    const titleMap: Record<string, string> = {
-                      left: t('site.hwpEditor.alignLeft'),
-                      center: t('site.hwpEditor.alignCenter'),
-                      right: t('site.hwpEditor.alignRight'),
-                      justify: t('site.hwpEditor.alignJustify'),
-                    };
-                    const iconMap: Record<string, React.ReactNode> = {
-                      left: (
-                        <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor">
-                          <rect x="0" y="1" width="16" height="2" rx="1"/>
-                          <rect x="0" y="5" width="11" height="2" rx="1"/>
-                          <rect x="0" y="9" width="16" height="2" rx="1"/>
-                          <rect x="0" y="13" width="9" height="1.5" rx="0.75"/>
-                        </svg>
-                      ),
-                      center: (
-                        <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor">
-                          <rect x="0" y="1" width="16" height="2" rx="1"/>
-                          <rect x="2.5" y="5" width="11" height="2" rx="1"/>
-                          <rect x="0" y="9" width="16" height="2" rx="1"/>
-                          <rect x="3.5" y="13" width="9" height="1.5" rx="0.75"/>
-                        </svg>
-                      ),
-                      right: (
-                        <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor">
-                          <rect x="0" y="1" width="16" height="2" rx="1"/>
-                          <rect x="5" y="5" width="11" height="2" rx="1"/>
-                          <rect x="0" y="9" width="16" height="2" rx="1"/>
-                          <rect x="7" y="13" width="9" height="1.5" rx="0.75"/>
-                        </svg>
-                      ),
-                      justify: (
-                        <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor">
-                          <rect x="0" y="1" width="16" height="2" rx="1"/>
-                          <rect x="0" y="5" width="16" height="2" rx="1"/>
-                          <rect x="0" y="9" width="16" height="2" rx="1"/>
-                          <rect x="0" y="13" width="16" height="1.5" rx="0.75"/>
-                        </svg>
-                      ),
-                    };
-                    return (
-                      <button
-                        key={align}
-                        className={`hwp-toolbar-btn${paraProps.alignment === align ? ' active' : ''}`}
-                        title={titleMap[align]}
-                        onClick={() => applyAlignment(align)}
-                      >
-                        {iconMap[align]}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Line spacing */}
-                <div className="hwp-toolbar-group">
-                  <div style={{ position: 'relative' }}>
-                    <button
-                      ref={spacingBtnRef}
-                      className="hwp-toolbar-btn"
-                      title={t('site.hwpEditor.lineSpacing')}
-                      onClick={() => setSpacingOpen((o) => !o)}
-                    >
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                        <line x1="8" y1="6" x2="21" y2="6" />
-                        <line x1="8" y1="12" x2="21" y2="12" />
-                        <line x1="8" y1="18" x2="21" y2="18" />
-                        <polyline points="3 8 3 3 3 8" />
-                        <polyline points="3 3 1 5 3 3 5 5" />
-                        <polyline points="3 16 3 21 3 16" />
-                        <polyline points="3 21 1 19 3 21 5 19" />
-                      </svg>
-                      <span style={{ fontSize: '10px', marginLeft: 2 }}>&#9662;</span>
-                    </button>
-                    {spacingOpen && (
-                      <div ref={spacingDropRef} className="hwp-toolbar-dropdown hwp-spacing-dropdown">
-                        {LINE_SPACINGS.map((sp) => (
-                          <button
-                            key={sp.value}
-                            className={paraProps.lineSpacing === sp.value ? 'active' : ''}
-                            onClick={() => applyLineSpacing(sp.value)}
-                          >
-                            {sp.label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Indent */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.outdent')} onClick={() => applyIndentChange(-1)}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <line x1="21" y1="10" x2="7" y2="10" /><line x1="21" y1="6" x2="3" y2="6" />
-                      <line x1="21" y1="14" x2="7" y2="14" /><line x1="21" y1="18" x2="3" y2="18" />
-                      <polyline points="11 8 7 10 11 12" />
-                    </svg>
-                  </button>
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.indent')} onClick={() => applyIndentChange(1)}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <line x1="21" y1="10" x2="7" y2="10" /><line x1="21" y1="6" x2="3" y2="6" />
-                      <line x1="21" y1="14" x2="7" y2="14" /><line x1="21" y1="18" x2="3" y2="18" />
-                      <polyline points="3 8 7 10 3 12" />
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Lists */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.bulletList')} onClick={applyBulletList}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <line x1="9" y1="6" x2="20" y2="6" /><line x1="9" y1="12" x2="20" y2="12" /><line x1="9" y1="18" x2="20" y2="18" />
-                      <circle cx="4" cy="6" r="1.5" fill="currentColor" stroke="none" />
-                      <circle cx="4" cy="12" r="1.5" fill="currentColor" stroke="none" />
-                      <circle cx="4" cy="18" r="1.5" fill="currentColor" stroke="none" />
-                    </svg>
-                  </button>
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.numberedList')} onClick={applyNumberedList}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <line x1="10" y1="6" x2="21" y2="6" /><line x1="10" y1="12" x2="21" y2="12" /><line x1="10" y1="18" x2="21" y2="18" />
-                      <text x="1" y="8" fill="currentColor" stroke="none" fontSize="8" fontFamily="sans-serif">1</text>
-                      <text x="1" y="14" fill="currentColor" stroke="none" fontSize="8" fontFamily="sans-serif">2</text>
-                      <text x="1" y="20" fill="currentColor" stroke="none" fontSize="8" fontFamily="sans-serif">3</text>
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Insert */}
-                <div className="hwp-toolbar-group">
-                  {/* Table */}
-                  <div style={{ position: 'relative' }}>
-                    <button
-                      ref={tableBtnRef}
-                      className="hwp-toolbar-btn"
-                      title={t('site.hwpEditor.insertTable')}
-                      onClick={() => setTableDialogOpen((o) => !o)}
-                    >
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                        <line x1="3" y1="9" x2="21" y2="9" /><line x1="3" y1="15" x2="21" y2="15" />
-                        <line x1="9" y1="3" x2="9" y2="21" /><line x1="15" y1="3" x2="15" y2="21" />
-                      </svg>
-                    </button>
-                    {tableDialogOpen && (
-                      <div ref={tableDialogRef} className="hwp-table-dialog">
-                        <div className="hwp-table-dialog-row">
-                          <label>행 (Rows)</label>
-                          <input
-                            type="number" min={1} max={50} value={tableRows}
-                            onChange={(e) => setTableRows(Number(e.target.value))}
-                          />
-                        </div>
-                        <div className="hwp-table-dialog-row">
-                          <label>열 (Cols)</label>
-                          <input
-                            type="number" min={1} max={20} value={tableCols}
-                            onChange={(e) => setTableCols(Number(e.target.value))}
-                          />
-                        </div>
-                        <button className="hwp-toolbar-btn" style={{ width: '100%', justifyContent: 'center' }} onClick={handleInsertTable}>
-                          {t('site.hwpEditor.insertTable')}
-                        </button>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Image */}
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.insertImage')} onClick={handleInsertImage}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg>
-                  </button>
-
-                  {/* Page break */}
-                  <button className="hwp-toolbar-btn" title={t('site.hwpEditor.pageBreak')} onClick={handlePageBreak}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <line x1="3" y1="12" x2="21" y2="12" strokeDasharray="4 2" />
-                      <path d="M9 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Find/Replace toggle */}
-                <div className="hwp-toolbar-group">
-                  <button
-                    className={`hwp-toolbar-btn${findBarOpen ? ' active' : ''}`}
-                    title={`${t('site.hwpEditor.findReplace')} (Ctrl+F)`}
-                    onClick={() => setFindBarOpen((o) => !o)}
-                  >
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Page setup */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title="페이지 설정" onClick={() => { loadPageDef(); setPageDefOpen((o) => !o); }}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="5" y="2" width="14" height="20" rx="1" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="18" x2="16" y2="18" />
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Style dropdown */}
-                <div className="hwp-toolbar-group">
-                  <div style={{ position: 'relative' }}>
-                    <button ref={styleBtnRef} className="hwp-toolbar-btn" title="스타일" onClick={() => { loadStyles(); setStyleOpen((o) => !o); }}>
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M4 7h16M4 12h10M4 17h14" />
-                      </svg>
-                      <span style={{ fontSize: '0.7rem' }}>스타일</span>
-                      <span style={{ fontSize: '10px', marginLeft: 1 }}>&#9662;</span>
-                    </button>
-                    {styleOpen && (
-                      <div ref={styleDropRef} className="hwp-toolbar-dropdown hwp-style-dropdown">
-                        {styleList.length === 0 && <div style={{ padding: 10, fontSize: '0.82rem', color: 'var(--text-secondary)' }}>스타일 없음</div>}
-                        {styleList.map((s) => (
-                          <button key={s.id} onClick={() => applyStyle(s.id)}>{s.name}</button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Header/Footer */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title="머리말" onClick={() => enterHeaderFooterMode(cursorRef.current.secIdx, true)}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="8" y1="6" x2="16" y2="6" />
-                    </svg>
-                  </button>
-                  <button className="hwp-toolbar-btn" title="꼬리말" onClick={() => enterHeaderFooterMode(cursorRef.current.secIdx, false)}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="15" x2="21" y2="15" /><line x1="8" y1="18" x2="16" y2="18" />
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Footnote */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title="각주 삽입" onClick={handleInsertFootnote}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M4 20h16M12 4v12" /><text x="14" y="10" fontSize="8" fill="currentColor" stroke="none" fontWeight="bold">1</text>
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Shape */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title="글상자 삽입" onClick={handleInsertShape}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="3" width="18" height="18" rx="2" /><text x="8" y="16" fontSize="10" fill="currentColor" stroke="none">T</text>
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Bookmark */}
-                <div className="hwp-toolbar-group">
-                  <button className="hwp-toolbar-btn" title="북마크" onClick={() => { loadBookmarks(); setBookmarkOpen((o) => !o); }}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="hwp-toolbar-divider" />
-
-                {/* Display options */}
-                <div className="hwp-toolbar-group">
-                  <button className={`hwp-toolbar-btn${showParaMarks ? ' active' : ''}`} title="조판부호 표시" onClick={toggleParaMarks}>
-                    <span style={{ fontFamily: 'monospace', fontSize: '14px', fontWeight: 'bold' }}>&#182;</span>
-                  </button>
-                  <button className={`hwp-toolbar-btn${showControlCodes ? ' active' : ''}`} title="제어코드 표시" onClick={toggleControlCodes}>
-                    <span style={{ fontFamily: 'monospace', fontSize: '12px', fontWeight: 'bold' }}>&#167;</span>
-                  </button>
-                </div>
-
-                <div className="hwp-toolbar-spacer" />
-
-                {/* Filename indicator */}
-                {fileName && (
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginRight: 8, maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {fileName}{dirty ? ' *' : ''}
-                  </span>
-                )}
-              </div>
-
-              {/* ── FIND/REPLACE BAR ──────────────────────────────────────── */}
-              {findBarOpen && (
-                <div className="hwp-find-bar">
-                  <input
-                    type="text"
-                    placeholder={t('site.hwpEditor.find')}
-                    value={findQuery}
-                    onChange={(e) => { setFindQuery(e.target.value); setFindInfo(''); }}
-                    onKeyDown={(e) => { if (e.key === 'Enter') handleFindNext(); }}
-                    autoFocus
-                  />
-                  <input
-                    type="text"
-                    placeholder={t('site.hwpEditor.replace')}
-                    value={replaceQuery}
-                    onChange={(e) => setReplaceQuery(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === 'Enter') handleReplaceOne(); }}
-                  />
-                  <button className="hwp-toolbar-btn" onClick={handleFindNext}>{t('site.hwpEditor.findNext')}</button>
-                  <button className="hwp-toolbar-btn" onClick={handleReplaceOne}>{t('site.hwpEditor.replaceOne')}</button>
-                  <button className="hwp-toolbar-btn" onClick={handleReplaceAll}>{t('site.hwpEditor.replaceAllBtn')}</button>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '13px', whiteSpace: 'nowrap' }}>
-                    <input
-                      type="checkbox"
-                      checked={caseSensitive}
-                      onChange={(e) => setCaseSensitive(e.target.checked)}
-                    />
-                    {t('site.hwpEditor.caseSensitive')}
-                  </label>
-                  {findInfo && <span className="hwp-find-info">{findInfo}</span>}
-                  <button
-                    className="hwp-find-close"
-                    onClick={() => { setFindBarOpen(false); setFindInfo(''); }}
-                  >&#10005;</button>
-                </div>
+              {/* ── FIND/REPLACE BAR ────────────────────────────────── */}
+              {st.findBarOpen && (
+                <FindReplaceBar
+                  t={t}
+                  findQuery={st.findQuery}
+                  replaceQuery={st.replaceQuery}
+                  caseSensitive={st.caseSensitive}
+                  findInfo={st.findInfo}
+                  onFindQueryChange={(val) => {
+                    st.setFindQuery(val);
+                    st.setFindInfo('');
+                  }}
+                  onReplaceQueryChange={st.setReplaceQuery}
+                  onCaseSensitiveChange={st.setCaseSensitive}
+                  onFindNext={handleFindNext}
+                  onReplaceOne={handleReplaceOne}
+                  onReplaceAll={handleReplaceAll}
+                  onClose={() => {
+                    st.setFindBarOpen(false);
+                    st.setFindInfo('');
+                  }}
+                />
               )}
 
-              {/* ── EDIT MODE INDICATOR ───────────────────────────────────── */}
-              {editMode !== 'body' && (
+              {/* ── EDIT MODE INDICATOR ──────────────────────────────── */}
+              {st.editMode !== 'body' && (
                 <div className="hwp-edit-mode-bar">
                   <span>
-                    {editMode === 'cell' ? '표 셀 편집' : editMode === 'header' ? '머리말 편집' : editMode === 'footer' ? '꼬리말 편집' : '각주 편집'}
+                    {st.editMode === 'cell'
+                      ? '\uD45C \uC140 \uD3B8\uC9D1'
+                      : st.editMode === 'header'
+                        ? '\uBA38\uB9AC\uB9D0 \uD3B8\uC9D1'
+                        : st.editMode === 'footer'
+                          ? '\uAF2C\uB9AC\uB9D0 \uD3B8\uC9D1'
+                          : '\uAC01\uC8FC \uD3B8\uC9D1'}
                   </span>
-                  <button onClick={() => { setEditMode('body'); cellCtxRef.current = null; hfCtxRef.current = null; fnCtxRef.current = null; }}>
-                    ESC 나가기
+                  <button
+                    onClick={() => {
+                      st.setEditMode('body');
+                      cellCtxRef.current = null;
+                      hfCtxRef.current = null;
+                      fnCtxRef.current = null;
+                    }}
+                  >
+                    ESC \uB098\uAC00\uAE30
                   </button>
                 </div>
               )}
 
-              {/* ── CANVAS AREA ───────────────────────────────────────────── */}
-              <div
-                className="hwp-canvas-wrapper"
-                onClick={() => hiddenInputRef.current?.focus()}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-              >
-                {Array.from({ length: pageCount }, (_, pageIdx) => (
-                  <div
-                    key={pageIdx}
-                    ref={(el) => { canvasRefs.current[pageIdx] = el; }}
-                    className="hwp-canvas"
-                    style={{
-                      transform: `scale(${zoom / 100})`,
-                      transformOrigin: 'top center',
-                    }}
-                    onMouseDown={(e) => handleCanvasMouseDown(e, pageIdx)}
-                    onMouseMove={(e) => handleCanvasMouseMove(e, pageIdx)}
-                    onMouseUp={(e) => handleCanvasMouseUp(e, pageIdx)}
-                    onContextMenu={(e) => handleContextMenu(e, pageIdx)}
-                    onDoubleClick={(e) => {
-                      const doc = docRef.current;
-                      if (!doc || editMode !== 'body') return;
-                      const canvas = pageCanvasRefs.current[pageIdx];
-                      if (!canvas) return;
-                      const scale = renderScaleRef.current;
-                      const rect = canvas.getBoundingClientRect();
-                      const px = ((e.clientX - rect.left) / rect.width) * canvas.width / scale;
-                      const py = ((e.clientY - rect.top) / rect.height) * canvas.height / scale;
-
-                      // Check header/footer hit
-                      try {
-                        const hfResult = parseResult(doc.hitTestHeaderFooter(pageIdx, px, py));
-                        if (hfResult?.hit) {
-                          enterHeaderFooterMode(
-                            (hfResult.sectionIndex as number) ?? 0,
-                            !!hfResult.isHeader
-                          );
-                          return;
-                        }
-                      } catch { /* ignore */ }
-
-                      // Body double-click → word selection (manual boundary scan)
-                      const pos = cursorRef.current;
-                      if (pos) {
-                        try {
-                          const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
-                          if (pLen > 0) {
-                            // Read surrounding text to find word boundaries
-                            const textJson = doc.getTextRange(pos.secIdx, pos.paraIdx, 0, pLen);
-                            const textResult = parseResult(textJson);
-                            const text = (textResult?.text as string) ?? '';
-                            if (text) {
-                              const off = Math.min(pos.charOffset, text.length);
-                              const isWordChar = (c: string) => /[\w\u3131-\uD79D]/.test(c);
-                              let wStart = off;
-                              let wEnd = off;
-                              while (wStart > 0 && isWordChar(text[wStart - 1])) wStart--;
-                              while (wEnd < text.length && isWordChar(text[wEnd])) wEnd++;
-                              if (wStart < wEnd) {
-                                const startPos = { ...pos, charOffset: wStart };
-                                const endPos = { ...pos, charOffset: wEnd };
-                                selAnchorRef.current = startPos;
-                                setCursor(endPos);
-                                updateSelectionRects(startPos, endPos);
-                                setHasSelection(true);
-                                updateCursorDisplay(endPos);
-                              }
-                            }
-                          }
-                        } catch { /* ignore */ }
-                      }
-                    }}
-                  >
-                    {/* Content canvas — rendered by WASM via renderPageToCanvas */}
-                    <canvas
-                      ref={(el) => { pageCanvasRefs.current[pageIdx] = el; }}
-                      className="hwp-page-canvas"
-                    />
-                    {/* Overlay canvas — cursor & selection drawn via 2D context */}
-                    <canvas
-                      ref={(el) => { overlayCanvasRefs.current[pageIdx] = el; }}
-                      className="hwp-overlay-canvas"
-                    />
-                  </div>
-                ))}
+              {/* ── MAIN LAYOUT ─────────────────────────────────────── */}
+              <div className="hwp-editor-main-layout">
+                <div className="hwp-editor-main-content">
+                  <EditorCanvas
+                    pageCount={st.pageCount}
+                    currentPage={st.currentPage}
+                    zoom={st.zoom}
+                    renderVer={st.renderVer}
+                    pageCanvasRefs={pageCanvasRefs}
+                    overlayCanvasRefs={overlayCanvasRefs}
+                    canvasRefs={st.canvasRefs}
+                    cursorRect={st.cursorRect}
+                    cursorVisible={st.cursorVisible}
+                    selRects={st.selRects}
+                    renderScaleRef={renderScaleRef}
+                    onCanvasMouseDown={handleCanvasMouseDown}
+                    onCanvasMouseMove={handleCanvasMouseMove}
+                    onCanvasMouseUp={handleCanvasMouseUp}
+                    onContextMenu={handleContextMenu}
+                    onDoubleClick={handleDoubleClick}
+                    isDragging={st.isDragging}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onFocusInput={() => st.hiddenInputRef.current?.focus()}
+                  />
+                </div>
+                <EditorSidebar
+                  isOpen={st.sidebarOpen}
+                  onClose={() => st.setSidebarOpen(false)}
+                  t={t}
+                  editMode={st.editMode}
+                  cursor={st.cursor}
+                  charProps={st.charProps}
+                  paraProps={st.paraProps}
+                  currentPage={st.currentPage}
+                  pageCount={st.pageCount}
+                  currentStyleName=""
+                  styleList={st.styleList}
+                  onApplyStyle={applyStyle}
+                  cellProps={null}
+                  onUpdateCellProps={handleUpdateSidebarCellProps}
+                  documentInfo={null}
+                  fieldInfo={null}
+                />
               </div>
 
-              {/* ── CONTEXT MENU ──────────────────────────────────────────── */}
-              {contextMenu && (
-                <div
-                  ref={contextMenuRef}
-                  className="hwp-context-menu"
-                  style={{ position: 'fixed', left: contextMenu.x, top: contextMenu.y, zIndex: 9999 }}
-                >
-                  {contextMenu.type === 'table' && contextMenu.tableInfo ? (
-                    <>
-                      <button onClick={() => { if (contextMenu.tableInfo) enterCellMode(contextMenu.tableInfo.secIdx, contextMenu.tableInfo.paraIdx, contextMenu.tableInfo.controlIdx, contextMenu.tableInfo.cellIdx); closeContextMenu(); }}>셀 편집</button>
-                      <div className="hwp-ctx-divider" />
-                      <button onClick={() => handleInsertTableRow(false)}>위에 행 삽입</button>
-                      <button onClick={() => handleInsertTableRow(true)}>아래에 행 삽입</button>
-                      <button onClick={() => handleDeleteTableRow()}>행 삭제</button>
-                      <div className="hwp-ctx-divider" />
-                      <button onClick={() => handleInsertTableColumn(false)}>왼쪽에 열 삽입</button>
-                      <button onClick={() => handleInsertTableColumn(true)}>오른쪽에 열 삽입</button>
-                      <button onClick={() => handleDeleteTableColumn()}>열 삭제</button>
-                      <div className="hwp-ctx-divider" />
-                      <button onClick={() => handleMergeTableCells()}>셀 병합</button>
-                      <button onClick={() => handleSplitTableCell()}>셀 분할</button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => { handleUndo(); closeContextMenu(); }}>실행 취소</button>
-                      <button onClick={() => { handleRedo(); closeContextMenu(); }}>다시 실행</button>
-                      <div className="hwp-ctx-divider" />
-                      <button onClick={() => { handleHtmlPaste(); closeContextMenu(); }}>붙여넣기</button>
-                    </>
-                  )}
-                </div>
+              {/* ── CONTEXT MENU ────────────────────────────────────── */}
+              {st.contextMenu && (
+                <ContextMenu
+                  menu={st.contextMenu}
+                  onClose={() => st.setContextMenu(null)}
+                  onUndo={() => {
+                    handleUndo();
+                    st.setContextMenu(null);
+                  }}
+                  onRedo={() => {
+                    handleRedo();
+                    st.setContextMenu(null);
+                  }}
+                  onCopy={() => {
+                    clipboard.handleCopy();
+                    st.setContextMenu(null);
+                  }}
+                  onCut={() => {
+                    clipboard.handleCut();
+                    st.setContextMenu(null);
+                  }}
+                  onPaste={() => {
+                    clipboard.handlePasteHtml();
+                    st.setContextMenu(null);
+                  }}
+                  onEnterCell={() => {
+                    if (st.contextMenu?.tableInfo) {
+                      const ti = st.contextMenu.tableInfo;
+                      enterCellMode(ti.secIdx, ti.paraIdx, ti.controlIdx, ti.cellIdx);
+                    }
+                    st.setContextMenu(null);
+                  }}
+                  onInsertRowBefore={() => handleInsertTableRow(false)}
+                  onInsertRowAfter={() => handleInsertTableRow(true)}
+                  onDeleteRow={handleDeleteTableRow}
+                  onInsertColBefore={() => handleInsertTableColumn(false)}
+                  onInsertColAfter={() => handleInsertTableColumn(true)}
+                  onDeleteCol={handleDeleteTableColumn}
+                  onMergeCells={handleMergeTableCells}
+                  onSplitCell={handleSplitTableCell}
+                  onTableProps={() => {
+                    st.setTablePropsOpen(true);
+                    st.setContextMenu(null);
+                  }}
+                  onTableFormula={handleTableFormula}
+                  onDeleteTable={handleDeleteTable}
+                  onShapeProps={() => {
+                    st.setShapeDialogOpen(true);
+                    st.setContextMenu(null);
+                  }}
+                  onDeleteShape={handleDeleteShape}
+                  onPictureProps={() => {
+                    st.setPicturePropsOpen(true);
+                    st.setContextMenu(null);
+                  }}
+                  onDeletePicture={handleDeletePicture}
+                  onDownloadImage={handleDownloadImage}
+                  onZOrderFront={handleZOrderFront}
+                  onZOrderBack={handleZOrderBack}
+                  onZOrderForward={handleZOrderForward}
+                  onZOrderBackward={handleZOrderBackward}
+                  onGroupShapes={handleGroupShapes}
+                  onUngroupShape={handleUngroupShape}
+                  onFieldProps={() => {
+                    st.setFieldDialogOpen(true);
+                    st.setContextMenu(null);
+                  }}
+                  onRemoveField={handleRemoveFieldCtxMenu}
+                  onFindNextControl={navigation.findNextControl}
+                  onFindPrevControl={navigation.findPrevControl}
+                />
               )}
 
-              {/* ── PAGE SETUP DIALOG ─────────────────────────────────── */}
-              {pageDefOpen && (
-                <div className="hwp-dialog-overlay" onClick={() => setPageDefOpen(false)}>
-                  <div className="hwp-dialog" onClick={(e) => e.stopPropagation()}>
-                    <h3>페이지 설정</h3>
-                    <div className="hwp-dialog-grid">
-                      <label>용지 폭 (HWPUNIT)</label>
-                      <input type="number" value={pageDef.width} onChange={(e) => setPageDef((p) => ({ ...p, width: Number(e.target.value) }))} />
-                      <label>용지 높이 (HWPUNIT)</label>
-                      <input type="number" value={pageDef.height} onChange={(e) => setPageDef((p) => ({ ...p, height: Number(e.target.value) }))} />
-                      <label>위 여백</label>
-                      <input type="number" value={pageDef.marginTop} onChange={(e) => setPageDef((p) => ({ ...p, marginTop: Number(e.target.value) }))} />
-                      <label>아래 여백</label>
-                      <input type="number" value={pageDef.marginBottom} onChange={(e) => setPageDef((p) => ({ ...p, marginBottom: Number(e.target.value) }))} />
-                      <label>왼쪽 여백</label>
-                      <input type="number" value={pageDef.marginLeft} onChange={(e) => setPageDef((p) => ({ ...p, marginLeft: Number(e.target.value) }))} />
-                      <label>오른쪽 여백</label>
-                      <input type="number" value={pageDef.marginRight} onChange={(e) => setPageDef((p) => ({ ...p, marginRight: Number(e.target.value) }))} />
-                      <label>가로 방향</label>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                        <input type="checkbox" checked={pageDef.landscape} onChange={(e) => setPageDef((p) => ({ ...p, landscape: e.target.checked }))} />
-                        가로
-                      </label>
-                    </div>
-                    <div className="hwp-dialog-actions">
-                      <button onClick={() => setPageDefOpen(false)}>취소</button>
-                      <button className="primary" onClick={applyPageDef}>적용</button>
-                    </div>
-                  </div>
-                </div>
+              {/* ── DIALOGS ─────────────────────────────────────────── */}
+              {st.pageDefOpen && (
+                <PageSetupDialog
+                  onClose={() => st.setPageDefOpen(false)}
+                  pageDef={st.pageDef}
+                  onApply={applyPageDef}
+                  sectionDef={null}
+                  onApplySectionDef={handleApplySectionDef}
+                  pageHide={null}
+                  onApplyPageHide={handleApplyPageHide}
+                />
               )}
 
-              {/* ── BOOKMARK DIALOG ───────────────────────────────────── */}
-              {bookmarkOpen && (
-                <div className="hwp-dialog-overlay" onClick={() => setBookmarkOpen(false)}>
-                  <div className="hwp-dialog" onClick={(e) => e.stopPropagation()}>
-                    <h3>북마크</h3>
-                    <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
-                      <input
-                        type="text"
-                        placeholder="북마크 이름"
-                        value={bookmarkName}
-                        onChange={(e) => setBookmarkName(e.target.value)}
-                        onKeyDown={(e) => { if (e.key === 'Enter') handleAddBookmark(); }}
-                        style={{ flex: 1, padding: '6px 10px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '0.85rem' }}
-                      />
-                      <button className="hwp-toolbar-btn" style={{ minWidth: 60 }} onClick={handleAddBookmark}>추가</button>
-                    </div>
-                    <div style={{ maxHeight: 200, overflowY: 'auto' }}>
-                      {bookmarkList.length === 0 && <div style={{ padding: 10, fontSize: '0.82rem', color: 'var(--text-secondary)' }}>북마크 없음</div>}
-                      {bookmarkList.map((bm) => (
-                        <div key={bm.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid var(--border-color)' }}>
-                          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary)', fontSize: '0.85rem' }} onClick={() => handleGotoBookmark(bm)}>{bm.name}</button>
-                          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#dc2626', fontSize: '0.8rem' }} onClick={() => handleDeleteBookmark(bm)}>삭제</button>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="hwp-dialog-actions">
-                      <button onClick={() => setBookmarkOpen(false)}>닫기</button>
-                    </div>
-                  </div>
-                </div>
+              {st.bookmarkDialogOpen && (
+                <BookmarkDialog
+                  onClose={() => st.setBookmarkDialogOpen(false)}
+                  bookmarkList={st.bookmarkList}
+                  onRefresh={loadBookmarks}
+                  onAdd={handleAddBookmark}
+                  onDelete={handleDeleteBookmark}
+                  onRename={handleRenameBookmark}
+                  onGoto={handleGotoBookmark}
+                />
               )}
 
-              {/* Hidden textarea for IME-safe keyboard input */}
+              {st.tablePropsOpen && (
+                <TablePropsDialog
+                  t={t}
+                  onClose={() => st.setTablePropsOpen(false)}
+                  tableProps={loadTableProps() as any}
+                  onApply={handleApplyTableProps}
+                />
+              )}
+
+              {st.cellPropsOpen && (
+                <CellPropsDialog
+                  t={t}
+                  onClose={() => st.setCellPropsOpen(false)}
+                  cellProps={loadCellProps() as any}
+                  onApply={handleApplyCellProps}
+                />
+              )}
+
+              {st.shapeDialogOpen && (
+                <ShapeDialog
+                  mode="insert"
+                  onClose={() => st.setShapeDialogOpen(false)}
+                  onInsert={(opts) => {
+                    const doc = docRef.current;
+                    if (!doc) return;
+                    const pos = cursorRef.current;
+                    saveSnapshot();
+                    try {
+                      doc.createShapeControl(
+                        JSON.stringify({
+                          sectionIdx: pos.secIdx,
+                          paraIdx: pos.paraIdx,
+                          charOffset: pos.charOffset,
+                          ...opts,
+                        }),
+                      );
+                    } catch {
+                      /* ignore */
+                    }
+                    rerender();
+                    st.setShapeDialogOpen(false);
+                  }}
+                  onApply={handleApplyShapeProps}
+                />
+              )}
+
+              {st.picturePropsOpen && (
+                <PicturePropsDialog
+                  onClose={() => st.setPicturePropsOpen(false)}
+                  pictureProps={null}
+                  onApply={handleApplyPictureProps}
+                  onDownloadImage={handleDownloadImage}
+                />
+              )}
+
+              {st.styleDialogOpen && (
+                <StyleDialog
+                  onClose={() => st.setStyleDialogOpen(false)}
+                  styleList={st.styleList}
+                  onCreateStyle={handleCreateStyle}
+                  onUpdateStyle={handleUpdateStyle}
+                  onDeleteStyle={handleDeleteStyle}
+                  onGetStyleDetail={handleGetStyleDetail}
+                  onApplyStyle={applyStyle}
+                />
+              )}
+
+              {st.headerFooterDialogOpen && (
+                <HeaderFooterDialog
+                  onClose={() => st.setHeaderFooterDialogOpen(false)}
+                  headerFooterList={[]}
+                  onRefreshList={handleRefreshHfList}
+                  onCreateHeaderFooter={(secIdx, isHeader) => enterHeaderFooterMode(secIdx, isHeader)}
+                  onDeleteHeaderFooter={handleDeleteHf}
+                  onToggleHide={handleToggleHideHf}
+                  onNavigateByPage={handleNavigateHfByPage}
+                  onApplyTemplate={handleApplyHfTemplate}
+                  onInsertField={handleInsertFieldInHf}
+                  onEnterEditMode={(secIdx, isHeader) => enterHeaderFooterMode(secIdx, isHeader)}
+                  sectionCount={1}
+                  currentPage={st.currentPage}
+                  pageCount={st.pageCount}
+                />
+              )}
+
+              {st.fieldDialogOpen && (
+                <FieldDialog
+                  onClose={() => st.setFieldDialogOpen(false)}
+                  fieldList={[]}
+                  onRefreshFieldList={handleRefreshFieldList}
+                  onGetFieldValue={handleGetFieldValue}
+                  onSetFieldValue={handleSetFieldValue}
+                  onSetActiveField={handleSetActiveField}
+                  onClearActiveField={handleClearActiveField}
+                  onRemoveField={handleRemoveFieldDialog}
+                  clickHereProps={null}
+                  onUpdateClickHere={handleUpdateClickHere}
+                  onGotoField={handleGotoField}
+                />
+              )}
+
+              {st.columnDialogOpen && (
+                <ColumnDialog
+                  onClose={() => st.setColumnDialogOpen(false)}
+                  currentDef={null}
+                  onApply={handleApplyColumnDef}
+                  onInsertBreak={handleInsertColumnBreak}
+                />
+              )}
+
+              {st.formDialogOpen && (
+                <FormDialog
+                  onClose={() => st.setFormDialogOpen(false)}
+                  formObjects={[]}
+                  onRefresh={handleRefreshForms}
+                  onSetValue={handleSetFormValue}
+                  onSetValueInCell={handleSetFormValueInCell}
+                  editMode={st.editMode}
+                />
+              )}
+
+              {st.numberingDialogOpen && (
+                <NumberingDialog
+                  onClose={() => st.setNumberingDialogOpen(false)}
+                  numberingList={[]}
+                  bulletList={[]}
+                  onRefreshLists={handleRefreshNumberingLists}
+                  onCreateNumbering={handleCreateNumbering}
+                  onApplyNumbering={handleApplyNumbering}
+                  onApplyBullet={handleApplyBullet}
+                  onRestartNumbering={handleRestartNumbering}
+                  onRemoveNumbering={handleRemoveNumbering}
+                />
+              )}
+
+              {st.equationDialogOpen && (
+                <EquationDialog
+                  mode="insert"
+                  onClose={() => st.setEquationDialogOpen(false)}
+                  onInsert={handleInsertEquation}
+                  onRenderPreview={handleRenderEquationPreview}
+                />
+              )}
+
+              {/* ── Hidden textarea for IME input ───────────────────── */}
               <textarea
-                ref={hiddenInputRef}
+                ref={st.hiddenInputRef}
                 className="hwp-hidden-input"
                 aria-label="HWP Editor input"
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck={false}
-                onCompositionStart={handleIMECompositionStart}
-                onCompositionEnd={handleIMECompositionEnd}
-                onInput={handleIMEInput}
-                onKeyDown={handleKeyDown}
+                onCompositionStart={keyboard.handleIMECompositionStart}
+                onCompositionEnd={keyboard.handleIMECompositionEnd}
+                onInput={keyboard.handleIMEInput}
+                onKeyDown={keyboard.handleKeyDown}
                 style={{
                   position: 'fixed',
                   left: '-9999px',
@@ -2956,13 +3097,13 @@ const HwpEditor: React.FC = () => {
                 }}
               />
 
-              {/* ── PAGE BAR ─────────────────────────────────────────────── */}
+              {/* ── PAGE BAR ────────────────────────────────────────── */}
               <div className="hwp-page-bar">
                 <div className="hwp-page-nav">
                   <button
                     className="hwp-page-btn"
-                    disabled={currentPage <= 0}
-                    onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
+                    disabled={st.currentPage <= 0}
+                    onClick={() => st.setCurrentPage((p) => Math.max(0, p - 1))}
                   >
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
                       <polyline points="15 18 9 12 15 6" />
@@ -2974,17 +3115,19 @@ const HwpEditor: React.FC = () => {
                     <input
                       className="hwp-page-input"
                       type="text"
-                      value={pageInputVal}
+                      value={st.pageInputVal}
                       onChange={handlePageInput}
                       onBlur={handlePageInputCommit}
-                      onKeyDown={(e) => { if (e.key === 'Enter') handlePageInputCommit(); }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handlePageInputCommit();
+                      }}
                     />
-                    &nbsp;/ {pageCount}
+                    &nbsp;/ {st.pageCount}
                   </span>
                   <button
                     className="hwp-page-btn"
-                    disabled={currentPage >= pageCount - 1}
-                    onClick={() => setCurrentPage((p) => Math.min(pageCount - 1, p + 1))}
+                    disabled={st.currentPage >= st.pageCount - 1}
+                    onClick={() => st.setCurrentPage((p) => Math.min(st.pageCount - 1, p + 1))}
                   >
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
                       <polyline points="9 18 15 12 9 6" />
@@ -2993,15 +3136,17 @@ const HwpEditor: React.FC = () => {
                 </div>
 
                 <div className="hwp-zoom-controls">
-                  <button className="hwp-zoom-btn" onClick={handleZoomOut} disabled={zoom <= 30}>&#8722;</button>
-                  <span className="hwp-zoom-label">{zoom}%</span>
-                  <button className="hwp-zoom-btn" onClick={handleZoomIn} disabled={zoom >= 200}>&#43;</button>
+                  <button className="hwp-zoom-btn" onClick={handleZoomOut} disabled={st.zoom <= 30}>
+                    &#8722;
+                  </button>
+                  <span className="hwp-zoom-label">{st.zoom}%</span>
+                  <button className="hwp-zoom-btn" onClick={handleZoomIn} disabled={st.zoom >= 200}>
+                    &#43;
+                  </button>
                 </div>
               </div>
-
-            </div> /* .hwp-editor-container */
+            </div>
           )}
-
         </div>
       </section>
     </>

@@ -1,0 +1,483 @@
+/* ============================================
+   HWP Dialog Styles
+   ============================================ */
+
+/* ── Dialog overlay ── */
+.hwp-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.15s ease-out;
+}
+
+/* ── Dialog box ── */
+.hwp-dialog {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: var(--shadow-lg, 0 8px 32px rgba(0,0,0,0.2));
+  padding: 24px;
+  min-width: 400px;
+  max-width: 640px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: dialogIn 0.2s ease-out;
+}
+
+.hwp-dialog h3 {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* ── Dialog form grid ── */
+.hwp-dialog-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px 16px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.hwp-dialog-grid label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.hwp-dialog-grid input[type="number"],
+.hwp-dialog-grid input[type="text"],
+.hwp-dialog-grid select,
+.hwp-dialog-grid textarea {
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hwp-dialog-grid input:focus,
+.hwp-dialog-grid select:focus,
+.hwp-dialog-grid textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+}
+
+.hwp-dialog-grid input[type="checkbox"] {
+  width: auto;
+}
+
+/* ── Dialog actions ── */
+.hwp-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.hwp-dialog-actions button {
+  padding: 8px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-base, all 0.2s);
+}
+
+.hwp-dialog-actions button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hwp-dialog-actions button.primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.hwp-dialog-actions button.primary:hover {
+  opacity: 0.9;
+}
+
+.hwp-dialog-actions button.danger {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+}
+
+/* ── Dialog tabs ── */
+.hwp-dialog-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 16px;
+  gap: 0;
+}
+
+.hwp-dialog-tab {
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.hwp-dialog-tab:hover {
+  color: var(--text-primary);
+}
+
+.hwp-dialog-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* ── Dialog list ── */
+.hwp-dialog-list {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  margin-bottom: 12px;
+}
+
+.hwp-dialog-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 0.85rem;
+}
+
+.hwp-dialog-list-item:last-child {
+  border-bottom: none;
+}
+
+.hwp-dialog-list-item:hover {
+  background: rgba(var(--primary-rgb), 0.04);
+}
+
+.hwp-dialog-list-item.selected {
+  background: rgba(var(--primary-rgb), 0.08);
+  color: var(--primary);
+}
+
+.hwp-dialog-list-item-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.hwp-dialog-list-item-actions button {
+  padding: 2px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.hwp-dialog-list-item-actions button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hwp-dialog-list-item-actions button.danger:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+/* ── Split layout (for style/field dialogs) ── */
+.hwp-dialog-split {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* ── Symbol palette (equation dialog) ── */
+.hwp-symbol-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  margin-bottom: 12px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.hwp-symbol-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  background: var(--bg-primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.1s;
+}
+
+.hwp-symbol-btn:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  border-color: var(--primary);
+}
+
+/* ── Equation preview ── */
+.hwp-equation-preview {
+  min-height: 80px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.hwp-equation-preview svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* ── Column preview ── */
+.hwp-column-preview {
+  display: flex;
+  gap: 4px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  margin-bottom: 12px;
+  min-height: 60px;
+}
+
+.hwp-column-preview-col {
+  flex: 1;
+  background: rgba(var(--primary-rgb), 0.08);
+  border: 1px dashed var(--primary);
+  border-radius: 2px;
+  min-height: 40px;
+}
+
+/* ── Bullet grid ── */
+.hwp-bullet-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.hwp-bullet-item {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.15s;
+  background: var(--bg-primary);
+}
+
+.hwp-bullet-item:hover {
+  border-color: var(--primary);
+  background: rgba(var(--primary-rgb), 0.06);
+}
+
+.hwp-bullet-item.selected {
+  border-color: var(--primary);
+  background: rgba(var(--primary-rgb), 0.12);
+  color: var(--primary);
+}
+
+/* ── Form object styles ── */
+.hwp-form-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hwp-form-badge {
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.hwp-form-badge.checkbox { background: #dbeafe; color: #1d4ed8; }
+.hwp-form-badge.radio { background: #fce7f3; color: #be185d; }
+.hwp-form-badge.combo { background: #d1fae5; color: #065f46; }
+.hwp-form-badge.text { background: #fef3c7; color: #92400e; }
+
+/* ── Sidebar ── */
+.hwp-editor-sidebar {
+  width: 0;
+  overflow: hidden;
+  transition: width 0.25s ease;
+  border-left: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.hwp-editor-sidebar.open {
+  width: 280px;
+}
+
+.hwp-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hwp-sidebar-header h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.hwp-sidebar-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0 4px;
+}
+
+.hwp-sidebar-close:hover {
+  color: var(--text-primary);
+}
+
+.hwp-sidebar-content {
+  padding: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.hwp-sidebar-section {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hwp-sidebar-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hwp-sidebar-section-header:hover {
+  background: rgba(var(--primary-rgb), 0.04);
+}
+
+.hwp-sidebar-section-body {
+  padding: 0 16px 12px;
+}
+
+.hwp-sidebar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 0.8rem;
+}
+
+.hwp-sidebar-row label {
+  color: var(--text-secondary);
+  min-width: 60px;
+}
+
+.hwp-sidebar-row span,
+.hwp-sidebar-row input {
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}
+
+.hwp-sidebar-row input {
+  width: 80px;
+  padding: 3px 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  background: var(--bg-primary);
+}
+
+.hwp-sidebar-color-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialogIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Editor layout with sidebar ── */
+.hwp-editor-main-layout {
+  display: flex;
+}
+
+.hwp-editor-main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Dark mode adjustments ── */
+[data-theme="dark"] .hwp-dialog {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .hwp-equation-preview {
+  background: #1a1a2e;
+}
+
+[data-theme="dark"] .hwp-canvas-wrapper {
+  background: #2a2a3a;
+}
