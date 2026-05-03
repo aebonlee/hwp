@@ -197,6 +197,9 @@ export function useEditorState() {
     setCursorState(pos);
   }, []);
 
+  // ── Pending character format (applied to next typed text) ────────────────
+  const pendingCharFormat = useRef<Record<string, unknown> | null>(null);
+
   // ── Canvas refs (per-page content + overlay) ─────────────────────────────
   const pageCanvasRefs = useRef<Record<number, HTMLCanvasElement | null>>({});
   const overlayCanvasRefs = useRef<Record<number, HTMLCanvasElement | null>>({});
@@ -484,6 +487,9 @@ export function useEditorState() {
     // ── NEW: Display toggles ─────────────────────────────────────────────
     showTransparentBorders, setShowTransparentBorders,
     debugOverlay, setDebugOverlay,
+
+    // ── Pending char format (applied to next typed text) ────────────────
+    pendingCharFormat,
   } as const;
 }
 

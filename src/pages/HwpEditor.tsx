@@ -565,6 +565,21 @@ const HwpEditor: React.FC = () => {
         const rj = doc.insertText(pos.secIdx, pos.paraIdx, pos.charOffset, text);
         const r = parseResult(rj);
         const newOff = (r?.charOffset as number) ?? pos.charOffset + text.length;
+        // Apply pending char format to the newly inserted text
+        const pending = st.pendingCharFormat.current;
+        if (pending) {
+          try {
+            doc.applyCharFormat(
+              pos.secIdx,
+              pos.paraIdx,
+              pos.charOffset,
+              newOff,
+              JSON.stringify(pending),
+            );
+          } catch (e) {
+            console.error('applyCharFormat (pending) failed:', e);
+          }
+        }
         const newPos: CursorPos = { ...pos, charOffset: newOff };
         rerenderCurrentPage();
         moveCursor(newPos);
@@ -572,7 +587,7 @@ const HwpEditor: React.FC = () => {
         console.error('insertText failed:', e);
       }
     },
-    [docRef, cursorRef, selAnchorRef, saveSnapshot, deleteSelection, moveCursor, rerenderCurrentPage],
+    [docRef, cursorRef, selAnchorRef, saveSnapshot, deleteSelection, moveCursor, rerenderCurrentPage, st],
   );
 
   const deleteCharBefore = useCallback(() => {
@@ -672,28 +687,20 @@ const HwpEditor: React.FC = () => {
             doc.applyCharFormat(pos.secIdx, pi, startO, endO, JSON.stringify(props));
           }
           doc.endBatch();
-        } catch {
+        } catch (e) {
+          console.error('applyCharFormat (selection) failed:', e);
           try {
             doc.endBatch();
           } catch {
-            /* ignore */
+            /* endBatch cleanup */
           }
         }
       } else {
-        try {
-          const pLen = doc.getParagraphLength(pos.secIdx, pos.paraIdx);
-          let startO = pos.charOffset;
-          let endO = pos.charOffset + 1;
-          if (pos.charOffset >= pLen && pos.charOffset > 0) {
-            startO = pos.charOffset - 1;
-            endO = pos.charOffset;
-          }
-          if (startO < endO) {
-            doc.applyCharFormat(pos.secIdx, pos.paraIdx, startO, endO, JSON.stringify(props));
-          }
-        } catch {
-          /* ignore */
-        }
+        // No selection → store as pending format for next typed text
+        st.pendingCharFormat.current = {
+          ...(st.pendingCharFormat.current ?? {}),
+          ...props,
+        };
       }
       rerenderCurrentPage();
       updateCharProps(pos);
@@ -709,8 +716,8 @@ const HwpEditor: React.FC = () => {
       saveSnapshot();
       try {
         doc.applyParaFormat(pos.secIdx, pos.paraIdx, JSON.stringify(props));
-      } catch {
-        /* ignore */
+      } catch (e) {
+        console.error('applyParaFormat failed:', e);
       }
       rerender();
       updateCharProps(pos);
@@ -834,7 +841,13 @@ const HwpEditor: React.FC = () => {
         moveCursor({ ...pos, paraIdx: (r.paraIdx as number) ?? pos.paraIdx, charOffset: 0 });
       }
     } catch (e) {
+      console.error('createTable failed:', e);
       st.setEditorError((e as Error).message);
+    }
+    try {
+      doc.reflowLinesegs();
+    } catch (e) {
+      console.error('reflowLinesegs after table failed:', e);
     }
     rerender();
     st.setTableDialogOpen(false);
@@ -866,8 +879,10 @@ const HwpEditor: React.FC = () => {
             doc.insertPicture(pos.secIdx, pos.paraIdx, pos.charOffset, bytes, hwpW, hwpH, natW, natH, ext, file.name);
             moveCursor({ ...pos, charOffset: pos.charOffset + 1 });
           } catch (e2) {
+            console.error('insertPicture failed:', e2);
             st.setEditorError((e2 as Error).message);
           }
+          try { doc.reflowLinesegs(); } catch { /* ok */ }
           rerender();
         };
         img.src = url;
