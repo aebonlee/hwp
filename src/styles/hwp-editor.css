@@ -592,8 +592,9 @@
   padding: 40px;
 }
 
-.hwp-editor-empty svg {
-  color: var(--text-light);
+.hwp-editor-empty > svg {
+  color: var(--primary);
+  opacity: 0.85;
 }
 
 .hwp-editor-empty h3 {
