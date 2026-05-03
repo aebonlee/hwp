@@ -1,8 +1,8 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/parser-C7fhgJDl.js","assets/jszip.min--09lEuHv.js","assets/index-BXpLHUGw.js","assets/index-y1Zlf-dZ.css","assets/types-dbiTllwl.js","assets/parser-RcNDRhfQ.js"])))=>i.map(i=>d[i]);
-import { u as L, b as O, c as P, d as R, r as i, _ as v, j as e, g as V, T as B, __tla as __tla_0 } from "./index-BXpLHUGw.js";
-import { S as I } from "./SEOHead-Ct7xhEkB.js";
-import { g as W } from "./fileUtils-1h3TEy09.js";
-let Q;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/parser-CHySdAvK.js","assets/jszip.min-BcJBHukL.js","assets/index-Cmm8s4WM.js","assets/index-CIugAJbD.css","assets/types-dbiTllwl.js","assets/parser-RcNDRhfQ.js"])))=>i.map(i=>d[i]);
+import { u as z, b as K, c as G, d as J, e as Q, r as n, _ as N, j as e, g as L, T as $, __tla as __tla_0 } from "./index-Cmm8s4WM.js";
+import { S as U } from "./SEOHead-4YFiXqf9.js";
+import { g as X } from "./fileUtils-1h3TEy09.js";
+let ae;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -10,101 +10,142 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    function z(s) {
-        const h = /\{\{([^}]+)\}\}/g, o = new Set;
-        let x;
-        for(; (x = h.exec(s)) !== null;)o.add(x[1].trim());
-        return Array.from(o).map((r)=>({
-                key: r,
-                label: r,
-                type: r.length > 20 ? "textarea" : "text",
+    function Y(s) {
+        const k = /\{\{([^}]+)\}\}/g, r = new Set;
+        let l;
+        for(; (l = k.exec(s)) !== null;)r.add(l[1].trim());
+        return Array.from(r).map((h)=>({
+                key: h,
+                label: h,
+                type: h.length > 20 ? "textarea" : "text",
                 placeholder: ""
             }));
     }
-    Q = ()=>{
-        const { t: s } = L(), { user: h } = O(), { showToast: o } = P(), x = R(), [r, m] = i.useState(1), [p, _] = i.useState(""), [b, E] = i.useState(""), [n, j] = i.useState(""), [S, g] = i.useState(!1), [$, C] = i.useState(!1), [D, f] = i.useState(!1), c = i.useMemo(()=>z(n), [
-            n
-        ]), [u, w] = i.useState({}), F = i.useMemo(()=>{
-            let t = n;
-            for (const a of c){
-                const l = u[a.key] || `{{${a.key}}}`;
-                t = t.replace(new RegExp(`\\{\\{${a.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g"), l);
+    ae = ()=>{
+        const { t: s, language: k } = z(), { user: r } = K(), { showToast: l } = G(), h = J(), [O] = Q(), d = k === "ko", x = O.get("edit"), p = !!x, [v, g] = n.useState(p ? 2 : 1), [m, _] = n.useState(""), [S, F] = n.useState(""), [c, j] = n.useState(""), [H, w] = n.useState(!1), [A, M] = n.useState(!1), [I, C] = n.useState(!1), [R, E] = n.useState(!1);
+        n.useEffect(()=>{
+            if (!x || !r) return;
+            E(!0), (async ()=>{
+                const a = L();
+                if (!a) {
+                    E(!1);
+                    return;
+                }
+                const { data: i, error: f } = await a.from($.templates).select("*").eq("id", x).eq("user_id", r.id).single();
+                !f && i && (_(i.title || ""), F(i.description || ""), j(i.content || ""), g(2)), E(!1);
+            })();
+        }, [
+            x,
+            r
+        ]);
+        const o = n.useMemo(()=>Y(c), [
+            c
+        ]), [y, b] = n.useState({}), V = n.useMemo(()=>{
+            let t = c;
+            for (const a of o){
+                const i = y[a.key] || `{{${a.key}}}`;
+                t = t.replace(new RegExp(`\\{\\{${a.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g"), i);
             }
             return t;
         }, [
-            n,
             c,
-            u
-        ]), T = i.useCallback(async (t)=>{
-            const a = W(t.name);
+            o,
+            y
+        ]), P = n.useCallback(async (t)=>{
+            const a = X(t.name);
             if (!(a !== "hwp" && a !== "hwpx")) {
-                C(!0);
+                M(!0);
                 try {
                     if (a === "hwpx") {
-                        const { parseHwpx: l } = await v(async ()=>{
-                            const { parseHwpx: d } = await import("./parser-C7fhgJDl.js");
+                        const { parseHwpx: i } = await N(async ()=>{
+                            const { parseHwpx: u } = await import("./parser-CHySdAvK.js");
                             return {
-                                parseHwpx: d
+                                parseHwpx: u
                             };
-                        }, __vite__mapDeps([0,1,2,3,4])), y = await t.arrayBuffer(), N = await l(y), { irToMarkdown: k } = await v(async ()=>{
-                            const { irToMarkdown: d } = await import("./toMarkdown-CeTF6k-c.js");
+                        }, __vite__mapDeps([0,1,2,3,4])), f = await t.arrayBuffer(), T = await i(f), { irToMarkdown: D } = await N(async ()=>{
+                            const { irToMarkdown: u } = await import("./toMarkdown-CeTF6k-c.js");
                             return {
-                                irToMarkdown: d
+                                irToMarkdown: u
                             };
                         }, []);
-                        j(k(N));
+                        j(D(T));
                     } else {
-                        const { parseHwp: l } = await v(async ()=>{
-                            const { parseHwp: d } = await import("./parser-RcNDRhfQ.js");
+                        const { parseHwp: i } = await N(async ()=>{
+                            const { parseHwp: u } = await import("./parser-RcNDRhfQ.js");
                             return {
-                                parseHwp: d
+                                parseHwp: u
                             };
-                        }, __vite__mapDeps([5,4])), y = await t.arrayBuffer(), N = await l(y), { irToMarkdown: k } = await v(async ()=>{
-                            const { irToMarkdown: d } = await import("./toMarkdown-CeTF6k-c.js");
+                        }, __vite__mapDeps([5,4])), f = await t.arrayBuffer(), T = await i(f), { irToMarkdown: D } = await N(async ()=>{
+                            const { irToMarkdown: u } = await import("./toMarkdown-CeTF6k-c.js");
                             return {
-                                irToMarkdown: d
+                                irToMarkdown: u
                             };
                         }, []);
-                        j(k(N));
+                        j(D(T));
                     }
-                    p || _(t.name.replace(/\.(hwp|hwpx)$/i, "")), m(2);
-                } catch (l) {
-                    console.error("Parse error:", l), o(l.message || "변환 중 오류가 발생했습니다.", "error");
+                    m || _(t.name.replace(/\.(hwp|hwpx)$/i, "")), g(2);
+                } catch (i) {
+                    console.error("Parse error:", i), l(i.message || (d ? "변환 중 오류가 발생했습니다" : "Conversion error"), "error");
                 } finally{
-                    C(!1);
+                    M(!1);
                 }
             }
         }, [
-            p,
-            o
-        ]), H = (t)=>{
-            t.preventDefault(), f(!1), t.dataTransfer.files.length > 0 && T(t.dataTransfer.files[0]);
-        }, M = ()=>{
+            m,
+            l,
+            d
+        ]), B = (t)=>{
+            t.preventDefault(), C(!1), t.dataTransfer.files.length > 0 && P(t.dataTransfer.files[0]);
+        }, W = ()=>{
             const t = document.createElement("input");
             t.type = "file", t.accept = ".hwp,.hwpx", t.onchange = ()=>{
-                t.files && t.files.length > 0 && T(t.files[0]);
+                t.files && t.files.length > 0 && P(t.files[0]);
             }, t.click();
-        }, A = async ()=>{
-            if (!p.trim() || !n.trim() || !h) return;
-            g(!0);
-            const t = V();
+        }, q = async ()=>{
+            if (!m.trim() || !c.trim() || !r) return;
+            w(!0);
+            const t = L();
             if (!t) {
-                g(!1);
+                w(!1);
                 return;
             }
-            const { error: a } = await t.from(B.templates).insert({
-                user_id: h.id,
-                title: p.trim(),
-                description: b.trim(),
-                content: n,
-                fields: c
-            });
-            g(!1), a ? o(a.message, "error") : (o(s("site.templates.saved"), "success"), x("/templates"));
+            if (p && x) {
+                const { error: a } = await t.from($.templates).update({
+                    title: m.trim(),
+                    description: S.trim(),
+                    content: c,
+                    fields: o,
+                    updated_at: new Date().toISOString()
+                }).eq("id", x).eq("user_id", r.id);
+                w(!1), a ? l(a.message, "error") : (l(d ? "템플릿이 수정되었습니다" : "Template updated", "success"), h("/templates"));
+            } else {
+                const { error: a } = await t.from($.templates).insert({
+                    user_id: r.id,
+                    title: m.trim(),
+                    description: S.trim(),
+                    content: c,
+                    fields: o
+                });
+                w(!1), a ? l(a.message, "error") : (l(s("site.templates.saved"), "success"), h("/templates"));
+            }
         };
-        return e.jsxs(e.Fragment, {
+        return R ? e.jsx("section", {
+            className: "section",
+            children: e.jsx("div", {
+                className: "container",
+                style: {
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "80px 0"
+                },
+                children: e.jsx("div", {
+                    className: "loading-spinner"
+                })
+            })
+        }) : e.jsxs(e.Fragment, {
             children: [
-                e.jsx(I, {
-                    title: s("site.templates.create"),
+                e.jsx(U, {
+                    title: p ? d ? "템플릿 편집" : "Edit Template" : s("site.templates.create"),
                     path: "/templates/new"
                 }),
                 e.jsx("section", {
@@ -113,7 +154,7 @@ let __tla = Promise.all([
                         className: "container",
                         children: [
                             e.jsx("h2", {
-                                children: s("site.templates.create")
+                                children: p ? d ? "템플릿 편집" : "Edit Template" : s("site.templates.create")
                             }),
                             e.jsx("p", {
                                 children: s("site.templates.subtitle")
@@ -133,17 +174,17 @@ let __tla = Promise.all([
                                     2,
                                     3
                                 ].map((t)=>e.jsxs("div", {
-                                        className: `template-step ${r === t ? "active" : ""} ${r > t ? "completed" : ""}`,
+                                        className: `template-step ${v === t ? "active" : ""} ${v > t ? "completed" : ""}`,
                                         children: [
                                             e.jsx("span", {
                                                 className: "template-step-num",
-                                                children: t
+                                                children: v > t ? "✓" : t
                                             }),
                                             s(`site.templates.step${t}`)
                                         ]
                                     }, t))
                             }),
-                            r === 1 && ($ ? e.jsxs("div", {
+                            v === 1 && !p && (A ? e.jsxs("div", {
                                 style: {
                                     textAlign: "center",
                                     padding: "60px 0"
@@ -157,20 +198,20 @@ let __tla = Promise.all([
                                             marginTop: "16px",
                                             color: "var(--text-secondary)"
                                         },
-                                        children: "변환 중..."
+                                        children: d ? "변환 중..." : "Converting..."
                                     })
                                 ]
                             }) : e.jsxs("div", {
                                 className: "source-cards",
                                 children: [
                                     e.jsxs("div", {
-                                        className: `source-card ${D ? "drag-over" : ""}`,
-                                        onClick: M,
+                                        className: `source-card ${I ? "drag-over" : ""}`,
+                                        onClick: W,
                                         onDragOver: (t)=>{
-                                            t.preventDefault(), f(!0);
+                                            t.preventDefault(), C(!0);
                                         },
-                                        onDragLeave: ()=>f(!1),
-                                        onDrop: H,
+                                        onDragLeave: ()=>C(!1),
+                                        onDrop: B,
                                         children: [
                                             e.jsxs("svg", {
                                                 className: "source-card-icon",
@@ -203,7 +244,7 @@ let __tla = Promise.all([
                                     }),
                                     e.jsxs("div", {
                                         className: "source-card",
-                                        onClick: ()=>m(2),
+                                        onClick: ()=>g(2),
                                         children: [
                                             e.jsxs("svg", {
                                                 className: "source-card-icon",
@@ -230,21 +271,21 @@ let __tla = Promise.all([
                                     })
                                 ]
                             })),
-                            r === 2 && e.jsxs("div", {
+                            v === 2 && e.jsxs("div", {
                                 className: "template-edit-section",
                                 children: [
                                     e.jsx("input", {
                                         className: "template-title-input",
                                         type: "text",
-                                        value: p,
+                                        value: m,
                                         onChange: (t)=>_(t.target.value),
                                         placeholder: s("site.templates.titlePlaceholder")
                                     }),
                                     e.jsx("input", {
                                         className: "template-desc-input",
                                         type: "text",
-                                        value: b,
-                                        onChange: (t)=>E(t.target.value),
+                                        value: S,
+                                        onChange: (t)=>F(t.target.value),
                                         placeholder: s("site.templates.descPlaceholder")
                                     }),
                                     e.jsx("div", {
@@ -253,9 +294,21 @@ let __tla = Promise.all([
                                     }),
                                     e.jsx("textarea", {
                                         className: "template-content-editor",
-                                        value: n,
+                                        value: c,
                                         onChange: (t)=>j(t.target.value),
-                                        placeholder: "마크다운으로 템플릿을 작성하세요..."
+                                        placeholder: d ? `마크다운으로 템플릿을 작성하세요...
+
+예시:
+# {{회사명}} 계약서
+
+계약일: {{계약일}}
+내용: {{계약내용}}` : `Write your template in Markdown...
+
+Example:
+# {{company}} Contract
+
+Date: {{date}}
+Content: {{content}}`
                                     }),
                                     e.jsxs("div", {
                                         className: "detected-fields",
@@ -265,13 +318,13 @@ let __tla = Promise.all([
                                                 children: [
                                                     s("site.templates.detectedFields"),
                                                     " (",
-                                                    c.length,
+                                                    o.length,
                                                     ")"
                                                 ]
                                             }),
-                                            c.length > 0 ? e.jsx("div", {
+                                            o.length > 0 ? e.jsx("div", {
                                                 className: "detected-fields-list",
-                                                children: c.map((t)=>e.jsx("span", {
+                                                children: o.map((t)=>e.jsx("span", {
                                                         className: "detected-field-tag",
                                                         children: `{{${t.key}}}`
                                                     }, t.key))
@@ -284,29 +337,29 @@ let __tla = Promise.all([
                                     e.jsxs("div", {
                                         className: "template-step-actions",
                                         children: [
-                                            e.jsx("button", {
+                                            !p && e.jsx("button", {
                                                 className: "editor-btn",
                                                 onClick: ()=>{
-                                                    m(1);
+                                                    g(1);
                                                 },
                                                 children: s("site.templates.prev")
                                             }),
                                             e.jsx("button", {
                                                 className: "editor-btn primary",
                                                 onClick: ()=>{
-                                                    w({}), m(3);
+                                                    b({}), g(3);
                                                 },
-                                                disabled: !p.trim() || !n.trim(),
+                                                disabled: !m.trim() || !c.trim(),
                                                 children: s("site.templates.next")
                                             })
                                         ]
                                     })
                                 ]
                             }),
-                            r === 3 && e.jsxs("div", {
+                            v === 3 && e.jsxs("div", {
                                 className: "template-edit-section",
                                 children: [
-                                    c.length > 0 && e.jsxs(e.Fragment, {
+                                    o.length > 0 && e.jsxs(e.Fragment, {
                                         children: [
                                             e.jsx("h3", {
                                                 style: {
@@ -318,24 +371,25 @@ let __tla = Promise.all([
                                             }),
                                             e.jsx("div", {
                                                 className: "template-fields",
-                                                children: c.map((t)=>e.jsxs("div", {
+                                                children: o.map((t)=>e.jsxs("div", {
                                                         className: "template-field",
                                                         children: [
                                                             e.jsx("label", {
                                                                 children: t.label
                                                             }),
                                                             t.type === "textarea" ? e.jsx("textarea", {
-                                                                value: u[t.key] || "",
-                                                                onChange: (a)=>w((l)=>({
-                                                                            ...l,
+                                                                value: y[t.key] || "",
+                                                                onChange: (a)=>b((i)=>({
+                                                                            ...i,
                                                                             [t.key]: a.target.value
                                                                         })),
-                                                                placeholder: `{{${t.key}}}`
+                                                                placeholder: `{{${t.key}}}`,
+                                                                rows: 3
                                                             }) : e.jsx("input", {
                                                                 type: "text",
-                                                                value: u[t.key] || "",
-                                                                onChange: (a)=>w((l)=>({
-                                                                            ...l,
+                                                                value: y[t.key] || "",
+                                                                onChange: (a)=>b((i)=>({
+                                                                            ...i,
                                                                             [t.key]: a.target.value
                                                                         })),
                                                                 placeholder: `{{${t.key}}}`
@@ -355,21 +409,21 @@ let __tla = Promise.all([
                                     }),
                                     e.jsx("div", {
                                         className: "template-preview-box",
-                                        children: F
+                                        children: V
                                     }),
                                     e.jsxs("div", {
                                         className: "template-step-actions",
                                         children: [
                                             e.jsx("button", {
                                                 className: "editor-btn",
-                                                onClick: ()=>m(2),
+                                                onClick: ()=>g(2),
                                                 children: s("site.templates.prev")
                                             }),
                                             e.jsx("button", {
                                                 className: "editor-btn primary",
-                                                onClick: A,
-                                                disabled: S,
-                                                children: S ? "..." : s("site.templates.save")
+                                                onClick: q,
+                                                disabled: H,
+                                                children: H ? "..." : p ? d ? "수정 저장" : "Save Changes" : s("site.templates.save")
                                             })
                                         ]
                                     })
@@ -382,4 +436,4 @@ let __tla = Promise.all([
         });
     };
 });
-export { Q as default, __tla };
+export { ae as default, __tla };
