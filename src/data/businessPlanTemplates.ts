@@ -717,4 +717,575 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
 {{budgetDetail}}
 `,
   },
+
+  // ── 5. 교육사업 계획서 ──
+  {
+    type: 'education',
+    nameKo: '교육사업 계획서',
+    nameEn: 'Education Business Plan',
+    icon: '\u{1F393}',
+    descKo: '학원, 온라인교육, 직업훈련 등 교육사업 계획서',
+    descEn: 'Business plan for academies, online education, and vocational training',
+    sections: [
+      {
+        id: 'eduOverview',
+        titleKo: '교육사업 개요',
+        titleEn: 'Education Business Overview',
+        fields: [
+          { key: 'eduName', labelKo: '교육기관명', labelEn: 'Institution Name', type: 'text', required: true },
+          { key: 'eduField', labelKo: '교육 분야', labelEn: 'Education Field', type: 'text', required: true },
+          { key: 'eduType', labelKo: '교육 형태', labelEn: 'Education Type', type: 'select', options: ['오프라인 학원', '온라인 교육', '블렌디드 러닝', '직업훈련', '기업교육', '평생교육'] },
+          { key: 'eduVision', labelKo: '교육 비전', labelEn: 'Education Vision', type: 'textarea', required: true },
+          { key: 'eduTarget', labelKo: '대상 학습자', labelEn: 'Target Learners', type: 'text', required: true },
+        ],
+      },
+      {
+        id: 'curriculum',
+        titleKo: '교육과정 설계',
+        titleEn: 'Curriculum Design',
+        fields: [
+          { key: 'courseList', labelKo: '주요 교육과정', labelEn: 'Main Courses', type: 'textarea', required: true },
+          { key: 'teachingMethod', labelKo: '교수법', labelEn: 'Teaching Methods', type: 'textarea' },
+          { key: 'eduDuration', labelKo: '교육 기간/시수', labelEn: 'Duration/Hours', type: 'text' },
+          { key: 'certification', labelKo: '자격/수료증', labelEn: 'Certifications', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'instructor',
+        titleKo: '강사진 구성',
+        titleEn: 'Instructor Team',
+        fields: [
+          { key: 'instructorPlan', labelKo: '강사 확보 계획', labelEn: 'Instructor Recruitment', type: 'textarea', required: true },
+          { key: 'instructorQual', labelKo: '강사 자격 요건', labelEn: 'Instructor Qualifications', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'eduFacility',
+        titleKo: '시설/플랫폼',
+        titleEn: 'Facilities/Platform',
+        fields: [
+          { key: 'facilityPlan', labelKo: '시설/플랫폼 계획', labelEn: 'Facility/Platform Plan', type: 'textarea' },
+          { key: 'eduTechnology', labelKo: '에듀테크 활용', labelEn: 'EdTech Utilization', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'eduMarketing',
+        titleKo: '학생 모집 전략',
+        titleEn: 'Student Recruitment',
+        fields: [
+          { key: 'recruitStrategy', labelKo: '모집 전략', labelEn: 'Recruitment Strategy', type: 'textarea', required: true },
+          { key: 'recruitTarget', labelKo: '연간 모집 목표', labelEn: 'Annual Target', type: 'text' },
+          { key: 'eduPricing', labelKo: '수강료 정책', labelEn: 'Pricing Policy', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'eduFinance',
+        titleKo: '재무 계획',
+        titleEn: 'Financial Plan',
+        fields: [
+          { key: 'eduInitialCost', labelKo: '초기 투자비', labelEn: 'Initial Investment', type: 'text' },
+          { key: 'eduRevenue', labelKo: '매출 전망', labelEn: 'Revenue Forecast', type: 'textarea' },
+          { key: 'eduCostStructure', labelKo: '비용 구조', labelEn: 'Cost Structure', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'eduQuality',
+        titleKo: '교육 품질 관리',
+        titleEn: 'Quality Assurance',
+        fields: [
+          { key: 'qualityPlan', labelKo: '품질 관리 방안', labelEn: 'QA Plan', type: 'textarea' },
+          { key: 'satisfaction', labelKo: '만족도 관리', labelEn: 'Satisfaction Management', type: 'textarea' },
+        ],
+      },
+    ],
+    markdownTemplate: `# {{eduName}} 교육사업 계획서
+
+## 1. 교육사업 개요
+
+- **교육기관명**: {{eduName}}
+- **교육 분야**: {{eduField}}
+- **교육 형태**: {{eduType}}
+- **대상 학습자**: {{eduTarget}}
+
+### 교육 비전
+{{eduVision}}
+
+## 2. 교육과정 설계
+
+### 주요 교육과정
+{{courseList}}
+
+### 교수법
+{{teachingMethod}}
+
+- **교육 기간/시수**: {{eduDuration}}
+
+### 자격/수료증
+{{certification}}
+
+## 3. 강사진 구성
+
+### 강사 확보 계획
+{{instructorPlan}}
+
+### 강사 자격 요건
+{{instructorQual}}
+
+## 4. 시설/플랫폼
+
+### 시설/플랫폼 계획
+{{facilityPlan}}
+
+### 에듀테크 활용
+{{eduTechnology}}
+
+## 5. 학생 모집 전략
+
+- **연간 모집 목표**: {{recruitTarget}}
+
+### 모집 전략
+{{recruitStrategy}}
+
+### 수강료 정책
+{{eduPricing}}
+
+## 6. 재무 계획
+
+- **초기 투자비**: {{eduInitialCost}}
+
+### 매출 전망
+{{eduRevenue}}
+
+### 비용 구조
+{{eduCostStructure}}
+
+## 7. 교육 품질 관리
+
+### 품질 관리 방안
+{{qualityPlan}}
+
+### 만족도 관리
+{{satisfaction}}
+`,
+  },
+
+  // ── 6. 비영리/사회적기업 사업계획서 ──
+  {
+    type: 'nonprofit',
+    nameKo: '비영리/사회적기업 사업계획서',
+    nameEn: 'Nonprofit / Social Enterprise Plan',
+    icon: '\u{1F91D}',
+    descKo: '비영리단체, 사회적기업, 협동조합 등을 위한 사업계획서',
+    descEn: 'Business plan for nonprofits, social enterprises, and cooperatives',
+    sections: [
+      {
+        id: 'npOverview',
+        titleKo: '단체/기업 개요',
+        titleEn: 'Organization Overview',
+        fields: [
+          { key: 'npName', labelKo: '단체/기업명', labelEn: 'Organization Name', type: 'text', required: true },
+          { key: 'npType', labelKo: '조직 형태', labelEn: 'Organization Type', type: 'select', options: ['비영리법인', '사회적기업', '협동조합', '사회적협동조합', '마을기업', '자활기업'] },
+          { key: 'npMission', labelKo: '미션 (사회적 목적)', labelEn: 'Mission (Social Purpose)', type: 'textarea', required: true },
+          { key: 'npVision', labelKo: '비전', labelEn: 'Vision', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'socialProblem',
+        titleKo: '사회 문제 정의',
+        titleEn: 'Social Problem',
+        fields: [
+          { key: 'socialIssue', labelKo: '해결하려는 사회 문제', labelEn: 'Social Issue to Solve', type: 'textarea', required: true },
+          { key: 'beneficiary', labelKo: '수혜 대상', labelEn: 'Beneficiaries', type: 'text', required: true },
+          { key: 'socialNeed', labelKo: '사회적 필요성', labelEn: 'Social Need', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'npPrograms',
+        titleKo: '사업 프로그램',
+        titleEn: 'Programs',
+        fields: [
+          { key: 'mainPrograms', labelKo: '주요 사업/프로그램', labelEn: 'Main Programs', type: 'textarea', required: true },
+          { key: 'socialImpact', labelKo: '사회적 영향력 목표', labelEn: 'Social Impact Goals', type: 'textarea' },
+          { key: 'impactMetrics', labelKo: '성과 지표', labelEn: 'Impact Metrics', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'npRevenue',
+        titleKo: '수익 구조',
+        titleEn: 'Revenue Structure',
+        fields: [
+          { key: 'revenueSource', labelKo: '수익원', labelEn: 'Revenue Sources', type: 'textarea', required: true },
+          { key: 'grantPlan', labelKo: '보조금/기부금 계획', labelEn: 'Grant/Donation Plan', type: 'textarea' },
+          { key: 'selfSustain', labelKo: '자립 방안', labelEn: 'Self-sustainability Plan', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'npOrg',
+        titleKo: '조직 운영',
+        titleEn: 'Organization Management',
+        fields: [
+          { key: 'npStructure', labelKo: '조직 구조', labelEn: 'Organization Structure', type: 'textarea' },
+          { key: 'npGovernance', labelKo: '거버넌스', labelEn: 'Governance', type: 'textarea' },
+          { key: 'npPartners', labelKo: '파트너/네트워크', labelEn: 'Partners/Network', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'npBudget',
+        titleKo: '예산 계획',
+        titleEn: 'Budget Plan',
+        fields: [
+          { key: 'npTotalBudget', labelKo: '총 예산', labelEn: 'Total Budget', type: 'text' },
+          { key: 'npExpenseDetail', labelKo: '지출 세부 계획', labelEn: 'Expense Detail', type: 'textarea' },
+          { key: 'npFundingPlan', labelKo: '재원 조달 계획', labelEn: 'Funding Plan', type: 'textarea' },
+        ],
+      },
+    ],
+    markdownTemplate: `# {{npName}} 사업계획서
+
+## 1. 단체/기업 개요
+
+- **단체/기업명**: {{npName}}
+- **조직 형태**: {{npType}}
+
+### 미션 (사회적 목적)
+{{npMission}}
+
+### 비전
+{{npVision}}
+
+## 2. 사회 문제 정의
+
+- **수혜 대상**: {{beneficiary}}
+
+### 해결하려는 사회 문제
+{{socialIssue}}
+
+### 사회적 필요성
+{{socialNeed}}
+
+## 3. 사업 프로그램
+
+### 주요 사업/프로그램
+{{mainPrograms}}
+
+### 사회적 영향력 목표
+{{socialImpact}}
+
+### 성과 지표
+{{impactMetrics}}
+
+## 4. 수익 구조
+
+### 수익원
+{{revenueSource}}
+
+### 보조금/기부금 계획
+{{grantPlan}}
+
+### 자립 방안
+{{selfSustain}}
+
+## 5. 조직 운영
+
+### 조직 구조
+{{npStructure}}
+
+### 거버넌스
+{{npGovernance}}
+
+### 파트너/네트워크
+{{npPartners}}
+
+## 6. 예산 계획
+
+- **총 예산**: {{npTotalBudget}}
+
+### 지출 세부 계획
+{{npExpenseDetail}}
+
+### 재원 조달 계획
+{{npFundingPlan}}
+`,
+  },
+
+  // ── 7. 프랜차이즈 사업계획서 ──
+  {
+    type: 'franchise',
+    nameKo: '프랜차이즈 사업계획서',
+    nameEn: 'Franchise Business Plan',
+    icon: '\u{1F3EA}',
+    descKo: '가맹점 모집 또는 프랜차이즈 창업 사업계획서',
+    descEn: 'Business plan for franchise development or franchise startup',
+    sections: [
+      {
+        id: 'franchiseOverview',
+        titleKo: '프랜차이즈 개요',
+        titleEn: 'Franchise Overview',
+        fields: [
+          { key: 'brandName', labelKo: '브랜드명', labelEn: 'Brand Name', type: 'text', required: true },
+          { key: 'franIndustry', labelKo: '업종', labelEn: 'Industry', type: 'text', required: true },
+          { key: 'franConcept', labelKo: '브랜드 컨셉', labelEn: 'Brand Concept', type: 'textarea', required: true },
+          { key: 'franHistory', labelKo: '브랜드 연혁', labelEn: 'Brand History', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'franProduct',
+        titleKo: '제품/메뉴 구성',
+        titleEn: 'Products/Menu',
+        fields: [
+          { key: 'mainProducts', labelKo: '주력 제품/메뉴', labelEn: 'Main Products/Menu', type: 'textarea', required: true },
+          { key: 'productStrategies', labelKo: '제품 전략', labelEn: 'Product Strategy', type: 'textarea' },
+          { key: 'avgPrice', labelKo: '평균 가격대', labelEn: 'Average Price Range', type: 'text' },
+        ],
+      },
+      {
+        id: 'franModel',
+        titleKo: '가맹 사업 모델',
+        titleEn: 'Franchise Model',
+        fields: [
+          { key: 'franFee', labelKo: '가맹비/보증금', labelEn: 'Franchise Fee/Deposit', type: 'text', required: true },
+          { key: 'royalty', labelKo: '로열티 구조', labelEn: 'Royalty Structure', type: 'text' },
+          { key: 'initialInvestFran', labelKo: '초기 투자 비용', labelEn: 'Initial Investment', type: 'text', required: true },
+          { key: 'franSupport', labelKo: '본부 지원 내용', labelEn: 'HQ Support', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'franStore',
+        titleKo: '매장 운영',
+        titleEn: 'Store Operations',
+        fields: [
+          { key: 'storeSize', labelKo: '표준 매장 규모', labelEn: 'Standard Store Size', type: 'text' },
+          { key: 'storeDesign', labelKo: '인테리어 컨셉', labelEn: 'Interior Concept', type: 'textarea' },
+          { key: 'storeOperation', labelKo: '운영 매뉴얼', labelEn: 'Operations Manual', type: 'textarea' },
+          { key: 'storeStaff', labelKo: '필요 인력', labelEn: 'Required Staff', type: 'text' },
+        ],
+      },
+      {
+        id: 'franExpansion',
+        titleKo: '가맹점 확장 계획',
+        titleEn: 'Expansion Plan',
+        fields: [
+          { key: 'currentStores', labelKo: '현재 매장 수', labelEn: 'Current Stores', type: 'number' },
+          { key: 'expansionTarget', labelKo: '확장 목표', labelEn: 'Expansion Target', type: 'textarea', required: true },
+          { key: 'targetArea', labelKo: '목표 지역', labelEn: 'Target Areas', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'franFinance',
+        titleKo: '재무 분석',
+        titleEn: 'Financial Analysis',
+        fields: [
+          { key: 'avgMonthlyRevenue', labelKo: '월 평균 매출', labelEn: 'Avg Monthly Revenue', type: 'text' },
+          { key: 'franBreakEven', labelKo: '손익분기 예상', labelEn: 'Break-even Estimate', type: 'text' },
+          { key: 'franRoi', labelKo: '투자 수익률 (ROI)', labelEn: 'ROI', type: 'text' },
+        ],
+      },
+    ],
+    markdownTemplate: `# {{brandName}} 프랜차이즈 사업계획서
+
+## 1. 프랜차이즈 개요
+
+- **브랜드명**: {{brandName}}
+- **업종**: {{franIndustry}}
+
+### 브랜드 컨셉
+{{franConcept}}
+
+### 브랜드 연혁
+{{franHistory}}
+
+## 2. 제품/메뉴 구성
+
+- **평균 가격대**: {{avgPrice}}
+
+### 주력 제품/메뉴
+{{mainProducts}}
+
+### 제품 전략
+{{productStrategies}}
+
+## 3. 가맹 사업 모델
+
+| 항목 | 내용 |
+|------|------|
+| 가맹비/보증금 | {{franFee}} |
+| 로열티 | {{royalty}} |
+| 초기 투자 비용 | {{initialInvestFran}} |
+
+### 본부 지원 내용
+{{franSupport}}
+
+## 4. 매장 운영
+
+- **표준 매장 규모**: {{storeSize}}
+- **필요 인력**: {{storeStaff}}
+
+### 인테리어 컨셉
+{{storeDesign}}
+
+### 운영 매뉴얼
+{{storeOperation}}
+
+## 5. 가맹점 확장 계획
+
+- **현재 매장 수**: {{currentStores}}개
+
+### 확장 목표
+{{expansionTarget}}
+
+### 목표 지역
+{{targetArea}}
+
+## 6. 재무 분석
+
+| 항목 | 내용 |
+|------|------|
+| 월 평균 매출 | {{avgMonthlyRevenue}} |
+| 손익분기 예상 | {{franBreakEven}} |
+| 투자 수익률 (ROI) | {{franRoi}} |
+`,
+  },
+
+  // ── 8. 이커머스 사업계획서 ──
+  {
+    type: 'ecommerce',
+    nameKo: '이커머스 사업계획서',
+    nameEn: 'E-commerce Business Plan',
+    icon: '\u{1F6D2}',
+    descKo: '온라인 쇼핑몰, D2C, 마켓플레이스 등 이커머스 사업계획서',
+    descEn: 'Business plan for online shops, D2C brands, and marketplaces',
+    sections: [
+      {
+        id: 'ecOverview',
+        titleKo: '이커머스 사업 개요',
+        titleEn: 'E-commerce Overview',
+        fields: [
+          { key: 'ecName', labelKo: '쇼핑몰/브랜드명', labelEn: 'Store/Brand Name', type: 'text', required: true },
+          { key: 'ecModel', labelKo: '비즈니스 모델', labelEn: 'Business Model', type: 'select', options: ['자사몰 D2C', '오픈마켓 입점', '마켓플레이스', '구독 커머스', '소셜 커머스', '라이브 커머스'] },
+          { key: 'ecCategory', labelKo: '상품 카테고리', labelEn: 'Product Category', type: 'text', required: true },
+          { key: 'ecDescription', labelKo: '사업 설명', labelEn: 'Business Description', type: 'textarea', required: true },
+        ],
+      },
+      {
+        id: 'ecProduct',
+        titleKo: '상품 전략',
+        titleEn: 'Product Strategy',
+        fields: [
+          { key: 'ecProducts', labelKo: '주력 상품', labelEn: 'Main Products', type: 'textarea', required: true },
+          { key: 'ecSourcing', labelKo: '소싱/공급 전략', labelEn: 'Sourcing Strategy', type: 'textarea' },
+          { key: 'ecPricing', labelKo: '가격 전략', labelEn: 'Pricing Strategy', type: 'textarea' },
+          { key: 'ecBranding', labelKo: '브랜딩 전략', labelEn: 'Branding Strategy', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'ecPlatform',
+        titleKo: '판매 플랫폼',
+        titleEn: 'Sales Platform',
+        fields: [
+          { key: 'ecPlatformType', labelKo: '플랫폼 구축 방안', labelEn: 'Platform Development', type: 'textarea', required: true },
+          { key: 'ecChannels', labelKo: '판매 채널', labelEn: 'Sales Channels', type: 'textarea' },
+          { key: 'ecPayment', labelKo: '결제 시스템', labelEn: 'Payment System', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'ecMarketing',
+        titleKo: '마케팅/고객 확보',
+        titleEn: 'Marketing & Customer Acquisition',
+        fields: [
+          { key: 'ecDigitalMkt', labelKo: '디지털 마케팅 전략', labelEn: 'Digital Marketing Strategy', type: 'textarea', required: true },
+          { key: 'ecCac', labelKo: '고객 획득 비용 (CAC)', labelEn: 'Customer Acquisition Cost', type: 'text' },
+          { key: 'ecRetention', labelKo: '고객 유지 전략', labelEn: 'Retention Strategy', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'ecLogistics',
+        titleKo: '물류/배송',
+        titleEn: 'Logistics & Shipping',
+        fields: [
+          { key: 'ecFulfillment', labelKo: '풀필먼트 전략', labelEn: 'Fulfillment Strategy', type: 'textarea' },
+          { key: 'ecShipping', labelKo: '배송 정책', labelEn: 'Shipping Policy', type: 'textarea' },
+          { key: 'ecReturns', labelKo: '반품/교환 정책', labelEn: 'Returns Policy', type: 'textarea' },
+        ],
+      },
+      {
+        id: 'ecFinance',
+        titleKo: '재무 계획',
+        titleEn: 'Financial Plan',
+        fields: [
+          { key: 'ecInitialCost', labelKo: '초기 투자비', labelEn: 'Initial Investment', type: 'text' },
+          { key: 'ecGmv', labelKo: 'GMV 목표', labelEn: 'GMV Target', type: 'text' },
+          { key: 'ecMargin', labelKo: '마진율', labelEn: 'Margin Rate', type: 'text' },
+          { key: 'ecRevenueForcast', labelKo: '매출 전망', labelEn: 'Revenue Forecast', type: 'textarea' },
+        ],
+      },
+    ],
+    markdownTemplate: `# {{ecName}} 이커머스 사업계획서
+
+## 1. 이커머스 사업 개요
+
+- **쇼핑몰/브랜드명**: {{ecName}}
+- **비즈니스 모델**: {{ecModel}}
+- **상품 카테고리**: {{ecCategory}}
+
+### 사업 설명
+{{ecDescription}}
+
+## 2. 상품 전략
+
+### 주력 상품
+{{ecProducts}}
+
+### 소싱/공급 전략
+{{ecSourcing}}
+
+### 가격 전략
+{{ecPricing}}
+
+### 브랜딩 전략
+{{ecBranding}}
+
+## 3. 판매 플랫폼
+
+### 플랫폼 구축 방안
+{{ecPlatformType}}
+
+### 판매 채널
+{{ecChannels}}
+
+### 결제 시스템
+{{ecPayment}}
+
+## 4. 마케팅/고객 확보
+
+- **고객 획득 비용 (CAC)**: {{ecCac}}
+
+### 디지털 마케팅 전략
+{{ecDigitalMkt}}
+
+### 고객 유지 전략
+{{ecRetention}}
+
+## 5. 물류/배송
+
+### 풀필먼트 전략
+{{ecFulfillment}}
+
+### 배송 정책
+{{ecShipping}}
+
+### 반품/교환 정책
+{{ecReturns}}
+
+## 6. 재무 계획
+
+| 항목 | 내용 |
+|------|------|
+| 초기 투자비 | {{ecInitialCost}} |
+| GMV 목표 | {{ecGmv}} |
+| 마진율 | {{ecMargin}} |
+
+### 매출 전망
+{{ecRevenueForcast}}
+`,
+  },
 ];

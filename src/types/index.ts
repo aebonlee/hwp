@@ -160,7 +160,7 @@ export type ColorTheme = 'blue' | 'red' | 'green' | 'purple' | 'orange';
 export type Language = 'ko' | 'en';
 
 // ─── Business Plan ───
-export type BusinessPlanType = 'startup' | 'sme' | 'investment' | 'government';
+export type BusinessPlanType = 'startup' | 'sme' | 'investment' | 'government' | 'education' | 'nonprofit' | 'franchise' | 'ecommerce';
 
 export interface BusinessPlanFieldDef {
   key: string;

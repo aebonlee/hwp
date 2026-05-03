@@ -1,5 +1,5 @@
-import { useState, useMemo, useCallback, type ReactElement, type DragEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useMemo, useCallback, type ReactElement, type DragEvent } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
@@ -11,7 +11,7 @@ import '../styles/templates.css';
 
 type Step = 1 | 2 | 3;
 
-/** {{key}} 필드 자동 감지 */
+/** {{key}} field auto-detection */
 function detectFields(content: string): TemplateFieldDef[] {
   const regex = /\{\{([^}]+)\}\}/g;
   const keys = new Set<string>();
@@ -28,23 +28,53 @@ function detectFields(content: string): TemplateFieldDef[] {
 }
 
 const TemplateCreate = (): ReactElement => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { user } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isKo = language === 'ko';
 
-  const [step, setStep] = useState<Step>(1);
+  const editId = searchParams.get('edit');
+  const isEdit = !!editId;
+
+  const [step, setStep] = useState<Step>(isEdit ? 2 : 1);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('');
   const [saving, setSaving] = useState(false);
   const [converting, setConverting] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [loadingEdit, setLoadingEdit] = useState(false);
 
-  // 필드 자동 감지
+  // Load existing template for editing
+  useEffect(() => {
+    if (!editId || !user) return;
+    setLoadingEdit(true);
+    const load = async () => {
+      const client = getSupabase();
+      if (!client) { setLoadingEdit(false); return; }
+      const { data, error } = await client
+        .from(TABLES.templates)
+        .select('*')
+        .eq('id', editId)
+        .eq('user_id', user.id)
+        .single();
+      if (!error && data) {
+        setTitle(data.title || '');
+        setDescription(data.description || '');
+        setContent(data.content || '');
+        setStep(2);
+      }
+      setLoadingEdit(false);
+    };
+    load();
+  }, [editId, user]);
+
+  // Field auto-detection
   const detectedFields = useMemo(() => detectFields(content), [content]);
 
-  // Step 3: 실시간 미리보기
+  // Step 3: live preview
   const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const preview = useMemo(() => {
     let result = content;
@@ -55,7 +85,7 @@ const TemplateCreate = (): ReactElement => {
     return result;
   }, [content, detectedFields, fieldValues]);
 
-  // 파일 업로드 처리
+  // File upload handler
   const handleFile = useCallback(async (f: File) => {
     const ext = getFileExtension(f.name);
     if (ext !== 'hwp' && ext !== 'hwpx') return;
@@ -79,11 +109,11 @@ const TemplateCreate = (): ReactElement => {
       setStep(2);
     } catch (err) {
       console.error('Parse error:', err);
-      showToast((err as Error).message || '변환 중 오류가 발생했습니다.', 'error');
+      showToast((err as Error).message || (isKo ? '변환 중 오류가 발생했습니다' : 'Conversion error'), 'error');
     } finally {
       setConverting(false);
     }
-  }, [title, showToast]);
+  }, [title, showToast, isKo]);
 
   const onDrop = (e: DragEvent) => {
     e.preventDefault();
@@ -101,37 +131,71 @@ const TemplateCreate = (): ReactElement => {
     input.click();
   };
 
-  // 저장
+  // Save (create or update)
   const handleSave = async () => {
     if (!title.trim() || !content.trim() || !user) return;
     setSaving(true);
     const client = getSupabase();
     if (!client) { setSaving(false); return; }
 
-    const { error } = await client.from(TABLES.templates).insert({
-      user_id: user.id,
-      title: title.trim(),
-      description: description.trim(),
-      content,
-      fields: detectedFields,
-    });
+    if (isEdit && editId) {
+      // Update existing
+      const { error } = await client
+        .from(TABLES.templates)
+        .update({
+          title: title.trim(),
+          description: description.trim(),
+          content,
+          fields: detectedFields,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', editId)
+        .eq('user_id', user.id);
 
-    setSaving(false);
-    if (error) {
-      showToast(error.message, 'error');
+      setSaving(false);
+      if (error) {
+        showToast(error.message, 'error');
+      } else {
+        showToast(isKo ? '템플릿이 수정되었습니다' : 'Template updated', 'success');
+        navigate('/templates');
+      }
     } else {
-      showToast(t('site.templates.saved'), 'success');
-      navigate('/templates');
+      // Create new
+      const { error } = await client.from(TABLES.templates).insert({
+        user_id: user.id,
+        title: title.trim(),
+        description: description.trim(),
+        content,
+        fields: detectedFields,
+      });
+
+      setSaving(false);
+      if (error) {
+        showToast(error.message, 'error');
+      } else {
+        showToast(t('site.templates.saved'), 'success');
+        navigate('/templates');
+      }
     }
   };
 
+  if (loadingEdit) {
+    return (
+      <section className="section">
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', padding: '80px 0' }}>
+          <div className="loading-spinner"></div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
-      <SEOHead title={t('site.templates.create')} path="/templates/new" />
+      <SEOHead title={isEdit ? (isKo ? '템플릿 편집' : 'Edit Template') : t('site.templates.create')} path="/templates/new" />
 
       <section className="page-header">
         <div className="container">
-          <h2>{t('site.templates.create')}</h2>
+          <h2>{isEdit ? (isKo ? '템플릿 편집' : 'Edit Template') : t('site.templates.create')}</h2>
           <p>{t('site.templates.subtitle')}</p>
         </div>
       </section>
@@ -142,18 +206,20 @@ const TemplateCreate = (): ReactElement => {
           <div className="template-steps">
             {([1, 2, 3] as Step[]).map(s => (
               <div key={s} className={`template-step ${step === s ? 'active' : ''} ${step > s ? 'completed' : ''}`}>
-                <span className="template-step-num">{s}</span>
+                <span className="template-step-num">{step > s ? '\u2713' : s}</span>
                 {t(`site.templates.step${s}`)}
               </div>
             ))}
           </div>
 
           {/* Step 1: Source Selection */}
-          {step === 1 && (
+          {step === 1 && !isEdit && (
             converting ? (
               <div style={{ textAlign: 'center', padding: '60px 0' }}>
                 <div className="loading-spinner"></div>
-                <p style={{ marginTop: '16px', color: 'var(--text-secondary)' }}>변환 중...</p>
+                <p style={{ marginTop: '16px', color: 'var(--text-secondary)' }}>
+                  {isKo ? '변환 중...' : 'Converting...'}
+                </p>
               </div>
             ) : (
               <div className="source-cards">
@@ -211,10 +277,10 @@ const TemplateCreate = (): ReactElement => {
                 className="template-content-editor"
                 value={content}
                 onChange={e => setContent(e.target.value)}
-                placeholder="마크다운으로 템플릿을 작성하세요..."
+                placeholder={isKo ? '마크다운으로 템플릿을 작성하세요...\n\n예시:\n# {{회사명}} 계약서\n\n계약일: {{계약일}}\n내용: {{계약내용}}' : 'Write your template in Markdown...\n\nExample:\n# {{company}} Contract\n\nDate: {{date}}\nContent: {{content}}'}
               />
 
-              {/* 감지된 필드 */}
+              {/* Detected fields */}
               <div className="detected-fields">
                 <div className="detected-fields-title">
                   {t('site.templates.detectedFields')} ({detectedFields.length})
@@ -231,9 +297,11 @@ const TemplateCreate = (): ReactElement => {
               </div>
 
               <div className="template-step-actions">
-                <button className="editor-btn" onClick={() => { setStep(1); }}>
-                  {t('site.templates.prev')}
-                </button>
+                {!isEdit && (
+                  <button className="editor-btn" onClick={() => { setStep(1); }}>
+                    {t('site.templates.prev')}
+                  </button>
+                )}
                 <button
                   className="editor-btn primary"
                   onClick={() => { setFieldValues({}); setStep(3); }}
@@ -262,6 +330,7 @@ const TemplateCreate = (): ReactElement => {
                             value={fieldValues[field.key] || ''}
                             onChange={e => setFieldValues(prev => ({ ...prev, [field.key]: e.target.value }))}
                             placeholder={`{{${field.key}}}`}
+                            rows={3}
                           />
                         ) : (
                           <input
@@ -291,7 +360,7 @@ const TemplateCreate = (): ReactElement => {
                   onClick={handleSave}
                   disabled={saving}
                 >
-                  {saving ? '...' : t('site.templates.save')}
+                  {saving ? '...' : isEdit ? (isKo ? '수정 저장' : 'Save Changes') : t('site.templates.save')}
                 </button>
               </div>
             </div>
