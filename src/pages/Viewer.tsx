@@ -144,9 +144,11 @@ const Viewer = (): ReactElement => {
                   onClick={ready ? onFileSelect : undefined}
                   style={{ cursor: ready ? 'pointer' : 'not-allowed', opacity: ready ? 1 : 0.5 }}
                 >
-                  <svg className="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
+                  <svg className="dropzone-icon" viewBox="0 0 24 24" strokeWidth="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="rgba(74,143,231,0.12)" stroke="var(--primary, #0046C8)" />
+                    <polyline points="14 2 14 8 20 8" fill="rgba(74,143,231,0.2)" stroke="var(--primary, #0046C8)" />
+                    <line x1="9" y1="13" x2="15" y2="13" stroke="var(--primary, #0046C8)" />
+                    <polyline points="12 10 12 16" stroke="var(--primary, #0046C8)" />
                   </svg>
                   <h3>{t('site.viewer.upload')}</h3>
                   <p>{t('site.viewer.uploadHint')}</p>

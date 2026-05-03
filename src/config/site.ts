@@ -5,9 +5,9 @@ import type { SiteConfig } from '../types';
 
 const site: SiteConfig = {
   id: 'hwp',
-  name: 'HWP Web',
-  nameKo: '한글 문서 변환기',
-  description: '한글(HWP/HWPX) 문서를 웹에서 변환·편집·관리하는 도구',
+  name: 'HWP Edit',
+  nameKo: '한글 문서 편집기',
+  description: '한글(HWP/HWPX) 문서를 웹에서 편집·변환·생성·관리하는 통합 도구',
   url: 'https://hwp.dreamitbiz.com',
   dbPrefix: 'hwp_',
 
@@ -19,7 +19,7 @@ const site: SiteConfig = {
   brand: {
     parts: [
       { text: 'HWP', className: 'brand-dream' },
-      { text: 'Web', className: 'brand-it' }
+      { text: 'Edit', className: 'brand-it' }
     ]
   },
 
