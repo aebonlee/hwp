@@ -62,6 +62,7 @@ const site: SiteConfig = {
     { path: '/generator', labelKey: 'site.nav.generator' },
     { path: '/templates', labelKey: 'site.nav.templates' },
     { path: '/documents', labelKey: 'site.nav.documents' },
+    { path: '/ai-writer', labelKey: 'site.nav.aiWriter' },
     { path: '/guide', labelKey: 'site.nav.guide' },
   ],
 
@@ -70,6 +71,7 @@ const site: SiteConfig = {
     { path: '/convert', labelKey: 'site.nav.convert' },
     { path: '/md-editor', labelKey: 'site.nav.mdEditor' },
     { path: '/hwp-editor', labelKey: 'site.nav.hwpEditor' },
+    { path: '/ai-writer', labelKey: 'site.nav.aiWriter' },
     { path: '/templates', labelKey: 'site.nav.templates' },
     { path: '/guide', labelKey: 'site.nav.guide' },
   ],
