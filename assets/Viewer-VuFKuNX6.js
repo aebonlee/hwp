@@ -1,6 +1,6 @@
-import { u as O, r as i, _ as P, j as e, __tla as __tla_0 } from "./index-B4CSoVQG.js";
-import { S as H } from "./SEOHead-BWvs9I22.js";
-import { u as W, __tla as __tla_1 } from "./useRhwp-DnWhA6O1.js";
+import { u as M, r as n, _ as O, j as e, __tla as __tla_0 } from "./index-BcN9a2gA.js";
+import { S as P } from "./SEOHead-hGQ78IE-.js";
+import { u as W, __tla as __tla_1 } from "./useRhwp-CIdgSSeW.js";
 let I;
 let __tla = Promise.all([
     (()=>{
@@ -15,54 +15,54 @@ let __tla = Promise.all([
     })()
 ]).then(async ()=>{
     I = ()=>{
-        const { t } = O(), { ready: h, loading: C, error: m } = W(), [S, v] = i.useState(!1), [u, j] = i.useState(null), [f, d] = i.useState(""), [y, x] = i.useState(!1), [n, p] = i.useState([]), [a, o] = i.useState(0), [N, w] = i.useState(100), _ = i.useRef(null), b = i.useCallback(async (s)=>{
-            const r = s.name.split(".").pop()?.toLowerCase();
-            if (r !== "hwp" && r !== "hwpx") {
+        const { t: r } = M(), { ready: h, loading: C, error: g } = W(), [S, v] = n.useState(!1), [j, u] = n.useState(null), [f, d] = n.useState(""), [y, x] = n.useState(!1), [i, p] = n.useState([]), [a, o] = n.useState(0), [N, m] = n.useState(100), _ = n.useRef(null), b = n.useCallback(async (s)=>{
+            const t = s.name.split(".").pop()?.toLowerCase();
+            if (t !== "hwp" && t !== "hwpx") {
                 d(".hwp 또는 .hwpx 파일만 지원합니다.");
                 return;
             }
-            j(s), d(""), x(!0), p([]), o(0);
+            u(s), d(""), x(!0), p([]), o(0);
             try {
-                const { HwpDocument: l } = await P(async ()=>{
+                const { HwpDocument: l } = await O(async ()=>{
                     const { HwpDocument: c } = await import("./rhwp-BgOEd_j0.js");
                     return {
                         HwpDocument: c
                     };
-                }, []), z = await s.arrayBuffer(), g = new l(new Uint8Array(z)), M = g.pageCount(), k = [];
-                for(let c = 0; c < M; c++)k.push(g.renderPageSvg(c));
-                g.free(), p(k), x(!1);
+                }, []), z = await s.arrayBuffer(), w = new l(new Uint8Array(z)), H = w.pageCount(), k = [];
+                for(let c = 0; c < H; c++)k.push(w.renderPageSvg(c));
+                w.free(), p(k), x(!1);
             } catch (l) {
-                d(l.message || t("site.viewer.error")), x(!1);
+                d(l.message || r("site.viewer.error")), x(!1);
             }
         }, [
-            t
+            r
         ]), B = (s)=>{
             s.preventDefault(), v(!1);
-            const r = s.dataTransfer.files;
-            r.length > 0 && b(r[0]);
+            const t = s.dataTransfer.files;
+            t.length > 0 && b(t[0]);
         }, D = ()=>{
             const s = document.createElement("input");
             s.type = "file", s.accept = ".hwp,.hwpx", s.onchange = ()=>{
                 s.files && s.files.length > 0 && b(s.files[0]);
             }, s.click();
         }, E = ()=>{
-            if (!n[a]) return;
+            if (!i[a]) return;
             const s = new Blob([
-                n[a]
+                i[a]
             ], {
                 type: "image/svg+xml"
-            }), r = URL.createObjectURL(s), l = document.createElement("a");
-            l.href = r, l.download = `${u?.name?.replace(/\.[^.]+$/, "") || "page"}_p${a + 1}.svg`, l.click(), URL.revokeObjectURL(r);
+            }), t = URL.createObjectURL(s), l = document.createElement("a");
+            l.href = t, l.download = `${j?.name?.replace(/\.[^.]+$/, "") || "page"}_p${a + 1}.svg`, l.click(), URL.revokeObjectURL(t);
         }, L = ()=>{
-            j(null), p([]), o(0), w(100), d("");
+            u(null), p([]), o(0), m(100), d("");
         }, R = (s)=>{
-            const r = parseInt(s.target.value, 10);
-            !isNaN(r) && r >= 1 && r <= n.length && o(r - 1);
+            const t = parseInt(s.target.value, 10);
+            !isNaN(t) && t >= 1 && t <= i.length && o(t - 1);
         };
         return e.jsxs(e.Fragment, {
             children: [
-                e.jsx(H, {
-                    title: t("site.viewer.title"),
+                e.jsx(P, {
+                    title: r("site.viewer.title"),
                     path: "/viewer"
                 }),
                 e.jsx("section", {
@@ -71,10 +71,10 @@ let __tla = Promise.all([
                         className: "container",
                         children: [
                             e.jsx("h2", {
-                                children: t("site.viewer.title")
+                                children: r("site.viewer.title")
                             }),
                             e.jsx("p", {
-                                children: t("site.viewer.subtitle")
+                                children: r("site.viewer.subtitle")
                             })
                         ]
                     })
@@ -84,7 +84,7 @@ let __tla = Promise.all([
                     children: e.jsxs("div", {
                         className: "container",
                         children: [
-                            m && e.jsxs("div", {
+                            g && e.jsxs("div", {
                                 className: "error-alert",
                                 children: [
                                     e.jsxs("svg", {
@@ -114,9 +114,9 @@ let __tla = Promise.all([
                                             })
                                         ]
                                     }),
-                                    t("site.viewer.wasmError"),
+                                    r("site.viewer.wasmError"),
                                     ": ",
-                                    m
+                                    g
                                 ]
                             }),
                             f && e.jsxs("div", {
@@ -152,7 +152,7 @@ let __tla = Promise.all([
                                     f
                                 ]
                             }),
-                            n.length === 0 && !y && e.jsx(e.Fragment, {
+                            i.length === 0 && !y && e.jsx(e.Fragment, {
                                 children: C ? e.jsxs("div", {
                                     className: "viewer-loading",
                                     children: [
@@ -160,7 +160,7 @@ let __tla = Promise.all([
                                             className: "loading-spinner"
                                         }),
                                         e.jsx("p", {
-                                            children: t("site.viewer.loading")
+                                            children: r("site.viewer.loading")
                                         })
                                     ]
                                 }) : e.jsxs("div", {
@@ -179,25 +179,36 @@ let __tla = Promise.all([
                                         e.jsxs("svg", {
                                             className: "dropzone-icon",
                                             viewBox: "0 0 24 24",
-                                            fill: "none",
-                                            stroke: "currentColor",
                                             strokeWidth: "1.5",
                                             children: [
                                                 e.jsx("path", {
-                                                    d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                                    d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z",
+                                                    fill: "rgba(74,143,231,0.12)",
+                                                    stroke: "var(--primary, #0046C8)"
                                                 }),
-                                                e.jsx("circle", {
-                                                    cx: "12",
-                                                    cy: "12",
-                                                    r: "3"
+                                                e.jsx("polyline", {
+                                                    points: "14 2 14 8 20 8",
+                                                    fill: "rgba(74,143,231,0.2)",
+                                                    stroke: "var(--primary, #0046C8)"
+                                                }),
+                                                e.jsx("line", {
+                                                    x1: "9",
+                                                    y1: "13",
+                                                    x2: "15",
+                                                    y2: "13",
+                                                    stroke: "var(--primary, #0046C8)"
+                                                }),
+                                                e.jsx("polyline", {
+                                                    points: "12 10 12 16",
+                                                    stroke: "var(--primary, #0046C8)"
                                                 })
                                             ]
                                         }),
                                         e.jsx("h3", {
-                                            children: t("site.viewer.upload")
+                                            children: r("site.viewer.upload")
                                         }),
                                         e.jsx("p", {
-                                            children: t("site.viewer.uploadHint")
+                                            children: r("site.viewer.uploadHint")
                                         })
                                     ]
                                 })
@@ -209,11 +220,11 @@ let __tla = Promise.all([
                                         className: "loading-spinner"
                                     }),
                                     e.jsx("p", {
-                                        children: t("site.viewer.rendering")
+                                        children: r("site.viewer.rendering")
                                     })
                                 ]
                             }),
-                            n.length > 0 && e.jsxs("div", {
+                            i.length > 0 && e.jsxs("div", {
                                 className: "viewer-container",
                                 children: [
                                     e.jsxs("div", {
@@ -223,7 +234,7 @@ let __tla = Promise.all([
                                                 className: "viewer-toolbar-left",
                                                 children: e.jsx("span", {
                                                     className: "viewer-filename",
-                                                    children: u?.name
+                                                    children: j?.name
                                                 })
                                             }),
                                             e.jsxs("div", {
@@ -254,21 +265,21 @@ let __tla = Promise.all([
                                                                 value: a + 1,
                                                                 onChange: R,
                                                                 min: 1,
-                                                                max: n.length
+                                                                max: i.length
                                                             }),
                                                             e.jsxs("span", {
                                                                 children: [
-                                                                    t("site.viewer.of"),
+                                                                    r("site.viewer.of"),
                                                                     " ",
-                                                                    n.length
+                                                                    i.length
                                                                 ]
                                                             })
                                                         ]
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-nav-btn",
-                                                        onClick: ()=>o((s)=>Math.min(n.length - 1, s + 1)),
-                                                        disabled: a === n.length - 1,
+                                                        onClick: ()=>o((s)=>Math.min(i.length - 1, s + 1)),
+                                                        disabled: a === i.length - 1,
                                                         children: e.jsx("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -288,7 +299,7 @@ let __tla = Promise.all([
                                                 children: [
                                                     e.jsx("button", {
                                                         className: "viewer-zoom-btn",
-                                                        onClick: ()=>w((s)=>Math.max(50, s - 25)),
+                                                        onClick: ()=>m((s)=>Math.max(50, s - 25)),
                                                         children: "-"
                                                     }),
                                                     e.jsxs("span", {
@@ -300,13 +311,13 @@ let __tla = Promise.all([
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-zoom-btn",
-                                                        onClick: ()=>w((s)=>Math.min(200, s + 25)),
+                                                        onClick: ()=>m((s)=>Math.min(200, s + 25)),
                                                         children: "+"
                                                     }),
                                                     e.jsx("button", {
                                                         className: "viewer-action-btn",
                                                         onClick: E,
-                                                        title: t("site.viewer.downloadSvg"),
+                                                        title: r("site.viewer.downloadSvg"),
                                                         children: e.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -333,7 +344,7 @@ let __tla = Promise.all([
                                                     e.jsx("button", {
                                                         className: "viewer-action-btn",
                                                         onClick: L,
-                                                        title: t("site.viewer.newFile"),
+                                                        title: r("site.viewer.newFile"),
                                                         children: e.jsxs("svg", {
                                                             viewBox: "0 0 24 24",
                                                             width: "16",
@@ -365,7 +376,7 @@ let __tla = Promise.all([
                                                 transformOrigin: "top center"
                                             },
                                             dangerouslySetInnerHTML: {
-                                                __html: n[a] || ""
+                                                __html: i[a] || ""
                                             }
                                         })
                                     })
