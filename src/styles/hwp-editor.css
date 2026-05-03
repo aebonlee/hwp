@@ -73,6 +73,11 @@
 
 .hwp-toolbar-btn svg {
   flex-shrink: 0;
+  color: #374151;
+}
+
+.hwp-toolbar-btn:hover svg {
+  color: var(--primary);
 }
 
 .hwp-toolbar-spacer {
