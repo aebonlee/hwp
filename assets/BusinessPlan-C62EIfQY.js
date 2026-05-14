@@ -1,7 +1,7 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-DKXGUNmt.js","assets/jszip.min-BcJBHukL.js","assets/index-Cmm8s4WM.js","assets/index-CIugAJbD.css","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import { u as ne, b as ie, c as se, d as re, r as d, j as e, g as q, T as O, _ as oe, __tla as __tla_0 } from "./index-Cmm8s4WM.js";
-import { S as ce } from "./SEOHead-4YFiXqf9.js";
-let ue;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-BjPGtegh.js","assets/jszip.min-Ew1mFSm8.js","assets/index-CGldg-6M.js","assets/index-cZa_jrDH.css","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
+import { u as L, r as c, j as e, c as Z, b as me, d as Ee, g as _, T as z, _ as ge, __tla as __tla_0 } from "./index-CGldg-6M.js";
+import { S as xe } from "./SEOHead-5o0TTb5U.js";
+let Ie;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -9,7 +9,2076 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    const k = [
+    const U = "hwp_ai_provider", H = "hwp_ai_claude_key", V = "hwp_ai_openai_key", W = "hwp_ai_claude_model", Y = "hwp_ai_openai_model", J = [
+        {
+            id: "claude-sonnet-4-20250514",
+            label: "Claude Sonnet 4"
+        },
+        {
+            id: "claude-3-5-haiku-20241022",
+            label: "Claude 3.5 Haiku"
+        }
+    ], Q = [
+        {
+            id: "gpt-4o",
+            label: "GPT-4o"
+        },
+        {
+            id: "gpt-4o-mini",
+            label: "GPT-4o Mini"
+        },
+        {
+            id: "gpt-4.1",
+            label: "GPT-4.1"
+        },
+        {
+            id: "gpt-4.1-mini",
+            label: "GPT-4.1 Mini"
+        }
+    ], ke = ({ collapsed: s = !0 })=>{
+        const { language: y } = L(), o = y === "ko", [u, f] = c.useState(!s), [a, g] = c.useState(()=>localStorage.getItem(U) || "claude"), [d, b] = c.useState(()=>localStorage.getItem(H) || ""), [m, n] = c.useState(()=>localStorage.getItem(V) || ""), [K, S] = c.useState(()=>localStorage.getItem(W) || J[0].id), [x, h] = c.useState(()=>localStorage.getItem(Y) || Q[0].id), [k, P] = c.useState(!1), j = a === "claude" ? d : m, N = a === "claude" ? K : x, T = a === "claude" ? J : Q, C = j.trim().length > 0, q = c.useCallback((p)=>{
+            g(p), localStorage.setItem(U, p);
+        }, []), O = c.useCallback((p)=>{
+            a === "claude" ? (b(p), localStorage.setItem(H, p)) : (n(p), localStorage.setItem(V, p));
+        }, [
+            a
+        ]), M = c.useCallback((p)=>{
+            a === "claude" ? (S(p), localStorage.setItem(W, p)) : (h(p), localStorage.setItem(Y, p));
+        }, [
+            a
+        ]);
+        return e.jsxs("div", {
+            className: "ai-key-setup",
+            children: [
+                e.jsxs("button", {
+                    className: "ai-key-setup-toggle",
+                    onClick: ()=>f(!u),
+                    children: [
+                        e.jsxs("span", {
+                            className: "ai-key-setup-toggle-left",
+                            children: [
+                                e.jsxs("svg", {
+                                    viewBox: "0 0 24 24",
+                                    width: "16",
+                                    height: "16",
+                                    fill: "none",
+                                    stroke: "currentColor",
+                                    strokeWidth: "2",
+                                    children: [
+                                        e.jsx("rect", {
+                                            x: "3",
+                                            y: "11",
+                                            width: "18",
+                                            height: "11",
+                                            rx: "2",
+                                            ry: "2"
+                                        }),
+                                        e.jsx("path", {
+                                            d: "M7 11V7a5 5 0 0 1 10 0v4"
+                                        })
+                                    ]
+                                }),
+                                e.jsx("span", {
+                                    children: o ? "AI 작성 설정" : "AI Writing Setup"
+                                }),
+                                e.jsx("span", {
+                                    className: `ai-key-setup-status ${C ? "configured" : ""}`,
+                                    children: C ? o ? "✓ 설정됨" : "✓ Configured" : o ? "미설정" : "Not set"
+                                })
+                            ]
+                        }),
+                        e.jsx("svg", {
+                            className: `ai-key-setup-arrow ${u ? "open" : ""}`,
+                            viewBox: "0 0 24 24",
+                            width: "16",
+                            height: "16",
+                            fill: "none",
+                            stroke: "currentColor",
+                            strokeWidth: "2",
+                            children: e.jsx("polyline", {
+                                points: "6 9 12 15 18 9"
+                            })
+                        })
+                    ]
+                }),
+                u && e.jsxs("div", {
+                    className: "ai-key-setup-body",
+                    children: [
+                        e.jsxs("div", {
+                            className: "ai-key-setup-providers",
+                            children: [
+                                e.jsxs("button", {
+                                    className: `ai-key-setup-provider ${a === "claude" ? "active" : ""}`,
+                                    onClick: ()=>q("claude"),
+                                    children: [
+                                        e.jsx("span", {
+                                            className: "ai-provider-icon",
+                                            children: "C"
+                                        }),
+                                        "Claude"
+                                    ]
+                                }),
+                                e.jsxs("button", {
+                                    className: `ai-key-setup-provider ${a === "openai" ? "active" : ""}`,
+                                    onClick: ()=>q("openai"),
+                                    children: [
+                                        e.jsx("span", {
+                                            className: "ai-provider-icon",
+                                            children: "G"
+                                        }),
+                                        "OpenAI"
+                                    ]
+                                })
+                            ]
+                        }),
+                        e.jsxs("div", {
+                            className: "ai-key-setup-row",
+                            children: [
+                                e.jsxs("div", {
+                                    className: "ai-key-setup-input-wrap",
+                                    children: [
+                                        e.jsx("input", {
+                                            type: k ? "text" : "password",
+                                            className: "ai-key-setup-input",
+                                            placeholder: a === "claude" ? "sk-ant-api03-..." : "sk-proj-...",
+                                            value: j,
+                                            onChange: (p)=>O(p.target.value)
+                                        }),
+                                        e.jsx("button", {
+                                            className: "ai-key-setup-eye",
+                                            onClick: ()=>P(!k),
+                                            children: e.jsx("svg", {
+                                                viewBox: "0 0 24 24",
+                                                width: "14",
+                                                height: "14",
+                                                fill: "none",
+                                                stroke: "currentColor",
+                                                strokeWidth: "2",
+                                                children: k ? e.jsxs(e.Fragment, {
+                                                    children: [
+                                                        e.jsx("path", {
+                                                            d: "M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                                                        }),
+                                                        e.jsx("line", {
+                                                            x1: "1",
+                                                            y1: "1",
+                                                            x2: "23",
+                                                            y2: "23"
+                                                        })
+                                                    ]
+                                                }) : e.jsxs(e.Fragment, {
+                                                    children: [
+                                                        e.jsx("path", {
+                                                            d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                                        }),
+                                                        e.jsx("circle", {
+                                                            cx: "12",
+                                                            cy: "12",
+                                                            r: "3"
+                                                        })
+                                                    ]
+                                                })
+                                            })
+                                        })
+                                    ]
+                                }),
+                                e.jsx("select", {
+                                    className: "ai-key-setup-model",
+                                    value: N,
+                                    onChange: (p)=>M(p.target.value),
+                                    children: T.map((p)=>e.jsx("option", {
+                                            value: p.id,
+                                            children: p.label
+                                        }, p.id))
+                                })
+                            ]
+                        }),
+                        e.jsx("p", {
+                            className: "ai-key-setup-hint",
+                            children: o ? "API 키는 브라우저에만 저장되며 서버로 전송되지 않습니다." : "API keys are stored locally and never sent to our server."
+                        })
+                    ]
+                })
+            ]
+        });
+    }, Ke = "hwp_ai_provider", he = "hwp_ai_claude_key", ve = "hwp_ai_openai_key", fe = "hwp_ai_claude_model", Se = "hwp_ai_openai_model";
+    function Pe() {
+        const [s, y] = c.useState(!1), [o, u] = c.useState(""), f = c.useRef(null), a = c.useCallback(()=>{
+            f.current?.abort();
+        }, []), g = c.useCallback(async (d)=>{
+            const b = localStorage.getItem(Ke) || "claude", m = localStorage.getItem(he) || "", n = localStorage.getItem(ve) || "", K = localStorage.getItem(fe) || "claude-sonnet-4-20250514", S = localStorage.getItem(Se) || "gpt-4o";
+            if (!(b === "claude" ? m : n)) throw new Error("API 키가 설정되지 않았습니다. 상단에서 API 키를 입력해 주세요.");
+            y(!0), u("");
+            const h = new AbortController;
+            f.current = h;
+            try {
+                let k = "";
+                return b === "claude" ? k = await Ne(d, m, K, h.signal, (P)=>{
+                    u(P);
+                }) : k = await Ce(d, n, S, h.signal, (P)=>{
+                    u(P);
+                }), k;
+            } finally{
+                y(!1), f.current = null;
+            }
+        }, []);
+        return {
+            generating: s,
+            generatedText: o,
+            generate: g,
+            stop: a
+        };
+    }
+    async function Ne(s, y, o, u, f) {
+        const a = await fetch("https://api.anthropic.com/v1/messages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": y,
+                "anthropic-version": "2023-06-01",
+                "anthropic-dangerous-direct-browser-access": "true"
+            },
+            body: JSON.stringify({
+                model: o,
+                max_tokens: 4096,
+                stream: !0,
+                messages: [
+                    {
+                        role: "user",
+                        content: s
+                    }
+                ],
+                system: "당신은 한국 사업계획서 작성 전문가입니다. 요청받은 항목을 전문적이고 구체적으로 작성해 주세요. 마크다운 서식 없이 순수 텍스트만 출력해 주세요."
+            }),
+            signal: u
+        });
+        if (!a.ok) {
+            const n = await a.json().catch(()=>({}));
+            throw new Error(n?.error?.message || `Claude API error: ${a.status}`);
+        }
+        const g = a.body?.getReader();
+        if (!g) throw new Error("No response body");
+        const d = new TextDecoder;
+        let b = "", m = "";
+        for(;;){
+            const { done: n, value: K } = await g.read();
+            if (n) break;
+            b += d.decode(K, {
+                stream: !0
+            });
+            const S = b.split(`
+`);
+            b = S.pop() || "";
+            for (const x of S){
+                if (!x.startsWith("data: ")) continue;
+                const h = x.slice(6);
+                if (h !== "[DONE]") try {
+                    const k = JSON.parse(h);
+                    k.type === "content_block_delta" && k.delta?.text && (m += k.delta.text, f(m));
+                } catch  {}
+            }
+        }
+        return m;
+    }
+    async function Ce(s, y, o, u, f) {
+        const a = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${y}`
+            },
+            body: JSON.stringify({
+                model: o,
+                max_tokens: 4096,
+                stream: !0,
+                messages: [
+                    {
+                        role: "system",
+                        content: "당신은 한국 사업계획서 작성 전문가입니다. 요청받은 항목을 전문적이고 구체적으로 작성해 주세요. 마크다운 서식 없이 순수 텍스트만 출력해 주세요."
+                    },
+                    {
+                        role: "user",
+                        content: s
+                    }
+                ]
+            }),
+            signal: u
+        });
+        if (!a.ok) {
+            const n = await a.json().catch(()=>({}));
+            throw new Error(n?.error?.message || `OpenAI API error: ${a.status}`);
+        }
+        const g = a.body?.getReader();
+        if (!g) throw new Error("No response body");
+        const d = new TextDecoder;
+        let b = "", m = "";
+        for(;;){
+            const { done: n, value: K } = await g.read();
+            if (n) break;
+            b += d.decode(K, {
+                stream: !0
+            });
+            const S = b.split(`
+`);
+            b = S.pop() || "";
+            for (const x of S){
+                if (!x.startsWith("data: ")) continue;
+                const h = x.slice(6);
+                if (h !== "[DONE]") try {
+                    const P = JSON.parse(h).choices?.[0]?.delta?.content;
+                    P && (m += P, f(m));
+                } catch  {}
+            }
+        }
+        return m;
+    }
+    const je = ({ fieldLabel: s, sectionTitle: y, templateName: o, allFormData: u, onAccept: f })=>{
+        const { language: a } = L(), { showToast: g } = Z(), d = a === "ko", [b, m] = c.useState(!1), { generating: n, generatedText: K, generate: S, stop: x } = Pe(), h = ()=>{
+            const N = {};
+            for (const [T, C] of Object.entries(u))C && C.trim() && (N[T] = C);
+            return `당신은 한국 사업계획서 작성 전문가입니다.
+사업유형: ${o}
+섹션: ${y}
+작성 항목: ${s}
+이미 입력된 정보: ${JSON.stringify(N, null, 2)}
+
+위 맥락을 참고하여 '${s}' 항목을 전문적이고 구체적으로 작성해 주세요.
+- 실제 사업계획서에 바로 사용할 수 있는 수준으로 작성
+- 구체적인 수치나 예시를 포함
+- 3~5개 문단 또는 항목으로 구성
+- 마크다운 서식 없이 순수 텍스트만 출력`;
+        }, k = async ()=>{
+            try {
+                await S(h());
+            } catch (N) {
+                N.name !== "AbortError" && g(N.message, "error");
+            }
+        }, P = ()=>{
+            f(K), m(!1);
+        }, j = ()=>{
+            n && x(), m(!1);
+        };
+        return b ? e.jsxs("div", {
+            className: "ai-field-popover",
+            children: [
+                e.jsxs("div", {
+                    className: "ai-field-popover-header",
+                    children: [
+                        e.jsx("span", {
+                            children: d ? `AI 작성: ${s}` : `AI Write: ${s}`
+                        }),
+                        e.jsx("button", {
+                            className: "ai-field-popover-close",
+                            onClick: j,
+                            children: "×"
+                        })
+                    ]
+                }),
+                e.jsxs("div", {
+                    className: "ai-field-preview",
+                    children: [
+                        K || (n ? d ? "생성 중..." : "Generating..." : ""),
+                        n && e.jsx("span", {
+                            className: "ai-cursor-blink",
+                            children: "|"
+                        })
+                    ]
+                }),
+                e.jsxs("div", {
+                    className: "ai-field-actions",
+                    children: [
+                        !n && K && e.jsxs(e.Fragment, {
+                            children: [
+                                e.jsx("button", {
+                                    className: "bp-btn primary",
+                                    onClick: P,
+                                    children: d ? "적용" : "Apply"
+                                }),
+                                e.jsx("button", {
+                                    className: "bp-btn",
+                                    onClick: k,
+                                    children: d ? "재생성" : "Regenerate"
+                                })
+                            ]
+                        }),
+                        n && e.jsx("button", {
+                            className: "bp-btn",
+                            onClick: x,
+                            children: d ? "중지" : "Stop"
+                        }),
+                        e.jsx("button", {
+                            className: "bp-btn",
+                            onClick: j,
+                            children: d ? "취소" : "Cancel"
+                        })
+                    ]
+                })
+            ]
+        }) : e.jsx("button", {
+            type: "button",
+            className: "ai-field-btn",
+            onClick: ()=>{
+                m(!0), k();
+            },
+            title: d ? "AI로 작성" : "Write with AI",
+            children: e.jsx("svg", {
+                viewBox: "0 0 24 24",
+                width: "14",
+                height: "14",
+                fill: "none",
+                stroke: "currentColor",
+                strokeWidth: "2",
+                children: e.jsx("polygon", {
+                    points: "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                })
+            })
+        });
+    }, Me = [
+        {
+            type: "gov-prestartup",
+            nameKo: "예비창업패키지",
+            nameEn: "Pre-Startup Package",
+            icon: "🌱",
+            descKo: "중소벤처기업부/창업진흥원 예비창업자 지원사업",
+            descEn: "KISED Pre-Startup Support Program",
+            category: "government",
+            sections: [
+                {
+                    id: "applicant",
+                    titleKo: "예비창업자 정보",
+                    titleEn: "Applicant Information",
+                    fields: [
+                        {
+                            key: "applicantName",
+                            labelKo: "신청자명",
+                            labelEn: "Applicant Name",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "applicantBirth",
+                            labelKo: "생년월일",
+                            labelEn: "Date of Birth",
+                            type: "date"
+                        },
+                        {
+                            key: "career",
+                            labelKo: "주요 경력 및 학력",
+                            labelEn: "Career & Education",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "preStartupMotivation",
+                            labelKo: "창업 동기",
+                            labelEn: "Startup Motivation",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "itemOverview",
+                    titleKo: "창업아이템 개요",
+                    titleEn: "Startup Item Overview",
+                    fields: [
+                        {
+                            key: "itemTitle",
+                            labelKo: "아이템명",
+                            labelEn: "Item Title",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "itemSummary",
+                            labelKo: "아이템 요약",
+                            labelEn: "Item Summary",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "itemCategory",
+                            labelKo: "업종/분야",
+                            labelEn: "Industry/Field",
+                            type: "text",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "innovation",
+                    titleKo: "아이템 혁신성·차별성",
+                    titleEn: "Innovation & Differentiation",
+                    fields: [
+                        {
+                            key: "innovationPoint",
+                            labelKo: "혁신성 (기존 대비 개선점)",
+                            labelEn: "Innovation Points",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "techDiff",
+                            labelKo: "기술적 차별성",
+                            labelEn: "Technical Differentiation",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "ipStatus",
+                            labelKo: "지식재산권 현황",
+                            labelEn: "IP Status",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "market",
+                    titleKo: "시장분석 및 경쟁력",
+                    titleEn: "Market Analysis & Competitiveness",
+                    fields: [
+                        {
+                            key: "targetMarket",
+                            labelKo: "목표 시장",
+                            labelEn: "Target Market",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "preMarketSize",
+                            labelKo: "시장 규모 (국내/해외)",
+                            labelEn: "Market Size (Domestic/Global)",
+                            type: "textarea"
+                        },
+                        {
+                            key: "preCompetitors",
+                            labelKo: "경쟁자 분석",
+                            labelEn: "Competitor Analysis",
+                            type: "textarea"
+                        },
+                        {
+                            key: "competitiveEdge",
+                            labelKo: "경쟁 우위 요소",
+                            labelEn: "Competitive Advantage",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "bizModel",
+                    titleKo: "BM·수익모델",
+                    titleEn: "Business Model & Revenue",
+                    fields: [
+                        {
+                            key: "businessModel",
+                            labelKo: "비즈니스 모델",
+                            labelEn: "Business Model",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "revenueModel",
+                            labelKo: "수익 모델",
+                            labelEn: "Revenue Model",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "salesStrategy",
+                            labelKo: "판매/마케팅 전략",
+                            labelEn: "Sales/Marketing Strategy",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "execution",
+                    titleKo: "사업화 전략",
+                    titleEn: "Commercialization Strategy",
+                    fields: [
+                        {
+                            key: "bizStrategy",
+                            labelKo: "사업화 추진 전략",
+                            labelEn: "Commercialization Plan",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "protoType",
+                            labelKo: "시제품/MVP 계획",
+                            labelEn: "Prototype/MVP Plan",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "schedule",
+                    titleKo: "추진일정·마일스톤",
+                    titleEn: "Schedule & Milestones",
+                    fields: [
+                        {
+                            key: "preMilestones",
+                            labelKo: "단계별 추진 일정",
+                            labelEn: "Phase Schedule",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "budget",
+                    titleKo: "소요자금 및 자금운용계획",
+                    titleEn: "Budget & Fund Plan",
+                    fields: [
+                        {
+                            key: "budgetTotal",
+                            labelKo: "총 소요자금",
+                            labelEn: "Total Budget",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "preGovFunding",
+                            labelKo: "정부지원금 신청액",
+                            labelEn: "Government Funding Request",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "preSelfFunding",
+                            labelKo: "자기부담금",
+                            labelEn: "Self Funding",
+                            type: "text"
+                        },
+                        {
+                            key: "budgetBreakdown",
+                            labelKo: "세부 자금 사용계획",
+                            labelEn: "Budget Breakdown",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "impact",
+                    titleKo: "기대효과",
+                    titleEn: "Expected Outcomes",
+                    fields: [
+                        {
+                            key: "revenue3yr",
+                            labelKo: "3년 매출 전망",
+                            labelEn: "3-Year Revenue Forecast",
+                            type: "textarea"
+                        },
+                        {
+                            key: "jobCreation",
+                            labelKo: "고용 창출 계획",
+                            labelEn: "Job Creation Plan",
+                            type: "textarea"
+                        },
+                        {
+                            key: "socialImpactPre",
+                            labelKo: "사회적 기대효과",
+                            labelEn: "Social Impact",
+                            type: "textarea"
+                        }
+                    ]
+                }
+            ],
+            markdownTemplate: `# 예비창업패키지 사업계획서
+
+## 예비창업자 정보
+
+| 항목 | 내용 |
+|------|------|
+| 신청자명 | {{applicantName}} |
+| 생년월일 | {{applicantBirth}} |
+
+### 주요 경력 및 학력
+{{career}}
+
+### 창업 동기
+{{preStartupMotivation}}
+
+## 1. 창업아이템 개요
+
+| 항목 | 내용 |
+|------|------|
+| 아이템명 | {{itemTitle}} |
+| 업종/분야 | {{itemCategory}} |
+
+### 아이템 요약
+{{itemSummary}}
+
+## 2. 아이템 혁신성·차별성
+
+### 혁신성 (기존 대비 개선점)
+{{innovationPoint}}
+
+### 기술적 차별성
+{{techDiff}}
+
+### 지식재산권 현황
+{{ipStatus}}
+
+## 3. 시장분석 및 경쟁력
+
+### 목표 시장
+{{targetMarket}}
+
+### 시장 규모
+{{preMarketSize}}
+
+### 경쟁자 분석
+{{preCompetitors}}
+
+### 경쟁 우위 요소
+{{competitiveEdge}}
+
+## 4. BM·수익모델
+
+### 비즈니스 모델
+{{businessModel}}
+
+### 수익 모델
+{{revenueModel}}
+
+### 판매/마케팅 전략
+{{salesStrategy}}
+
+## 5. 사업화 전략
+
+### 사업화 추진 전략
+{{bizStrategy}}
+
+### 시제품/MVP 계획
+{{protoType}}
+
+## 6. 추진일정·마일스톤
+
+{{preMilestones}}
+
+## 7. 소요자금 및 자금운용계획
+
+| 항목 | 금액 |
+|------|------|
+| 총 소요자금 | {{budgetTotal}} |
+| 정부지원금 신청액 | {{preGovFunding}} |
+| 자기부담금 | {{preSelfFunding}} |
+
+### 세부 자금 사용계획
+{{budgetBreakdown}}
+
+## 8. 기대효과
+
+### 3년 매출 전망
+{{revenue3yr}}
+
+### 고용 창출 계획
+{{jobCreation}}
+
+### 사회적 기대효과
+{{socialImpactPre}}
+`
+        },
+        {
+            type: "gov-earlystartup",
+            nameKo: "초기창업패키지",
+            nameEn: "Early-Stage Startup Package",
+            icon: "🚀",
+            descKo: "3년 이내 창업기업 대상 초기창업 지원사업",
+            descEn: "Support program for startups within 3 years",
+            category: "government",
+            sections: [
+                {
+                    id: "companyStatus",
+                    titleKo: "기업 현황",
+                    titleEn: "Company Status",
+                    fields: [
+                        {
+                            key: "earlyCompanyName",
+                            labelKo: "기업명",
+                            labelEn: "Company Name",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "earlyRepName",
+                            labelKo: "대표자명",
+                            labelEn: "CEO Name",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "earlyEstDate",
+                            labelKo: "설립일",
+                            labelEn: "Established Date",
+                            type: "date",
+                            required: !0
+                        },
+                        {
+                            key: "earlyBizNumber",
+                            labelKo: "사업자등록번호",
+                            labelEn: "Business Registration Number",
+                            type: "text"
+                        },
+                        {
+                            key: "earlyEmployees",
+                            labelKo: "상시근로자 수",
+                            labelEn: "Number of Employees",
+                            type: "number"
+                        },
+                        {
+                            key: "earlyAddress",
+                            labelKo: "소재지",
+                            labelEn: "Location",
+                            type: "text"
+                        }
+                    ]
+                },
+                {
+                    id: "earlyItem",
+                    titleKo: "창업아이템",
+                    titleEn: "Startup Item",
+                    fields: [
+                        {
+                            key: "earlyItemName",
+                            labelKo: "아이템명",
+                            labelEn: "Item Name",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "earlyItemDesc",
+                            labelKo: "아이템 설명",
+                            labelEn: "Item Description",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "earlyItemDiff",
+                            labelKo: "차별성 및 혁신성",
+                            labelEn: "Differentiation & Innovation",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "earlyTech",
+                    titleKo: "기술/IP 현황",
+                    titleEn: "Technology/IP Status",
+                    fields: [
+                        {
+                            key: "earlyCoreTech",
+                            labelKo: "핵심 보유 기술",
+                            labelEn: "Core Technology",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "earlyIpList",
+                            labelKo: "지식재산권 보유 현황",
+                            labelEn: "IP Holdings",
+                            type: "textarea"
+                        },
+                        {
+                            key: "earlyTechRoadmap",
+                            labelKo: "기술 개발 로드맵",
+                            labelEn: "Technology Roadmap",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "earlyMarket",
+                    titleKo: "시장분석",
+                    titleEn: "Market Analysis",
+                    fields: [
+                        {
+                            key: "earlyTargetMarket",
+                            labelKo: "목표 시장 및 고객",
+                            labelEn: "Target Market & Customers",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "earlyMarketSize",
+                            labelKo: "시장 규모 및 성장성",
+                            labelEn: "Market Size & Growth",
+                            type: "textarea"
+                        },
+                        {
+                            key: "earlyCompetitorAnalysis",
+                            labelKo: "경쟁 환경 분석",
+                            labelEn: "Competitive Landscape",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "earlyBizStrategy",
+                    titleKo: "사업화 전략",
+                    titleEn: "Commercialization Strategy",
+                    fields: [
+                        {
+                            key: "earlyBizModel",
+                            labelKo: "비즈니스 모델",
+                            labelEn: "Business Model",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "earlySalesStrategy",
+                            labelKo: "판로 개척 전략",
+                            labelEn: "Sales Strategy",
+                            type: "textarea"
+                        },
+                        {
+                            key: "earlyMarketingPlan",
+                            labelKo: "마케팅 계획",
+                            labelEn: "Marketing Plan",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "earlyGrowth",
+                    titleKo: "성장전략",
+                    titleEn: "Growth Strategy",
+                    fields: [
+                        {
+                            key: "earlyGrowthPlan",
+                            labelKo: "중장기 성장 전략",
+                            labelEn: "Mid-Long Term Growth Plan",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "earlyScaleup",
+                            labelKo: "스케일업 계획",
+                            labelEn: "Scale-up Plan",
+                            type: "textarea"
+                        },
+                        {
+                            key: "earlyGlobalPlan",
+                            labelKo: "해외 진출 계획",
+                            labelEn: "Global Expansion Plan",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "earlyTeam",
+                    titleKo: "팀 구성",
+                    titleEn: "Team Composition",
+                    fields: [
+                        {
+                            key: "earlyTeamIntro",
+                            labelKo: "핵심 인력 현황",
+                            labelEn: "Key Personnel",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "earlyHiringPlan",
+                            labelKo: "인력 충원 계획",
+                            labelEn: "Hiring Plan",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "earlyBudget",
+                    titleKo: "자금운용계획",
+                    titleEn: "Budget Plan",
+                    fields: [
+                        {
+                            key: "earlyTotalBudget",
+                            labelKo: "총 사업비",
+                            labelEn: "Total Budget",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "earlyGovAmount",
+                            labelKo: "정부지원금",
+                            labelEn: "Government Funding",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "earlySelfAmount",
+                            labelKo: "자부담금",
+                            labelEn: "Self Funding",
+                            type: "text"
+                        },
+                        {
+                            key: "earlyBudgetDetail",
+                            labelKo: "세부 자금운용 계획",
+                            labelEn: "Detailed Budget Plan",
+                            type: "textarea"
+                        }
+                    ]
+                }
+            ],
+            markdownTemplate: `# 초기창업패키지 사업계획서
+
+## 기업 현황
+
+| 항목 | 내용 |
+|------|------|
+| 기업명 | {{earlyCompanyName}} |
+| 대표자명 | {{earlyRepName}} |
+| 설립일 | {{earlyEstDate}} |
+| 사업자등록번호 | {{earlyBizNumber}} |
+| 상시근로자 수 | {{earlyEmployees}}명 |
+| 소재지 | {{earlyAddress}} |
+
+## 1. 창업아이템
+
+### 아이템명
+{{earlyItemName}}
+
+### 아이템 설명
+{{earlyItemDesc}}
+
+### 차별성 및 혁신성
+{{earlyItemDiff}}
+
+## 2. 기술/IP 현황
+
+### 핵심 보유 기술
+{{earlyCoreTech}}
+
+### 지식재산권 보유 현황
+{{earlyIpList}}
+
+### 기술 개발 로드맵
+{{earlyTechRoadmap}}
+
+## 3. 시장분석
+
+### 목표 시장 및 고객
+{{earlyTargetMarket}}
+
+### 시장 규모 및 성장성
+{{earlyMarketSize}}
+
+### 경쟁 환경 분석
+{{earlyCompetitorAnalysis}}
+
+## 4. 사업화 전략
+
+### 비즈니스 모델
+{{earlyBizModel}}
+
+### 판로 개척 전략
+{{earlySalesStrategy}}
+
+### 마케팅 계획
+{{earlyMarketingPlan}}
+
+## 5. 성장전략
+
+### 중장기 성장 전략
+{{earlyGrowthPlan}}
+
+### 스케일업 계획
+{{earlyScaleup}}
+
+### 해외 진출 계획
+{{earlyGlobalPlan}}
+
+## 6. 팀 구성
+
+### 핵심 인력 현황
+{{earlyTeamIntro}}
+
+### 인력 충원 계획
+{{earlyHiringPlan}}
+
+## 7. 자금운용계획
+
+| 항목 | 금액 |
+|------|------|
+| 총 사업비 | {{earlyTotalBudget}} |
+| 정부지원금 | {{earlyGovAmount}} |
+| 자부담금 | {{earlySelfAmount}} |
+
+### 세부 자금운용 계획
+{{earlyBudgetDetail}}
+`
+        },
+        {
+            type: "gov-smallbiz",
+            nameKo: "소상공인 정책자금",
+            nameEn: "Small Business Policy Fund",
+            icon: "🏪",
+            descKo: "소상공인시장진흥공단 정책자금 신청서",
+            descEn: "Small Enterprise & Market Service Policy Fund Application",
+            category: "government",
+            sections: [
+                {
+                    id: "sbApplicant",
+                    titleKo: "신청인 정보",
+                    titleEn: "Applicant Information",
+                    fields: [
+                        {
+                            key: "sbName",
+                            labelKo: "상호/법인명",
+                            labelEn: "Business Name",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "sbRepName",
+                            labelKo: "대표자명",
+                            labelEn: "Representative",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "sbBizNumber",
+                            labelKo: "사업자등록번호",
+                            labelEn: "Business Registration No.",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "sbIndustry",
+                            labelKo: "업종",
+                            labelEn: "Industry",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "sbEstDate",
+                            labelKo: "개업일",
+                            labelEn: "Opening Date",
+                            type: "date"
+                        }
+                    ]
+                },
+                {
+                    id: "sbLocation",
+                    titleKo: "사업장 현황",
+                    titleEn: "Business Location Status",
+                    fields: [
+                        {
+                            key: "sbAddress",
+                            labelKo: "사업장 주소",
+                            labelEn: "Business Address",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "sbSize",
+                            labelKo: "사업장 규모 (면적)",
+                            labelEn: "Business Area Size",
+                            type: "text"
+                        },
+                        {
+                            key: "sbEmployees",
+                            labelKo: "종업원 수",
+                            labelEn: "Employee Count",
+                            type: "number"
+                        },
+                        {
+                            key: "sbOwnership",
+                            labelKo: "소유/임차 여부",
+                            labelEn: "Ownership Type",
+                            type: "select",
+                            options: [
+                                "자가",
+                                "임차",
+                                "기타"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "sbBusiness",
+                    titleKo: "사업 내용",
+                    titleEn: "Business Description",
+                    fields: [
+                        {
+                            key: "sbDescription",
+                            labelKo: "주요 사업 내용",
+                            labelEn: "Main Business Activities",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "sbProducts",
+                            labelKo: "주요 상품/서비스",
+                            labelEn: "Main Products/Services",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "sbCustomers",
+                            labelKo: "주요 고객층",
+                            labelEn: "Target Customers",
+                            type: "textarea"
+                        },
+                        {
+                            key: "sbStrength",
+                            labelKo: "사업 경쟁력",
+                            labelEn: "Business Competitiveness",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "sbFundUse",
+                    titleKo: "자금 사용계획",
+                    titleEn: "Fund Usage Plan",
+                    fields: [
+                        {
+                            key: "sbLoanAmount",
+                            labelKo: "신청 금액",
+                            labelEn: "Requested Amount",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "sbLoanPurpose",
+                            labelKo: "자금 용도",
+                            labelEn: "Fund Purpose",
+                            type: "select",
+                            options: [
+                                "운전자금",
+                                "시설자금",
+                                "운전+시설",
+                                "긴급경영안정자금"
+                            ]
+                        },
+                        {
+                            key: "sbFundDetail",
+                            labelKo: "세부 사용계획",
+                            labelEn: "Detailed Usage Plan",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "sbRepayment",
+                    titleKo: "상환계획",
+                    titleEn: "Repayment Plan",
+                    fields: [
+                        {
+                            key: "sbRepaymentPlan",
+                            labelKo: "상환 계획",
+                            labelEn: "Repayment Plan",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "sbRepaymentSource",
+                            labelKo: "상환 재원",
+                            labelEn: "Repayment Source",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "sbFinance",
+                    titleKo: "매출·재무현황",
+                    titleEn: "Sales & Financial Status",
+                    fields: [
+                        {
+                            key: "sbAnnualRevenue",
+                            labelKo: "최근 연 매출액",
+                            labelEn: "Recent Annual Revenue",
+                            type: "text"
+                        },
+                        {
+                            key: "sbMonthlyRevenue",
+                            labelKo: "월 평균 매출액",
+                            labelEn: "Average Monthly Revenue",
+                            type: "text"
+                        },
+                        {
+                            key: "sbDebtStatus",
+                            labelKo: "부채 현황",
+                            labelEn: "Debt Status",
+                            type: "textarea"
+                        },
+                        {
+                            key: "sbCreditGrade",
+                            labelKo: "신용등급",
+                            labelEn: "Credit Rating",
+                            type: "text"
+                        }
+                    ]
+                }
+            ],
+            markdownTemplate: `# 소상공인 정책자금 신청서
+
+## 신청인 정보
+
+| 항목 | 내용 |
+|------|------|
+| 상호/법인명 | {{sbName}} |
+| 대표자명 | {{sbRepName}} |
+| 사업자등록번호 | {{sbBizNumber}} |
+| 업종 | {{sbIndustry}} |
+| 개업일 | {{sbEstDate}} |
+
+## 1. 사업장 현황
+
+| 항목 | 내용 |
+|------|------|
+| 사업장 주소 | {{sbAddress}} |
+| 사업장 규모 | {{sbSize}} |
+| 종업원 수 | {{sbEmployees}}명 |
+| 소유/임차 | {{sbOwnership}} |
+
+## 2. 사업 내용
+
+### 주요 사업 내용
+{{sbDescription}}
+
+### 주요 상품/서비스
+{{sbProducts}}
+
+### 주요 고객층
+{{sbCustomers}}
+
+### 사업 경쟁력
+{{sbStrength}}
+
+## 3. 자금 사용계획
+
+| 항목 | 내용 |
+|------|------|
+| 신청 금액 | {{sbLoanAmount}} |
+| 자금 용도 | {{sbLoanPurpose}} |
+
+### 세부 사용계획
+{{sbFundDetail}}
+
+## 4. 상환계획
+
+### 상환 계획
+{{sbRepaymentPlan}}
+
+### 상환 재원
+{{sbRepaymentSource}}
+
+## 5. 매출·재무현황
+
+| 항목 | 내용 |
+|------|------|
+| 최근 연 매출액 | {{sbAnnualRevenue}} |
+| 월 평균 매출액 | {{sbMonthlyRevenue}} |
+| 신용등급 | {{sbCreditGrade}} |
+
+### 부채 현황
+{{sbDebtStatus}}
+`
+        },
+        {
+            type: "gov-rnd",
+            nameKo: "기술개발 R&D 사업계획서",
+            nameEn: "R&D Project Plan",
+            icon: "🔬",
+            descKo: "정부 R&D 기술개발 과제 신청용 사업계획서",
+            descEn: "Government R&D Technology Development Project Plan",
+            category: "government",
+            sections: [
+                {
+                    id: "rndSummary",
+                    titleKo: "과제 총괄표",
+                    titleEn: "Project Summary",
+                    fields: [
+                        {
+                            key: "rndTitle",
+                            labelKo: "과제명",
+                            labelEn: "Project Title",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "rndProgram",
+                            labelKo: "사업명/공고명",
+                            labelEn: "Program Name",
+                            type: "text"
+                        },
+                        {
+                            key: "rndPeriod",
+                            labelKo: "연구개발 기간",
+                            labelEn: "R&D Period",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "rndOrganization",
+                            labelKo: "주관연구기관",
+                            labelEn: "Lead Research Institution",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "rndPI",
+                            labelKo: "연구책임자",
+                            labelEn: "Principal Investigator",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "rndCoOrg",
+                            labelKo: "참여기관",
+                            labelEn: "Participating Organizations",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "rndNecessity",
+                    titleKo: "기술개발 필요성",
+                    titleEn: "R&D Necessity",
+                    fields: [
+                        {
+                            key: "rndBackground",
+                            labelKo: "연구개발 배경 및 필요성",
+                            labelEn: "R&D Background & Necessity",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "rndProblem",
+                            labelKo: "현재 기술적 한계/문제점",
+                            labelEn: "Current Technical Limitations",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "rndTrend",
+                    titleKo: "국내외 기술동향",
+                    titleEn: "Technology Trends",
+                    fields: [
+                        {
+                            key: "rndDomesticTrend",
+                            labelKo: "국내 기술동향",
+                            labelEn: "Domestic Technology Trends",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "rndGlobalTrend",
+                            labelKo: "국외 기술동향",
+                            labelEn: "Global Technology Trends",
+                            type: "textarea"
+                        },
+                        {
+                            key: "rndPriorArt",
+                            labelKo: "선행연구 분석",
+                            labelEn: "Prior Art Analysis",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "rndGoal",
+                    titleKo: "개발 목표·내용",
+                    titleEn: "Development Goals & Content",
+                    fields: [
+                        {
+                            key: "rndFinalGoal",
+                            labelKo: "최종 개발 목표",
+                            labelEn: "Final Development Goal",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "rndYearlyGoal",
+                            labelKo: "연차별 개발 목표",
+                            labelEn: "Yearly Development Goals",
+                            type: "textarea"
+                        },
+                        {
+                            key: "rndDevContent",
+                            labelKo: "세부 개발 내용",
+                            labelEn: "Detailed Development Content",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "rndSpecs",
+                            labelKo: "목표 성능 지표",
+                            labelEn: "Target Performance Specs",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "rndEquip",
+                    titleKo: "연구장비·시설",
+                    titleEn: "Research Equipment & Facilities",
+                    fields: [
+                        {
+                            key: "rndExistingEquip",
+                            labelKo: "보유 연구장비 현황",
+                            labelEn: "Existing Equipment",
+                            type: "textarea"
+                        },
+                        {
+                            key: "rndNewEquip",
+                            labelKo: "신규 장비 구매 계획",
+                            labelEn: "New Equipment Purchase Plan",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "rndSystem",
+                    titleKo: "추진체계",
+                    titleEn: "Implementation System",
+                    fields: [
+                        {
+                            key: "rndOrgChart",
+                            labelKo: "연구 추진체계",
+                            labelEn: "R&D Organization Chart",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "rndSchedule",
+                            labelKo: "추진 일정",
+                            labelEn: "Schedule",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "rndTeam",
+                    titleKo: "연구인력",
+                    titleEn: "Research Personnel",
+                    fields: [
+                        {
+                            key: "rndPIProfile",
+                            labelKo: "연구책임자 이력",
+                            labelEn: "PI Profile",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "rndResearchers",
+                            labelKo: "참여 연구원 현황",
+                            labelEn: "Research Team",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "rndComm",
+                    titleKo: "사업화 계획",
+                    titleEn: "Commercialization Plan",
+                    fields: [
+                        {
+                            key: "rndCommPlan",
+                            labelKo: "사업화 추진 계획",
+                            labelEn: "Commercialization Plan",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "rndMarketAnalysis",
+                            labelKo: "시장 분석 및 매출 전망",
+                            labelEn: "Market Analysis & Revenue Forecast",
+                            type: "textarea"
+                        },
+                        {
+                            key: "rndIpStrategy",
+                            labelKo: "IP 전략",
+                            labelEn: "IP Strategy",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "rndBudget",
+                    titleKo: "연구비 편성",
+                    titleEn: "R&D Budget",
+                    fields: [
+                        {
+                            key: "rndTotalBudget",
+                            labelKo: "총 연구비",
+                            labelEn: "Total R&D Budget",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "rndGovFunding",
+                            labelKo: "정부출연금",
+                            labelEn: "Government Funding",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "rndMatchFunding",
+                            labelKo: "민간부담금",
+                            labelEn: "Private Match",
+                            type: "text"
+                        },
+                        {
+                            key: "rndBudgetDetail",
+                            labelKo: "비목별 연구비 내역",
+                            labelEn: "Budget by Category",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                }
+            ],
+            markdownTemplate: `# {{rndTitle}}
+
+## 기술개발 R&D 사업계획서
+
+### 과제 총괄표
+
+| 항목 | 내용 |
+|------|------|
+| 과제명 | {{rndTitle}} |
+| 사업명/공고명 | {{rndProgram}} |
+| 연구개발 기간 | {{rndPeriod}} |
+| 주관연구기관 | {{rndOrganization}} |
+| 연구책임자 | {{rndPI}} |
+
+### 참여기관
+{{rndCoOrg}}
+
+## 1. 기술개발 필요성
+
+### 연구개발 배경 및 필요성
+{{rndBackground}}
+
+### 현재 기술적 한계/문제점
+{{rndProblem}}
+
+## 2. 국내외 기술동향
+
+### 국내 기술동향
+{{rndDomesticTrend}}
+
+### 국외 기술동향
+{{rndGlobalTrend}}
+
+### 선행연구 분석
+{{rndPriorArt}}
+
+## 3. 개발 목표·내용
+
+### 최종 개발 목표
+{{rndFinalGoal}}
+
+### 연차별 개발 목표
+{{rndYearlyGoal}}
+
+### 세부 개발 내용
+{{rndDevContent}}
+
+### 목표 성능 지표
+{{rndSpecs}}
+
+## 4. 연구장비·시설
+
+### 보유 연구장비 현황
+{{rndExistingEquip}}
+
+### 신규 장비 구매 계획
+{{rndNewEquip}}
+
+## 5. 추진체계
+
+### 연구 추진체계
+{{rndOrgChart}}
+
+### 추진 일정
+{{rndSchedule}}
+
+## 6. 연구인력
+
+### 연구책임자 이력
+{{rndPIProfile}}
+
+### 참여 연구원 현황
+{{rndResearchers}}
+
+## 7. 사업화 계획
+
+### 사업화 추진 계획
+{{rndCommPlan}}
+
+### 시장 분석 및 매출 전망
+{{rndMarketAnalysis}}
+
+### IP 전략
+{{rndIpStrategy}}
+
+## 8. 연구비 편성
+
+| 항목 | 금액 |
+|------|------|
+| 총 연구비 | {{rndTotalBudget}} |
+| 정부출연금 | {{rndGovFunding}} |
+| 민간부담금 | {{rndMatchFunding}} |
+
+### 비목별 연구비 내역
+{{rndBudgetDetail}}
+`
+        },
+        {
+            type: "gov-social",
+            nameKo: "사회적기업 육성사업",
+            nameEn: "Social Enterprise Development",
+            icon: "🤝",
+            descKo: "한국사회적기업진흥원 사회적기업 육성사업 신청서",
+            descEn: "Korea Social Enterprise Promotion Agency Development Program",
+            category: "government",
+            sections: [
+                {
+                    id: "seOverview",
+                    titleKo: "기업 개요",
+                    titleEn: "Enterprise Overview",
+                    fields: [
+                        {
+                            key: "seName",
+                            labelKo: "기업명",
+                            labelEn: "Enterprise Name",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "seType",
+                            labelKo: "조직 형태",
+                            labelEn: "Organization Type",
+                            type: "select",
+                            options: [
+                                "사회적기업(인증)",
+                                "예비사회적기업",
+                                "사회적협동조합",
+                                "마을기업",
+                                "자활기업"
+                            ],
+                            required: !0
+                        },
+                        {
+                            key: "seRepName",
+                            labelKo: "대표자명",
+                            labelEn: "Representative",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "seEstDate",
+                            labelKo: "설립일",
+                            labelEn: "Established Date",
+                            type: "date"
+                        },
+                        {
+                            key: "seEmployees",
+                            labelKo: "총 근로자 수",
+                            labelEn: "Total Employees",
+                            type: "number"
+                        },
+                        {
+                            key: "seDescription",
+                            labelKo: "기업 소개",
+                            labelEn: "Enterprise Description",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "sePurpose",
+                    titleKo: "사회적 목적",
+                    titleEn: "Social Purpose",
+                    fields: [
+                        {
+                            key: "seMission",
+                            labelKo: "사회적 미션",
+                            labelEn: "Social Mission",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seSocialGoal",
+                            labelKo: "사회적 목적 유형",
+                            labelEn: "Social Purpose Type",
+                            type: "select",
+                            options: [
+                                "일자리제공형",
+                                "사회서비스제공형",
+                                "지역사회공헌형",
+                                "혼합형",
+                                "기타(창의·혁신)형"
+                            ]
+                        },
+                        {
+                            key: "seSocialProblem",
+                            labelKo: "해결하려는 사회문제",
+                            labelEn: "Social Problem to Solve",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seBeneficiary",
+                            labelKo: "주요 수혜 대상",
+                            labelEn: "Main Beneficiaries",
+                            type: "textarea",
+                            required: !0
+                        }
+                    ]
+                },
+                {
+                    id: "seService",
+                    titleKo: "사회서비스 실적",
+                    titleEn: "Social Service Performance",
+                    fields: [
+                        {
+                            key: "seServiceList",
+                            labelKo: "제공 사회서비스 내용",
+                            labelEn: "Social Services Provided",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seServiceResult",
+                            labelKo: "서비스 제공 실적",
+                            labelEn: "Service Performance",
+                            type: "textarea"
+                        },
+                        {
+                            key: "seSocialImpact",
+                            labelKo: "사회적 성과",
+                            labelEn: "Social Impact Results",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "seJobs",
+                    titleKo: "일자리 창출",
+                    titleEn: "Job Creation",
+                    fields: [
+                        {
+                            key: "seCurrentJobs",
+                            labelKo: "현재 고용 현황",
+                            labelEn: "Current Employment Status",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seJobPlan",
+                            labelKo: "신규 일자리 창출 계획",
+                            labelEn: "New Job Creation Plan",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seVulnerable",
+                            labelKo: "취약계층 고용 현황/계획",
+                            labelEn: "Vulnerable Group Employment",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "seBizPlan",
+                    titleKo: "사업계획",
+                    titleEn: "Business Plan",
+                    fields: [
+                        {
+                            key: "seMainBiz",
+                            labelKo: "주요 사업 내용",
+                            labelEn: "Main Business Activities",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seBizModel",
+                            labelKo: "수익 모델",
+                            labelEn: "Revenue Model",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seGrowthPlan",
+                            labelKo: "성장 계획",
+                            labelEn: "Growth Plan",
+                            type: "textarea"
+                        },
+                        {
+                            key: "seSchedule",
+                            labelKo: "사업 추진 일정",
+                            labelEn: "Business Schedule",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "seFinance",
+                    titleKo: "재무계획",
+                    titleEn: "Financial Plan",
+                    fields: [
+                        {
+                            key: "seAnnualRevenue",
+                            labelKo: "연간 매출액 (최근)",
+                            labelEn: "Annual Revenue (Recent)",
+                            type: "text"
+                        },
+                        {
+                            key: "seRevenueTarget",
+                            labelKo: "매출 목표",
+                            labelEn: "Revenue Target",
+                            type: "textarea"
+                        },
+                        {
+                            key: "seTotalBudget",
+                            labelKo: "총 사업비",
+                            labelEn: "Total Budget",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "seGovSupport",
+                            labelKo: "정부지원 신청금액",
+                            labelEn: "Government Support Requested",
+                            type: "text",
+                            required: !0
+                        },
+                        {
+                            key: "seBudgetDetail",
+                            labelKo: "예산 세부 내역",
+                            labelEn: "Detailed Budget",
+                            type: "textarea"
+                        }
+                    ]
+                },
+                {
+                    id: "sePerformance",
+                    titleKo: "성과관리",
+                    titleEn: "Performance Management",
+                    fields: [
+                        {
+                            key: "seKpi",
+                            labelKo: "성과 지표 (KPI)",
+                            labelEn: "Key Performance Indicators",
+                            type: "textarea",
+                            required: !0
+                        },
+                        {
+                            key: "seMonitoring",
+                            labelKo: "모니터링 계획",
+                            labelEn: "Monitoring Plan",
+                            type: "textarea"
+                        },
+                        {
+                            key: "seSustainPlan",
+                            labelKo: "자립 지속가능성 계획",
+                            labelEn: "Sustainability Plan",
+                            type: "textarea"
+                        }
+                    ]
+                }
+            ],
+            markdownTemplate: `# {{seName}} 사회적기업 육성사업 신청서
+
+## 기업 개요
+
+| 항목 | 내용 |
+|------|------|
+| 기업명 | {{seName}} |
+| 조직 형태 | {{seType}} |
+| 대표자명 | {{seRepName}} |
+| 설립일 | {{seEstDate}} |
+| 총 근로자 수 | {{seEmployees}}명 |
+
+### 기업 소개
+{{seDescription}}
+
+## 1. 사회적 목적
+
+- **사회적 목적 유형**: {{seSocialGoal}}
+
+### 사회적 미션
+{{seMission}}
+
+### 해결하려는 사회문제
+{{seSocialProblem}}
+
+### 주요 수혜 대상
+{{seBeneficiary}}
+
+## 2. 사회서비스 실적
+
+### 제공 사회서비스 내용
+{{seServiceList}}
+
+### 서비스 제공 실적
+{{seServiceResult}}
+
+### 사회적 성과
+{{seSocialImpact}}
+
+## 3. 일자리 창출
+
+### 현재 고용 현황
+{{seCurrentJobs}}
+
+### 신규 일자리 창출 계획
+{{seJobPlan}}
+
+### 취약계층 고용 현황/계획
+{{seVulnerable}}
+
+## 4. 사업계획
+
+### 주요 사업 내용
+{{seMainBiz}}
+
+### 수익 모델
+{{seBizModel}}
+
+### 성장 계획
+{{seGrowthPlan}}
+
+### 사업 추진 일정
+{{seSchedule}}
+
+## 5. 재무계획
+
+| 항목 | 내용 |
+|------|------|
+| 연간 매출액 (최근) | {{seAnnualRevenue}} |
+| 총 사업비 | {{seTotalBudget}} |
+| 정부지원 신청금액 | {{seGovSupport}} |
+
+### 매출 목표
+{{seRevenueTarget}}
+
+### 예산 세부 내역
+{{seBudgetDetail}}
+
+## 6. 성과관리
+
+### 성과 지표 (KPI)
+{{seKpi}}
+
+### 모니터링 계획
+{{seMonitoring}}
+
+### 자립 지속가능성 계획
+{{seSustainPlan}}
+`
+        }
+    ], we = [
         {
             type: "startup",
             nameKo: "창업사업계획서",
@@ -17,6 +2086,7 @@ let __tla = Promise.all([
             icon: "🚀",
             descKo: "스타트업/신규 창업을 위한 사업계획서",
             descEn: "Business plan for startups and new ventures",
+            category: "general",
             sections: [
                 {
                     id: "overview",
@@ -355,6 +2425,7 @@ let __tla = Promise.all([
             icon: "🏢",
             descKo: "기존 중소기업의 성장·확장 사업계획서",
             descEn: "Business plan for SME growth and expansion",
+            category: "general",
             sections: [
                 {
                     id: "company",
@@ -633,6 +2704,7 @@ let __tla = Promise.all([
             icon: "💰",
             descKo: "투자자 대상 IR/피칭용 사업계획서",
             descEn: "Business plan for investor relations and pitching",
+            category: "general",
             sections: [
                 {
                     id: "execSummary",
@@ -928,6 +3000,7 @@ let __tla = Promise.all([
             icon: "🏛",
             descKo: "정부 R&D 및 지원사업 신청용 사업계획서",
             descEn: "Business plan for government R&D and support programs",
+            category: "general",
             sections: [
                 {
                     id: "projectOverview",
@@ -1241,6 +3314,7 @@ let __tla = Promise.all([
             icon: "🎓",
             descKo: "학원, 온라인교육, 직업훈련 등 교육사업 계획서",
             descEn: "Business plan for academies, online education, and vocational training",
+            category: "general",
             sections: [
                 {
                     id: "eduOverview",
@@ -1510,6 +3584,7 @@ let __tla = Promise.all([
             icon: "🤝",
             descKo: "비영리단체, 사회적기업, 협동조합 등을 위한 사업계획서",
             descEn: "Business plan for nonprofits, social enterprises, and cooperatives",
+            category: "general",
             sections: [
                 {
                     id: "npOverview",
@@ -1756,6 +3831,7 @@ let __tla = Promise.all([
             icon: "🏪",
             descKo: "가맹점 모집 또는 프랜차이즈 창업 사업계획서",
             descEn: "Business plan for franchise development or franchise startup",
+            category: "general",
             sections: [
                 {
                     id: "franchiseOverview",
@@ -2004,6 +4080,7 @@ let __tla = Promise.all([
             icon: "🛒",
             descKo: "온라인 쇼핑몰, D2C, 마켓플레이스 등 이커머스 사업계획서",
             descEn: "Business plan for online shops, D2C brands, and marketplaces",
+            category: "general",
             sections: [
                 {
                     id: "ecOverview",
@@ -2257,195 +4334,209 @@ let __tla = Promise.all([
 {{ecRevenueForcast}}
 `
         }
-    ], j = "hwp_bp_autosave";
-    function z(s) {
-        let u = s.replace(/^#### (.+)$/gm, "<h4>$1</h4>").replace(/^### (.+)$/gm, "<h3>$1</h3>").replace(/^## (.+)$/gm, "<h2>$1</h2>").replace(/^# (.+)$/gm, "<h1>$1</h1>").replace(/^\> (.+)$/gm, "<blockquote>$1</blockquote>").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/^- (.+)$/gm, "<li>$1</li>").replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
-        return u = u.replace(/^\|(.+)\|$/gm, (r)=>{
-            if (/^\|[\s-:|]+\|$/.test(r)) return "";
-            const b = r.split("|").filter((i)=>i.trim()), S = "td";
-            return "<tr>" + b.map((i)=>`<${S}>${i.trim()}</${S}>`).join("") + "</tr>";
-        }), u = u.replace(/(<tr>[\s\S]*?<\/tr>)/g, "<table>$1</table>"), u = u.replace(/<\/table>\s*<table>/g, ""), u = u.split(`
+    ], D = [
+        ...we,
+        ...Me
+    ], A = "hwp_bp_autosave";
+    function X(s) {
+        let y = s.replace(/^#### (.+)$/gm, "<h4>$1</h4>").replace(/^### (.+)$/gm, "<h3>$1</h3>").replace(/^## (.+)$/gm, "<h2>$1</h2>").replace(/^# (.+)$/gm, "<h1>$1</h1>").replace(/^\> (.+)$/gm, "<blockquote>$1</blockquote>").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/^- (.+)$/gm, "<li>$1</li>").replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
+        return y = y.replace(/^\|(.+)\|$/gm, (o)=>{
+            if (/^\|[\s-:|]+\|$/.test(o)) return "";
+            const u = o.split("|").filter((a)=>a.trim()), f = "td";
+            return "<tr>" + u.map((a)=>`<${f}>${a.trim()}</${f}>`).join("") + "</tr>";
+        }), y = y.replace(/(<tr>[\s\S]*?<\/tr>)/g, "<table>$1</table>"), y = y.replace(/<\/table>\s*<table>/g, ""), y = y.split(`
 
-`).map((r)=>(r = r.trim(), r ? r.startsWith("<h") || r.startsWith("<li") || r.startsWith("<table") || r.startsWith("<blockquote") || r.startsWith("<tr") ? r : `<p>${r}</p>` : "")).join(`
-`), u;
+`).map((o)=>(o = o.trim(), o ? o.startsWith("<h") || o.startsWith("<li") || o.startsWith("<table") || o.startsWith("<blockquote") || o.startsWith("<tr") ? o : `<p>${o}</p>` : "")).join(`
+`), y;
     }
-    ue = ()=>{
-        const { t: s, language: u } = ne(), { user: r } = ie(), { showToast: b } = se(), S = re(), i = u === "ko", [y, m] = d.useState(1), [x, K] = d.useState(null), [o, v] = d.useState({}), [B, g] = d.useState({}), [N, F] = d.useState("preview"), [D, R] = d.useState(!1), [I, A] = d.useState([]), [L, M] = d.useState(!1), [G, f] = d.useState(!1), [P, H] = d.useState(""), p = d.useMemo(()=>k.find((t)=>t.type === x) ?? null, [
-            x
-        ]), E = d.useMemo(()=>{
-            if (!p) return "";
-            let t = p.markdownTemplate;
-            for (const a of p.sections)for (const l of a.fields){
-                const n = o[l.key] || "", c = new RegExp(`\\{\\{${l.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g");
-                t = t.replace(c, n || `(${i ? l.labelKo : l.labelEn})`);
+    Ie = ()=>{
+        const { t: s, language: y } = L(), { user: o } = me(), { showToast: u } = Z(), f = Ee(), a = y === "ko", [g, d] = c.useState(1), [b, m] = c.useState(null), [n, K] = c.useState({}), [S, x] = c.useState({}), [h, k] = c.useState("preview"), [P, j] = c.useState(!1), [N, T] = c.useState([]), [C, q] = c.useState(!1), [O, M] = c.useState(!1), [p, ee] = c.useState(""), [R, te] = c.useState("all"), v = c.useMemo(()=>D.find((t)=>t.type === b) ?? null, [
+            b
+        ]), w = c.useMemo(()=>{
+            if (!v) return "";
+            let t = v.markdownTemplate;
+            for (const l of v.sections)for (const r of l.fields){
+                const i = n[r.key] || "", E = new RegExp(`\\{\\{${r.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g");
+                t = t.replace(E, i || `(${a ? r.labelKo : r.labelEn})`);
+            }
+            return t;
+        }, [
+            v,
+            n,
+            a
+        ]), F = c.useMemo(()=>{
+            if (!v) return 0;
+            const t = v.sections.flatMap((r)=>r.fields.filter((i)=>i.required));
+            if (t.length === 0) return 100;
+            const l = t.filter((r)=>n[r.key]?.trim()).length;
+            return Math.round(l / t.length * 100);
+        }, [
+            v,
+            n
+        ]);
+        c.useEffect(()=>{
+            if (!b || Object.keys(n).length === 0) return;
+            const t = {
+                type: b,
+                formData: n,
+                timestamp: Date.now()
+            };
+            try {
+                localStorage.setItem(A, JSON.stringify(t));
+            } catch  {}
+        }, [
+            b,
+            n
+        ]), c.useEffect(()=>{
+            try {
+                const t = localStorage.getItem(A);
+                if (!t) return;
+                const { type: l, formData: r, timestamp: i } = JSON.parse(t);
+                if (Date.now() - i > 864e5) return;
+                if (l && r && Object.keys(r).length > 0) {
+                    m(l), K(r);
+                    const E = D.find((G)=>G.type === l);
+                    E && (x({
+                        [E.sections[0].id]: !0
+                    }), d(2), u(a ? "자동 저장된 내용을 복원했습니다" : "Restored autosaved draft", "info"));
+                }
+            } catch  {}
+        }, []);
+        const ae = async ()=>{
+            if (!o) return;
+            q(!0);
+            const t = _();
+            if (!t) {
+                q(!1);
+                return;
+            }
+            const { data: l, error: r } = await t.from(z.businessPlans).select("*").eq("user_id", o.id).order("updated_at", {
+                ascending: !1
+            }).limit(20);
+            !r && l && T(l), q(!1), M(!0);
+        }, le = (t)=>{
+            m(t.plan_type), K(t.data);
+            const l = D.find((r)=>r.type === t.plan_type);
+            if (l) {
+                const r = {};
+                l.sections.forEach((i)=>{
+                    r[i.id] = !0;
+                }), x(r);
+            }
+            M(!1), d(2), u(a ? "저장된 계획서를 불러왔습니다" : "Loaded saved plan", "success");
+        }, ne = async (t)=>{
+            if (!confirm(a ? "이 사업계획서를 삭제하시겠습니까?" : "Delete this business plan?")) return;
+            const l = _();
+            if (!l || !o) return;
+            const { error: r } = await l.from(z.businessPlans).delete().eq("id", t).eq("user_id", o.id);
+            r || (T((i)=>i.filter((E)=>E.id !== t)), u(a ? "삭제되었습니다" : "Deleted", "success"));
+        }, $ = c.useMemo(()=>{
+            let t = D;
+            if (R !== "all" && (t = t.filter((l)=>l.category === R)), p.trim()) {
+                const l = p.toLowerCase();
+                t = t.filter((r)=>r.nameKo.toLowerCase().includes(l) || r.nameEn.toLowerCase().includes(l) || r.descKo.toLowerCase().includes(l) || r.descEn.toLowerCase().includes(l));
             }
             return t;
         }, [
             p,
-            o,
-            i
-        ]), C = d.useMemo(()=>{
-            if (!p) return 0;
-            const t = p.sections.flatMap((l)=>l.fields.filter((n)=>n.required));
-            if (t.length === 0) return 100;
-            const a = t.filter((l)=>o[l.key]?.trim()).length;
-            return Math.round(a / t.length * 100);
-        }, [
-            p,
-            o
-        ]);
-        d.useEffect(()=>{
-            if (!x || Object.keys(o).length === 0) return;
-            const t = {
-                type: x,
-                formData: o,
-                timestamp: Date.now()
-            };
-            try {
-                localStorage.setItem(j, JSON.stringify(t));
-            } catch  {}
-        }, [
-            x,
-            o
-        ]), d.useEffect(()=>{
-            try {
-                const t = localStorage.getItem(j);
-                if (!t) return;
-                const { type: a, formData: l, timestamp: n } = JSON.parse(t);
-                if (Date.now() - n > 864e5) return;
-                if (a && l && Object.keys(l).length > 0) {
-                    K(a), v(l);
-                    const c = k.find((T)=>T.type === a);
-                    c && (g({
-                        [c.sections[0].id]: !0
-                    }), m(2), b(i ? "자동 저장된 내용을 복원했습니다" : "Restored autosaved draft", "info"));
-                }
-            } catch  {}
-        }, []);
-        const _ = async ()=>{
-            if (!r) return;
-            M(!0);
-            const t = q();
-            if (!t) {
-                M(!1);
-                return;
-            }
-            const { data: a, error: l } = await t.from(O.businessPlans).select("*").eq("user_id", r.id).order("updated_at", {
-                ascending: !1
-            }).limit(20);
-            !l && a && A(a), M(!1), f(!0);
-        }, U = (t)=>{
-            K(t.plan_type), v(t.data);
-            const a = k.find((l)=>l.type === t.plan_type);
-            if (a) {
-                const l = {};
-                a.sections.forEach((n)=>{
-                    l[n.id] = !0;
-                }), g(l);
-            }
-            f(!1), m(2), b(i ? "저장된 계획서를 불러왔습니다" : "Loaded saved plan", "success");
-        }, V = async (t)=>{
-            if (!confirm(i ? "이 사업계획서를 삭제하시겠습니까?" : "Delete this business plan?")) return;
-            const a = q();
-            if (!a || !r) return;
-            const { error: l } = await a.from(O.businessPlans).delete().eq("id", t).eq("user_id", r.id);
-            l || (A((n)=>n.filter((c)=>c.id !== t)), b(i ? "삭제되었습니다" : "Deleted", "success"));
-        }, $ = d.useMemo(()=>{
-            if (!P.trim()) return k;
-            const t = P.toLowerCase();
-            return k.filter((a)=>a.nameKo.toLowerCase().includes(t) || a.nameEn.toLowerCase().includes(t) || a.descKo.toLowerCase().includes(t) || a.descEn.toLowerCase().includes(t));
-        }, [
-            P
-        ]), W = (t)=>{
-            K(t), v({});
-            const a = k.find((l)=>l.type === t);
-            a && g({
-                [a.sections[0].id]: !0
-            }), m(2);
-        }, Q = (t)=>{
-            g((a)=>({
-                    ...a,
-                    [t]: !a[t]
-                }));
-        }, Y = ()=>{
-            if (!p) return;
-            const t = {};
-            p.sections.forEach((a)=>{
-                t[a.id] = !0;
-            }), g(t);
-        }, w = (t, a)=>{
-            v((l)=>({
+            R
+        ]), re = (t)=>{
+            m(t), K({});
+            const l = D.find((r)=>r.type === t);
+            l && x({
+                [l.sections[0].id]: !0
+            }), d(2);
+        }, ie = (t)=>{
+            x((l)=>({
                     ...l,
-                    [t]: a
+                    [t]: !l[t]
                 }));
-        }, h = ()=>o.businessName || o.companyName || o.invCompanyName || o.projectTitle || o.eduName || o.npName || o.brandName || o.ecName || "", J = ()=>{
+        }, se = ()=>{
+            if (!v) return;
+            const t = {};
+            v.sections.forEach((l)=>{
+                t[l.id] = !0;
+            }), x(t);
+        }, B = (t, l)=>{
+            K((r)=>({
+                    ...r,
+                    [t]: l
+                }));
+        }, I = ()=>n.businessName || n.companyName || n.invCompanyName || n.projectTitle || n.eduName || n.npName || n.brandName || n.ecName || n.itemTitle || n.earlyCompanyName || n.sbName || n.rndTitle || n.seName || "", oe = ()=>{
             const t = new Blob([
-                E
+                w
             ], {
                 type: "text/markdown;charset=utf-8"
-            }), a = URL.createObjectURL(t), l = document.createElement("a");
-            l.href = a, l.download = `${h() || "business-plan"}.md`, l.click(), URL.revokeObjectURL(a);
-        }, X = ()=>{
+            }), l = URL.createObjectURL(t), r = document.createElement("a");
+            r.href = l, r.download = `${I() || "business-plan"}.md`, r.click(), URL.revokeObjectURL(l);
+        }, ce = ()=>{
             const t = `<!DOCTYPE html>
 <html lang="ko">
-<head><meta charset="UTF-8"><title>${h() || "Business Plan"}</title>
+<head><meta charset="UTF-8"><title>${I() || "Business Plan"}</title>
 <style>body{font-family:'Malgun Gothic',sans-serif;max-width:800px;margin:40px auto;padding:0 20px;line-height:1.8;color:#333}
 h1{border-bottom:2px solid #333;padding-bottom:8px}h2{color:#0046C8;margin-top:32px}
 table{border-collapse:collapse;width:100%;margin:16px 0}th,td{border:1px solid #ddd;padding:8px 12px;text-align:left}
 th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;margin:16px 0;background:#f9f9f9}
 @media print{body{margin:0;padding:20px}h2{page-break-before:auto}}</style></head>
-<body>${z(E)}</body></html>`, a = new Blob([
+<body>${X(w)}</body></html>`, l = new Blob([
                 t
             ], {
                 type: "text/html;charset=utf-8"
-            }), l = URL.createObjectURL(a), n = document.createElement("a");
-            n.href = l, n.download = `${h() || "business-plan"}.html`, n.click(), URL.revokeObjectURL(l);
-        }, Z = async ()=>{
+            }), r = URL.createObjectURL(l), i = document.createElement("a");
+            i.href = r, i.download = `${I() || "business-plan"}.html`, i.click(), URL.revokeObjectURL(r);
+        }, de = async ()=>{
             try {
-                const { generateHwpx: t } = await oe(async ()=>{
-                    const { generateHwpx: T } = await import("./generator-DKXGUNmt.js");
+                const { generateHwpx: t } = await ge(async ()=>{
+                    const { generateHwpx: G } = await import("./generator-BjPGtegh.js");
                     return {
-                        generateHwpx: T
+                        generateHwpx: G
                     };
-                }, __vite__mapDeps([0,1,2,3,4])), a = h() || "business-plan", l = await t(E, a), n = URL.createObjectURL(l), c = document.createElement("a");
-                c.href = n, c.download = `${a}.hwpx`, c.click(), URL.revokeObjectURL(n);
+                }, __vite__mapDeps([0,1,2,3,4])), l = I() || "business-plan", r = await t(w, l, {
+                    pageNumbers: !0,
+                    coverPage: {
+                        title: l,
+                        organization: n.companyName || n.businessName || n.earlyCompanyName || n.sbName || n.seName || "",
+                        date: new Date().toLocaleDateString("ko-KR")
+                    }
+                }), i = URL.createObjectURL(r), E = document.createElement("a");
+                E.href = i, E.download = `${l}.hwpx`, E.click(), URL.revokeObjectURL(i);
             } catch (t) {
-                b(t.message || "HWPX export failed", "error");
+                u(t.message || "HWPX export failed", "error");
             }
-        }, ee = async ()=>{
-            if (!r) {
-                b(i ? "로그인이 필요합니다" : "Login required", "warning");
+        }, pe = async ()=>{
+            if (!o) {
+                u(a ? "로그인이 필요합니다" : "Login required", "warning");
                 return;
             }
-            const t = q();
+            const t = _();
             if (!t) return;
-            R(!0);
-            const { error: a } = await t.from(O.businessPlans).insert({
-                user_id: r.id,
-                plan_type: x,
-                title: h(),
-                data: o,
-                generated_content: E
+            j(!0);
+            const { error: l } = await t.from(z.businessPlans).insert({
+                user_id: o.id,
+                plan_type: b,
+                title: I(),
+                data: n,
+                generated_content: w
             });
-            if (R(!1), a) b(a.message, "error");
+            if (j(!1), l) u(l.message, "error");
             else {
-                b(s("site.businessPlan.saved"), "success");
+                u(s("site.businessPlan.saved"), "success");
                 try {
-                    localStorage.removeItem(j);
+                    localStorage.removeItem(A);
                 } catch  {}
             }
-        }, te = ()=>{
-            S("/md-editor", {
+        }, ue = ()=>{
+            f("/md-editor", {
                 state: {
-                    content: E
+                    content: w
                 }
             });
-        }, ae = ()=>{
-            m(1), K(null), v({}), g({}), f(!1);
+        }, ye = ()=>{
+            d(1), m(null), K({}), x({}), M(!1);
             try {
-                localStorage.removeItem(j);
+                localStorage.removeItem(A);
             } catch  {}
-        }, le = [
+        }, be = [
             s("site.businessPlan.step1"),
             s("site.businessPlan.step2"),
             s("site.businessPlan.step3"),
@@ -2453,7 +4544,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
         ];
         return e.jsxs(e.Fragment, {
             children: [
-                e.jsx(ce, {
+                e.jsx(xe, {
                     title: s("site.businessPlan.title"),
                     path: "/business-plan"
                 }),
@@ -2483,34 +4574,34 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                     2,
                                     3,
                                     4
-                                ].map((t, a)=>e.jsxs("div", {
+                                ].map((t, l)=>e.jsxs("div", {
                                         style: {
                                             display: "contents"
                                         },
                                         children: [
-                                            a > 0 && e.jsx("div", {
+                                            l > 0 && e.jsx("div", {
                                                 className: "bp-step-connector"
                                             }),
                                             e.jsxs("div", {
-                                                className: `bp-step ${y === t ? "active" : ""} ${y > t ? "completed" : ""}`,
+                                                className: `bp-step ${g === t ? "active" : ""} ${g > t ? "completed" : ""}`,
                                                 onClick: ()=>{
-                                                    y > t && m(t);
+                                                    g > t && d(t);
                                                 },
                                                 style: {
-                                                    cursor: y > t ? "pointer" : "default"
+                                                    cursor: g > t ? "pointer" : "default"
                                                 },
                                                 children: [
                                                     e.jsx("span", {
                                                         className: "bp-step-num",
-                                                        children: y > t ? "✓" : t
+                                                        children: g > t ? "✓" : t
                                                     }),
-                                                    le[a]
+                                                    be[l]
                                                 ]
                                             })
                                         ]
                                     }, t))
                             }),
-                            y === 1 && e.jsxs("div", {
+                            g === 1 && e.jsxs("div", {
                                 className: "bp-step1-section",
                                 children: [
                                     e.jsxs("div", {
@@ -2542,17 +4633,17 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                     }),
                                                     e.jsx("input", {
                                                         type: "text",
-                                                        value: P,
-                                                        onChange: (t)=>H(t.target.value),
-                                                        placeholder: i ? "유형 검색..." : "Search types...",
+                                                        value: p,
+                                                        onChange: (t)=>ee(t.target.value),
+                                                        placeholder: a ? "유형 검색..." : "Search types...",
                                                         className: "bp-search-input"
                                                     })
                                                 ]
                                             }),
-                                            r && e.jsxs("button", {
+                                            o && e.jsxs("button", {
                                                 className: "bp-btn",
-                                                onClick: _,
-                                                disabled: L,
+                                                onClick: ae,
+                                                disabled: C,
                                                 children: [
                                                     e.jsx("svg", {
                                                         viewBox: "0 0 24 24",
@@ -2565,14 +4656,14 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                             d: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
                                                         })
                                                     }),
-                                                    i ? "저장된 계획서" : "Saved Plans"
+                                                    a ? "저장된 계획서" : "Saved Plans"
                                                 ]
                                             })
                                         ]
                                     }),
-                                    G && e.jsx("div", {
+                                    O && e.jsx("div", {
                                         className: "bp-saved-overlay",
-                                        onClick: ()=>f(!1),
+                                        onClick: ()=>M(!1),
                                         children: e.jsxs("div", {
                                             className: "bp-saved-modal",
                                             onClick: (t)=>t.stopPropagation(),
@@ -2581,16 +4672,16 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                     className: "bp-saved-header",
                                                     children: [
                                                         e.jsx("h3", {
-                                                            children: i ? "저장된 사업계획서" : "Saved Business Plans"
+                                                            children: a ? "저장된 사업계획서" : "Saved Business Plans"
                                                         }),
                                                         e.jsx("button", {
                                                             className: "bp-saved-close",
-                                                            onClick: ()=>f(!1),
+                                                            onClick: ()=>M(!1),
                                                             children: "×"
                                                         })
                                                     ]
                                                 }),
-                                                L ? e.jsx("div", {
+                                                C ? e.jsx("div", {
                                                     style: {
                                                         display: "flex",
                                                         justifyContent: "center",
@@ -2599,29 +4690,29 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                     children: e.jsx("div", {
                                                         className: "loading-spinner"
                                                     })
-                                                }) : I.length === 0 ? e.jsx("div", {
+                                                }) : N.length === 0 ? e.jsx("div", {
                                                     className: "bp-saved-empty",
-                                                    children: i ? "저장된 사업계획서가 없습니다" : "No saved business plans"
+                                                    children: a ? "저장된 사업계획서가 없습니다" : "No saved business plans"
                                                 }) : e.jsx("div", {
                                                     className: "bp-saved-list",
-                                                    children: I.map((t)=>{
-                                                        const a = k.find((l)=>l.type === t.plan_type);
+                                                    children: N.map((t)=>{
+                                                        const l = D.find((r)=>r.type === t.plan_type);
                                                         return e.jsxs("div", {
                                                             className: "bp-saved-item",
                                                             children: [
                                                                 e.jsx("div", {
                                                                     className: "bp-saved-item-icon",
-                                                                    children: a?.icon || "📄"
+                                                                    children: l?.icon || "📄"
                                                                 }),
                                                                 e.jsxs("div", {
                                                                     className: "bp-saved-item-info",
                                                                     children: [
                                                                         e.jsx("strong", {
-                                                                            children: t.title || (i ? "제목 없음" : "Untitled")
+                                                                            children: t.title || (a ? "제목 없음" : "Untitled")
                                                                         }),
                                                                         e.jsxs("span", {
                                                                             children: [
-                                                                                i ? a?.nameKo : a?.nameEn,
+                                                                                a ? l?.nameKo : l?.nameEn,
                                                                                 " · ",
                                                                                 new Date(t.updated_at).toLocaleDateString()
                                                                             ]
@@ -2633,13 +4724,13 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                                     children: [
                                                                         e.jsx("button", {
                                                                             className: "bp-btn primary",
-                                                                            onClick: ()=>U(t),
-                                                                            children: i ? "불러오기" : "Load"
+                                                                            onClick: ()=>le(t),
+                                                                            children: a ? "불러오기" : "Load"
                                                                         }),
                                                                         e.jsx("button", {
                                                                             className: "bp-btn danger",
-                                                                            onClick: ()=>V(t.id),
-                                                                            children: i ? "삭제" : "Delete"
+                                                                            onClick: ()=>ne(t.id),
+                                                                            children: a ? "삭제" : "Delete"
                                                                         })
                                                                     ]
                                                                 })
@@ -2651,31 +4742,47 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                         })
                                     }),
                                     e.jsx("div", {
+                                        className: "bp-category-tabs",
+                                        children: [
+                                            "all",
+                                            "general",
+                                            "government"
+                                        ].map((t)=>e.jsx("button", {
+                                                className: `bp-category-tab ${R === t ? "active" : ""}`,
+                                                onClick: ()=>te(t),
+                                                children: t === "all" ? a ? "전체" : "All" : t === "general" ? a ? "일반 사업계획서" : "General" : a ? "정부지원사업" : "Government"
+                                            }, t))
+                                    }),
+                                    e.jsx("div", {
                                         className: "bp-type-grid",
                                         children: $.map((t)=>e.jsxs("div", {
-                                                className: `bp-type-card ${x === t.type ? "selected" : ""}`,
-                                                onClick: ()=>W(t.type),
+                                                className: `bp-type-card ${b === t.type ? "selected" : ""}`,
+                                                onClick: ()=>re(t.type),
                                                 children: [
+                                                    t.category === "government" && e.jsx("span", {
+                                                        className: "bp-gov-badge",
+                                                        children: a ? "🏛️ 정부지원" : "🏛️ Gov"
+                                                    }),
                                                     e.jsx("div", {
                                                         className: "bp-type-icon",
                                                         children: t.icon
                                                     }),
                                                     e.jsx("h3", {
-                                                        children: i ? t.nameKo : t.nameEn
+                                                        children: a ? t.nameKo : t.nameEn
                                                     }),
                                                     e.jsx("p", {
-                                                        children: i ? t.descKo : t.descEn
+                                                        children: a ? t.descKo : t.descEn
                                                     }),
                                                     e.jsxs("span", {
                                                         className: "bp-type-badge",
                                                         children: [
                                                             t.sections.length,
                                                             " ",
-                                                            i ? "섹션" : "sections",
+                                                            a ? "섹션" : "sections",
                                                             " · ",
-                                                            t.sections.reduce((a, l)=>a + l.fields.length, 0),
+                                                            t.sections.reduce((l, r)=>l + r.fields.length, 0),
                                                             " ",
-                                                            i ? "항목" : "fields"
+                                                            a ? "항목" : "fields"
                                                         ]
                                                     })
                                                 ]
@@ -2683,13 +4790,16 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                     }),
                                     $.length === 0 && e.jsx("div", {
                                         className: "bp-empty-search",
-                                        children: i ? "검색 결과가 없습니다" : "No results found"
+                                        children: a ? "검색 결과가 없습니다" : "No results found"
                                     })
                                 ]
                             }),
-                            y === 2 && p && e.jsxs("div", {
+                            g === 2 && v && e.jsxs("div", {
                                 className: "bp-form-section",
                                 children: [
+                                    e.jsx(ke, {
+                                        collapsed: !0
+                                    }),
                                     e.jsxs("div", {
                                         className: "bp-form-header",
                                         children: [
@@ -2698,18 +4808,18 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                 children: [
                                                     e.jsx("span", {
                                                         className: "bp-form-type-icon",
-                                                        children: p.icon
+                                                        children: v.icon
                                                     }),
                                                     e.jsx("span", {
                                                         className: "bp-form-type-name",
-                                                        children: i ? p.nameKo : p.nameEn
+                                                        children: a ? v.nameKo : v.nameEn
                                                     })
                                                 ]
                                             }),
                                             e.jsx("button", {
                                                 className: "bp-btn-text",
-                                                onClick: Y,
-                                                children: i ? "모두 펼치기" : "Expand All"
+                                                onClick: se,
+                                                children: a ? "모두 펼치기" : "Expand All"
                                             })
                                         ]
                                     }),
@@ -2725,40 +4835,40 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                 children: e.jsx("div", {
                                                     className: "bp-progress-bar-fill",
                                                     style: {
-                                                        width: `${C}%`
+                                                        width: `${F}%`
                                                     }
                                                 })
                                             }),
                                             e.jsxs("span", {
                                                 className: "bp-progress-bar-pct",
                                                 children: [
-                                                    C,
+                                                    F,
                                                     "%"
                                                 ]
                                             })
                                         ]
                                     }),
-                                    p.sections.map((t, a)=>{
-                                        const l = t.fields.filter((n)=>o[n.key]?.trim()).length;
+                                    v.sections.map((t, l)=>{
+                                        const r = t.fields.filter((i)=>n[i.key]?.trim()).length;
                                         return e.jsxs("div", {
                                             className: "bp-accordion",
                                             children: [
                                                 e.jsxs("button", {
-                                                    className: `bp-accordion-header ${B[t.id] ? "open" : ""}`,
-                                                    onClick: ()=>Q(t.id),
+                                                    className: `bp-accordion-header ${S[t.id] ? "open" : ""}`,
+                                                    onClick: ()=>ie(t.id),
                                                     children: [
                                                         e.jsxs("span", {
                                                             className: "bp-accordion-header-left",
                                                             children: [
                                                                 e.jsx("span", {
                                                                     className: "bp-section-num",
-                                                                    children: a + 1
+                                                                    children: l + 1
                                                                 }),
-                                                                i ? t.titleKo : t.titleEn,
+                                                                a ? t.titleKo : t.titleEn,
                                                                 e.jsxs("span", {
                                                                     className: "bp-section-count",
                                                                     children: [
-                                                                        l,
+                                                                        r,
                                                                         "/",
                                                                         t.fields.length
                                                                     ]
@@ -2777,46 +4887,54 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                         })
                                                     ]
                                                 }),
-                                                B[t.id] && e.jsx("div", {
+                                                S[t.id] && e.jsx("div", {
                                                     className: "bp-accordion-body",
-                                                    children: t.fields.map((n)=>e.jsxs("div", {
+                                                    children: t.fields.map((i)=>e.jsxs("div", {
                                                             className: "bp-field",
                                                             children: [
                                                                 e.jsxs("label", {
                                                                     children: [
-                                                                        i ? n.labelKo : n.labelEn,
-                                                                        n.required && e.jsx("span", {
+                                                                        a ? i.labelKo : i.labelEn,
+                                                                        i.required && e.jsx("span", {
                                                                             className: "required",
                                                                             children: "*"
+                                                                        }),
+                                                                        i.type === "textarea" && e.jsx(je, {
+                                                                            fieldKey: i.key,
+                                                                            fieldLabel: a ? i.labelKo : i.labelEn,
+                                                                            sectionTitle: a ? t.titleKo : t.titleEn,
+                                                                            templateName: a ? v.nameKo : v.nameEn,
+                                                                            allFormData: n,
+                                                                            onAccept: (E)=>B(i.key, E)
                                                                         })
                                                                     ]
                                                                 }),
-                                                                n.type === "textarea" ? e.jsx("textarea", {
-                                                                    value: o[n.key] || "",
-                                                                    onChange: (c)=>w(n.key, c.target.value),
-                                                                    placeholder: n.placeholder,
+                                                                i.type === "textarea" ? e.jsx("textarea", {
+                                                                    value: n[i.key] || "",
+                                                                    onChange: (E)=>B(i.key, E.target.value),
+                                                                    placeholder: i.placeholder,
                                                                     rows: 3
-                                                                }) : n.type === "select" && n.options ? e.jsxs("select", {
-                                                                    value: o[n.key] || "",
-                                                                    onChange: (c)=>w(n.key, c.target.value),
+                                                                }) : i.type === "select" && i.options ? e.jsxs("select", {
+                                                                    value: n[i.key] || "",
+                                                                    onChange: (E)=>B(i.key, E.target.value),
                                                                     children: [
                                                                         e.jsx("option", {
                                                                             value: "",
-                                                                            children: i ? "선택하세요" : "Select..."
+                                                                            children: a ? "선택하세요" : "Select..."
                                                                         }),
-                                                                        n.options.map((c)=>e.jsx("option", {
-                                                                                value: c,
-                                                                                children: c
-                                                                            }, c))
+                                                                        i.options.map((E)=>e.jsx("option", {
+                                                                                value: E,
+                                                                                children: E
+                                                                            }, E))
                                                                     ]
                                                                 }) : e.jsx("input", {
-                                                                    type: n.type === "number" ? "number" : n.type === "date" ? "date" : "text",
-                                                                    value: o[n.key] || "",
-                                                                    onChange: (c)=>w(n.key, c.target.value),
-                                                                    placeholder: n.placeholder
+                                                                    type: i.type === "number" ? "number" : i.type === "date" ? "date" : "text",
+                                                                    value: n[i.key] || "",
+                                                                    onChange: (E)=>B(i.key, E.target.value),
+                                                                    placeholder: i.placeholder
                                                                 })
                                                             ]
-                                                        }, n.key))
+                                                        }, i.key))
                                                 })
                                             ]
                                         }, t.id);
@@ -2843,7 +4961,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                     })
                                                 ]
                                             }),
-                                            i ? "자동 저장 중" : "Auto-saving"
+                                            a ? "자동 저장 중" : "Auto-saving"
                                         ]
                                     }),
                                     e.jsxs("div", {
@@ -2852,46 +4970,46 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             e.jsx("button", {
                                                 className: "bp-btn",
                                                 onClick: ()=>{
-                                                    m(1), K(null);
+                                                    d(1), m(null);
                                                 },
                                                 children: s("site.businessPlan.prev")
                                             }),
                                             e.jsx("button", {
                                                 className: "bp-btn primary",
-                                                onClick: ()=>m(3),
-                                                disabled: C < 10,
+                                                onClick: ()=>d(3),
+                                                disabled: F < 10,
                                                 children: s("site.businessPlan.next")
                                             })
                                         ]
                                     })
                                 ]
                             }),
-                            y === 3 && e.jsxs("div", {
+                            g === 3 && e.jsxs("div", {
                                 className: "bp-preview-section",
                                 children: [
                                     e.jsxs("div", {
                                         className: "bp-preview-tabs",
                                         children: [
                                             e.jsx("button", {
-                                                className: `bp-preview-tab ${N === "preview" ? "active" : ""}`,
-                                                onClick: ()=>F("preview"),
+                                                className: `bp-preview-tab ${h === "preview" ? "active" : ""}`,
+                                                onClick: ()=>k("preview"),
                                                 children: s("site.businessPlan.previewTab")
                                             }),
                                             e.jsx("button", {
-                                                className: `bp-preview-tab ${N === "markdown" ? "active" : ""}`,
-                                                onClick: ()=>F("markdown"),
+                                                className: `bp-preview-tab ${h === "markdown" ? "active" : ""}`,
+                                                onClick: ()=>k("markdown"),
                                                 children: s("site.businessPlan.markdownTab")
                                             })
                                         ]
                                     }),
                                     e.jsx("div", {
                                         className: "bp-preview-content",
-                                        children: N === "markdown" ? e.jsx("pre", {
-                                            children: E
+                                        children: h === "markdown" ? e.jsx("pre", {
+                                            children: w
                                         }) : e.jsx("div", {
                                             className: "bp-preview-rendered",
                                             dangerouslySetInnerHTML: {
-                                                __html: z(E)
+                                                __html: X(w)
                                             }
                                         })
                                     }),
@@ -2900,39 +5018,39 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                         children: [
                                             e.jsx("button", {
                                                 className: "bp-btn",
-                                                onClick: ()=>m(2),
+                                                onClick: ()=>d(2),
                                                 children: s("site.businessPlan.prev")
                                             }),
                                             e.jsx("button", {
                                                 className: "bp-btn primary",
-                                                onClick: ()=>m(4),
+                                                onClick: ()=>d(4),
                                                 children: s("site.businessPlan.next")
                                             })
                                         ]
                                     })
                                 ]
                             }),
-                            y === 4 && e.jsxs("div", {
+                            g === 4 && e.jsxs("div", {
                                 className: "bp-export-section",
                                 children: [
                                     e.jsx("div", {
                                         className: "bp-export-success",
-                                        children: p?.icon
+                                        children: v?.icon
                                     }),
                                     e.jsx("div", {
                                         className: "bp-export-title",
-                                        children: h() || s("site.businessPlan.title")
+                                        children: I() || s("site.businessPlan.title")
                                     }),
                                     e.jsx("div", {
                                         className: "bp-export-subtitle",
-                                        children: i ? "사업계획서가 준비되었습니다. 원하는 형식으로 내보내세요." : "Your business plan is ready. Export in your preferred format."
+                                        children: a ? "사업계획서가 준비되었습니다. 원하는 형식으로 내보내세요." : "Your business plan is ready. Export in your preferred format."
                                     }),
                                     e.jsxs("div", {
                                         className: "bp-export-buttons",
                                         children: [
                                             e.jsxs("button", {
                                                 className: "bp-export-btn primary",
-                                                onClick: Z,
+                                                onClick: de,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -2961,7 +5079,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             }),
                                             e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: J,
+                                                onClick: oe,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -2984,7 +5102,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             }),
                                             e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: X,
+                                                onClick: ce,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -3005,10 +5123,10 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                     s("site.businessPlan.downloadHtml")
                                                 ]
                                             }),
-                                            r && e.jsxs("button", {
+                                            o && e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: ee,
-                                                disabled: D,
+                                                onClick: pe,
+                                                disabled: P,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -3029,12 +5147,12 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                             })
                                                         ]
                                                     }),
-                                                    D ? "..." : s("site.businessPlan.saveToDb")
+                                                    P ? "..." : s("site.businessPlan.saveToDb")
                                                 ]
                                             }),
                                             e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: te,
+                                                onClick: ue,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -3059,7 +5177,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                     }),
                                     e.jsx("button", {
                                         className: "bp-btn",
-                                        onClick: ae,
+                                        onClick: ye,
                                         children: s("site.businessPlan.startNew")
                                     })
                                 ]
@@ -3071,4 +5189,4 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
         });
     };
 });
-export { ue as default, __tla };
+export { Ie as default, __tla };
