@@ -1,5 +1,5 @@
 /* ============================================
-   Humanize Text Page Styles
+   Humanize Text Page Styles (Self-contained)
    ============================================ */
 
 .humanize-text-page {
@@ -18,13 +18,13 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: var(--transition-base);
-  background: var(--card-bg);
+  background: var(--card-bg, #fff);
   box-shadow: var(--shadow-sm);
 }
 
 .humanize-text-input:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(var(--primary-rgb, 0, 70, 200), 0.08);
+  box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.08);
 }
 
 .humanize-text-input textarea {
@@ -62,7 +62,7 @@
 .humanize-text-page .humanize-options {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 24px;
   padding: 28px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -77,10 +77,10 @@
 
 .humanize-text-page .option-group label {
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
 }
 
 .humanize-text-page .option-buttons {
@@ -90,10 +90,10 @@
 
 .humanize-text-page .option-buttons button {
   flex: 1;
-  padding: 10px 16px;
+  padding: 11px 16px;
   border-radius: var(--radius-md);
   border: 2px solid var(--border-color);
-  background: var(--card-bg);
+  background: var(--card-bg, #fff);
   color: var(--text-primary);
   font-size: 0.85rem;
   font-weight: 600;
@@ -105,14 +105,14 @@
 .humanize-text-page .option-buttons button:hover {
   border-color: var(--primary);
   color: var(--primary);
-  background: rgba(var(--primary-rgb, 0, 70, 200), 0.03);
+  background: rgba(var(--primary-rgb), 0.03);
 }
 
 .humanize-text-page .option-buttons button.active {
   background: var(--primary);
   color: white;
   border-color: var(--primary);
-  box-shadow: 0 2px 8px rgba(var(--primary-rgb, 0, 70, 200), 0.25);
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.25);
 }
 
 /* ── CTA Button ── */
@@ -122,7 +122,7 @@
 }
 
 .humanize-text-page .humanize-actions .btn-primary {
-  padding: 16px 48px;
+  padding: 16px 56px;
   background: var(--primary-gradient);
   color: white;
   border: none;
@@ -131,13 +131,13 @@
   font-weight: 700;
   cursor: pointer;
   transition: var(--transition-base);
-  box-shadow: 0 4px 16px rgba(var(--primary-rgb, 0, 70, 200), 0.25);
+  box-shadow: 0 4px 16px rgba(var(--primary-rgb), 0.25);
   letter-spacing: 0.02em;
 }
 
 .humanize-text-page .humanize-actions .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(var(--primary-rgb, 0, 70, 200), 0.35);
+  box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.35);
 }
 
 .humanize-text-page .humanize-actions .btn-primary:disabled {
@@ -146,15 +146,35 @@
   box-shadow: none;
 }
 
-/* ── Result Container ── */
+/* ── Processing ── */
+.humanize-text-page .humanize-processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 100px 0;
+}
+
+.humanize-text-page .humanize-processing p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   Result Area
+   ============================================ */
+
 .humanize-text-page .humanize-result {
-  background: var(--card-bg);
+  background: var(--card-bg, #fff);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
 
+/* ── Result Header ── */
 .humanize-text-page .result-header {
   display: flex;
   justify-content: space-between;
@@ -166,10 +186,11 @@
   gap: 12px;
 }
 
+/* ── Tabs (pill toggle) ── */
 .humanize-text-page .result-tabs {
   display: flex;
   gap: 4px;
-  background: var(--card-bg);
+  background: var(--card-bg, #fff);
   padding: 4px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-color);
@@ -189,24 +210,25 @@
 
 .humanize-text-page .result-tab:hover {
   color: var(--primary);
-  background: rgba(var(--primary-rgb, 0, 70, 200), 0.05);
+  background: rgba(var(--primary-rgb), 0.05);
 }
 
 .humanize-text-page .result-tab.active {
   background: var(--primary);
   color: white;
-  box-shadow: 0 2px 8px rgba(var(--primary-rgb, 0, 70, 200), 0.3);
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
 }
 
+/* ── Action Buttons ── */
 .humanize-text-page .result-actions {
   display: flex;
   gap: 8px;
 }
 
 .humanize-text-page .result-actions button {
-  padding: 8px 16px;
+  padding: 8px 18px;
   border: 1px solid var(--border-color);
-  background: var(--card-bg);
+  background: var(--card-bg, #fff);
   border-radius: var(--radius-full);
   cursor: pointer;
   font-size: 0.82rem;
@@ -218,15 +240,15 @@
 .humanize-text-page .result-actions button:hover {
   border-color: var(--primary);
   color: var(--primary);
-  background: rgba(var(--primary-rgb, 0, 70, 200), 0.04);
+  background: rgba(var(--primary-rgb), 0.04);
 }
 
-/* ── Result Content Area ── */
+/* ── Result Content ── */
 .humanize-text-page .humanize-result-content {
   padding: 28px;
 }
 
-/* ── Compare Legend ── */
+/* ── Legend ── */
 .humanize-text-page .para-compare-legend {
   display: flex;
   gap: 20px;
@@ -235,6 +257,44 @@
   background: var(--bg-secondary);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.humanize-text-page .para-compare-legend .legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.humanize-text-page .para-compare-legend .legend-item::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.humanize-text-page .legend-same::before {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.humanize-text-page .legend-changed::before {
+  background: linear-gradient(90deg, #fdd 50%, #dfd 50%);
+  border: 1px solid var(--border-color);
+}
+
+.humanize-text-page .legend-added::before {
+  background: #d4edda;
+  border: 1px solid #b7dfbf;
+}
+
+.humanize-text-page .legend-removed::before {
+  background: #f8d7da;
+  border: 1px solid #f1b0b7;
 }
 
 /* ── Compare Rows ── */
@@ -259,23 +319,157 @@
   padding: 10px 18px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
+  font-size: 0.85rem;
+}
+
+.humanize-text-page .para-num {
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.humanize-text-page .para-badge {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.humanize-text-page .badge-same {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.humanize-text-page .badge-changed {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.humanize-text-page .badge-added {
+  background: #d4edda;
+  color: #155724;
+}
+
+.humanize-text-page .badge-removed {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ── Two-Column Layout ── */
+.humanize-text-page .para-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .humanize-text-page .para-col {
   padding: 18px 20px;
+  white-space: pre-wrap;
+  word-break: break-word;
   line-height: 1.8;
   font-size: 0.9rem;
+}
+
+.humanize-text-page .para-left {
+  border-right: 1px solid var(--border-color);
+}
+
+/* ── Row Color Coding ── */
+.humanize-text-page .para-same .para-col {
+  background: var(--bg-primary, #fff);
+}
+
+.humanize-text-page .para-changed .para-left {
+  background: #fff5f5;
+}
+
+.humanize-text-page .para-changed .para-right {
+  background: #f0fff4;
+}
+
+.humanize-text-page .para-added .para-left {
+  background: var(--bg-secondary);
+}
+
+.humanize-text-page .para-added .para-right {
+  background: #d4edda;
+}
+
+.humanize-text-page .para-removed .para-left {
+  background: #f8d7da;
+}
+
+.humanize-text-page .para-removed .para-right {
+  background: var(--bg-secondary);
+}
+
+.humanize-text-page .para-empty {
+  color: var(--text-light, #aaa);
+  font-style: italic;
 }
 
 /* ── Result Only (pre) ── */
 .humanize-text-page .humanize-pre.full {
   max-height: 600px;
+  overflow-y: auto;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 24px;
+  margin: 0;
   background: var(--bg-secondary);
+  color: var(--text-primary);
   font-size: 0.9rem;
   line-height: 1.8;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* ── Dark Mode ── */
+[data-theme="dark"] .humanize-text-page .para-changed .para-left {
+  background: rgba(200, 16, 46, 0.1);
+}
+
+[data-theme="dark"] .humanize-text-page .para-changed .para-right {
+  background: rgba(0, 133, 90, 0.1);
+}
+
+[data-theme="dark"] .humanize-text-page .para-added .para-right {
+  background: rgba(0, 133, 90, 0.12);
+}
+
+[data-theme="dark"] .humanize-text-page .para-removed .para-left {
+  background: rgba(200, 16, 46, 0.12);
+}
+
+[data-theme="dark"] .humanize-text-page .badge-changed {
+  background: rgba(255, 243, 205, 0.15);
+  color: #ffc107;
+}
+
+[data-theme="dark"] .humanize-text-page .badge-added {
+  background: rgba(212, 237, 218, 0.15);
+  color: #4ae79a;
+}
+
+[data-theme="dark"] .humanize-text-page .badge-removed {
+  background: rgba(248, 215, 218, 0.15);
+  color: #e74a5a;
+}
+
+[data-theme="dark"] .humanize-text-page .legend-changed::before {
+  background: linear-gradient(90deg, rgba(200,16,46,0.2) 50%, rgba(0,133,90,0.2) 50%);
+}
+
+[data-theme="dark"] .humanize-text-page .legend-added::before {
+  background: rgba(0, 133, 90, 0.2);
+  border-color: rgba(0, 133, 90, 0.3);
+}
+
+[data-theme="dark"] .humanize-text-page .legend-removed::before {
+  background: rgba(200, 16, 46, 0.2);
+  border-color: rgba(200, 16, 46, 0.3);
 }
 
 /* ── Responsive ── */
@@ -321,7 +515,15 @@
 
   .humanize-text-page .para-compare-legend {
     gap: 12px;
-    font-size: 0.78rem;
+  }
+
+  .humanize-text-page .para-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .humanize-text-page .para-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .humanize-text-page .para-col {
