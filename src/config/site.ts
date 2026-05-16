@@ -93,6 +93,7 @@ const site: SiteConfig = {
       ],
     },
     { path: '/guide', labelKey: 'site.nav.guide' },
+    { path: '/pricing', labelKey: 'site.nav.pricing' },
   ],
 
   footerLinks: [
@@ -102,7 +103,7 @@ const site: SiteConfig = {
     { path: '/hwp-editor', labelKey: 'site.nav.hwpEditor' },
     { path: '/ai-writer', labelKey: 'site.nav.aiWriter' },
     { path: '/templates', labelKey: 'site.nav.templates' },
-    { path: '/guide', labelKey: 'site.nav.guide' },
+    { path: '/pricing', labelKey: 'site.nav.pricing' },
   ],
 
   familySites: [

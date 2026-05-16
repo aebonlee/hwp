@@ -21,6 +21,7 @@ const Generator = lazy(() => import('../pages/Generator'));
 const AiWriter = lazy(() => import('../pages/AiWriter'));
 const Humanize = lazy(() => import('../pages/Humanize'));
 const Guide = lazy(() => import('../pages/Guide'));
+const Pricing = lazy(() => import('../pages/Pricing'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
 // Auth 페이지
@@ -58,6 +59,7 @@ const PublicLayout = (): ReactElement => {
             <Route path="/ai-writer" element={<AiWriter />} />
             <Route path="/humanize" element={<Humanize />} />
             <Route path="/guide" element={<Guide />} />
+            <Route path="/pricing" element={<Pricing />} />
 
             {/* 문서 관리 (AuthGuard) */}
             <Route path="/documents" element={<AuthGuard><Documents /></AuthGuard>} />
