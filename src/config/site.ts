@@ -61,7 +61,6 @@ const site: SiteConfig = {
       dropdown: [
         { path: '/convert', labelKey: 'site.nav.convert' },
         { path: '/humanize', labelKey: 'site.nav.humanize' },
-        { path: '/compare', labelKey: 'site.nav.compare' },
       ],
     },
     {

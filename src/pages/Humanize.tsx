@@ -1,4 +1,4 @@
-import { useState, useCallback, type ReactElement, type DragEvent } from 'react';
+import { useState, useCallback, useMemo, type ReactElement, type DragEvent } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import SEOHead from '../components/SEOHead';
 import { formatFileSize, getFileExtension } from '../utils/fileUtils';
@@ -8,6 +8,38 @@ import '../styles/humanize.css';
 type HumanizeStep = 'upload' | 'preview' | 'processing' | 'done';
 type Intensity = 'light' | 'moderate' | 'aggressive';
 type Tone = 'formal' | 'casual' | 'academic';
+type ParaStatus = 'same' | 'changed' | 'added' | 'removed';
+
+interface ParaRow {
+  left: string;
+  right: string;
+  status: ParaStatus;
+}
+
+function splitParagraphs(text: string): string[] {
+  return text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+}
+
+function buildParaRows(original: string, modified: string): ParaRow[] {
+  const leftParas = splitParagraphs(original);
+  const rightParas = splitParagraphs(modified);
+  const rows: ParaRow[] = [];
+  const max = Math.max(leftParas.length, rightParas.length);
+  for (let i = 0; i < max; i++) {
+    const l = leftParas[i] ?? '';
+    const r = rightParas[i] ?? '';
+    let status: ParaStatus;
+    if (l && r) {
+      status = l === r ? 'same' : 'changed';
+    } else if (l) {
+      status = 'removed';
+    } else {
+      status = 'added';
+    }
+    rows.push({ left: l, right: r, status });
+  }
+  return rows;
+}
 
 const Humanize = (): ReactElement => {
   const { t } = useLanguage();
@@ -21,6 +53,11 @@ const Humanize = (): ReactElement => {
   const [tone, setTone] = useState<Tone>('formal');
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<'side-by-side' | 'result'>('side-by-side');
+
+  const paraRows = useMemo(
+    () => (step === 'done' ? buildParaRows(originalMarkdown, humanizedMarkdown) : []),
+    [step, originalMarkdown, humanizedMarkdown]
+  );
 
   const parseFile = useCallback(async (f: File): Promise<string> => {
     const ext = getFileExtension(f.name);
@@ -294,16 +331,35 @@ const Humanize = (): ReactElement => {
 
               <div className={`humanize-result-content ${viewMode}`}>
                 {viewMode === 'side-by-side' ? (
-                  <>
-                    <div className="compare-col">
-                      <div className="compare-label">{t('site.humanize.original')}</div>
-                      <pre className="humanize-pre">{originalMarkdown}</pre>
+                  <div className="para-compare">
+                    <div className="para-compare-legend">
+                      <span className="legend-item legend-same">{t('site.humanize.paraSame')}</span>
+                      <span className="legend-item legend-changed">{t('site.humanize.paraChanged')}</span>
+                      <span className="legend-item legend-added">{t('site.humanize.paraAdded')}</span>
+                      <span className="legend-item legend-removed">{t('site.humanize.paraRemoved')}</span>
                     </div>
-                    <div className="compare-col">
-                      <div className="compare-label">{t('site.humanize.humanized')}</div>
-                      <pre className="humanize-pre">{humanizedMarkdown}</pre>
-                    </div>
-                  </>
+                    {paraRows.map((row, i) => (
+                      <div key={i} className={`para-row para-${row.status}`}>
+                        <div className="para-index">
+                          <span className="para-num">#{i + 1}</span>
+                          <span className={`para-badge badge-${row.status}`}>
+                            {row.status === 'same' ? t('site.humanize.paraSame')
+                              : row.status === 'changed' ? t('site.humanize.paraChanged')
+                              : row.status === 'added' ? t('site.humanize.paraAdded')
+                              : t('site.humanize.paraRemoved')}
+                          </span>
+                        </div>
+                        <div className="para-cols">
+                          <div className="para-col para-left">
+                            {row.left || <span className="para-empty">&mdash;</span>}
+                          </div>
+                          <div className="para-col para-right">
+                            {row.right || <span className="para-empty">&mdash;</span>}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 ) : (
                   <pre className="humanize-pre full">{humanizedMarkdown}</pre>
                 )}
