@@ -1,4 +1,4 @@
-import { r as o, _ as s, __tla as __tla_0 } from "./index-Ds74n7JL.js";
+import { r as o, _ as s, __tla as __tla_0 } from "./index-ClwInC4J.js";
 let d;
 let __tla = Promise.all([
     (()=>{
@@ -17,7 +17,7 @@ let __tla = Promise.all([
     function c() {
         return r ? Promise.resolve() : i || (i = (async ()=>{
             f();
-            const e = await s(()=>import("./rhwp-BgOEd_j0.js"), []);
+            const e = await s(()=>import("./rhwp-BG_h0eyp.js"), []);
             typeof e.default == "function" && await e.default();
             try {
                 typeof e.init_panic_hook == "function" && e.init_panic_hook();

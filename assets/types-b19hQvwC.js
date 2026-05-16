@@ -1,0 +1,1 @@
+function u(){return{version:"1.0",metadata:{},content:[]}}function s(n){return{text:n,runs:[],style:{}}}function c(n,t){const e=[];for(let r=0;r<n;r++){const a=[];for(let o=0;o<t;o++)a.push({text:"",rowSpan:1,colSpan:1,style:{}});e.push(a)}return{rows:n,cols:t,cells:e}}function l(n){return{id:n}}export{u as a,c as b,l as c,s as n};

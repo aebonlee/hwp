@@ -1,7 +1,7 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-56FRFKxg.js","assets/jszip.min-hMq8e4Wj.js","assets/index-Ds74n7JL.js","assets/index-DymPi6cS.css","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import { u as W, b as U, c as _, d as A, r as p, j as e, _ as F, g as z, T as V, __tla as __tla_0 } from "./index-Ds74n7JL.js";
-import { S as Y } from "./SEOHead-Bs-UI5fS.js";
-let J;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-BTg9bJrR.js","assets/jszip.min-DZkfFYuS.js","assets/index-ClwInC4J.js","assets/index-DymPi6cS.css"])))=>i.map(i=>d[i]);
+import { u as U, b as _, c as A, d as z, r as p, j as e, _ as F, g as V, T as Y, __tla as __tla_0 } from "./index-ClwInC4J.js";
+import { S as G } from "./SEOHead-CBONIOdD.js";
+let Q;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -9,7 +9,7 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    const K = [
+    const w = [
         {
             type: "report",
             nameKo: "업무 보고서",
@@ -656,33 +656,33 @@ let __tla = Promise.all([
 `
         }
     ];
-    function D(l) {
+    function R(l) {
         let i = l.replace(/^#### (.+)$/gm, "<h4>$1</h4>").replace(/^### (.+)$/gm, "<h3>$1</h3>").replace(/^## (.+)$/gm, "<h2>$1</h2>").replace(/^# (.+)$/gm, "<h1>$1</h1>").replace(/^\> (.+)$/gm, "<blockquote>$1</blockquote>").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/^- (.+)$/gm, "<li>$1</li>").replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
         return i = i.replace(/^\|(.+)\|$/gm, (s)=>{
             if (/^\|[\s-:|]+\|$/.test(s)) return "";
-            const u = s.split("|").filter((n)=>n.trim()), g = "td";
-            return "<tr>" + u.map((n)=>`<${g}>${n.trim()}</${g}>`).join("") + "</tr>";
+            const u = s.split("|").filter((n)=>n.trim()), h = "td";
+            return "<tr>" + u.map((n)=>`<${h}>${n.trim()}</${h}>`).join("") + "</tr>";
         }), i = i.replace(/(<tr>[\s\S]*?<\/tr>)/g, "<table>$1</table>"), i = i.replace(/<\/table>\s*<table>/g, ""), i = i.split(`
 
 `).map((s)=>(s = s.trim(), s ? s.startsWith("<h") || s.startsWith("<li") || s.startsWith("<table") || s.startsWith("<blockquote") || s.startsWith("<tr") ? s : `<p>${s}</p>` : "")).join(`
 `), i;
     }
-    J = ()=>{
-        const { t: l, language: i } = W(), { user: s } = U(), { showToast: u } = _(), g = A(), n = i === "ko", [m, x] = p.useState(1), [k, f] = p.useState(null), [o, E] = p.useState({}), [w, j] = p.useState({}), [v, N] = p.useState("preview"), [T, C] = p.useState(!1), c = p.useMemo(()=>K.find((t)=>t.type === k) ?? null, [
-            k
+    Q = ()=>{
+        const { t: l, language: i } = U(), { user: s } = _(), { showToast: u } = A(), h = z(), n = i === "ko", [m, x] = p.useState(1), [g, f] = p.useState(null), [o, E] = p.useState({}), [N, j] = p.useState({}), [v, T] = p.useState("preview"), [C, q] = p.useState(!1), c = p.useMemo(()=>w.find((t)=>t.type === g) ?? null, [
+            g
         ]), b = p.useMemo(()=>{
             if (!c) return "";
             let t = c.markdownTemplate;
             for (const r of c.sections)for (const a of r.fields){
-                const d = o[a.key] || "", h = new RegExp(`\\{\\{${a.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g");
-                t = t.replace(h, d || `(${n ? a.labelKo : a.labelEn})`);
+                const d = o[a.key] || "", k = new RegExp(`\\{\\{${a.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g");
+                t = t.replace(k, d || `(${n ? a.labelKo : a.labelEn})`);
             }
             return t;
         }, [
             c,
             o,
             n
-        ]), q = p.useMemo(()=>{
+        ]), $ = p.useMemo(()=>{
             if (!c) return 0;
             const t = c.sections.flatMap((a)=>a.fields.filter((d)=>d.required));
             if (t.length === 0) return 100;
@@ -691,30 +691,30 @@ let __tla = Promise.all([
         }, [
             c,
             o
-        ]), R = (t)=>{
+        ]), S = (t)=>{
             f(t), E({});
-            const r = K.find((a)=>a.type === t);
+            const r = w.find((a)=>a.type === t);
             r && j({
                 [r.sections[0].id]: !0
             }), x(2);
-        }, S = (t)=>{
+        }, P = (t)=>{
             j((r)=>({
                     ...r,
                     [t]: !r[t]
                 }));
-        }, $ = (t, r)=>{
+        }, D = (t, r)=>{
             E((a)=>({
                     ...a,
                     [t]: r
                 }));
-        }, y = ()=>o.reportTitle || o.letterTitle || o.meetingTitle || o.proposalTitle || o.fullName || o.certTitle || "", P = ()=>{
+        }, y = ()=>o.reportTitle || o.letterTitle || o.meetingTitle || o.proposalTitle || o.fullName || o.certTitle || "", I = ()=>{
             const t = new Blob([
                 b
             ], {
                 type: "text/markdown;charset=utf-8"
             }), r = URL.createObjectURL(t), a = document.createElement("a");
             a.href = r, a.download = `${y() || "document"}.md`, a.click(), URL.revokeObjectURL(r);
-        }, I = ()=>{
+        }, L = ()=>{
             const t = `<!DOCTYPE html>
 <html lang="ko">
 <head><meta charset="UTF-8"><title>${y() || "Document"}</title>
@@ -722,50 +722,54 @@ let __tla = Promise.all([
 h1{border-bottom:2px solid #333;padding-bottom:8px}h2{color:#0046C8;margin-top:32px}
 table{border-collapse:collapse;width:100%;margin:16px 0}th,td{border:1px solid #ddd;padding:8px 12px;text-align:left}
 th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;margin:16px 0;background:#f9f9f9}</style></head>
-<body>${D(b)}</body></html>`, r = new Blob([
+<body>${R(b)}</body></html>`, r = new Blob([
                 t
             ], {
                 type: "text/html;charset=utf-8"
             }), a = URL.createObjectURL(r), d = document.createElement("a");
             d.href = a, d.download = `${y() || "document"}.html`, d.click(), URL.revokeObjectURL(a);
-        }, L = async ()=>{
+        }, O = async ()=>{
             try {
-                const { generateHwpx: t } = await F(async ()=>{
-                    const { generateHwpx: H } = await import("./generator-56FRFKxg.js");
+                const { markdownToHwpx: t } = await F(async ()=>{
+                    const { markdownToHwpx: W } = await import("./index-BTg9bJrR.js");
                     return {
-                        generateHwpx: H
+                        markdownToHwpx: W
                     };
-                }, __vite__mapDeps([0,1,2,3,4])), r = y() || "document", a = await t(b, r), d = URL.createObjectURL(a), h = document.createElement("a");
-                h.href = d, h.download = `${r}.hwpx`, h.click(), URL.revokeObjectURL(d);
+                }, __vite__mapDeps([0,1,2,3])), r = y() || "document", a = await t(b), d = new Blob([
+                    a
+                ], {
+                    type: "application/hwp+zip"
+                }), k = URL.createObjectURL(d), K = document.createElement("a");
+                K.href = k, K.download = `${r}.hwpx`, K.click(), URL.revokeObjectURL(k);
             } catch (t) {
                 u(t.message || "HWPX export failed", "error");
             }
-        }, O = async ()=>{
+        }, M = async ()=>{
             if (!s) {
                 u(n ? "로그인이 필요합니다" : "Login required", "warning");
                 return;
             }
-            const t = z();
+            const t = V();
             if (!t) return;
-            C(!0);
-            const { error: r } = await t.from(V.documents).insert({
+            q(!0);
+            const { error: r } = await t.from(Y.documents).insert({
                 user_id: s.id,
                 title: y() || (n ? "문서" : "Document"),
                 content: b,
                 metadata: {
-                    type: k,
+                    type: g,
                     formData: o
                 },
                 is_public: !1
             });
-            C(!1), r ? u(r.message, "error") : u(l("site.generator.saved"), "success");
-        }, M = ()=>{
-            g("/editor", {
+            q(!1), r ? u(r.message, "error") : u(l("site.generator.saved"), "success");
+        }, B = ()=>{
+            h("/editor", {
                 state: {
                     content: b
                 }
             });
-        }, B = [
+        }, H = [
             l("site.generator.step1"),
             l("site.generator.step2"),
             l("site.generator.step3"),
@@ -773,7 +777,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
         ];
         return e.jsxs(e.Fragment, {
             children: [
-                e.jsx(Y, {
+                e.jsx(G, {
                     title: l("site.generator.title"),
                     path: "/generator"
                 }),
@@ -818,7 +822,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                         className: "bp-step-num",
                                                         children: t
                                                     }),
-                                                    B[r]
+                                                    H[r]
                                                 ]
                                             })
                                         ]
@@ -826,9 +830,9 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                             }),
                             m === 1 && e.jsx("div", {
                                 className: "gen-type-grid",
-                                children: K.map((t)=>e.jsxs("div", {
-                                        className: `gen-type-card ${k === t.type ? "selected" : ""}`,
-                                        onClick: ()=>R(t.type),
+                                children: w.map((t)=>e.jsxs("div", {
+                                        className: `gen-type-card ${g === t.type ? "selected" : ""}`,
+                                        onClick: ()=>S(t.type),
                                         children: [
                                             e.jsx("div", {
                                                 className: "gen-type-icon",
@@ -858,14 +862,14 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                 children: e.jsx("div", {
                                                     className: "bp-progress-bar-fill",
                                                     style: {
-                                                        width: `${q}%`
+                                                        width: `${$}%`
                                                     }
                                                 })
                                             }),
                                             e.jsxs("span", {
                                                 className: "bp-progress-bar-pct",
                                                 children: [
-                                                    q,
+                                                    $,
                                                     "%"
                                                 ]
                                             })
@@ -875,8 +879,8 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             className: "bp-accordion",
                                             children: [
                                                 e.jsxs("button", {
-                                                    className: `bp-accordion-header ${w[t.id] ? "open" : ""}`,
-                                                    onClick: ()=>S(t.id),
+                                                    className: `bp-accordion-header ${N[t.id] ? "open" : ""}`,
+                                                    onClick: ()=>P(t.id),
                                                     children: [
                                                         n ? t.titleKo : t.titleEn,
                                                         e.jsx("svg", {
@@ -891,7 +895,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                         })
                                                     ]
                                                 }),
-                                                w[t.id] && e.jsx("div", {
+                                                N[t.id] && e.jsx("div", {
                                                     className: "bp-accordion-body",
                                                     children: t.fields.map((r)=>e.jsxs("div", {
                                                             className: "bp-field",
@@ -907,12 +911,12 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                                 }),
                                                                 r.type === "textarea" ? e.jsx("textarea", {
                                                                     value: o[r.key] || "",
-                                                                    onChange: (a)=>$(r.key, a.target.value),
+                                                                    onChange: (a)=>D(r.key, a.target.value),
                                                                     placeholder: r.placeholder
                                                                 }) : e.jsx("input", {
                                                                     type: r.type === "number" ? "number" : r.type === "date" ? "date" : "text",
                                                                     value: o[r.key] || "",
-                                                                    onChange: (a)=>$(r.key, a.target.value),
+                                                                    onChange: (a)=>D(r.key, a.target.value),
                                                                     placeholder: r.placeholder
                                                                 })
                                                             ]
@@ -947,12 +951,12 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                         children: [
                                             e.jsx("button", {
                                                 className: `bp-preview-tab ${v === "preview" ? "active" : ""}`,
-                                                onClick: ()=>N("preview"),
+                                                onClick: ()=>T("preview"),
                                                 children: l("site.generator.previewTab")
                                             }),
                                             e.jsx("button", {
                                                 className: `bp-preview-tab ${v === "markdown" ? "active" : ""}`,
-                                                onClick: ()=>N("markdown"),
+                                                onClick: ()=>T("markdown"),
                                                 children: l("site.generator.markdownTab")
                                             })
                                         ]
@@ -964,7 +968,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                         }) : e.jsx("div", {
                                             className: "bp-preview-rendered",
                                             dangerouslySetInnerHTML: {
-                                                __html: D(b)
+                                                __html: R(b)
                                             }
                                         })
                                     }),
@@ -1005,7 +1009,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                         children: [
                                             e.jsxs("button", {
                                                 className: "bp-export-btn primary",
-                                                onClick: L,
+                                                onClick: O,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -1034,7 +1038,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             }),
                                             e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: P,
+                                                onClick: I,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -1057,7 +1061,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             }),
                                             e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: I,
+                                                onClick: L,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -1080,8 +1084,8 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             }),
                                             s && e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: O,
-                                                disabled: T,
+                                                onClick: M,
+                                                disabled: C,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -1102,12 +1106,12 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                             })
                                                         ]
                                                     }),
-                                                    T ? "..." : l("site.generator.saveToDb")
+                                                    C ? "..." : l("site.generator.saveToDb")
                                                 ]
                                             }),
                                             e.jsxs("button", {
                                                 className: "bp-export-btn",
-                                                onClick: M,
+                                                onClick: B,
                                                 children: [
                                                     e.jsxs("svg", {
                                                         viewBox: "0 0 24 24",
@@ -1146,4 +1150,4 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
         });
     };
 });
-export { J as default, __tla };
+export { Q as default, __tla };

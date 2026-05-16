@@ -1,8 +1,8 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-56FRFKxg.js","assets/jszip.min-hMq8e4Wj.js","assets/index-Ds74n7JL.js","assets/index-DymPi6cS.css","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import { u as v, a as k, r as i, j as t, _ as g, __tla as __tla_0 } from "./index-Ds74n7JL.js";
-import { S as E } from "./SEOHead-Bs-UI5fS.js";
-import { d } from "./fileUtils-1h3TEy09.js";
-let H;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-BTg9bJrR.js","assets/jszip.min-DZkfFYuS.js","assets/index-ClwInC4J.js","assets/index-DymPi6cS.css"])))=>i.map(i=>d[i]);
+import { u as v, a as E, r as i, j as t, _ as N, __tla as __tla_0 } from "./index-ClwInC4J.js";
+import { S as g } from "./SEOHead-CBONIOdD.js";
+import { d as c } from "./fileUtils-1h3TEy09.js";
+let _;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -10,46 +10,50 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    H = ()=>{
-        const { t: e } = v(), x = k(), [l, h] = i.useState(""), [o, m] = i.useState(""), [p, u] = i.useState(!1), b = i.useRef(null);
+    _ = ()=>{
+        const { t: e } = v(), d = E(), [x, p] = i.useState(""), [o, h] = i.useState(""), [m, u] = i.useState(!1), w = i.useRef(null);
         i.useEffect(()=>{
-            const s = x.state;
-            s?.content && m(s.content), s?.title && h(s.title);
+            const s = d.state;
+            s?.content && h(s.content), s?.title && p(s.title);
         }, [
-            x.state
+            d.state
         ]);
         const n = async (s)=>{
             u(!1);
-            const r = l || e("site.editor.untitled");
+            const a = x || e("site.editor.untitled");
             switch(s){
                 case "md":
-                    d(o, `${r}.md`, "text/markdown");
+                    c(o, `${a}.md`, "text/markdown");
                     break;
                 case "html":
                     {
-                        const a = `<!DOCTYPE html>
+                        const r = `<!DOCTYPE html>
 <html lang="ko">
-<head><meta charset="UTF-8"><title>${r}</title></head>
+<head><meta charset="UTF-8"><title>${a}</title></head>
 <body>${o}</body>
 </html>`;
-                        d(a, `${r}.html`, "text/html");
+                        c(r, `${a}.html`, "text/html");
                         break;
                     }
                 case "txt":
-                    d(o, `${r}.txt`, "text/plain");
+                    c(o, `${a}.txt`, "text/plain");
                     break;
                 case "hwpx":
                     {
                         try {
-                            const { generateHwpx: a } = await g(async ()=>{
-                                const { generateHwpx: f } = await import("./generator-56FRFKxg.js");
+                            const { markdownToHwpx: r } = await N(async ()=>{
+                                const { markdownToHwpx: k } = await import("./index-BTg9bJrR.js");
                                 return {
-                                    generateHwpx: f
+                                    markdownToHwpx: k
                                 };
-                            }, __vite__mapDeps([0,1,2,3,4])), w = await a(o, l || e("site.editor.untitled")), j = URL.createObjectURL(w), c = document.createElement("a");
-                            c.href = j, c.download = `${r}.hwpx`, c.click(), URL.revokeObjectURL(j);
-                        } catch (a) {
-                            console.error("HWPX export error:", a), alert("HWPX 내보내기 중 오류가 발생했습니다.");
+                            }, __vite__mapDeps([0,1,2,3])), b = await r(o), f = new Blob([
+                                b
+                            ], {
+                                type: "application/hwp+zip"
+                            }), j = URL.createObjectURL(f), l = document.createElement("a");
+                            l.href = j, l.download = `${a}.hwpx`, l.click(), URL.revokeObjectURL(j);
+                        } catch (r) {
+                            console.error("HWPX export error:", r), alert("HWPX 내보내기 중 오류가 발생했습니다.");
                         }
                         break;
                     }
@@ -57,7 +61,7 @@ let __tla = Promise.all([
         };
         return t.jsxs(t.Fragment, {
             children: [
-                t.jsx(E, {
+                t.jsx(g, {
                     title: e("site.editor.title"),
                     path: "/md-editor"
                 }),
@@ -86,25 +90,25 @@ let __tla = Promise.all([
                                     t.jsx("input", {
                                         className: "editor-title-input",
                                         type: "text",
-                                        value: l,
-                                        onChange: (s)=>h(s.target.value),
+                                        value: x,
+                                        onChange: (s)=>p(s.target.value),
                                         placeholder: e("site.editor.untitled")
                                     }),
                                     t.jsx("div", {
                                         className: "editor-actions",
                                         children: t.jsxs("div", {
                                             className: "export-menu-wrapper",
-                                            ref: b,
+                                            ref: w,
                                             children: [
                                                 t.jsxs("button", {
                                                     className: "editor-btn",
-                                                    onClick: ()=>u(!p),
+                                                    onClick: ()=>u(!m),
                                                     children: [
                                                         e("site.editor.export"),
                                                         " ▾"
                                                     ]
                                                 }),
-                                                p && t.jsxs("div", {
+                                                m && t.jsxs("div", {
                                                     className: "export-dropdown",
                                                     children: [
                                                         t.jsx("button", {
@@ -134,7 +138,7 @@ let __tla = Promise.all([
                                 className: "md-editor-wrapper",
                                 children: t.jsx("textarea", {
                                     value: o,
-                                    onChange: (s)=>m(s.target.value),
+                                    onChange: (s)=>h(s.target.value),
                                     placeholder: "마크다운으로 문서를 작성하세요..."
                                 })
                             })
@@ -145,4 +149,4 @@ let __tla = Promise.all([
         });
     };
 });
-export { H as default, __tla };
+export { _ as default, __tla };

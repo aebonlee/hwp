@@ -1,7 +1,7 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/generator-56FRFKxg.js","assets/jszip.min-hMq8e4Wj.js","assets/index-Ds74n7JL.js","assets/index-DymPi6cS.css","assets/types-dbiTllwl.js"])))=>i.map(i=>d[i]);
-import { u as L, r as c, j as e, c as Z, b as me, d as Ee, g as _, T as z, _ as ge, __tla as __tla_0 } from "./index-Ds74n7JL.js";
-import { S as xe } from "./SEOHead-Bs-UI5fS.js";
-let Ie;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-BTg9bJrR.js","assets/jszip.min-DZkfFYuS.js","assets/index-ClwInC4J.js","assets/index-DymPi6cS.css"])))=>i.map(i=>d[i]);
+import { u as L, r as c, j as e, c as Z, b as Ee, d as xe, g as _, T as z, _ as ge, __tla as __tla_0 } from "./index-ClwInC4J.js";
+import { S as ke } from "./SEOHead-CBONIOdD.js";
+let De;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -35,15 +35,15 @@ let __tla = Promise.all([
             id: "gpt-4.1-mini",
             label: "GPT-4.1 Mini"
         }
-    ], ke = ({ collapsed: s = !0 })=>{
-        const { language: y } = L(), o = y === "ko", [u, f] = c.useState(!s), [a, g] = c.useState(()=>localStorage.getItem(U) || "claude"), [d, b] = c.useState(()=>localStorage.getItem(H) || ""), [m, n] = c.useState(()=>localStorage.getItem(V) || ""), [K, S] = c.useState(()=>localStorage.getItem(W) || J[0].id), [x, h] = c.useState(()=>localStorage.getItem(Y) || Q[0].id), [k, P] = c.useState(!1), j = a === "claude" ? d : m, N = a === "claude" ? K : x, T = a === "claude" ? J : Q, C = j.trim().length > 0, q = c.useCallback((p)=>{
-            g(p), localStorage.setItem(U, p);
-        }, []), O = c.useCallback((p)=>{
+    ], he = ({ collapsed: s = !0 })=>{
+        const { language: y } = L(), o = y === "ko", [u, f] = c.useState(!s), [a, E] = c.useState(()=>localStorage.getItem(U) || "claude"), [d, b] = c.useState(()=>localStorage.getItem(H) || ""), [m, n] = c.useState(()=>localStorage.getItem(V) || ""), [h, S] = c.useState(()=>localStorage.getItem(W) || J[0].id), [g, K] = c.useState(()=>localStorage.getItem(Y) || Q[0].id), [k, P] = c.useState(!1), N = a === "claude" ? d : m, j = a === "claude" ? h : g, T = a === "claude" ? J : Q, C = N.trim().length > 0, q = c.useCallback((p)=>{
+            E(p), localStorage.setItem(U, p);
+        }, []), F = c.useCallback((p)=>{
             a === "claude" ? (b(p), localStorage.setItem(H, p)) : (n(p), localStorage.setItem(V, p));
         }, [
             a
         ]), M = c.useCallback((p)=>{
-            a === "claude" ? (S(p), localStorage.setItem(W, p)) : (h(p), localStorage.setItem(Y, p));
+            a === "claude" ? (S(p), localStorage.setItem(W, p)) : (K(p), localStorage.setItem(Y, p));
         }, [
             a
         ]);
@@ -141,8 +141,8 @@ let __tla = Promise.all([
                                             type: k ? "text" : "password",
                                             className: "ai-key-setup-input",
                                             placeholder: a === "claude" ? "sk-ant-api03-..." : "sk-proj-...",
-                                            value: j,
-                                            onChange: (p)=>O(p.target.value)
+                                            value: N,
+                                            onChange: (p)=>F(p.target.value)
                                         }),
                                         e.jsx("button", {
                                             className: "ai-key-setup-eye",
@@ -184,7 +184,7 @@ let __tla = Promise.all([
                                 }),
                                 e.jsx("select", {
                                     className: "ai-key-setup-model",
-                                    value: N,
+                                    value: j,
                                     onChange: (p)=>M(p.target.value),
                                     children: T.map((p)=>e.jsx("option", {
                                             value: p.id,
@@ -201,21 +201,21 @@ let __tla = Promise.all([
                 })
             ]
         });
-    }, Ke = "hwp_ai_provider", he = "hwp_ai_claude_key", ve = "hwp_ai_openai_key", fe = "hwp_ai_claude_model", Se = "hwp_ai_openai_model";
-    function Pe() {
+    }, Ke = "hwp_ai_provider", ve = "hwp_ai_claude_key", fe = "hwp_ai_openai_key", Se = "hwp_ai_claude_model", Pe = "hwp_ai_openai_model";
+    function je() {
         const [s, y] = c.useState(!1), [o, u] = c.useState(""), f = c.useRef(null), a = c.useCallback(()=>{
             f.current?.abort();
-        }, []), g = c.useCallback(async (d)=>{
-            const b = localStorage.getItem(Ke) || "claude", m = localStorage.getItem(he) || "", n = localStorage.getItem(ve) || "", K = localStorage.getItem(fe) || "claude-sonnet-4-20250514", S = localStorage.getItem(Se) || "gpt-4o";
+        }, []), E = c.useCallback(async (d)=>{
+            const b = localStorage.getItem(Ke) || "claude", m = localStorage.getItem(ve) || "", n = localStorage.getItem(fe) || "", h = localStorage.getItem(Se) || "claude-sonnet-4-20250514", S = localStorage.getItem(Pe) || "gpt-4o";
             if (!(b === "claude" ? m : n)) throw new Error("API 키가 설정되지 않았습니다. 상단에서 API 키를 입력해 주세요.");
             y(!0), u("");
-            const h = new AbortController;
-            f.current = h;
+            const K = new AbortController;
+            f.current = K;
             try {
                 let k = "";
-                return b === "claude" ? k = await Ne(d, m, K, h.signal, (P)=>{
+                return b === "claude" ? k = await Ce(d, m, h, K.signal, (P)=>{
                     u(P);
-                }) : k = await Ce(d, n, S, h.signal, (P)=>{
+                }) : k = await Ne(d, n, S, K.signal, (P)=>{
                     u(P);
                 }), k;
             } finally{
@@ -225,11 +225,11 @@ let __tla = Promise.all([
         return {
             generating: s,
             generatedText: o,
-            generate: g,
+            generate: E,
             stop: a
         };
     }
-    async function Ne(s, y, o, u, f) {
+    async function Ce(s, y, o, u, f) {
         const a = await fetch("https://api.anthropic.com/v1/messages", {
             method: "POST",
             headers: {
@@ -256,31 +256,31 @@ let __tla = Promise.all([
             const n = await a.json().catch(()=>({}));
             throw new Error(n?.error?.message || `Claude API error: ${a.status}`);
         }
-        const g = a.body?.getReader();
-        if (!g) throw new Error("No response body");
+        const E = a.body?.getReader();
+        if (!E) throw new Error("No response body");
         const d = new TextDecoder;
         let b = "", m = "";
         for(;;){
-            const { done: n, value: K } = await g.read();
+            const { done: n, value: h } = await E.read();
             if (n) break;
-            b += d.decode(K, {
+            b += d.decode(h, {
                 stream: !0
             });
             const S = b.split(`
 `);
             b = S.pop() || "";
-            for (const x of S){
-                if (!x.startsWith("data: ")) continue;
-                const h = x.slice(6);
-                if (h !== "[DONE]") try {
-                    const k = JSON.parse(h);
+            for (const g of S){
+                if (!g.startsWith("data: ")) continue;
+                const K = g.slice(6);
+                if (K !== "[DONE]") try {
+                    const k = JSON.parse(K);
                     k.type === "content_block_delta" && k.delta?.text && (m += k.delta.text, f(m));
                 } catch  {}
             }
         }
         return m;
     }
-    async function Ce(s, y, o, u, f) {
+    async function Ne(s, y, o, u, f) {
         const a = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -308,39 +308,39 @@ let __tla = Promise.all([
             const n = await a.json().catch(()=>({}));
             throw new Error(n?.error?.message || `OpenAI API error: ${a.status}`);
         }
-        const g = a.body?.getReader();
-        if (!g) throw new Error("No response body");
+        const E = a.body?.getReader();
+        if (!E) throw new Error("No response body");
         const d = new TextDecoder;
         let b = "", m = "";
         for(;;){
-            const { done: n, value: K } = await g.read();
+            const { done: n, value: h } = await E.read();
             if (n) break;
-            b += d.decode(K, {
+            b += d.decode(h, {
                 stream: !0
             });
             const S = b.split(`
 `);
             b = S.pop() || "";
-            for (const x of S){
-                if (!x.startsWith("data: ")) continue;
-                const h = x.slice(6);
-                if (h !== "[DONE]") try {
-                    const P = JSON.parse(h).choices?.[0]?.delta?.content;
+            for (const g of S){
+                if (!g.startsWith("data: ")) continue;
+                const K = g.slice(6);
+                if (K !== "[DONE]") try {
+                    const P = JSON.parse(K).choices?.[0]?.delta?.content;
                     P && (m += P, f(m));
                 } catch  {}
             }
         }
         return m;
     }
-    const je = ({ fieldLabel: s, sectionTitle: y, templateName: o, allFormData: u, onAccept: f })=>{
-        const { language: a } = L(), { showToast: g } = Z(), d = a === "ko", [b, m] = c.useState(!1), { generating: n, generatedText: K, generate: S, stop: x } = Pe(), h = ()=>{
-            const N = {};
-            for (const [T, C] of Object.entries(u))C && C.trim() && (N[T] = C);
+    const Me = ({ fieldLabel: s, sectionTitle: y, templateName: o, allFormData: u, onAccept: f })=>{
+        const { language: a } = L(), { showToast: E } = Z(), d = a === "ko", [b, m] = c.useState(!1), { generating: n, generatedText: h, generate: S, stop: g } = je(), K = ()=>{
+            const j = {};
+            for (const [T, C] of Object.entries(u))C && C.trim() && (j[T] = C);
             return `당신은 한국 사업계획서 작성 전문가입니다.
 사업유형: ${o}
 섹션: ${y}
 작성 항목: ${s}
-이미 입력된 정보: ${JSON.stringify(N, null, 2)}
+이미 입력된 정보: ${JSON.stringify(j, null, 2)}
 
 위 맥락을 참고하여 '${s}' 항목을 전문적이고 구체적으로 작성해 주세요.
 - 실제 사업계획서에 바로 사용할 수 있는 수준으로 작성
@@ -349,14 +349,14 @@ let __tla = Promise.all([
 - 마크다운 서식 없이 순수 텍스트만 출력`;
         }, k = async ()=>{
             try {
-                await S(h());
-            } catch (N) {
-                N.name !== "AbortError" && g(N.message, "error");
+                await S(K());
+            } catch (j) {
+                j.name !== "AbortError" && E(j.message, "error");
             }
         }, P = ()=>{
-            f(K), m(!1);
-        }, j = ()=>{
-            n && x(), m(!1);
+            f(h), m(!1);
+        }, N = ()=>{
+            n && g(), m(!1);
         };
         return b ? e.jsxs("div", {
             className: "ai-field-popover",
@@ -369,7 +369,7 @@ let __tla = Promise.all([
                         }),
                         e.jsx("button", {
                             className: "ai-field-popover-close",
-                            onClick: j,
+                            onClick: N,
                             children: "×"
                         })
                     ]
@@ -377,7 +377,7 @@ let __tla = Promise.all([
                 e.jsxs("div", {
                     className: "ai-field-preview",
                     children: [
-                        K || (n ? d ? "생성 중..." : "Generating..." : ""),
+                        h || (n ? d ? "생성 중..." : "Generating..." : ""),
                         n && e.jsx("span", {
                             className: "ai-cursor-blink",
                             children: "|"
@@ -387,7 +387,7 @@ let __tla = Promise.all([
                 e.jsxs("div", {
                     className: "ai-field-actions",
                     children: [
-                        !n && K && e.jsxs(e.Fragment, {
+                        !n && h && e.jsxs(e.Fragment, {
                             children: [
                                 e.jsx("button", {
                                     className: "bp-btn primary",
@@ -403,12 +403,12 @@ let __tla = Promise.all([
                         }),
                         n && e.jsx("button", {
                             className: "bp-btn",
-                            onClick: x,
+                            onClick: g,
                             children: d ? "중지" : "Stop"
                         }),
                         e.jsx("button", {
                             className: "bp-btn",
-                            onClick: j,
+                            onClick: N,
                             children: d ? "취소" : "Cancel"
                         })
                     ]
@@ -433,7 +433,7 @@ let __tla = Promise.all([
                 })
             })
         });
-    }, Me = [
+    }, we = [
         {
             type: "gov-prestartup",
             nameKo: "예비창업패키지",
@@ -2078,7 +2078,7 @@ let __tla = Promise.all([
 {{seSustainPlan}}
 `
         }
-    ], we = [
+    ], Te = [
         {
             type: "startup",
             nameKo: "창업사업계획서",
@@ -4335,9 +4335,9 @@ let __tla = Promise.all([
 `
         }
     ], D = [
-        ...we,
-        ...Me
-    ], A = "hwp_bp_autosave";
+        ...Te,
+        ...we
+    ], O = "hwp_bp_autosave";
     function X(s) {
         let y = s.replace(/^#### (.+)$/gm, "<h4>$1</h4>").replace(/^### (.+)$/gm, "<h3>$1</h3>").replace(/^## (.+)$/gm, "<h2>$1</h2>").replace(/^# (.+)$/gm, "<h1>$1</h1>").replace(/^\> (.+)$/gm, "<blockquote>$1</blockquote>").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/^- (.+)$/gm, "<li>$1</li>").replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
         return y = y.replace(/^\|(.+)\|$/gm, (o)=>{
@@ -4349,22 +4349,22 @@ let __tla = Promise.all([
 `).map((o)=>(o = o.trim(), o ? o.startsWith("<h") || o.startsWith("<li") || o.startsWith("<table") || o.startsWith("<blockquote") || o.startsWith("<tr") ? o : `<p>${o}</p>` : "")).join(`
 `), y;
     }
-    Ie = ()=>{
-        const { t: s, language: y } = L(), { user: o } = me(), { showToast: u } = Z(), f = Ee(), a = y === "ko", [g, d] = c.useState(1), [b, m] = c.useState(null), [n, K] = c.useState({}), [S, x] = c.useState({}), [h, k] = c.useState("preview"), [P, j] = c.useState(!1), [N, T] = c.useState([]), [C, q] = c.useState(!1), [O, M] = c.useState(!1), [p, ee] = c.useState(""), [R, te] = c.useState("all"), v = c.useMemo(()=>D.find((t)=>t.type === b) ?? null, [
+    De = ()=>{
+        const { t: s, language: y } = L(), { user: o } = Ee(), { showToast: u } = Z(), f = xe(), a = y === "ko", [E, d] = c.useState(1), [b, m] = c.useState(null), [n, h] = c.useState({}), [S, g] = c.useState({}), [K, k] = c.useState("preview"), [P, N] = c.useState(!1), [j, T] = c.useState([]), [C, q] = c.useState(!1), [F, M] = c.useState(!1), [p, ee] = c.useState(""), [B, te] = c.useState("all"), v = c.useMemo(()=>D.find((t)=>t.type === b) ?? null, [
             b
         ]), w = c.useMemo(()=>{
             if (!v) return "";
             let t = v.markdownTemplate;
             for (const l of v.sections)for (const r of l.fields){
-                const i = n[r.key] || "", E = new RegExp(`\\{\\{${r.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g");
-                t = t.replace(E, i || `(${a ? r.labelKo : r.labelEn})`);
+                const i = n[r.key] || "", x = new RegExp(`\\{\\{${r.key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\}\\}`, "g");
+                t = t.replace(x, i || `(${a ? r.labelKo : r.labelEn})`);
             }
             return t;
         }, [
             v,
             n,
             a
-        ]), F = c.useMemo(()=>{
+        ]), G = c.useMemo(()=>{
             if (!v) return 0;
             const t = v.sections.flatMap((r)=>r.fields.filter((i)=>i.required));
             if (t.length === 0) return 100;
@@ -4382,22 +4382,22 @@ let __tla = Promise.all([
                 timestamp: Date.now()
             };
             try {
-                localStorage.setItem(A, JSON.stringify(t));
+                localStorage.setItem(O, JSON.stringify(t));
             } catch  {}
         }, [
             b,
             n
         ]), c.useEffect(()=>{
             try {
-                const t = localStorage.getItem(A);
+                const t = localStorage.getItem(O);
                 if (!t) return;
                 const { type: l, formData: r, timestamp: i } = JSON.parse(t);
                 if (Date.now() - i > 864e5) return;
                 if (l && r && Object.keys(r).length > 0) {
-                    m(l), K(r);
-                    const E = D.find((G)=>G.type === l);
-                    E && (x({
-                        [E.sections[0].id]: !0
+                    m(l), h(r);
+                    const x = D.find((R)=>R.type === l);
+                    x && (g({
+                        [x.sections[0].id]: !0
                     }), d(2), u(a ? "자동 저장된 내용을 복원했습니다" : "Restored autosaved draft", "info"));
                 }
             } catch  {}
@@ -4415,13 +4415,13 @@ let __tla = Promise.all([
             }).limit(20);
             !r && l && T(l), q(!1), M(!0);
         }, le = (t)=>{
-            m(t.plan_type), K(t.data);
+            m(t.plan_type), h(t.data);
             const l = D.find((r)=>r.type === t.plan_type);
             if (l) {
                 const r = {};
                 l.sections.forEach((i)=>{
                     r[i.id] = !0;
-                }), x(r);
+                }), g(r);
             }
             M(!1), d(2), u(a ? "저장된 계획서를 불러왔습니다" : "Loaded saved plan", "success");
         }, ne = async (t)=>{
@@ -4429,25 +4429,25 @@ let __tla = Promise.all([
             const l = _();
             if (!l || !o) return;
             const { error: r } = await l.from(z.businessPlans).delete().eq("id", t).eq("user_id", o.id);
-            r || (T((i)=>i.filter((E)=>E.id !== t)), u(a ? "삭제되었습니다" : "Deleted", "success"));
+            r || (T((i)=>i.filter((x)=>x.id !== t)), u(a ? "삭제되었습니다" : "Deleted", "success"));
         }, $ = c.useMemo(()=>{
             let t = D;
-            if (R !== "all" && (t = t.filter((l)=>l.category === R)), p.trim()) {
+            if (B !== "all" && (t = t.filter((l)=>l.category === B)), p.trim()) {
                 const l = p.toLowerCase();
                 t = t.filter((r)=>r.nameKo.toLowerCase().includes(l) || r.nameEn.toLowerCase().includes(l) || r.descKo.toLowerCase().includes(l) || r.descEn.toLowerCase().includes(l));
             }
             return t;
         }, [
             p,
-            R
+            B
         ]), re = (t)=>{
-            m(t), K({});
+            m(t), h({});
             const l = D.find((r)=>r.type === t);
-            l && x({
+            l && g({
                 [l.sections[0].id]: !0
             }), d(2);
         }, ie = (t)=>{
-            x((l)=>({
+            g((l)=>({
                     ...l,
                     [t]: !l[t]
                 }));
@@ -4456,9 +4456,9 @@ let __tla = Promise.all([
             const t = {};
             v.sections.forEach((l)=>{
                 t[l.id] = !0;
-            }), x(t);
-        }, B = (t, l)=>{
-            K((r)=>({
+            }), g(t);
+        }, A = (t, l)=>{
+            h((r)=>({
                     ...r,
                     [t]: l
                 }));
@@ -4486,20 +4486,17 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
             i.href = r, i.download = `${I() || "business-plan"}.html`, i.click(), URL.revokeObjectURL(r);
         }, de = async ()=>{
             try {
-                const { generateHwpx: t } = await ge(async ()=>{
-                    const { generateHwpx: G } = await import("./generator-56FRFKxg.js");
+                const { markdownToHwpx: t } = await ge(async ()=>{
+                    const { markdownToHwpx: me } = await import("./index-BTg9bJrR.js");
                     return {
-                        generateHwpx: G
+                        markdownToHwpx: me
                     };
-                }, __vite__mapDeps([0,1,2,3,4])), l = I() || "business-plan", r = await t(w, l, {
-                    pageNumbers: !0,
-                    coverPage: {
-                        title: l,
-                        organization: n.companyName || n.businessName || n.earlyCompanyName || n.sbName || n.seName || "",
-                        date: new Date().toLocaleDateString("ko-KR")
-                    }
-                }), i = URL.createObjectURL(r), E = document.createElement("a");
-                E.href = i, E.download = `${l}.hwpx`, E.click(), URL.revokeObjectURL(i);
+                }, __vite__mapDeps([0,1,2,3])), l = I() || "business-plan", r = await t(w), i = new Blob([
+                    r
+                ], {
+                    type: "application/hwp+zip"
+                }), x = URL.createObjectURL(i), R = document.createElement("a");
+                R.href = x, R.download = `${l}.hwpx`, R.click(), URL.revokeObjectURL(x);
             } catch (t) {
                 u(t.message || "HWPX export failed", "error");
             }
@@ -4510,7 +4507,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
             }
             const t = _();
             if (!t) return;
-            j(!0);
+            N(!0);
             const { error: l } = await t.from(z.businessPlans).insert({
                 user_id: o.id,
                 plan_type: b,
@@ -4518,11 +4515,11 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                 data: n,
                 generated_content: w
             });
-            if (j(!1), l) u(l.message, "error");
+            if (N(!1), l) u(l.message, "error");
             else {
                 u(s("site.businessPlan.saved"), "success");
                 try {
-                    localStorage.removeItem(A);
+                    localStorage.removeItem(O);
                 } catch  {}
             }
         }, ue = ()=>{
@@ -4532,9 +4529,9 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                 }
             });
         }, ye = ()=>{
-            d(1), m(null), K({}), x({}), M(!1);
+            d(1), m(null), h({}), g({}), M(!1);
             try {
-                localStorage.removeItem(A);
+                localStorage.removeItem(O);
             } catch  {}
         }, be = [
             s("site.businessPlan.step1"),
@@ -4544,7 +4541,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
         ];
         return e.jsxs(e.Fragment, {
             children: [
-                e.jsx(xe, {
+                e.jsx(ke, {
                     title: s("site.businessPlan.title"),
                     path: "/business-plan"
                 }),
@@ -4583,17 +4580,17 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                 className: "bp-step-connector"
                                             }),
                                             e.jsxs("div", {
-                                                className: `bp-step ${g === t ? "active" : ""} ${g > t ? "completed" : ""}`,
+                                                className: `bp-step ${E === t ? "active" : ""} ${E > t ? "completed" : ""}`,
                                                 onClick: ()=>{
-                                                    g > t && d(t);
+                                                    E > t && d(t);
                                                 },
                                                 style: {
-                                                    cursor: g > t ? "pointer" : "default"
+                                                    cursor: E > t ? "pointer" : "default"
                                                 },
                                                 children: [
                                                     e.jsx("span", {
                                                         className: "bp-step-num",
-                                                        children: g > t ? "✓" : t
+                                                        children: E > t ? "✓" : t
                                                     }),
                                                     be[l]
                                                 ]
@@ -4601,7 +4598,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                         ]
                                     }, t))
                             }),
-                            g === 1 && e.jsxs("div", {
+                            E === 1 && e.jsxs("div", {
                                 className: "bp-step1-section",
                                 children: [
                                     e.jsxs("div", {
@@ -4661,7 +4658,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             })
                                         ]
                                     }),
-                                    O && e.jsx("div", {
+                                    F && e.jsx("div", {
                                         className: "bp-saved-overlay",
                                         onClick: ()=>M(!1),
                                         children: e.jsxs("div", {
@@ -4690,12 +4687,12 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                     children: e.jsx("div", {
                                                         className: "loading-spinner"
                                                     })
-                                                }) : N.length === 0 ? e.jsx("div", {
+                                                }) : j.length === 0 ? e.jsx("div", {
                                                     className: "bp-saved-empty",
                                                     children: a ? "저장된 사업계획서가 없습니다" : "No saved business plans"
                                                 }) : e.jsx("div", {
                                                     className: "bp-saved-list",
-                                                    children: N.map((t)=>{
+                                                    children: j.map((t)=>{
                                                         const l = D.find((r)=>r.type === t.plan_type);
                                                         return e.jsxs("div", {
                                                             className: "bp-saved-item",
@@ -4748,7 +4745,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             "general",
                                             "government"
                                         ].map((t)=>e.jsx("button", {
-                                                className: `bp-category-tab ${R === t ? "active" : ""}`,
+                                                className: `bp-category-tab ${B === t ? "active" : ""}`,
                                                 onClick: ()=>te(t),
                                                 children: t === "all" ? a ? "전체" : "All" : t === "general" ? a ? "일반 사업계획서" : "General" : a ? "정부지원사업" : "Government"
                                             }, t))
@@ -4794,10 +4791,10 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                     })
                                 ]
                             }),
-                            g === 2 && v && e.jsxs("div", {
+                            E === 2 && v && e.jsxs("div", {
                                 className: "bp-form-section",
                                 children: [
-                                    e.jsx(ke, {
+                                    e.jsx(he, {
                                         collapsed: !0
                                     }),
                                     e.jsxs("div", {
@@ -4835,14 +4832,14 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                 children: e.jsx("div", {
                                                     className: "bp-progress-bar-fill",
                                                     style: {
-                                                        width: `${F}%`
+                                                        width: `${G}%`
                                                     }
                                                 })
                                             }),
                                             e.jsxs("span", {
                                                 className: "bp-progress-bar-pct",
                                                 children: [
-                                                    F,
+                                                    G,
                                                     "%"
                                                 ]
                                             })
@@ -4899,38 +4896,38 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                                                             className: "required",
                                                                             children: "*"
                                                                         }),
-                                                                        i.type === "textarea" && e.jsx(je, {
+                                                                        i.type === "textarea" && e.jsx(Me, {
                                                                             fieldKey: i.key,
                                                                             fieldLabel: a ? i.labelKo : i.labelEn,
                                                                             sectionTitle: a ? t.titleKo : t.titleEn,
                                                                             templateName: a ? v.nameKo : v.nameEn,
                                                                             allFormData: n,
-                                                                            onAccept: (E)=>B(i.key, E)
+                                                                            onAccept: (x)=>A(i.key, x)
                                                                         })
                                                                     ]
                                                                 }),
                                                                 i.type === "textarea" ? e.jsx("textarea", {
                                                                     value: n[i.key] || "",
-                                                                    onChange: (E)=>B(i.key, E.target.value),
+                                                                    onChange: (x)=>A(i.key, x.target.value),
                                                                     placeholder: i.placeholder,
                                                                     rows: 3
                                                                 }) : i.type === "select" && i.options ? e.jsxs("select", {
                                                                     value: n[i.key] || "",
-                                                                    onChange: (E)=>B(i.key, E.target.value),
+                                                                    onChange: (x)=>A(i.key, x.target.value),
                                                                     children: [
                                                                         e.jsx("option", {
                                                                             value: "",
                                                                             children: a ? "선택하세요" : "Select..."
                                                                         }),
-                                                                        i.options.map((E)=>e.jsx("option", {
-                                                                                value: E,
-                                                                                children: E
-                                                                            }, E))
+                                                                        i.options.map((x)=>e.jsx("option", {
+                                                                                value: x,
+                                                                                children: x
+                                                                            }, x))
                                                                     ]
                                                                 }) : e.jsx("input", {
                                                                     type: i.type === "number" ? "number" : i.type === "date" ? "date" : "text",
                                                                     value: n[i.key] || "",
-                                                                    onChange: (E)=>B(i.key, E.target.value),
+                                                                    onChange: (x)=>A(i.key, x.target.value),
                                                                     placeholder: i.placeholder
                                                                 })
                                                             ]
@@ -4977,26 +4974,26 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                             e.jsx("button", {
                                                 className: "bp-btn primary",
                                                 onClick: ()=>d(3),
-                                                disabled: F < 10,
+                                                disabled: G < 10,
                                                 children: s("site.businessPlan.next")
                                             })
                                         ]
                                     })
                                 ]
                             }),
-                            g === 3 && e.jsxs("div", {
+                            E === 3 && e.jsxs("div", {
                                 className: "bp-preview-section",
                                 children: [
                                     e.jsxs("div", {
                                         className: "bp-preview-tabs",
                                         children: [
                                             e.jsx("button", {
-                                                className: `bp-preview-tab ${h === "preview" ? "active" : ""}`,
+                                                className: `bp-preview-tab ${K === "preview" ? "active" : ""}`,
                                                 onClick: ()=>k("preview"),
                                                 children: s("site.businessPlan.previewTab")
                                             }),
                                             e.jsx("button", {
-                                                className: `bp-preview-tab ${h === "markdown" ? "active" : ""}`,
+                                                className: `bp-preview-tab ${K === "markdown" ? "active" : ""}`,
                                                 onClick: ()=>k("markdown"),
                                                 children: s("site.businessPlan.markdownTab")
                                             })
@@ -5004,7 +5001,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                     }),
                                     e.jsx("div", {
                                         className: "bp-preview-content",
-                                        children: h === "markdown" ? e.jsx("pre", {
+                                        children: K === "markdown" ? e.jsx("pre", {
                                             children: w
                                         }) : e.jsx("div", {
                                             className: "bp-preview-rendered",
@@ -5030,7 +5027,7 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                                     })
                                 ]
                             }),
-                            g === 4 && e.jsxs("div", {
+                            E === 4 && e.jsxs("div", {
                                 className: "bp-export-section",
                                 children: [
                                     e.jsx("div", {
@@ -5189,4 +5186,4 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
         });
     };
 });
-export { Ie as default, __tla };
+export { De as default, __tla };

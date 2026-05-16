@@ -1,8 +1,8 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/parser-Ky50ipSL.js","assets/jszip.min-hMq8e4Wj.js","assets/index-Ds74n7JL.js","assets/index-DymPi6cS.css","assets/types-dbiTllwl.js","assets/parser-RcNDRhfQ.js"])))=>i.map(i=>d[i]);
-import { u as R, r as i, _ as m, j as e, g as F, __tla as __tla_0 } from "./index-Ds74n7JL.js";
-import { S as I } from "./SEOHead-Bs-UI5fS.js";
-import { g as V, f as P } from "./fileUtils-1h3TEy09.js";
-let Q;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-BTg9bJrR.js","assets/jszip.min-DZkfFYuS.js","assets/index-ClwInC4J.js","assets/index-DymPi6cS.css","assets/parser-DJr_P0bV.js","assets/types-b19hQvwC.js"])))=>i.map(i=>d[i]);
+import { u as V, r as l, _ as k, j as e, g as F, __tla as __tla_0 } from "./index-ClwInC4J.js";
+import { S as U } from "./SEOHead-CBONIOdD.js";
+import { g as X, f as q } from "./fileUtils-1h3TEy09.js";
+let se;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -10,93 +10,140 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    Q = ()=>{
-        const { t } = R(), [o, n] = i.useState("upload"), [D, u] = i.useState(!1), [p, _] = i.useState(null), [c, j] = i.useState(""), [q, w] = i.useState(null), [d, g] = i.useState("source"), [M, E] = i.useState(!1), [S, x] = i.useState(""), [f, $] = i.useState(""), [v, C] = i.useState(!1), [L, N] = i.useState(""), T = i.useCallback(async (s)=>{
-            const r = V(s.name);
-            if (r !== "hwp" && r !== "hwpx") {
-                x(".hwp 또는 .hwpx 파일만 지원합니다.");
+    const G = [
+        "hwp",
+        "hwpx",
+        "docx",
+        "xlsx",
+        "hwp3",
+        "hwpml"
+    ];
+    function J(t) {
+        return G.includes(t);
+    }
+    se = ()=>{
+        const { t } = V(), [w, r] = l.useState("upload"), [C, _] = l.useState(!1), [f, D] = l.useState(null), [u, v] = l.useState(""), [Q, j] = l.useState(null), [g, y] = l.useState("source"), [L, H] = l.useState(!1), [R, b] = l.useState(""), [T, S] = l.useState(""), [N, M] = l.useState(!1), [I, E] = l.useState(""), $ = l.useCallback(async (o)=>{
+            const n = X(o.name);
+            if (!J(n)) {
+                b("지원하지 않는 파일 형식입니다. (.hwp, .hwpx, .docx, .xlsx, .hwp3 지원)");
                 return;
             }
-            _(s), x(""), n("converting");
+            D(o), b(""), r("converting");
             try {
-                if (r === "hwpx") {
-                    const { parseHwpx: a } = await m(async ()=>{
-                        const { parseHwpx: l } = await import("./parser-Ky50ipSL.js");
+                const a = await o.arrayBuffer();
+                if (n === "hwpx") {
+                    const { parseHwpxDocument: d, blocksToMarkdown: i, kordocToHwpIR: p } = await k(async ()=>{
+                        const { parseHwpxDocument: h, blocksToMarkdown: x, kordocToHwpIR: m } = await import("./index-BTg9bJrR.js");
                         return {
-                            parseHwpx: l
+                            parseHwpxDocument: h,
+                            blocksToMarkdown: x,
+                            kordocToHwpIR: m
                         };
-                    }, __vite__mapDeps([0,1,2,3,4])), k = await s.arrayBuffer(), h = await a(k);
-                    w(h);
-                    const { irToMarkdown: y } = await m(async ()=>{
-                        const { irToMarkdown: l } = await import("./toMarkdown-CeTF6k-c.js");
+                    }, __vite__mapDeps([0,1,2,3])), s = await d(a), c = s.markdown || i(s.blocks);
+                    j(p(s.blocks, s.metadata)), v(c);
+                } else if (n === "docx") {
+                    const { parseDocxDocument: d, blocksToMarkdown: i, kordocToHwpIR: p } = await k(async ()=>{
+                        const { parseDocxDocument: h, blocksToMarkdown: x, kordocToHwpIR: m } = await import("./index-BTg9bJrR.js");
                         return {
-                            irToMarkdown: l
+                            parseDocxDocument: h,
+                            blocksToMarkdown: x,
+                            kordocToHwpIR: m
                         };
-                    }, []), b = y(h);
-                    j(b);
+                    }, __vite__mapDeps([0,1,2,3])), s = await d(a), c = s.markdown || i(s.blocks);
+                    j(p(s.blocks, s.metadata)), v(c);
+                } else if (n === "xlsx") {
+                    const { parseXlsxDocument: d, blocksToMarkdown: i, kordocToHwpIR: p } = await k(async ()=>{
+                        const { parseXlsxDocument: h, blocksToMarkdown: x, kordocToHwpIR: m } = await import("./index-BTg9bJrR.js");
+                        return {
+                            parseXlsxDocument: h,
+                            blocksToMarkdown: x,
+                            kordocToHwpIR: m
+                        };
+                    }, __vite__mapDeps([0,1,2,3])), s = await d(a), c = s.markdown || i(s.blocks);
+                    j(p(s.blocks, s.metadata)), v(c);
+                } else if (n === "hwp3") {
+                    const { parseHwp3Document: d, blocksToMarkdown: i, kordocToHwpIR: p } = await k(async ()=>{
+                        const { parseHwp3Document: h, blocksToMarkdown: x, kordocToHwpIR: m } = await import("./index-BTg9bJrR.js");
+                        return {
+                            parseHwp3Document: h,
+                            blocksToMarkdown: x,
+                            kordocToHwpIR: m
+                        };
+                    }, __vite__mapDeps([0,1,2,3])), s = d(a), c = s.markdown || i(s.blocks);
+                    j(p(s.blocks, s.metadata)), v(c);
+                } else if (n === "hwpml") {
+                    const { parseHwpmlDocument: d, blocksToMarkdown: i, kordocToHwpIR: p } = await k(async ()=>{
+                        const { parseHwpmlDocument: h, blocksToMarkdown: x, kordocToHwpIR: m } = await import("./index-BTg9bJrR.js");
+                        return {
+                            parseHwpmlDocument: h,
+                            blocksToMarkdown: x,
+                            kordocToHwpIR: m
+                        };
+                    }, __vite__mapDeps([0,1,2,3])), s = d(a), c = s.markdown || i(s.blocks);
+                    j(p(s.blocks, s.metadata)), v(c);
                 } else {
-                    const { parseHwp: a } = await m(async ()=>{
-                        const { parseHwp: l } = await import("./parser-RcNDRhfQ.js");
+                    const { parseHwp: d } = await k(async ()=>{
+                        const { parseHwp: c } = await import("./parser-DJr_P0bV.js");
                         return {
-                            parseHwp: l
+                            parseHwp: c
                         };
-                    }, __vite__mapDeps([5,4])), k = await s.arrayBuffer(), h = await a(k);
-                    w(h);
-                    const { irToMarkdown: y } = await m(async ()=>{
-                        const { irToMarkdown: l } = await import("./toMarkdown-CeTF6k-c.js");
+                    }, __vite__mapDeps([4,5])), i = await d(a);
+                    j(i);
+                    const { irToMarkdown: p } = await k(async ()=>{
+                        const { irToMarkdown: c } = await import("./toMarkdown-CeTF6k-c.js");
                         return {
-                            irToMarkdown: l
+                            irToMarkdown: c
                         };
-                    }, []), b = y(h);
-                    j(b);
+                    }, []), s = p(i);
+                    v(s);
                 }
-                n("done");
+                r("done");
             } catch (a) {
-                x(a.message || "변환 중 오류가 발생했습니다."), n("upload");
+                b(a.message || "변환 중 오류가 발생했습니다."), r("upload");
             }
-        }, []), B = (s)=>{
-            s.preventDefault(), u(!1);
-            const r = s.dataTransfer.files;
-            r.length > 0 && T(r[0]);
-        }, H = ()=>{
-            const s = document.createElement("input");
-            s.type = "file", s.accept = ".hwp,.hwpx", s.onchange = ()=>{
-                s.files && s.files.length > 0 && T(s.files[0]);
-            }, s.click();
-        }, z = async ()=>{
-            await navigator.clipboard.writeText(c), E(!0), setTimeout(()=>E(!1), 2e3);
-        }, O = ()=>{
-            const s = new Blob([
-                c
+        }, []), O = (o)=>{
+            o.preventDefault(), _(!1);
+            const n = o.dataTransfer.files;
+            n.length > 0 && $(n[0]);
+        }, A = ()=>{
+            const o = document.createElement("input");
+            o.type = "file", o.accept = ".hwp,.hwpx,.docx,.xlsx,.hwp3,.hwpml", o.onchange = ()=>{
+                o.files && o.files.length > 0 && $(o.files[0]);
+            }, o.click();
+        }, B = async ()=>{
+            await navigator.clipboard.writeText(u), H(!0), setTimeout(()=>H(!1), 2e3);
+        }, P = ()=>{
+            const o = new Blob([
+                u
             ], {
                 type: "text/markdown"
-            }), r = URL.createObjectURL(s), a = document.createElement("a");
-            a.href = r, a.download = (p?.name.replace(/\.(hwp|hwpx)$/i, "") || "document") + ".md", a.click(), URL.revokeObjectURL(r);
+            }), n = URL.createObjectURL(o), a = document.createElement("a");
+            a.href = n, a.download = (f?.name.replace(/\.(hwp|hwpx|docx|xlsx|hwp3|hwpml)$/i, "") || "document") + ".md", a.click(), URL.revokeObjectURL(n);
         }, W = async ()=>{
-            if (!(f || v)) {
-                C(!0), N("");
+            if (!(T || N)) {
+                M(!0), E("");
                 try {
-                    const s = F();
-                    if (!s) throw new Error("Supabase not configured");
-                    const { data: r, error: a } = await s.functions.invoke("enhance-markdown", {
+                    const o = F();
+                    if (!o) throw new Error("Supabase not configured");
+                    const { data: n, error: a } = await o.functions.invoke("enhance-markdown", {
                         body: {
-                            markdown: c
+                            markdown: u
                         }
                     });
                     if (a) throw a;
-                    $(r?.enhanced || r?.markdown || c);
+                    S(n?.enhanced || n?.markdown || u);
                 } catch  {
-                    N(t("site.convert.aiNotAvailable"));
+                    E(t("site.convert.aiNotAvailable"));
                 } finally{
-                    C(!1);
+                    M(!1);
                 }
             }
-        }, A = ()=>{
-            n("upload"), _(null), j(""), w(null), x(""), $(""), N("");
+        }, z = ()=>{
+            r("upload"), D(null), v(""), j(null), b(""), S(""), E("");
         };
         return e.jsxs(e.Fragment, {
             children: [
-                e.jsx(I, {
+                e.jsx(U, {
                     title: t("site.convert.title"),
                     path: "/convert"
                 }),
@@ -119,7 +166,7 @@ let __tla = Promise.all([
                     children: e.jsxs("div", {
                         className: "container",
                         children: [
-                            S && e.jsxs("div", {
+                            R && e.jsxs("div", {
                                 className: "error-alert",
                                 children: [
                                     e.jsxs("svg", {
@@ -149,17 +196,17 @@ let __tla = Promise.all([
                                             })
                                         ]
                                     }),
-                                    S
+                                    R
                                 ]
                             }),
-                            o === "upload" && e.jsxs("div", {
-                                className: `dropzone ${D ? "drag-over" : ""}`,
-                                onDragOver: (s)=>{
-                                    s.preventDefault(), u(!0);
+                            w === "upload" && e.jsxs("div", {
+                                className: `dropzone ${C ? "drag-over" : ""}`,
+                                onDragOver: (o)=>{
+                                    o.preventDefault(), _(!0);
                                 },
-                                onDragLeave: ()=>u(!1),
-                                onDrop: B,
-                                onClick: H,
+                                onDragLeave: ()=>_(!1),
+                                onDrop: O,
+                                onClick: A,
                                 children: [
                                     e.jsxs("svg", {
                                         className: "dropzone-icon",
@@ -186,11 +233,11 @@ let __tla = Promise.all([
                                         children: t("site.convert.dropzone")
                                     }),
                                     e.jsx("p", {
-                                        children: t("site.convert.dropzoneHint")
+                                        children: ".hwp, .hwpx, .docx, .xlsx, .hwp3, .hwpml"
                                     })
                                 ]
                             }),
-                            o === "converting" && e.jsxs("div", {
+                            w === "converting" && e.jsxs("div", {
                                 className: "conversion-progress",
                                 children: [
                                     e.jsxs("div", {
@@ -287,10 +334,10 @@ let __tla = Promise.all([
                                     })
                                 ]
                             }),
-                            o === "done" && e.jsxs("div", {
+                            w === "done" && e.jsxs("div", {
                                 className: "conversion-result",
                                 children: [
-                                    p && e.jsxs("div", {
+                                    f && e.jsxs("div", {
                                         className: "file-info",
                                         children: [
                                             e.jsxs("svg", {
@@ -313,11 +360,11 @@ let __tla = Promise.all([
                                                 children: [
                                                     e.jsx("div", {
                                                         className: "file-info-name",
-                                                        children: p.name
+                                                        children: f.name
                                                     }),
                                                     e.jsx("div", {
                                                         className: "file-info-size",
-                                                        children: P(p.size)
+                                                        children: q(f.size)
                                                     })
                                                 ]
                                             })
@@ -330,21 +377,21 @@ let __tla = Promise.all([
                                                 className: "result-tabs",
                                                 children: [
                                                     e.jsx("button", {
-                                                        className: `result-tab ${d === "source" ? "active" : ""}`,
-                                                        onClick: ()=>g("source"),
+                                                        className: `result-tab ${g === "source" ? "active" : ""}`,
+                                                        onClick: ()=>y("source"),
                                                         children: t("site.convert.source")
                                                     }),
                                                     e.jsx("button", {
-                                                        className: `result-tab ${d === "preview" ? "active" : ""}`,
-                                                        onClick: ()=>g("preview"),
+                                                        className: `result-tab ${g === "preview" ? "active" : ""}`,
+                                                        onClick: ()=>y("preview"),
                                                         children: t("site.convert.preview")
                                                     }),
                                                     e.jsx("button", {
-                                                        className: `result-tab ai-tab ${d === "ai" ? "active" : ""}`,
+                                                        className: `result-tab ai-tab ${g === "ai" ? "active" : ""}`,
                                                         onClick: ()=>{
-                                                            g("ai"), W();
+                                                            y("ai"), W();
                                                         },
-                                                        children: t(v ? "site.convert.aiEnhancing" : "site.convert.aiEnhance")
+                                                        children: t(N ? "site.convert.aiEnhancing" : "site.convert.aiEnhance")
                                                     })
                                                 ]
                                             }),
@@ -352,15 +399,15 @@ let __tla = Promise.all([
                                                 className: "result-actions",
                                                 children: [
                                                     e.jsx("button", {
-                                                        onClick: z,
-                                                        children: t(M ? "site.convert.copied" : "site.convert.copy")
+                                                        onClick: B,
+                                                        children: t(L ? "site.convert.copied" : "site.convert.copy")
                                                     }),
                                                     e.jsx("button", {
-                                                        onClick: O,
+                                                        onClick: P,
                                                         children: t("site.convert.download")
                                                     }),
                                                     e.jsx("button", {
-                                                        onClick: A,
+                                                        onClick: z,
                                                         children: t("site.convert.newConversion")
                                                     })
                                                 ]
@@ -369,17 +416,17 @@ let __tla = Promise.all([
                                     }),
                                     e.jsx("div", {
                                         className: "result-content",
-                                        children: d === "source" ? e.jsx("pre", {
-                                            children: c
-                                        }) : d === "preview" ? e.jsx("div", {
+                                        children: g === "source" ? e.jsx("pre", {
+                                            children: u
+                                        }) : g === "preview" ? e.jsx("div", {
                                             className: "result-preview",
                                             dangerouslySetInnerHTML: {
-                                                __html: U(c)
+                                                __html: K(u)
                                             }
                                         }) : e.jsxs("div", {
                                             className: "ai-enhance-content",
                                             children: [
-                                                v && e.jsxs("div", {
+                                                N && e.jsxs("div", {
                                                     className: "ai-loading",
                                                     children: [
                                                         e.jsx("div", {
@@ -390,7 +437,7 @@ let __tla = Promise.all([
                                                         })
                                                     ]
                                                 }),
-                                                L && e.jsxs("div", {
+                                                I && e.jsxs("div", {
                                                     className: "ai-notice",
                                                     children: [
                                                         e.jsxs("svg", {
@@ -421,11 +468,11 @@ let __tla = Promise.all([
                                                             ]
                                                         }),
                                                         e.jsx("p", {
-                                                            children: L
+                                                            children: I
                                                         })
                                                     ]
                                                 }),
-                                                f && !v && e.jsxs("div", {
+                                                T && !N && e.jsxs("div", {
                                                     className: "ai-compare",
                                                     children: [
                                                         e.jsxs("div", {
@@ -436,7 +483,7 @@ let __tla = Promise.all([
                                                                     children: t("site.convert.original")
                                                                 }),
                                                                 e.jsx("pre", {
-                                                                    children: c
+                                                                    children: u
                                                                 })
                                                             ]
                                                         }),
@@ -448,7 +495,7 @@ let __tla = Promise.all([
                                                                     children: t("site.convert.enhanced")
                                                                 }),
                                                                 e.jsx("pre", {
-                                                                    children: f
+                                                                    children: T
                                                                 })
                                                             ]
                                                         })
@@ -465,12 +512,12 @@ let __tla = Promise.all([
             ]
         });
     };
-    function U(t) {
-        let o = t.replace(/^### (.+)$/gm, "<h3>$1</h3>").replace(/^## (.+)$/gm, "<h2>$1</h2>").replace(/^# (.+)$/gm, "<h1>$1</h1>").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/^- (.+)$/gm, "<li>$1</li>").replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
-        return o = o.split(`
+    function K(t) {
+        let w = t.replace(/^### (.+)$/gm, "<h3>$1</h3>").replace(/^## (.+)$/gm, "<h2>$1</h2>").replace(/^# (.+)$/gm, "<h1>$1</h1>").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/^- (.+)$/gm, "<li>$1</li>").replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
+        return w = w.split(`
 
-`).map((n)=>(n = n.trim(), n ? n.startsWith("<h") || n.startsWith("<li") || n.startsWith("<table") ? n : `<p>${n}</p>` : "")).join(`
-`), o;
+`).map((r)=>(r = r.trim(), r ? r.startsWith("<h") || r.startsWith("<li") || r.startsWith("<table") ? r : `<p>${r}</p>` : "")).join(`
+`), w;
     }
 });
-export { Q as default, __tla };
+export { se as default, __tla };
