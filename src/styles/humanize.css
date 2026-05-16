@@ -152,9 +152,7 @@
 }
 
 .humanize-result-content.side-by-side {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  width: 100%;
 }
 
 .compare-col {
@@ -178,6 +176,10 @@
 }
 
 /* ─── 문단 비교 뷰 ────────────────────────────────── */
+
+.para-compare {
+  width: 100%;
+}
 
 .para-compare-legend {
   display: flex;
