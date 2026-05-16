@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-Xhk1cARy.js","assets/SEOHead-DRXu8xQD.js","assets/useAOS-d9kQrU0U.js","assets/Convert-Bpx5s5mv.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-BVgb0OMz.js","assets/editor-B2FMxC-J.css","assets/Templates-CVtMyz_y.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-SFpOFhq7.js","assets/TemplateDetail-B1bD39J9.js","assets/Documents-DhRjQX4f.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-B29U3Q6T.js","assets/BusinessPlan-CXfuBTRP.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-D70c-7fn.js","assets/useRhwp-Co2IISnQ.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-Dacte-ZU.js","assets/Viewer-BeyzE84f.css","assets/Generator-CUF67CjW.js","assets/Generator-B3i-1g61.css","assets/AiWriter-CZsRrl76.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-wYF-AP6c.js","assets/Humanize--lwfvXIZ.css","assets/Guide-DDbMe_tq.js","assets/Pricing-DZWoyVnq.js","assets/NotFound-D9j0MUeC.js","assets/Login-Bl7E_di-.js","assets/auth-DKHmQrFs.css","assets/Register-CqCUBcHa.js","assets/ForgotPassword-Cqa7YW7e.js","assets/MyPage-CyOVKlWm.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-G183QK7U.js","assets/SEOHead-DNbEnOLL.js","assets/useAOS-BhSpzq8e.js","assets/Convert-ZkFukrU5.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-DFAz9rr0.js","assets/editor-B2FMxC-J.css","assets/Templates-DjdMVx8E.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-D5KyY261.js","assets/TemplateDetail-B2aoDrl5.js","assets/Documents-DZrii7WD.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-DblLmRLb.js","assets/BusinessPlan-Bd_8nAmB.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-wj0lb4fK.js","assets/useRhwp-1064TS1r.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-Beixbo4k.js","assets/Viewer-BeyzE84f.css","assets/Generator-z-zyTKea.js","assets/Generator-B3i-1g61.css","assets/AiWriter-BV55yYke.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-9-8N76mR.js","assets/Humanize--lwfvXIZ.css","assets/Guide-LIHRbOrY.js","assets/Pricing-DIlCgiOw.js","assets/NotFound-RDllfXWu.js","assets/Login-Br-eHsE9.js","assets/auth-DKHmQrFs.css","assets/Register-CDlQdwDR.js","assets/ForgotPassword-DEdrG5Qh.js","assets/MyPage-CY4TETiD.js"])))=>i.map(i=>d[i]);
 let Rn, _E, TE, Ie, Nt, Eg, kE, Oc, EE, SE, Jt, xE, RE, w, OE, CE, Tc, je, Xv, A, AE, ng;
 let __tla = (async ()=>{
     (function() {
@@ -19044,10 +19044,6 @@ ${B}`;
         ],
         footerLinks: [
             {
-                path: "/",
-                labelKey: "nav.home"
-            },
-            {
                 path: "/convert",
                 labelKey: "site.nav.convert"
             },
@@ -20682,54 +20678,54 @@ ${B}`;
             })
         });
     };
-    QS = A.lazy(()=>Ie(()=>import("./Home-Xhk1cARy.js"), __vite__mapDeps([0,1,2])));
-    ZS = A.lazy(()=>Ie(()=>import("./Convert-Bpx5s5mv.js").then(async (m)=>{
+    QS = A.lazy(()=>Ie(()=>import("./Home-G183QK7U.js"), __vite__mapDeps([0,1,2])));
+    ZS = A.lazy(()=>Ie(()=>import("./Convert-ZkFukrU5.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([3,1,4,5])));
-    FS = A.lazy(()=>Ie(()=>import("./Editor-BVgb0OMz.js").then(async (m)=>{
+    FS = A.lazy(()=>Ie(()=>import("./Editor-DFAz9rr0.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([6,1,4,7])));
-    eE = A.lazy(()=>Ie(()=>import("./Templates-CVtMyz_y.js"), __vite__mapDeps([8,1,9])));
-    tE = A.lazy(()=>Ie(()=>import("./TemplateCreate-SFpOFhq7.js").then(async (m)=>{
+    eE = A.lazy(()=>Ie(()=>import("./Templates-DjdMVx8E.js"), __vite__mapDeps([8,1,9])));
+    tE = A.lazy(()=>Ie(()=>import("./TemplateCreate-D5KyY261.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([10,1,4,9])));
-    nE = A.lazy(()=>Ie(()=>import("./TemplateDetail-B1bD39J9.js").then(async (m)=>{
+    nE = A.lazy(()=>Ie(()=>import("./TemplateDetail-B2aoDrl5.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([11,1,4,9])));
-    aE = A.lazy(()=>Ie(()=>import("./Documents-DhRjQX4f.js"), __vite__mapDeps([12,1,13])));
-    iE = A.lazy(()=>Ie(()=>import("./DocumentDetail-B29U3Q6T.js"), __vite__mapDeps([14,1,4,7])));
-    rE = A.lazy(()=>Ie(()=>import("./BusinessPlan-CXfuBTRP.js").then(async (m)=>{
+    aE = A.lazy(()=>Ie(()=>import("./Documents-DZrii7WD.js"), __vite__mapDeps([12,1,13])));
+    iE = A.lazy(()=>Ie(()=>import("./DocumentDetail-DblLmRLb.js"), __vite__mapDeps([14,1,4,7])));
+    rE = A.lazy(()=>Ie(()=>import("./BusinessPlan-Bd_8nAmB.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([15,1,16])));
-    sE = A.lazy(()=>Ie(()=>import("./HwpEditor-D70c-7fn.js").then(async (m)=>{
+    sE = A.lazy(()=>Ie(()=>import("./HwpEditor-wj0lb4fK.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([17,18,1,19])));
-    lE = A.lazy(()=>Ie(()=>import("./Viewer-Dacte-ZU.js").then(async (m)=>{
+    lE = A.lazy(()=>Ie(()=>import("./Viewer-Beixbo4k.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([20,1,18,21])));
-    oE = A.lazy(()=>Ie(()=>import("./Generator-CUF67CjW.js").then(async (m)=>{
+    oE = A.lazy(()=>Ie(()=>import("./Generator-z-zyTKea.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([22,1,23])));
-    uE = A.lazy(()=>Ie(()=>import("./AiWriter-CZsRrl76.js"), __vite__mapDeps([24,1,25])));
-    cE = A.lazy(()=>Ie(()=>import("./Humanize-wYF-AP6c.js").then(async (m)=>{
+    uE = A.lazy(()=>Ie(()=>import("./AiWriter-BV55yYke.js"), __vite__mapDeps([24,1,25])));
+    cE = A.lazy(()=>Ie(()=>import("./Humanize-9-8N76mR.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([26,1,4,27])));
-    hE = A.lazy(()=>Ie(()=>import("./Guide-DDbMe_tq.js"), __vite__mapDeps([28,1])));
-    fE = A.lazy(()=>Ie(()=>import("./Pricing-DZWoyVnq.js"), __vite__mapDeps([29,1,2])));
-    dE = A.lazy(()=>Ie(()=>import("./NotFound-D9j0MUeC.js"), __vite__mapDeps([30,1])));
-    pE = A.lazy(()=>Ie(()=>import("./Login-Bl7E_di-.js"), __vite__mapDeps([31,1,32])));
-    mE = A.lazy(()=>Ie(()=>import("./Register-CqCUBcHa.js"), __vite__mapDeps([33,1,32])));
-    gE = A.lazy(()=>Ie(()=>import("./ForgotPassword-Cqa7YW7e.js"), __vite__mapDeps([34,1,32])));
-    yE = A.lazy(()=>Ie(()=>import("./MyPage-CyOVKlWm.js"), __vite__mapDeps([35,1,32])));
+    hE = A.lazy(()=>Ie(()=>import("./Guide-LIHRbOrY.js"), __vite__mapDeps([28,1])));
+    fE = A.lazy(()=>Ie(()=>import("./Pricing-DIlCgiOw.js"), __vite__mapDeps([29,1,2])));
+    dE = A.lazy(()=>Ie(()=>import("./NotFound-RDllfXWu.js"), __vite__mapDeps([30,1])));
+    pE = A.lazy(()=>Ie(()=>import("./Login-Br-eHsE9.js"), __vite__mapDeps([31,1,32])));
+    mE = A.lazy(()=>Ie(()=>import("./Register-CDlQdwDR.js"), __vite__mapDeps([33,1,32])));
+    gE = A.lazy(()=>Ie(()=>import("./ForgotPassword-DEdrG5Qh.js"), __vite__mapDeps([34,1,32])));
+    yE = A.lazy(()=>Ie(()=>import("./MyPage-CY4TETiD.js"), __vite__mapDeps([35,1,32])));
     vE = ()=>w.jsx("div", {
             style: {
                 display: "flex",
