@@ -54,16 +54,44 @@ const site: SiteConfig = {
   ],
 
   menuItems: [
-    { path: '/convert', labelKey: 'site.nav.convert' },
-    { path: '/md-editor', labelKey: 'site.nav.mdEditor' },
-    { path: '/hwp-editor', labelKey: 'site.nav.hwpEditor' },
-    { path: '/viewer', labelKey: 'site.nav.viewer' },
-    { path: '/business-plan', labelKey: 'site.nav.businessPlan' },
-    { path: '/generator', labelKey: 'site.nav.generator' },
-    { path: '/templates', labelKey: 'site.nav.templates' },
-    { path: '/documents', labelKey: 'site.nav.documents' },
-    { path: '/ai-writer', labelKey: 'site.nav.aiWriter' },
-    { path: '/humanize', labelKey: 'site.nav.humanize' },
+    {
+      path: '/convert',
+      labelKey: 'site.nav.groupConvert',
+      activePath: '/convert',
+      dropdown: [
+        { path: '/convert', labelKey: 'site.nav.convert' },
+        { path: '/humanize', labelKey: 'site.nav.humanize' },
+      ],
+    },
+    {
+      path: '/md-editor',
+      labelKey: 'site.nav.groupEdit',
+      activePath: '/md-editor',
+      dropdown: [
+        { path: '/md-editor', labelKey: 'site.nav.mdEditor' },
+        { path: '/hwp-editor', labelKey: 'site.nav.hwpEditor' },
+        { path: '/viewer', labelKey: 'site.nav.viewer' },
+      ],
+    },
+    {
+      path: '/generator',
+      labelKey: 'site.nav.groupCreate',
+      activePath: '/generator',
+      dropdown: [
+        { path: '/generator', labelKey: 'site.nav.generator' },
+        { path: '/business-plan', labelKey: 'site.nav.businessPlan' },
+        { path: '/ai-writer', labelKey: 'site.nav.aiWriter' },
+      ],
+    },
+    {
+      path: '/templates',
+      labelKey: 'site.nav.groupManage',
+      activePath: '/templates',
+      dropdown: [
+        { path: '/templates', labelKey: 'site.nav.templates' },
+        { path: '/documents', labelKey: 'site.nav.documents' },
+      ],
+    },
     { path: '/guide', labelKey: 'site.nav.guide' },
   ],
 

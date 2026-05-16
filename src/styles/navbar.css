@@ -89,6 +89,25 @@
     transform: scaleX(1);
 }
 
+.nav-link.has-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-dropdown-arrow {
+    width: 10px;
+    height: 10px;
+    opacity: 0.5;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-item-dropdown:hover .nav-dropdown-arrow,
+.nav-item-dropdown.active .nav-dropdown-arrow {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;

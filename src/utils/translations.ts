@@ -16,6 +16,10 @@ export const translations: Record<string, Record<string, unknown>> = {
         guide: '가이드',
         aiWriter: 'AI 문서 작성',
         humanize: 'AI 휴머나이징',
+        groupConvert: '변환',
+        groupEdit: '편집',
+        groupCreate: '생성',
+        groupManage: '관리',
       },
       humanize: {
         title: 'AI 문서 휴머나이징',
@@ -336,6 +340,10 @@ export const translations: Record<string, Record<string, unknown>> = {
         guide: 'Guide',
         aiWriter: 'AI Writer',
         humanize: 'Humanize',
+        groupConvert: 'Convert',
+        groupEdit: 'Edit',
+        groupCreate: 'Create',
+        groupManage: 'Manage',
       },
       humanize: {
         title: 'AI Document Humanizer',

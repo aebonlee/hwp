@@ -62,6 +62,9 @@ const Navbar = (): ReactElement => {
   }));
 
   const isActive = (item: ResolvedMenuItem): boolean => {
+    if (item.dropdown) {
+      return item.dropdown.some((sub) => location.pathname.startsWith(sub.path));
+    }
     const checkPath = item.activePath || item.path;
     if (checkPath === '/') return location.pathname === '/';
     return location.pathname.startsWith(checkPath);
@@ -97,7 +100,7 @@ const Navbar = (): ReactElement => {
                   <>
                     <Link
                       to={item.path}
-                      className={`nav-link ${isActive(item) ? 'active' : ''}`}
+                      className={`nav-link has-dropdown ${isActive(item) ? 'active' : ''}`}
                       onClick={(e: MouseEvent<HTMLAnchorElement>) => {
                         if (window.innerWidth <= 1100) {
                           e.preventDefault();
@@ -106,6 +109,9 @@ const Navbar = (): ReactElement => {
                       }}
                     >
                       {item.label}
+                      <svg className="nav-dropdown-arrow" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M3 5l3 3 3-3" />
+                      </svg>
                     </Link>
                     <ul className={`dropdown-menu ${activeDropdown === index ? 'active' : ''}`}>
                       {item.dropdown.map((subItem, subIndex) => (
