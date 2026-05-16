@@ -1,5 +1,5 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-B8hVOlCH.js","assets/SEOHead-DQdA10qr.js","assets/useAOS-C2VtWBeg.js","assets/Convert-BmhJxPF9.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-2Z9Trc5O.js","assets/editor-B2FMxC-J.css","assets/Templates-C-mnJ30f.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-_jjJFhoO.js","assets/TemplateDetail-4TSxnmu9.js","assets/Documents-CXn0GtHC.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-kF3Mw5Hv.js","assets/BusinessPlan-Bnt1C8a0.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-BXZjW7Fp.js","assets/useRhwp-BIP372C1.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-D0q72qsq.js","assets/Viewer-BeyzE84f.css","assets/Generator-DFaFaBN_.js","assets/Generator-B3i-1g61.css","assets/AiWriter-BBZsM0if.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-UoE4SNrs.js","assets/Humanize--lwfvXIZ.css","assets/HumanizeText-BRHK5-XH.js","assets/HumanizeText-CF6PjwKH.css","assets/Guide-BNCquhFh.js","assets/Pricing-urxY8v5q.js","assets/NotFound-CstCxhq3.js","assets/Login-6XkmX9Jt.js","assets/auth-DKHmQrFs.css","assets/Register-SQCedKUb.js","assets/ForgotPassword-Nv2dzrHt.js","assets/MyPage-B1NrXXsX.js"])))=>i.map(i=>d[i]);
-let Rn, SE, AE, Pe, Nt, Eg, jE, Oc, TE, EE, Jt, RE, OE, w, CE, kE, Tc, je, Xv, A, xE, ng;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-Bo4p9mWU.js","assets/SEOHead-Cajeojgs.js","assets/useAOS-Wupl6pTR.js","assets/Convert-yF9olAzN.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-zw1KzJ3d.js","assets/editor-B2FMxC-J.css","assets/Templates-Ck1EUWmx.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-Zo-Vywp-.js","assets/TemplateDetail-Bvik9fYh.js","assets/Documents-Bjh5vFlU.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-C-KN6uS7.js","assets/BusinessPlan-XVkDO0FE.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-BJvtUVge.js","assets/useRhwp-B0uyCZs0.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-CKQSEWVN.js","assets/Viewer-BeyzE84f.css","assets/Generator-Hn0F2Ua7.js","assets/Generator-B3i-1g61.css","assets/AiWriter-BVYuo2dq.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-BbUM1EC_.js","assets/Humanize--lwfvXIZ.css","assets/HumanizeText-DuuvPY9O.js","assets/HumanizeText-CF6PjwKH.css","assets/Guide-B_q1KIrc.js","assets/Pricing-Do5LwOhy.js","assets/NotFound-wD8s2VGG.js","assets/Login-DsmTu2VK.js","assets/auth-DKHmQrFs.css","assets/Register-C7OpFK4C.js","assets/ForgotPassword-DikFxT1b.js","assets/MyPage-CESq_bbL.js","assets/About-K6c3AI7T.js"])))=>i.map(i=>d[i]);
+let Rn, EE, xE, He, Nt, Eg, NE, Oc, AE, TE, Jt, OE, CE, w, kE, jE, Tc, je, Xv, A, RE, ng;
 let __tla = (async ()=>{
     (function() {
         const n = document.createElement("link").relList;
@@ -363,7 +363,7 @@ let __tla = (async ()=>{
         return $p || ($p = 1, Wu.exports = Qv()), Wu.exports;
     }
     A = Ac();
-    SE = Xv(A);
+    EE = Xv(A);
     var Ju = {
         exports: {}
     }, Sr = {}, Qu = {
@@ -3299,7 +3299,7 @@ Error generating stack: ` + s.message + `
             return null;
         }
         var pn = 0, le = null, Te = null, Ke = null, vs = !1, Ja = !1, va = !1, bs = 0, Zi = 0, Qa = null, My = 0;
-        function He() {
+        function Be() {
             throw Error(l(321));
         }
         function jo(e, t) {
@@ -3989,29 +3989,29 @@ Error generating stack: ` + s.message + `
         var tr = {
             readContext: nt,
             use: _s,
-            useCallback: He,
-            useContext: He,
-            useEffect: He,
-            useImperativeHandle: He,
-            useLayoutEffect: He,
-            useInsertionEffect: He,
-            useMemo: He,
-            useReducer: He,
-            useRef: He,
-            useState: He,
-            useDebugValue: He,
-            useDeferredValue: He,
-            useTransition: He,
-            useSyncExternalStore: He,
-            useId: He,
-            useHostTransitionStatus: He,
-            useFormState: He,
-            useActionState: He,
-            useOptimistic: He,
-            useMemoCache: He,
-            useCacheRefresh: He
+            useCallback: Be,
+            useContext: Be,
+            useEffect: Be,
+            useImperativeHandle: Be,
+            useLayoutEffect: Be,
+            useInsertionEffect: Be,
+            useMemo: Be,
+            useReducer: Be,
+            useRef: Be,
+            useState: Be,
+            useDebugValue: Be,
+            useDeferredValue: Be,
+            useTransition: Be,
+            useSyncExternalStore: Be,
+            useId: Be,
+            useHostTransitionStatus: Be,
+            useFormState: Be,
+            useActionState: Be,
+            useOptimistic: Be,
+            useMemoCache: Be,
+            useCacheRefresh: Be
         };
-        tr.useEffectEvent = He;
+        tr.useEffectEvent = Be;
         var Pf = {
             readContext: nt,
             use: _s,
@@ -4352,7 +4352,7 @@ Error generating stack: ` + s.message + `
                     switch(a.tag){
                         case 31:
                         case 13:
-                            return Pt === null ? Hs() : a.alternate === null && Be === 0 && (Be = 3), a.flags &= -257, a.flags |= 65536, a.lanes = o, s === ds ? a.flags |= 16384 : (t = a.updateQueue, t === null ? a.updateQueue = new Set([
+                            return Pt === null ? Hs() : a.alternate === null && qe === 0 && (qe = 3), a.flags &= -257, a.flags |= 65536, a.lanes = o, s === ds ? a.flags |= 16384 : (t = a.updateQueue, t === null ? a.updateQueue = new Set([
                                 s
                             ]) : t.add(s), _u(e, s, o)), !1;
                         case 22:
@@ -4374,13 +4374,13 @@ Error generating stack: ` + s.message + `
                 cause: s
             }), Ii(Mt(e, a)))) : (s !== mo && (t = Error(l(423), {
                 cause: s
-            }), Ii(Mt(t, a))), e = e.current.alternate, e.flags |= 65536, o &= -o, e.lanes |= o, s = Mt(s, a), o = Jo(e.stateNode, s, o), xo(e, o), Be !== 4 && (Be = 2)), !1;
+            }), Ii(Mt(t, a))), e = e.current.alternate, e.flags |= 65536, o &= -o, e.lanes |= o, s = Mt(s, a), o = Jo(e.stateNode, s, o), xo(e, o), qe !== 4 && (qe = 2)), !1;
             var c = Error(l(520), {
                 cause: s
             });
             if (c = Mt(c, a), ur === null ? ur = [
                 c
-            ] : ur.push(c), Be !== 4 && (Be = 2), t === null) return !0;
+            ] : ur.push(c), qe !== 4 && (qe = 2), t === null) return !0;
             s = Mt(s, a), a = t;
             do {
                 switch(a.tag){
@@ -5039,7 +5039,7 @@ Error generating stack: ` + s.message + `
                     if (P(Ge), s = t.memoizedState, s === null) return Ue(t), null;
                     if (o = (t.flags & 128) !== 0, c = s.rendering, c === null) if (o) ar(s, !1);
                     else {
-                        if (Be !== 0 || e !== null && (e.flags & 128) !== 0) for(e = t.child; e !== null;){
+                        if (qe !== 0 || e !== null && (e.flags & 128) !== 0) for(e = t.child; e !== null;){
                             if (c = ys(e), c !== null) {
                                 for(t.flags |= 128, ar(s, !1), e = c.updateQueue, t.updateQueue = e, ks(t, e), t.subtreeFlags = 0, e = a, a = t.child; a !== null;)Mh(a, e), a = a.sibling;
                                 return I(Ge, Ge.current & 1 | 2), pe && hn(t, s.treeForkCount), t.child;
@@ -5470,7 +5470,7 @@ Error generating stack: ` + s.message + `
             var t = e.alternate;
             t !== null && (e.alternate = null, bd(t)), e.child = null, e.deletions = null, e.sibling = null, e.tag === 5 && (t = e.stateNode, t !== null && Bl(t)), e.stateNode = null, e.return = null, e.dependencies = null, e.memoizedProps = null, e.memoizedState = null, e.pendingProps = null, e.stateNode = null, e.updateQueue = null;
         }
-        var ze = null, dt = !1;
+        var Le = null, dt = !1;
         function bn(e, t, a) {
             for(a = a.child; a !== null;)wd(e, t, a), a = a.sibling;
         }
@@ -5484,28 +5484,28 @@ Error generating stack: ` + s.message + `
                     break;
                 case 27:
                     Xe || en(a, t);
-                    var s = ze, o = dt;
-                    Wn(a.type) && (ze = a.stateNode, dt = !1), bn(e, t, a), pr(a.stateNode), ze = s, dt = o;
+                    var s = Le, o = dt;
+                    Wn(a.type) && (Le = a.stateNode, dt = !1), bn(e, t, a), pr(a.stateNode), Le = s, dt = o;
                     break;
                 case 5:
                     Xe || en(a, t);
                 case 6:
-                    if (s = ze, o = dt, ze = null, bn(e, t, a), ze = s, dt = o, ze !== null) if (dt) try {
-                        (ze.nodeType === 9 ? ze.body : ze.nodeName === "HTML" ? ze.ownerDocument.body : ze).removeChild(a.stateNode);
+                    if (s = Le, o = dt, Le = null, bn(e, t, a), Le = s, dt = o, Le !== null) if (dt) try {
+                        (Le.nodeType === 9 ? Le.body : Le.nodeName === "HTML" ? Le.ownerDocument.body : Le).removeChild(a.stateNode);
                     } catch (c) {
                         _e(a, t, c);
                     }
                     else try {
-                        ze.removeChild(a.stateNode);
+                        Le.removeChild(a.stateNode);
                     } catch (c) {
                         _e(a, t, c);
                     }
                     break;
                 case 18:
-                    ze !== null && (dt ? (e = ze, fp(e.nodeType === 9 ? e.body : e.nodeName === "HTML" ? e.ownerDocument.body : e, a.stateNode), ci(e)) : fp(ze, a.stateNode));
+                    Le !== null && (dt ? (e = Le, fp(e.nodeType === 9 ? e.body : e.nodeName === "HTML" ? e.ownerDocument.body : e, a.stateNode), ci(e)) : fp(Le, a.stateNode));
                     break;
                 case 4:
-                    s = ze, o = dt, ze = a.stateNode.containerInfo, dt = !0, bn(e, t, a), ze = s, dt = o;
+                    s = Le, o = dt, Le = a.stateNode.containerInfo, dt = !0, bn(e, t, a), Le = s, dt = o;
                     break;
                 case 0:
                 case 11:
@@ -5574,22 +5574,22 @@ Error generating stack: ` + s.message + `
                     switch(y.tag){
                         case 27:
                             if (Wn(y.type)) {
-                                ze = y.stateNode, dt = !1;
+                                Le = y.stateNode, dt = !1;
                                 break e;
                             }
                             break;
                         case 5:
-                            ze = y.stateNode, dt = !1;
+                            Le = y.stateNode, dt = !1;
                             break e;
                         case 3:
                         case 4:
-                            ze = y.stateNode.containerInfo, dt = !0;
+                            Le = y.stateNode.containerInfo, dt = !0;
                             break e;
                     }
                     y = y.return;
                 }
-                if (ze === null) throw Error(l(160));
-                wd(c, m, o), ze = null, dt = !1, c = o.alternate, c !== null && (c.return = null), o.return = null;
+                if (Le === null) throw Error(l(160));
+                wd(c, m, o), Le = null, dt = !1, c = o.alternate, c !== null && (c.return = null), o.return = null;
             }
             if (t.subtreeFlags & 13886) for(t = t.child; t !== null;)Ed(t, e), t = t.sibling;
         }
@@ -6110,7 +6110,7 @@ Error generating stack: ` + s.message + `
             cacheSignal: function() {
                 return nt(Ve).controller.signal;
             }
-        }, Fy = typeof WeakMap == "function" ? WeakMap : Map, ye = 0, Ce = null, ce = null, fe = 0, we = 0, xt = null, Gn = !1, ti = !1, du = !1, Sn = 0, Be = 0, In = 0, _a = 0, pu = 0, Rt = 0, ni = 0, ur = null, gt = null, mu = !1, Us = 0, kd = 0, zs = 1 / 0, Ls = null, Vn = null, Qe = 0, Kn = null, ai = null, En = 0, gu = 0, yu = null, jd = null, cr = 0, vu = null;
+        }, Fy = typeof WeakMap == "function" ? WeakMap : Map, ye = 0, Ce = null, ce = null, fe = 0, we = 0, xt = null, Gn = !1, ti = !1, du = !1, Sn = 0, qe = 0, In = 0, _a = 0, pu = 0, Rt = 0, ni = 0, ur = null, gt = null, mu = !1, Us = 0, kd = 0, zs = 1 / 0, Ls = null, Vn = null, Qe = 0, Kn = null, ai = null, En = 0, gu = 0, yu = null, jd = null, cr = 0, vu = null;
         function Ot() {
             return (ye & 2) !== 0 && fe !== 0 ? fe & -fe : M.T !== null ? Tu() : Kc();
         }
@@ -6122,7 +6122,7 @@ Error generating stack: ` + s.message + `
             return e = Tt.current, e !== null && (e.flags |= 32), Rt;
         }
         function yt(e, t, a) {
-            (e === Ce && (we === 2 || we === 9) || e.cancelPendingCommit !== null) && (ii(e, 0), Yn(e, fe, Rt, !1)), ji(e, a), ((ye & 2) === 0 || e !== Ce) && (e === Ce && ((ye & 2) === 0 && (_a |= a), Be === 4 && Yn(e, fe, Rt, !1)), tn(e));
+            (e === Ce && (we === 2 || we === 9) || e.cancelPendingCommit !== null) && (ii(e, 0), Yn(e, fe, Rt, !1)), ji(e, a), ((ye & 2) === 0 || e !== Ce) && (e === Ce && ((ye & 2) === 0 && (_a |= a), qe === 4 && Yn(e, fe, Rt, !1)), tn(e));
         }
         function Dd(e, t, a) {
             if ((ye & 6) !== 0) throw Error(l(327));
@@ -6257,7 +6257,7 @@ Error generating stack: ` + s.message + `
         }
         function ii(e, t) {
             var a = e.timeoutHandle;
-            a !== -1 && (e.timeoutHandle = -1, wv(a)), a = e.cancelPendingCommit, a !== null && (e.cancelPendingCommit = null, a()), En = 0, bu(), Ce = e, ce = a = cn(e.current, null), fe = t, we = 0, xt = null, Gn = !1, ti = ki(e, t), du = !1, ni = Rt = pu = _a = In = Be = 0, gt = ur = null, mu = !1, (t & 8) !== 0 && (t |= t & 32);
+            a !== -1 && (e.timeoutHandle = -1, wv(a)), a = e.cancelPendingCommit, a !== null && (e.cancelPendingCommit = null, a()), En = 0, bu(), Ce = e, ce = a = cn(e.current, null), fe = t, we = 0, xt = null, Gn = !1, ti = ki(e, t), du = !1, ni = Rt = pu = _a = In = qe = 0, gt = ur = null, mu = !1, (t & 8) !== 0 && (t |= t & 32);
             var s = e.entangledLanes;
             if (s !== 0) for(e = e.entanglements, s &= t; 0 < s;){
                 var o = 31 - _t(s), c = 1 << o;
@@ -6266,7 +6266,7 @@ Error generating stack: ` + s.message + `
             return Sn = t, is(), a;
         }
         function zd(e, t) {
-            le = null, M.H = tr, t === Ya || t === fs ? (t = Jh(), we = 3) : t === Eo ? (t = Jh(), we = 4) : we = t === Qo ? 8 : t !== null && typeof t == "object" && typeof t.then == "function" ? 6 : 1, xt = t, ce === null && (Be = 1, xs(e, Mt(t, e.current)));
+            le = null, M.H = tr, t === Ya || t === fs ? (t = Jh(), we = 3) : t === Eo ? (t = Jh(), we = 4) : we = t === Qo ? 8 : t !== null && typeof t == "object" && typeof t.then == "function" ? 6 : 1, xt = t, ce === null && (qe = 1, xs(e, Mt(t, e.current)));
         }
         function Ld() {
             var e = Tt.current;
@@ -6281,14 +6281,14 @@ Error generating stack: ` + s.message + `
             return M.A = Zy, e;
         }
         function Hs() {
-            Be = 4, Gn || (fe & 4194048) !== fe && Tt.current !== null || (ti = !0), (In & 134217727) === 0 && (_a & 134217727) === 0 || Ce === null || Yn(Ce, fe, Rt, !1);
+            qe = 4, Gn || (fe & 4194048) !== fe && Tt.current !== null || (ti = !0), (In & 134217727) === 0 && (_a & 134217727) === 0 || Ce === null || Yn(Ce, fe, Rt, !1);
         }
         function wu(e, t, a) {
             var s = ye;
             ye |= 2;
             var o = Md(), c = Hd();
             (Ce !== e || fe !== t) && (Ls = null, ii(e, t)), t = !1;
-            var m = Be;
+            var m = qe;
             e: do try {
                 if (we !== 0 && ce !== null) {
                     var y = ce, _ = xt;
@@ -6311,7 +6311,7 @@ Error generating stack: ` + s.message + `
                             C = we, we = 0, xt = null, ri(e, y, _, C);
                     }
                 }
-                tv(), m = Be;
+                tv(), m = qe;
                 break;
             } catch (L) {
                 zd(e, L);
@@ -6379,7 +6379,7 @@ Error generating stack: ` + s.message + `
                             we = 0, xt = null, ri(e, t, c, 6);
                             break;
                         case 8:
-                            bu(), Be = 6;
+                            bu(), qe = 6;
                             break e;
                         default:
                             throw Error(l(462));
@@ -6391,7 +6391,7 @@ Error generating stack: ` + s.message + `
                 zd(e, L);
             }
             while (!0);
-            return fn = fa = null, M.H = s, M.A = o, ye = a, ce !== null ? 0 : (Ce = null, fe = 0, is(), Be);
+            return fn = fa = null, M.H = s, M.A = o, ye = a, ce !== null ? 0 : (Ce = null, fe = 0, is(), qe);
         }
         function av() {
             for(; ce !== null && !xg();)Bd(ce);
@@ -6422,12 +6422,12 @@ Error generating stack: ` + s.message + `
             var o = t.return;
             try {
                 if (Vy(e, o, t, a, fe)) {
-                    Be = 1, xs(e, Mt(a, e.current)), ce = null;
+                    qe = 1, xs(e, Mt(a, e.current)), ce = null;
                     return;
                 }
             } catch (c) {
                 if (o !== null) throw ce = o, c;
-                Be = 1, xs(e, Mt(a, e.current)), ce = null;
+                qe = 1, xs(e, Mt(a, e.current)), ce = null;
                 return;
             }
             t.flags & 32768 ? (pe || s === 1 ? e = !0 : ti || (fe & 536870912) !== 0 ? e = !1 : (Gn = e = !0, (s === 2 || s === 9 || s === 3 || s === 6) && (s = Tt.current, s !== null && s.tag === 13 && (s.flags |= 16384))), Pd(t, e)) : Bs(t);
@@ -6451,7 +6451,7 @@ Error generating stack: ` + s.message + `
                 }
                 ce = t = e;
             }while (t !== null);
-            Be === 0 && (Be = 5);
+            qe === 0 && (qe = 5);
         }
         function Pd(e, t) {
             do {
@@ -6466,7 +6466,7 @@ Error generating stack: ` + s.message + `
                 }
                 ce = e = a;
             }while (e !== null);
-            Be = 6, ce = null;
+            qe = 6, ce = null;
         }
         function $d(e, t, a, s, o, c, m, y, _) {
             e.cancelPendingCommit = null;
@@ -6634,7 +6634,7 @@ Error generating stack: ` + s.message + `
         }
         function iv(e, t, a) {
             var s = e.pingCache;
-            s !== null && s.delete(t), e.pingedLanes |= e.suspendedLanes & a, e.warmLanes &= ~a, Ce === e && (fe & a) === a && (Be === 4 || Be === 3 && (fe & 62914560) === fe && 300 > bt() - Us ? (ye & 2) === 0 && ii(e, 0) : pu |= a, ni === fe && (ni = 0)), tn(e);
+            s !== null && s.delete(t), e.pingedLanes |= e.suspendedLanes & a, e.warmLanes &= ~a, Ce === e && (fe & a) === a && (qe === 4 || qe === 3 && (fe & 62914560) === fe && 300 > bt() - Us ? (ye & 2) === 0 && ii(e, 0) : pu |= a, ni === fe && (ni = 0)), tn(e);
         }
         function Wd(e, t) {
             t === 0 && (t = $c()), e = ua(e, t), e !== null && (ji(e, t), tn(e));
@@ -9273,7 +9273,7 @@ Error generating stack: ` + s.message + `
         ]);
     }
     A.createContext(null);
-    EE = function() {
+    TE = function() {
         let { matches: i } = A.useContext(Qt), n = i[i.length - 1];
         return n ? n.params : {};
     };
@@ -9571,7 +9571,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
             r
         ]), null;
     }
-    function Le(i) {
+    function ze(i) {
         Me(!1, "A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.");
     }
     function tb({ basename: i = "/", children: n = null, location: r, navigationType: l = "POP", navigator: u, static: h = !1, unstable_useTransitions: f }) {
@@ -9634,7 +9634,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                 r.push.apply(r, cc(l.props.children, h));
                 return;
             }
-            Me(l.type === Le, `[${typeof l.type == "string" ? l.type : l.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`), Me(!l.props.index || !l.props.children, "An index route cannot have child routes.");
+            Me(l.type === ze, `[${typeof l.type == "string" ? l.type : l.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`), Me(!l.props.index || !l.props.children, "An index route cannot have child routes.");
             let f = {
                 id: l.props.id || h.join("-"),
                 caseSensitive: l.props.caseSensitive,
@@ -10195,7 +10195,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
             g
         ]);
     }
-    TE = function(i) {
+    AE = function(i) {
         It(typeof URLSearchParams < "u", "You cannot use the `useSearchParams` hook in a browser that does not support the URLSearchParams API. If you need to support Internet Explorer 11, we recommend you load a polyfill such as https://github.com/ungap/url-search-params.");
         let n = A.useRef(hc(i)), r = A.useRef(!1), l = Nt(), u = A.useMemo(()=>lb(l.search, r.current ? null : n.current), [
             l.search
@@ -10357,7 +10357,8 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
     qb = {
         ko: {
             nav: {
-                home: "홈"
+                home: "홈",
+                about: "소개"
             },
             site: {
                 nav: {
@@ -10433,11 +10434,11 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     freeBtn: "무료 시작",
                     basicName: "Basic",
                     basicDesc: "자주 사용하는 분을 위한 합리적인 요금제",
-                    basicFeatures: "변환 50회/월|AI 휴머나이징 20회/월|문서 30개 저장|HWP 에디터 + HWPX 내보내기|이메일 지원",
+                    basicFeatures: "변환 50회/월|AI 처리 월 150,000자 (A4 약 40페이지)|문서 30개 저장|1회 최대 30,000자|HWP 에디터 + HWPX 내보내기|이메일 지원",
                     basicBtn: "Basic 시작",
                     proName: "Pro",
-                    proDesc: "전문가를 위한 무제한 기능과 우선 지원",
-                    proFeatures: "변환 무제한|AI 휴머나이징 무제한|문서 무제한 저장|사업계획서 + AI 문서 작성|PPTX 내보내기|카카오톡 + 이메일 지원",
+                    proDesc: "전문가를 위한 대용량 AI 처리와 우선 지원",
+                    proFeatures: "변환 무제한|AI 처리 월 500,000자 (A4 약 125페이지)|문서 무제한 저장|1회 최대 50,000자|사업계획서 + AI 문서 작성|PPTX 내보내기|카카오톡 + 이메일 지원",
                     proBtn: "Pro 시작",
                     compare: {
                         price: {
@@ -10453,13 +10454,13 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                             pro: "무제한"
                         },
                         humanize: {
-                            label: "AI 휴머나이징",
+                            label: "AI 처리량",
                             free: "사용자 키",
-                            basic: "20회/월",
-                            pro: "무제한"
+                            basic: "월 150,000자",
+                            pro: "월 500,000자"
                         },
                         maxLength: {
-                            label: "최대 문서 길이",
+                            label: "1회 최대 길이",
                             free: "5,000자",
                             basic: "30,000자",
                             pro: "50,000자"
@@ -10488,8 +10489,8 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                         a: "네, 무료 요금제에서도 월 5회까지 HWP/HWPX → Markdown 변환을 이용할 수 있습니다. 마크다운 에디터도 제한 없이 사용 가능합니다."
                     },
                     faq2: {
-                        q: "AI 휴머나이징은 어떤 기능인가요?",
-                        a: "AI가 생성한 문서를 사람이 작성한 것처럼 자연스럽게 변환합니다. 변환 강도와 어체를 선택할 수 있으며, 원본과 결과를 문단별로 비교할 수 있습니다."
+                        q: "AI 처리량은 어떻게 계산되나요?",
+                        a: "AI 휴머나이징, AI 문서 작성, 사업계획서 생성 등 모든 AI 기능 사용 시 처리된 글자 수가 차감됩니다. 월 할당량을 초과하면 다음 달까지 대기하거나 사용자 API 키로 계속 이용할 수 있습니다."
                     },
                     faq3: {
                         q: "요금제는 언제든 변경할 수 있나요?",
@@ -10788,7 +10789,8 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
         },
         en: {
             nav: {
-                home: "Home"
+                home: "Home",
+                about: "About"
             },
             site: {
                 nav: {
@@ -10864,11 +10866,11 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     freeBtn: "Start Free",
                     basicName: "Basic",
                     basicDesc: "A reasonable plan for regular users",
-                    basicFeatures: "50 conversions/mo|20 AI humanizations/mo|30 document storage|HWP Editor + HWPX export|Email support",
+                    basicFeatures: "50 conversions/mo|AI quota: 150,000 chars/mo (~40 pages)|30 document storage|Max 30,000 chars per request|HWP Editor + HWPX export|Email support",
                     basicBtn: "Start Basic",
                     proName: "Pro",
-                    proDesc: "Unlimited features and priority support for professionals",
-                    proFeatures: "Unlimited conversions|Unlimited AI humanization|Unlimited storage|Business plan + AI writer|PPTX export|Kakao + Email support",
+                    proDesc: "High-volume AI processing and priority support for professionals",
+                    proFeatures: "Unlimited conversions|AI quota: 500,000 chars/mo (~125 pages)|Unlimited storage|Max 50,000 chars per request|Business plan + AI writer|PPTX export|Kakao + Email support",
                     proBtn: "Start Pro",
                     compare: {
                         price: {
@@ -10884,13 +10886,13 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                             pro: "Unlimited"
                         },
                         humanize: {
-                            label: "AI Humanize",
+                            label: "AI Quota",
                             free: "Own key",
-                            basic: "20/mo",
-                            pro: "Unlimited"
+                            basic: "150,000 chars/mo",
+                            pro: "500,000 chars/mo"
                         },
                         maxLength: {
-                            label: "Max Length",
+                            label: "Max per Request",
                             free: "5,000 chars",
                             basic: "30,000 chars",
                             pro: "50,000 chars"
@@ -10919,8 +10921,8 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                         a: "Yes, the free plan allows up to 5 HWP/HWPX → Markdown conversions per month. The Markdown editor is also available without limits."
                     },
                     faq2: {
-                        q: "What is AI Humanization?",
-                        a: "It transforms AI-generated documents into natural, human-written text. You can choose intensity and tone, and compare the original with the result paragraph by paragraph."
+                        q: "How is the AI quota calculated?",
+                        a: "All AI features (humanization, AI writer, business plan generation) consume characters from your monthly quota. When exceeded, you can wait for the next month or use your own API key to continue."
                     },
                     faq3: {
                         q: "Can I change my plan anytime?",
@@ -18749,7 +18751,7 @@ ${B}`;
         }
         return r;
     }
-    function qe(i) {
+    function Pe(i) {
         for(var n = 1; n < arguments.length; n++){
             var r = arguments[n] != null ? arguments[n] : {};
             n % 2 ? km(Object(r), !0).forEach(function(l) {
@@ -18766,7 +18768,7 @@ ${B}`;
             var d;
             const p = (d = await n()) !== null && d !== void 0 ? d : i;
             let g = new u(f?.headers);
-            return g.has("apikey") || g.set("apikey", i), g.has("Authorization") || g.set("Authorization", `Bearer ${p}`), l(h, qe(qe({}, f), {}, {
+            return g.has("apikey") || g.set("apikey", i), g.has("Authorization") || g.set("Authorization", `Bearer ${p}`), l(h, Pe(Pe({}, f), {}, {
                 headers: g
             }));
         };
@@ -18777,12 +18779,12 @@ ${B}`;
     function jS(i, n) {
         var r, l;
         const { db: u, auth: h, realtime: f, global: d } = i, { db: p, auth: g, realtime: b, global: v } = n, S = {
-            db: qe(qe({}, p), u),
-            auth: qe(qe({}, g), h),
-            realtime: qe(qe({}, b), f),
+            db: Pe(Pe({}, p), u),
+            auth: Pe(Pe({}, g), h),
+            realtime: Pe(Pe({}, b), f),
             storage: {},
-            global: qe(qe(qe({}, v), d), {}, {
-                headers: qe(qe({}, (r = v?.headers) !== null && r !== void 0 ? r : {}), (l = d?.headers) !== null && l !== void 0 ? l : {})
+            global: Pe(Pe(Pe({}, v), d), {}, {
+                headers: Pe(Pe({}, (r = v?.headers) !== null && r !== void 0 ? r : {}), (l = d?.headers) !== null && l !== void 0 ? l : {})
             }),
             accessToken: async ()=>""
         };
@@ -18812,7 +18814,7 @@ ${B}`;
             const f = `sb-${h.hostname.split(".")[0]}-auth-token`, d = {
                 db: _S,
                 realtime: ES,
-                auth: qe(qe({}, SS), {}, {
+                auth: Pe(Pe({}, SS), {}, {
                     storageKey: f
                 }),
                 global: wS
@@ -18826,7 +18828,7 @@ ${B}`;
                 var g;
                 this.auth = this._initSupabaseAuthClient((g = p.auth) !== null && g !== void 0 ? g : {}, this.headers, p.global.fetch);
             }
-            this.fetch = CS(n, this._getAccessToken.bind(this), p.global.fetch), this.realtime = this._initRealtimeClient(qe({
+            this.fetch = CS(n, this._getAccessToken.bind(this), p.global.fetch), this.realtime = this._initRealtimeClient(Pe({
                 headers: this.headers,
                 accessToken: this._getAccessToken.bind(this)
             }, p.realtime)), this.accessToken && Promise.resolve(this.accessToken()).then((b)=>this.realtime.setAuth(b)).catch((b)=>console.warn("Failed to set initial Realtime auth token:", b)), this.rest = new tw(new URL("rest/v1", h).href, {
@@ -18883,7 +18885,7 @@ ${B}`;
             };
             return new DS({
                 url: this.authUrl.href,
-                headers: qe(qe({}, S), b),
+                headers: Pe(Pe({}, S), b),
                 storageKey: h,
                 autoRefreshToken: i,
                 persistSession: n,
@@ -18899,8 +18901,8 @@ ${B}`;
             });
         }
         _initRealtimeClient(i) {
-            return new zw(this.realtimeUrl.href, qe(qe({}, i), {}, {
-                params: qe(qe({}, {
+            return new zw(this.realtimeUrl.href, Pe(Pe({}, i), {}, {
+                params: Pe(Pe({}, {
                     apikey: this.supabaseKey
                 }), i?.params)
             }));
@@ -18985,6 +18987,10 @@ ${B}`;
             }
         ],
         menuItems: [
+            {
+                path: "/about",
+                labelKey: "nav.about"
+            },
             {
                 path: "/convert",
                 labelKey: "site.nav.groupConvert",
@@ -19109,7 +19115,7 @@ ${B}`;
     };
     jm = "https://hcmgdztsgjvzcyxyayaj.supabase.co";
     Nm = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbWdkenRzZ2p2emN5eHlheWFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MzU4ODcsImV4cCI6MjA4NzAxMTg4N30.gznaPzY1l8qDAPsEyYNR9KS7f7VqS3xaw-_2HTSwSZw";
-    AE = {
+    xE = {
         documents: `${je.dbPrefix}documents`,
         templates: `${je.dbPrefix}templates`,
         conversions: `${je.dbPrefix}conversions`,
@@ -19124,7 +19130,7 @@ ${B}`;
                 persistSession: !0
             }
         })), oc);
-    xE = async function() {
+    RE = async function() {
         const i = Jt();
         if (!i) throw new Error("Supabase not configured");
         const { data: n, error: r } = await i.auth.signInWithOAuth({
@@ -19136,7 +19142,7 @@ ${B}`;
         if (r) throw r;
         return n;
     };
-    RE = async function() {
+    OE = async function() {
         const i = Jt();
         if (!i) throw new Error("Supabase not configured");
         const { data: n, error: r } = await i.auth.signInWithOAuth({
@@ -19149,7 +19155,7 @@ ${B}`;
         if (r) throw r;
         return n;
     };
-    OE = async function(i, n) {
+    CE = async function(i, n) {
         const r = Jt();
         if (!r) throw new Error("Supabase not configured");
         const { data: l, error: u } = await r.auth.signInWithPassword({
@@ -19159,7 +19165,7 @@ ${B}`;
         if (u) throw u;
         return l;
     };
-    CE = async function(i, n, r) {
+    kE = async function(i, n, r) {
         const l = Jt();
         if (!l) throw new Error("Supabase not configured");
         const { data: u, error: h } = await l.auth.signUp({
@@ -19189,7 +19195,7 @@ ${B}`;
         const { data: r, error: l } = await n.from("user_profiles").select("*").eq("id", i).single();
         return l ? (console.error("getProfile error:", l), null) : r;
     }
-    kE = async function(i) {
+    jE = async function(i) {
         const n = Jt();
         if (!n) throw new Error("Supabase not configured");
         const { data: r, error: l } = await n.auth.resetPasswordForEmail(i, {
@@ -20001,20 +20007,20 @@ ${B}`;
             ]
         });
     }
-    jE = function() {
+    NE = function() {
         const i = A.useContext(Tg);
         return i || {
             showToast: (n)=>(console.warn("ToastProvider not found:", n), 0),
             removeToast: ()=>{}
         };
     };
-    let YS, XS, zm, yi, WS, JS, QS, ZS, FS, eE, tE, nE, aE, iE, rE, sE, lE, oE, uE, cE, hE, fE, dE, pE, mE, gE, yE, vE, bE, wE;
+    let YS, XS, zm, yi, WS, JS, QS, ZS, FS, eE, tE, nE, aE, iE, rE, sE, lE, oE, uE, cE, hE, fE, dE, pE, mE, gE, yE, vE, bE, wE, _E;
     YS = "modulepreload";
     XS = function(i) {
         return "/" + i;
     };
     zm = {};
-    Pe = function(n, r, l) {
+    He = function(n, r, l) {
         let u = Promise.resolve();
         if (r && r.length > 0) {
             let p = function(g) {
@@ -20702,56 +20708,57 @@ ${B}`;
             })
         });
     };
-    QS = A.lazy(()=>Pe(()=>import("./Home-B8hVOlCH.js"), __vite__mapDeps([0,1,2])));
-    ZS = A.lazy(()=>Pe(()=>import("./Convert-BmhJxPF9.js").then(async (m)=>{
+    QS = A.lazy(()=>He(()=>import("./Home-Bo4p9mWU.js"), __vite__mapDeps([0,1,2])));
+    ZS = A.lazy(()=>He(()=>import("./Convert-yF9olAzN.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([3,1,4,5])));
-    FS = A.lazy(()=>Pe(()=>import("./Editor-2Z9Trc5O.js").then(async (m)=>{
+    FS = A.lazy(()=>He(()=>import("./Editor-zw1KzJ3d.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([6,1,4,7])));
-    eE = A.lazy(()=>Pe(()=>import("./Templates-C-mnJ30f.js"), __vite__mapDeps([8,1,9])));
-    tE = A.lazy(()=>Pe(()=>import("./TemplateCreate-_jjJFhoO.js").then(async (m)=>{
+    eE = A.lazy(()=>He(()=>import("./Templates-Ck1EUWmx.js"), __vite__mapDeps([8,1,9])));
+    tE = A.lazy(()=>He(()=>import("./TemplateCreate-Zo-Vywp-.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([10,1,4,9])));
-    nE = A.lazy(()=>Pe(()=>import("./TemplateDetail-4TSxnmu9.js").then(async (m)=>{
+    nE = A.lazy(()=>He(()=>import("./TemplateDetail-Bvik9fYh.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([11,1,4,9])));
-    aE = A.lazy(()=>Pe(()=>import("./Documents-CXn0GtHC.js"), __vite__mapDeps([12,1,13])));
-    iE = A.lazy(()=>Pe(()=>import("./DocumentDetail-kF3Mw5Hv.js"), __vite__mapDeps([14,1,4,7])));
-    rE = A.lazy(()=>Pe(()=>import("./BusinessPlan-Bnt1C8a0.js").then(async (m)=>{
+    aE = A.lazy(()=>He(()=>import("./Documents-Bjh5vFlU.js"), __vite__mapDeps([12,1,13])));
+    iE = A.lazy(()=>He(()=>import("./DocumentDetail-C-KN6uS7.js"), __vite__mapDeps([14,1,4,7])));
+    rE = A.lazy(()=>He(()=>import("./BusinessPlan-XVkDO0FE.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([15,1,16])));
-    sE = A.lazy(()=>Pe(()=>import("./HwpEditor-BXZjW7Fp.js").then(async (m)=>{
+    sE = A.lazy(()=>He(()=>import("./HwpEditor-BJvtUVge.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([17,18,1,19])));
-    lE = A.lazy(()=>Pe(()=>import("./Viewer-D0q72qsq.js").then(async (m)=>{
+    lE = A.lazy(()=>He(()=>import("./Viewer-CKQSEWVN.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([20,1,18,21])));
-    oE = A.lazy(()=>Pe(()=>import("./Generator-DFaFaBN_.js").then(async (m)=>{
+    oE = A.lazy(()=>He(()=>import("./Generator-Hn0F2Ua7.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([22,1,23])));
-    uE = A.lazy(()=>Pe(()=>import("./AiWriter-BBZsM0if.js"), __vite__mapDeps([24,1,25])));
-    cE = A.lazy(()=>Pe(()=>import("./Humanize-UoE4SNrs.js").then(async (m)=>{
+    uE = A.lazy(()=>He(()=>import("./AiWriter-BVYuo2dq.js"), __vite__mapDeps([24,1,25])));
+    cE = A.lazy(()=>He(()=>import("./Humanize-BbUM1EC_.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([26,1,4,27])));
-    hE = A.lazy(()=>Pe(()=>import("./HumanizeText-BRHK5-XH.js"), __vite__mapDeps([28,1,29])));
-    fE = A.lazy(()=>Pe(()=>import("./Guide-BNCquhFh.js"), __vite__mapDeps([30,1])));
-    dE = A.lazy(()=>Pe(()=>import("./Pricing-urxY8v5q.js"), __vite__mapDeps([31,1,2])));
-    pE = A.lazy(()=>Pe(()=>import("./NotFound-CstCxhq3.js"), __vite__mapDeps([32,1])));
-    mE = A.lazy(()=>Pe(()=>import("./Login-6XkmX9Jt.js"), __vite__mapDeps([33,1,34])));
-    gE = A.lazy(()=>Pe(()=>import("./Register-SQCedKUb.js"), __vite__mapDeps([35,1,34])));
-    yE = A.lazy(()=>Pe(()=>import("./ForgotPassword-Nv2dzrHt.js"), __vite__mapDeps([36,1,34])));
-    vE = A.lazy(()=>Pe(()=>import("./MyPage-B1NrXXsX.js"), __vite__mapDeps([37,1,34])));
-    bE = ()=>w.jsx("div", {
+    hE = A.lazy(()=>He(()=>import("./HumanizeText-DuuvPY9O.js"), __vite__mapDeps([28,1,29])));
+    fE = A.lazy(()=>He(()=>import("./Guide-B_q1KIrc.js"), __vite__mapDeps([30,1])));
+    dE = A.lazy(()=>He(()=>import("./Pricing-Do5LwOhy.js"), __vite__mapDeps([31,1,2])));
+    pE = A.lazy(()=>He(()=>import("./NotFound-wD8s2VGG.js"), __vite__mapDeps([32,1])));
+    mE = A.lazy(()=>He(()=>import("./Login-DsmTu2VK.js"), __vite__mapDeps([33,1,34])));
+    gE = A.lazy(()=>He(()=>import("./Register-C7OpFK4C.js"), __vite__mapDeps([35,1,34])));
+    yE = A.lazy(()=>He(()=>import("./ForgotPassword-DikFxT1b.js"), __vite__mapDeps([36,1,34])));
+    vE = A.lazy(()=>He(()=>import("./MyPage-CESq_bbL.js"), __vite__mapDeps([37,1,34])));
+    bE = A.lazy(()=>He(()=>import("./About-K6c3AI7T.js"), __vite__mapDeps([38,1])));
+    wE = ()=>w.jsx("div", {
             style: {
                 display: "flex",
                 justifyContent: "center",
@@ -20762,87 +20769,87 @@ ${B}`;
                 className: "loading-spinner"
             })
         });
-    wE = ()=>w.jsxs(w.Fragment, {
+    _E = ()=>w.jsxs(w.Fragment, {
             children: [
                 w.jsx(WS, {}),
                 w.jsx("main", {
                     children: w.jsx(A.Suspense, {
-                        fallback: w.jsx(bE, {}),
+                        fallback: w.jsx(wE, {}),
                         children: w.jsxs(Jm, {
                             children: [
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/",
                                     element: w.jsx(QS, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/convert",
                                     element: w.jsx(ZS, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/md-editor",
                                     element: w.jsx(FS, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/hwp-editor",
                                     element: w.jsx(sE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/templates",
                                     element: w.jsx(yi, {
                                         children: w.jsx(eE, {})
                                     })
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/templates/new",
                                     element: w.jsx(yi, {
                                         children: w.jsx(tE, {})
                                     })
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/templates/:id",
                                     element: w.jsx(yi, {
                                         children: w.jsx(nE, {})
                                     })
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/business-plan",
                                     element: w.jsx(rE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/viewer",
                                     element: w.jsx(lE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/generator",
                                     element: w.jsx(oE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/ai-writer",
                                     element: w.jsx(uE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/humanize",
                                     element: w.jsx(cE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/humanize-text",
                                     element: w.jsx(hE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/guide",
                                     element: w.jsx(fE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/pricing",
                                     element: w.jsx(dE, {})
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/documents",
                                     element: w.jsx(yi, {
                                         children: w.jsx(aE, {})
                                     })
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
                                     path: "/documents/:id",
                                     element: w.jsx(yi, {
                                         children: w.jsx(iE, {})
@@ -20850,19 +20857,19 @@ ${B}`;
                                 }),
                                 w.jsxs(w.Fragment, {
                                     children: [
-                                        w.jsx(Le, {
+                                        w.jsx(ze, {
                                             path: "/login",
                                             element: w.jsx(mE, {})
                                         }),
-                                        w.jsx(Le, {
+                                        w.jsx(ze, {
                                             path: "/register",
                                             element: w.jsx(gE, {})
                                         }),
-                                        w.jsx(Le, {
+                                        w.jsx(ze, {
                                             path: "/forgot-password",
                                             element: w.jsx(yE, {})
                                         }),
-                                        w.jsx(Le, {
+                                        w.jsx(ze, {
                                             path: "/mypage",
                                             element: w.jsx(yi, {
                                                 children: w.jsx(vE, {})
@@ -20870,7 +20877,11 @@ ${B}`;
                                         })
                                     ]
                                 }),
-                                w.jsx(Le, {
+                                w.jsx(ze, {
+                                    path: "/about",
+                                    element: w.jsx(bE, {})
+                                }),
+                                w.jsx(ze, {
                                     path: "*",
                                     element: w.jsx(pE, {})
                                 })
@@ -20881,7 +20892,7 @@ ${B}`;
                 w.jsx(JS, {})
             ]
         });
-    function _E() {
+    function SE() {
         return w.jsx(Hb, {
             children: w.jsx(Pb, {
                 children: w.jsx(IS, {
@@ -20890,9 +20901,9 @@ ${B}`;
                             children: w.jsx("div", {
                                 className: "App",
                                 children: w.jsx(Jm, {
-                                    children: w.jsx(Le, {
+                                    children: w.jsx(ze, {
                                         path: "*",
-                                        element: w.jsx(wE, {})
+                                        element: w.jsx(_E, {})
                                     })
                                 })
                             })
@@ -20903,7 +20914,7 @@ ${B}`;
         });
     }
     i0.createRoot(document.getElementById("root")).render(w.jsx(A.StrictMode, {
-        children: w.jsx(_E, {})
+        children: w.jsx(SE, {})
     }));
 })();
-export { Rn as L, SE as R, AE as T, Pe as _, Nt as a, Eg as b, jE as c, Oc as d, TE as e, EE as f, Jt as g, RE as h, OE as i, w as j, CE as k, kE as l, Tc as m, je as n, Xv as o, A as r, xE as s, ng as u, __tla };
+export { Rn as L, EE as R, xE as T, He as _, Nt as a, Eg as b, NE as c, Oc as d, AE as e, TE as f, Jt as g, OE as h, CE as i, w as j, kE as k, jE as l, Tc as m, je as n, Xv as o, A as r, RE as s, ng as u, __tla };
