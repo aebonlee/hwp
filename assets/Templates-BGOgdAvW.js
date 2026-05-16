@@ -1,4 +1,4 @@
-import{u as B,b as q,c as A,d as P,r as o,j as e,L as b,g,T as u}from"./index-B-67kTbQ.js";import{S as $}from"./SEOHead-D-taEm1S.js";/* empty css                  */const N=[{id:"__sample_meeting",titleKo:"회의록",titleEn:"Meeting Minutes",descKo:"회의 내용, 참석자, 결정사항을 기록하는 표준 회의록",descEn:"Standard meeting minutes with attendees, agenda, and decisions",icon:"📋",category:"business",content:`# {{회의명}} 회의록
+import{u as B,b as q,c as A,d as P,r as o,j as e,L as b,g,T as u}from"./index-D7e5NJ_E.js";import{S as $}from"./SEOHead-DFwRUzJa.js";/* empty css                  */const N=[{id:"__sample_meeting",titleKo:"회의록",titleEn:"Meeting Minutes",descKo:"회의 내용, 참석자, 결정사항을 기록하는 표준 회의록",descEn:"Standard meeting minutes with attendees, agenda, and decisions",icon:"📋",category:"business",content:`# {{회의명}} 회의록
 
 ## 회의 정보
 
