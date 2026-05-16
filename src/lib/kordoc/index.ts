@@ -5,12 +5,6 @@
  * 개별 모듈을 직접 가져와서 사용한다.
  */
 
-// Buffer polyfill (kordoc 파서들이 Buffer를 사용)
-import { Buffer } from 'buffer';
-if (typeof globalThis.Buffer === 'undefined') {
-  (globalThis as unknown as { Buffer: typeof Buffer }).Buffer = Buffer;
-}
-
 // ─── 파서 ───────────────────────────────────────────────
 export { parseHwpxDocument } from '@kordoc/hwpx/parser';
 export { parseDocxDocument } from '@kordoc/docx/parser';
