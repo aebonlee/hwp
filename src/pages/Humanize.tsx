@@ -135,6 +135,7 @@ const Humanize = (): ReactElement => {
           markdown: originalMarkdown,
           intensity,
           tone,
+          provider: 'openai',
         },
       });
 
