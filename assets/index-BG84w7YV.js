@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-D8XgKTe1.js","assets/SEOHead-DcgeNTk0.js","assets/useAOS-BnJchnYH.js","assets/Convert-BweT153z.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-Cx3cmObh.js","assets/editor-B2FMxC-J.css","assets/Templates-Du2r9BWT.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-UO193keE.js","assets/TemplateDetail-VH42Vy6q.js","assets/Documents-BSiO1yZT.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-9oIvT727.js","assets/BusinessPlan-B5p1dRhu.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-DeQWSx4V.js","assets/useRhwp-DALorG1e.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-BX2ou6K3.js","assets/Viewer-BeyzE84f.css","assets/Generator-CNbgSdnr.js","assets/Generator-B3i-1g61.css","assets/AiWriter-DooLsd7F.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-ObEXSien.js","assets/Humanize--lwfvXIZ.css","assets/HumanizeText-ChZwBA0L.js","assets/HumanizeText-DmJSOmHL.css","assets/Guide-CzU47Qyw.js","assets/Pricing-BQGgzGtm.js","assets/NotFound-Dg0ioj0t.js","assets/Login-BiFXQhjU.js","assets/auth-DKHmQrFs.css","assets/Register-DCenaXcv.js","assets/ForgotPassword-B6g-Bup_.js","assets/MyPage-Nokr4LbI.js","assets/About-CTD5OajQ.js","assets/About-D4JMrjv8.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-LHeGDXCA.js","assets/SEOHead-4HIbEn4I.js","assets/useAOS-DLVDPFWU.js","assets/Convert-bxCF3N3i.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-wPGIlBNA.js","assets/editor-B2FMxC-J.css","assets/Templates-D-S3L62V.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-Cdd4Musc.js","assets/TemplateDetail-C2QS7AoX.js","assets/Documents-BXARJekG.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-DSJMLRav.js","assets/BusinessPlan-F6deae50.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-B4Tstnfs.js","assets/useRhwp-DKpoRvk8.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-C3qPInUC.js","assets/Viewer-BeyzE84f.css","assets/Generator-CNkI3Q9f.js","assets/Generator-B3i-1g61.css","assets/AiWriter-Bg3ViXrB.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-BFK-eHaf.js","assets/Humanize--lwfvXIZ.css","assets/HumanizeText-CObXbh21.js","assets/HumanizeText-DmJSOmHL.css","assets/Guide-DEXhqgAD.js","assets/Pricing-B7qJhGgD.js","assets/NotFound-D6ZJzNsu.js","assets/Login-DzXGLJ4J.js","assets/auth-DKHmQrFs.css","assets/Register-BVvOwUUS.js","assets/ForgotPassword-DD-99_b4.js","assets/MyPage-Bqxnnz6Q.js","assets/About-BCm_OP-1.js","assets/About-D4JMrjv8.css"])))=>i.map(i=>d[i]);
 let Rn, EE, xE, He, Nt, Eg, NE, Oc, AE, TE, Jt, OE, CE, w, kE, jE, Tc, je, Xv, A, RE, ng;
 let __tla = (async ()=>{
     (function() {
@@ -10437,8 +10437,8 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     basicFeatures: "변환 50회/월|AI 처리 월 150,000자 (A4 약 40페이지)|문서 30개 저장|1회 최대 30,000자|HWP 에디터 + HWPX 내보내기|이메일 지원",
                     basicBtn: "Basic 시작",
                     proName: "Pro",
-                    proDesc: "전문가를 위한 대용량 AI 처리와 우선 지원",
-                    proFeatures: "변환 무제한|AI 처리 월 500,000자 (A4 약 125페이지)|문서 무제한 저장|1회 최대 50,000자|사업계획서 + AI 문서 작성|PPTX 내보내기|카카오톡 + 이메일 지원",
+                    proDesc: "전문가를 위한 대용량 AI 처리",
+                    proFeatures: "변환 무제한|AI 처리 월 500,000자 (A4 약 125페이지)|문서 무제한 저장|1회 최대 50,000자|사업계획서 + AI 문서 작성|HWPX + Markdown 내보내기|이메일 지원",
                     proBtn: "Pro 시작",
                     compare: {
                         price: {
@@ -10469,7 +10469,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                             label: "내보내기",
                             free: "Markdown",
                             basic: "Markdown, HWPX",
-                            pro: "Markdown, HWPX, PDF"
+                            pro: "Markdown, HWPX"
                         },
                         storage: {
                             label: "문서 저장",
@@ -10481,7 +10481,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                             label: "지원",
                             free: "-",
                             basic: "이메일",
-                            pro: "이메일 + 카카오톡"
+                            pro: "이메일"
                         }
                     },
                     faq1: {
@@ -10869,8 +10869,8 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     basicFeatures: "50 conversions/mo|AI quota: 150,000 chars/mo (~40 pages)|30 document storage|Max 30,000 chars per request|HWP Editor + HWPX export|Email support",
                     basicBtn: "Start Basic",
                     proName: "Pro",
-                    proDesc: "High-volume AI processing and priority support for professionals",
-                    proFeatures: "Unlimited conversions|AI quota: 500,000 chars/mo (~125 pages)|Unlimited storage|Max 50,000 chars per request|Business plan + AI writer|PPTX export|Kakao + Email support",
+                    proDesc: "High-volume AI processing for professionals",
+                    proFeatures: "Unlimited conversions|AI quota: 500,000 chars/mo (~125 pages)|Unlimited storage|Max 50,000 chars per request|Business plan + AI writer|HWPX + Markdown export|Email support",
                     proBtn: "Start Pro",
                     compare: {
                         price: {
@@ -10901,7 +10901,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                             label: "Export",
                             free: "Markdown",
                             basic: "Markdown, HWPX",
-                            pro: "Markdown, HWPX, PDF"
+                            pro: "Markdown, HWPX"
                         },
                         storage: {
                             label: "Storage",
@@ -10913,7 +10913,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                             label: "Support",
                             free: "-",
                             basic: "Email",
-                            pro: "Email + Kakao"
+                            pro: "Email"
                         }
                     },
                     faq1: {
@@ -20708,56 +20708,56 @@ ${B}`;
             })
         });
     };
-    QS = A.lazy(()=>He(()=>import("./Home-D8XgKTe1.js"), __vite__mapDeps([0,1,2])));
-    ZS = A.lazy(()=>He(()=>import("./Convert-BweT153z.js").then(async (m)=>{
+    QS = A.lazy(()=>He(()=>import("./Home-LHeGDXCA.js"), __vite__mapDeps([0,1,2])));
+    ZS = A.lazy(()=>He(()=>import("./Convert-bxCF3N3i.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([3,1,4,5])));
-    FS = A.lazy(()=>He(()=>import("./Editor-Cx3cmObh.js").then(async (m)=>{
+    FS = A.lazy(()=>He(()=>import("./Editor-wPGIlBNA.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([6,1,4,7])));
-    eE = A.lazy(()=>He(()=>import("./Templates-Du2r9BWT.js"), __vite__mapDeps([8,1,9])));
-    tE = A.lazy(()=>He(()=>import("./TemplateCreate-UO193keE.js").then(async (m)=>{
+    eE = A.lazy(()=>He(()=>import("./Templates-D-S3L62V.js"), __vite__mapDeps([8,1,9])));
+    tE = A.lazy(()=>He(()=>import("./TemplateCreate-Cdd4Musc.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([10,1,4,9])));
-    nE = A.lazy(()=>He(()=>import("./TemplateDetail-VH42Vy6q.js").then(async (m)=>{
+    nE = A.lazy(()=>He(()=>import("./TemplateDetail-C2QS7AoX.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([11,1,4,9])));
-    aE = A.lazy(()=>He(()=>import("./Documents-BSiO1yZT.js"), __vite__mapDeps([12,1,13])));
-    iE = A.lazy(()=>He(()=>import("./DocumentDetail-9oIvT727.js"), __vite__mapDeps([14,1,4,7])));
-    rE = A.lazy(()=>He(()=>import("./BusinessPlan-B5p1dRhu.js").then(async (m)=>{
+    aE = A.lazy(()=>He(()=>import("./Documents-BXARJekG.js"), __vite__mapDeps([12,1,13])));
+    iE = A.lazy(()=>He(()=>import("./DocumentDetail-DSJMLRav.js"), __vite__mapDeps([14,1,4,7])));
+    rE = A.lazy(()=>He(()=>import("./BusinessPlan-F6deae50.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([15,1,16])));
-    sE = A.lazy(()=>He(()=>import("./HwpEditor-DeQWSx4V.js").then(async (m)=>{
+    sE = A.lazy(()=>He(()=>import("./HwpEditor-B4Tstnfs.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([17,18,1,19])));
-    lE = A.lazy(()=>He(()=>import("./Viewer-BX2ou6K3.js").then(async (m)=>{
+    lE = A.lazy(()=>He(()=>import("./Viewer-C3qPInUC.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([20,1,18,21])));
-    oE = A.lazy(()=>He(()=>import("./Generator-CNbgSdnr.js").then(async (m)=>{
+    oE = A.lazy(()=>He(()=>import("./Generator-CNkI3Q9f.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([22,1,23])));
-    uE = A.lazy(()=>He(()=>import("./AiWriter-DooLsd7F.js"), __vite__mapDeps([24,1,25])));
-    cE = A.lazy(()=>He(()=>import("./Humanize-ObEXSien.js").then(async (m)=>{
+    uE = A.lazy(()=>He(()=>import("./AiWriter-Bg3ViXrB.js"), __vite__mapDeps([24,1,25])));
+    cE = A.lazy(()=>He(()=>import("./Humanize-BFK-eHaf.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([26,1,4,27])));
-    hE = A.lazy(()=>He(()=>import("./HumanizeText-ChZwBA0L.js"), __vite__mapDeps([28,1,29])));
-    fE = A.lazy(()=>He(()=>import("./Guide-CzU47Qyw.js"), __vite__mapDeps([30,1])));
-    dE = A.lazy(()=>He(()=>import("./Pricing-BQGgzGtm.js"), __vite__mapDeps([31,1,2])));
-    pE = A.lazy(()=>He(()=>import("./NotFound-Dg0ioj0t.js"), __vite__mapDeps([32,1])));
-    mE = A.lazy(()=>He(()=>import("./Login-BiFXQhjU.js"), __vite__mapDeps([33,1,34])));
-    gE = A.lazy(()=>He(()=>import("./Register-DCenaXcv.js"), __vite__mapDeps([35,1,34])));
-    yE = A.lazy(()=>He(()=>import("./ForgotPassword-B6g-Bup_.js"), __vite__mapDeps([36,1,34])));
-    vE = A.lazy(()=>He(()=>import("./MyPage-Nokr4LbI.js"), __vite__mapDeps([37,1,34])));
-    bE = A.lazy(()=>He(()=>import("./About-CTD5OajQ.js"), __vite__mapDeps([38,1,2,39])));
+    hE = A.lazy(()=>He(()=>import("./HumanizeText-CObXbh21.js"), __vite__mapDeps([28,1,29])));
+    fE = A.lazy(()=>He(()=>import("./Guide-DEXhqgAD.js"), __vite__mapDeps([30,1])));
+    dE = A.lazy(()=>He(()=>import("./Pricing-B7qJhGgD.js"), __vite__mapDeps([31,1,2])));
+    pE = A.lazy(()=>He(()=>import("./NotFound-D6ZJzNsu.js"), __vite__mapDeps([32,1])));
+    mE = A.lazy(()=>He(()=>import("./Login-DzXGLJ4J.js"), __vite__mapDeps([33,1,34])));
+    gE = A.lazy(()=>He(()=>import("./Register-BVvOwUUS.js"), __vite__mapDeps([35,1,34])));
+    yE = A.lazy(()=>He(()=>import("./ForgotPassword-DD-99_b4.js"), __vite__mapDeps([36,1,34])));
+    vE = A.lazy(()=>He(()=>import("./MyPage-Bqxnnz6Q.js"), __vite__mapDeps([37,1,34])));
+    bE = A.lazy(()=>He(()=>import("./About-BCm_OP-1.js"), __vite__mapDeps([38,1,2,39])));
     wE = ()=>w.jsx("div", {
             style: {
                 display: "flex",
