@@ -474,27 +474,6 @@
     background: rgba(74, 143, 231, 0.08);
 }
 
-/* ── Ecosystem cards (Guide page) dark mode ── */
-[data-theme="dark"] .ecosystem-card {
-    background: var(--bg-light-gray);
-    border-color: var(--border-medium);
-}
-
-[data-theme="dark"] .ecosystem-badge {
-    background: rgba(74, 143, 231, 0.15);
-    color: var(--primary-blue-light);
-}
-
-[data-theme="dark"] .ecosystem-link {
-    border-color: var(--border-medium);
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .ecosystem-link:hover {
-    border-color: var(--primary-blue);
-    color: var(--primary-blue);
-}
-
 /* ── AI enhance dark mode ── */
 [data-theme="dark"] .ai-compare-col {
     border-color: var(--border-medium);

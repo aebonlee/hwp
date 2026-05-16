@@ -6,6 +6,14 @@ import getSupabase from '../utils/supabase';
 import type { IRDocument } from '../types/hwpx';
 import '../styles/convert.css';
 
+/** 지원 포맷 목록 */
+const SUPPORTED_EXTENSIONS = ['hwp', 'hwpx', 'docx', 'xlsx', 'hwp3', 'hwpml'] as const;
+type SupportedExt = typeof SUPPORTED_EXTENSIONS[number];
+
+function isSupportedExt(ext: string): ext is SupportedExt {
+  return (SUPPORTED_EXTENSIONS as readonly string[]).includes(ext);
+}
+
 type ConvertStep = 'upload' | 'converting' | 'done';
 
 const Convert = (): ReactElement => {
@@ -23,9 +31,9 @@ const Convert = (): ReactElement => {
   const [aiError, setAiError] = useState('');
 
   const handleFile = useCallback(async (f: File) => {
-    const ext = getFileExtension(f.name);
-    if (ext !== 'hwp' && ext !== 'hwpx') {
-      setError('.hwp 또는 .hwpx 파일만 지원합니다.');
+    const ext = getFileExtension(f.name) as string;
+    if (!isSupportedExt(ext)) {
+      setError('지원하지 않는 파일 형식입니다. (.hwp, .hwpx, .docx, .xlsx, .hwp3 지원)');
       return;
     }
     setFile(f);
@@ -33,17 +41,46 @@ const Convert = (): ReactElement => {
     setStep('converting');
 
     try {
+      const arrayBuf = await f.arrayBuffer();
+
       if (ext === 'hwpx') {
-        const { parseHwpx } = await import('../lib/hwpx/parser');
-        const arrayBuf = await f.arrayBuffer();
-        const doc = await parseHwpx(arrayBuf);
-        setIrDoc(doc);
-        const { irToMarkdown } = await import('../lib/ir/toMarkdown');
-        const md = irToMarkdown(doc);
+        // kordoc HWPX 파서 사용
+        const { parseHwpxDocument, blocksToMarkdown, kordocToHwpIR } = await import('../lib/kordoc/index');
+        const result = await parseHwpxDocument(arrayBuf);
+        const md = result.markdown || blocksToMarkdown(result.blocks);
+        setIrDoc(kordocToHwpIR(result.blocks, result.metadata));
+        setMarkdown(md);
+      } else if (ext === 'docx') {
+        // kordoc DOCX 파서
+        const { parseDocxDocument, blocksToMarkdown, kordocToHwpIR } = await import('../lib/kordoc/index');
+        const result = await parseDocxDocument(arrayBuf);
+        const md = result.markdown || blocksToMarkdown(result.blocks);
+        setIrDoc(kordocToHwpIR(result.blocks, result.metadata));
+        setMarkdown(md);
+      } else if (ext === 'xlsx') {
+        // kordoc XLSX 파서
+        const { parseXlsxDocument, blocksToMarkdown, kordocToHwpIR } = await import('../lib/kordoc/index');
+        const result = await parseXlsxDocument(arrayBuf);
+        const md = result.markdown || blocksToMarkdown(result.blocks);
+        setIrDoc(kordocToHwpIR(result.blocks, result.metadata));
+        setMarkdown(md);
+      } else if (ext === 'hwp3') {
+        // kordoc HWP3 파서
+        const { parseHwp3Document, blocksToMarkdown, kordocToHwpIR } = await import('../lib/kordoc/index');
+        const result = parseHwp3Document(arrayBuf);
+        const md = result.markdown || blocksToMarkdown(result.blocks);
+        setIrDoc(kordocToHwpIR(result.blocks, result.metadata));
+        setMarkdown(md);
+      } else if (ext === 'hwpml') {
+        // kordoc HWPML 파서
+        const { parseHwpmlDocument, blocksToMarkdown, kordocToHwpIR } = await import('../lib/kordoc/index');
+        const result = parseHwpmlDocument(arrayBuf);
+        const md = result.markdown || blocksToMarkdown(result.blocks);
+        setIrDoc(kordocToHwpIR(result.blocks, result.metadata));
         setMarkdown(md);
       } else {
+        // hwp: 기존 자체 파서 유지
         const { parseHwp } = await import('../lib/hwp/parser');
-        const arrayBuf = await f.arrayBuffer();
         const doc = await parseHwp(arrayBuf);
         setIrDoc(doc);
         const { irToMarkdown } = await import('../lib/ir/toMarkdown');
@@ -67,7 +104,7 @@ const Convert = (): ReactElement => {
   const onFileSelect = () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.hwp,.hwpx';
+    input.accept = '.hwp,.hwpx,.docx,.xlsx,.hwp3,.hwpml';
     input.onchange = () => {
       if (input.files && input.files.length > 0) handleFile(input.files[0]);
     };
@@ -85,7 +122,7 @@ const Convert = (): ReactElement => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = (file?.name.replace(/\.(hwp|hwpx)$/i, '') || 'document') + '.md';
+    a.download = (file?.name.replace(/\.(hwp|hwpx|docx|xlsx|hwp3|hwpml)$/i, '') || 'document') + '.md';
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -157,7 +194,7 @@ const Convert = (): ReactElement => {
                 <line x1="12" y1="3" x2="12" y2="15" />
               </svg>
               <h3>{t('site.convert.dropzone')}</h3>
-              <p>{t('site.convert.dropzoneHint')}</p>
+              <p>.hwp, .hwpx, .docx, .xlsx, .hwp3, .hwpml</p>
             </div>
           )}
 

@@ -250,6 +250,55 @@
   color: #dc2626;
 }
 
+/* ── Category Tabs ── */
+.bp-category-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.bp-category-tab {
+  padding: 8px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background: var(--bg-secondary);
+  color: var(--text-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.bp-category-tab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.bp-category-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* ── Government Badge ── */
+.bp-gov-badge {
+  display: inline-block;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #1a365d, #2b6cb0);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="dark"] .bp-gov-badge {
+  background: linear-gradient(135deg, #2b6cb0, #4299e1);
+}
+
 /* ── Type Selection ── */
 .bp-type-grid {
   display: grid;
@@ -258,6 +307,7 @@
 }
 
 .bp-type-card {
+  position: relative;
   padding: 28px 20px;
   border: 2px solid var(--border-color);
   border-radius: var(--radius-lg);

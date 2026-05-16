@@ -1,6 +1,7 @@
 import type { BusinessPlanTemplate } from '../types';
+import { governmentTemplates } from './governmentTemplates';
 
-export const businessPlanTemplates: BusinessPlanTemplate[] = [
+const generalTemplates: BusinessPlanTemplate[] = [
   // ── 1. 창업사업계획서 ──
   {
     type: 'startup',
@@ -9,6 +10,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F680}',
     descKo: '스타트업/신규 창업을 위한 사업계획서',
     descEn: 'Business plan for startups and new ventures',
+    category: 'general',
     sections: [
       {
         id: 'overview',
@@ -197,6 +199,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F3E2}',
     descKo: '기존 중소기업의 성장·확장 사업계획서',
     descEn: 'Business plan for SME growth and expansion',
+    category: 'general',
     sections: [
       {
         id: 'company',
@@ -368,6 +371,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F4B0}',
     descKo: '투자자 대상 IR/피칭용 사업계획서',
     descEn: 'Business plan for investor relations and pitching',
+    category: 'general',
     sections: [
       {
         id: 'execSummary',
@@ -540,6 +544,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F3DB}',
     descKo: '정부 R&D 및 지원사업 신청용 사업계획서',
     descEn: 'Business plan for government R&D and support programs',
+    category: 'general',
     sections: [
       {
         id: 'projectOverview',
@@ -726,6 +731,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F393}',
     descKo: '학원, 온라인교육, 직업훈련 등 교육사업 계획서',
     descEn: 'Business plan for academies, online education, and vocational training',
+    category: 'general',
     sections: [
       {
         id: 'eduOverview',
@@ -877,6 +883,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F91D}',
     descKo: '비영리단체, 사회적기업, 협동조합 등을 위한 사업계획서',
     descEn: 'Business plan for nonprofits, social enterprises, and cooperatives',
+    category: 'general',
     sections: [
       {
         id: 'npOverview',
@@ -1016,6 +1023,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F3EA}',
     descKo: '가맹점 모집 또는 프랜차이즈 창업 사업계획서',
     descEn: 'Business plan for franchise development or franchise startup',
+    category: 'general',
     sections: [
       {
         id: 'franchiseOverview',
@@ -1154,6 +1162,7 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
     icon: '\u{1F6D2}',
     descKo: '온라인 쇼핑몰, D2C, 마켓플레이스 등 이커머스 사업계획서',
     descEn: 'Business plan for online shops, D2C brands, and marketplaces',
+    category: 'general',
     sections: [
       {
         id: 'ecOverview',
@@ -1289,3 +1298,5 @@ export const businessPlanTemplates: BusinessPlanTemplate[] = [
 `,
   },
 ];
+
+export const businessPlanTemplates: BusinessPlanTemplate[] = [...generalTemplates, ...governmentTemplates];

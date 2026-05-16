@@ -160,7 +160,10 @@ export type ColorTheme = 'blue' | 'red' | 'green' | 'purple' | 'orange';
 export type Language = 'ko' | 'en';
 
 // ─── Business Plan ───
-export type BusinessPlanType = 'startup' | 'sme' | 'investment' | 'government' | 'education' | 'nonprofit' | 'franchise' | 'ecommerce';
+export type BusinessPlanType =
+  | 'startup' | 'sme' | 'investment' | 'government'
+  | 'education' | 'nonprofit' | 'franchise' | 'ecommerce'
+  | 'gov-prestartup' | 'gov-earlystartup' | 'gov-smallbiz' | 'gov-rnd' | 'gov-social';
 
 export interface BusinessPlanFieldDef {
   key: string;
@@ -186,6 +189,7 @@ export interface BusinessPlanTemplate {
   icon: string;
   descKo: string;
   descEn: string;
+  category?: 'general' | 'government';
   sections: BusinessPlanSection[];
   markdownTemplate: string;
 }

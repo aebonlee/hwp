@@ -141,9 +141,10 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
 
   const handleDownloadHwpx = async () => {
     try {
-      const { generateHwpx } = await import('../lib/hwpxWriter/generator');
+      const { markdownToHwpx } = await import('../lib/kordoc/index');
       const title = getDocTitle() || 'document';
-      const blob = await generateHwpx(generatedMarkdown, title);
+      const arrayBuffer = await markdownToHwpx(generatedMarkdown);
+      const blob = new Blob([arrayBuffer], { type: 'application/hwp+zip' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

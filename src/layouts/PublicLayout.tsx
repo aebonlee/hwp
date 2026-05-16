@@ -19,6 +19,7 @@ const HwpEditor = lazy(() => import('../pages/HwpEditor'));
 const Viewer = lazy(() => import('../pages/Viewer'));
 const Generator = lazy(() => import('../pages/Generator'));
 const AiWriter = lazy(() => import('../pages/AiWriter'));
+const Humanize = lazy(() => import('../pages/Humanize'));
 const Guide = lazy(() => import('../pages/Guide'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
@@ -55,6 +56,7 @@ const PublicLayout = (): ReactElement => {
             <Route path="/viewer" element={<Viewer />} />
             <Route path="/generator" element={<Generator />} />
             <Route path="/ai-writer" element={<AiWriter />} />
+            <Route path="/humanize" element={<Humanize />} />
             <Route path="/guide" element={<Guide />} />
 
             {/* 문서 관리 (AuthGuard) */}

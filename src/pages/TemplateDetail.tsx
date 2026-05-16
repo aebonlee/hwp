@@ -129,8 +129,9 @@ th{background:#f5f5f5}</style></head><body><pre style="white-space:pre-wrap;font
       downloadText(htmlContent, `${fileName}.html`, 'text/html');
     } else {
       try {
-        const { generateHwpx } = await import('../lib/hwpxWriter/generator');
-        const blob = await generateHwpx(filledContent, fileName);
+        const { markdownToHwpx } = await import('../lib/kordoc/index');
+        const arrayBuffer = await markdownToHwpx(filledContent);
+        const blob = new Blob([arrayBuffer], { type: 'application/hwp+zip' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;

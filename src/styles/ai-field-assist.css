@@ -1,0 +1,278 @@
+/* ============================================
+   AI Field Assist Styles
+   ============================================ */
+
+/* ── AI Key Setup Panel ── */
+.ai-key-setup {
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.ai-key-setup-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: var(--transition-base);
+}
+
+.ai-key-setup-toggle:hover {
+  background: var(--bg-hover);
+}
+
+.ai-key-setup-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-key-setup-status {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+.ai-key-setup-status.configured {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+}
+
+.ai-key-setup-arrow {
+  transition: transform 0.2s;
+}
+
+.ai-key-setup-arrow.open {
+  transform: rotate(180deg);
+}
+
+.ai-key-setup-body {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.ai-key-setup-providers {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ai-key-setup-provider {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background: var(--bg-primary);
+  color: var(--text-light);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.ai-key-setup-provider:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.ai-key-setup-provider.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.ai-key-setup-provider .ai-provider-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.ai-key-setup-provider.active .ai-provider-icon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ai-key-setup-row {
+  display: flex;
+  gap: 8px;
+}
+
+.ai-key-setup-input-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.ai-key-setup-input {
+  width: 100%;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.ai-key-setup-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 0, 70, 200), 0.1);
+}
+
+.ai-key-setup-eye {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.ai-key-setup-model {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  min-width: 140px;
+}
+
+.ai-key-setup-hint {
+  margin: 8px 0 0;
+  font-size: 0.72rem;
+  color: var(--text-light);
+}
+
+/* ── AI Field Button ── */
+.ai-field-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-left: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition-base);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.ai-field-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* ── AI Field Popover ── */
+.ai-field-popover {
+  margin-top: 8px;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.ai-field-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.ai-field-popover-close {
+  border: none;
+  background: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* ── AI Field Preview ── */
+.ai-field-preview {
+  padding: 12px;
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ai-cursor-blink {
+  animation: cursorBlink 1s infinite;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ── AI Field Actions ── */
+.ai-field-actions {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+}
+
+.ai-field-actions .bp-btn {
+  padding: 4px 12px;
+  font-size: 0.75rem;
+}
+
+/* ── Field label row (for AI button alignment) ── */
+.bp-field label {
+  display: flex;
+  align-items: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ai-key-setup-row {
+    flex-direction: column;
+  }
+
+  .ai-key-setup-model {
+    min-width: unset;
+  }
+}

@@ -4,10 +4,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import SEOHead from '../components/SEOHead';
+import AiKeySetup from '../components/AiKeySetup';
+import AiFieldButton from '../components/AiFieldButton';
 import getSupabase, { TABLES } from '../utils/supabase';
 import { businessPlanTemplates } from '../data/businessPlanTemplates';
 import type { BusinessPlanTemplate, BusinessPlanType, BusinessPlan as BPType } from '../types';
 import '../styles/business-plan.css';
+import '../styles/ai-field-assist.css';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -69,6 +72,7 @@ const BusinessPlan = (): ReactElement => {
 
   // Search/filter for type cards
   const [typeSearch, setTypeSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<'all' | 'general' | 'government'>('all');
 
   const template: BusinessPlanTemplate | null = useMemo(
     () => businessPlanTemplates.find(t => t.type === selectedType) ?? null,
@@ -172,15 +176,21 @@ const BusinessPlan = (): ReactElement => {
 
   // Filter business plan types
   const filteredTemplates = useMemo(() => {
-    if (!typeSearch.trim()) return businessPlanTemplates;
-    const q = typeSearch.toLowerCase();
-    return businessPlanTemplates.filter(t =>
-      t.nameKo.toLowerCase().includes(q) ||
-      t.nameEn.toLowerCase().includes(q) ||
-      t.descKo.toLowerCase().includes(q) ||
-      t.descEn.toLowerCase().includes(q)
-    );
-  }, [typeSearch]);
+    let list = businessPlanTemplates;
+    if (categoryFilter !== 'all') {
+      list = list.filter(t => t.category === categoryFilter);
+    }
+    if (typeSearch.trim()) {
+      const q = typeSearch.toLowerCase();
+      list = list.filter(t =>
+        t.nameKo.toLowerCase().includes(q) ||
+        t.nameEn.toLowerCase().includes(q) ||
+        t.descKo.toLowerCase().includes(q) ||
+        t.descEn.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [typeSearch, categoryFilter]);
 
   // Handlers
   const handleTypeSelect = (type: BusinessPlanType) => {
@@ -210,7 +220,8 @@ const BusinessPlan = (): ReactElement => {
 
   const getTitle = () =>
     formData.businessName || formData.companyName || formData.invCompanyName || formData.projectTitle ||
-    formData.eduName || formData.npName || formData.brandName || formData.ecName || '';
+    formData.eduName || formData.npName || formData.brandName || formData.ecName ||
+    formData.itemTitle || formData.earlyCompanyName || formData.sbName || formData.rndTitle || formData.seName || '';
 
   const handleDownloadMd = () => {
     const blob = new Blob([generatedMarkdown], { type: 'text/markdown;charset=utf-8' });
@@ -243,9 +254,10 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
 
   const handleDownloadHwpx = async () => {
     try {
-      const { generateHwpx } = await import('../lib/hwpxWriter/generator');
+      const { markdownToHwpx } = await import('../lib/kordoc/index');
       const title = getTitle() || 'business-plan';
-      const blob = await generateHwpx(generatedMarkdown, title);
+      const arrayBuffer = await markdownToHwpx(generatedMarkdown);
+      const blob = new Blob([arrayBuffer], { type: 'application/hwp+zip' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -405,6 +417,21 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                 </div>
               )}
 
+              {/* Category Tabs */}
+              <div className="bp-category-tabs">
+                {(['all', 'general', 'government'] as const).map(cat => (
+                  <button
+                    key={cat}
+                    className={`bp-category-tab ${categoryFilter === cat ? 'active' : ''}`}
+                    onClick={() => setCategoryFilter(cat)}
+                  >
+                    {cat === 'all' ? (isKo ? '전체' : 'All') :
+                     cat === 'general' ? (isKo ? '일반 사업계획서' : 'General') :
+                     (isKo ? '정부지원사업' : 'Government')}
+                  </button>
+                ))}
+              </div>
+
               {/* Type Grid */}
               <div className="bp-type-grid">
                 {filteredTemplates.map(tmpl => (
@@ -413,6 +440,9 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                     className={`bp-type-card ${selectedType === tmpl.type ? 'selected' : ''}`}
                     onClick={() => handleTypeSelect(tmpl.type)}
                   >
+                    {tmpl.category === 'government' && (
+                      <span className="bp-gov-badge">{isKo ? '🏛️ 정부지원' : '🏛️ Gov'}</span>
+                    )}
                     <div className="bp-type-icon">{tmpl.icon}</div>
                     <h3>{isKo ? tmpl.nameKo : tmpl.nameEn}</h3>
                     <p>{isKo ? tmpl.descKo : tmpl.descEn}</p>
@@ -434,6 +464,8 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
           {/* Step 2: Form Input */}
           {step === 2 && template && (
             <div className="bp-form-section">
+              <AiKeySetup collapsed />
+
               <div className="bp-form-header">
                 <div className="bp-form-header-left">
                   <span className="bp-form-type-icon">{template.icon}</span>
@@ -476,6 +508,16 @@ th{background:#f5f5f5}blockquote{border-left:4px solid #0046C8;padding:8px 16px;
                             <label>
                               {isKo ? field.labelKo : field.labelEn}
                               {field.required && <span className="required">*</span>}
+                              {field.type === 'textarea' && (
+                                <AiFieldButton
+                                  fieldKey={field.key}
+                                  fieldLabel={isKo ? field.labelKo : field.labelEn}
+                                  sectionTitle={isKo ? section.titleKo : section.titleEn}
+                                  templateName={isKo ? template.nameKo : template.nameEn}
+                                  allFormData={formData}
+                                  onAccept={(value) => handleFieldChange(field.key, value)}
+                                />
+                              )}
                             </label>
                             {field.type === 'textarea' ? (
                               <textarea

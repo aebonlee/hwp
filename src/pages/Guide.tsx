@@ -139,41 +139,6 @@ const Guide = (): ReactElement => {
     },
   ];
 
-  const ecosystemTools = [
-    {
-      name: 'hwp2md',
-      badge: 'Go CLI',
-      desc: isKo
-        ? 'HWP/HWPX → Markdown 변환 CLI. 2단계 파이프라인(파서 + LLM)으로 정확한 변환.'
-        : 'HWP/HWPX → Markdown CLI. 2-stage pipeline (parser + LLM) for accurate conversion.',
-      github: 'https://github.com/aebonlee/hwp2md',
-    },
-    {
-      name: 'hwp-mcp',
-      badge: 'Python MCP',
-      desc: isKo
-        ? 'AI 모델이 HWP 문서를 직접 생성·편집할 수 있는 MCP 서버.'
-        : 'MCP server enabling AI models to directly create and edit HWP documents.',
-      github: 'https://github.com/aebonlee/hwp-mcp',
-    },
-    {
-      name: 'python-hwplib',
-      badge: 'Python + Java',
-      desc: isKo
-        ? 'Java hwplib 기반 고정확도 HWP 텍스트 추출 라이브러리.'
-        : 'High-accuracy HWP text extraction library based on Java hwplib.',
-      github: 'https://github.com/aebonlee/python-hwplib',
-    },
-    {
-      name: 'rhwp',
-      badge: 'Rust + WASM',
-      desc: isKo
-        ? 'Rust+WASM 기반 HWP 뷰어/에디터. 이 사이트의 HWP 뷰어 엔진.'
-        : 'Rust+WASM HWP viewer/editor. Powers the HWP Viewer on this site.',
-      github: 'https://github.com/edwardkim/rhwp',
-    },
-  ];
-
   return (
     <>
       <SEOHead title={t('site.guide.title')} path="/guide" />
@@ -209,36 +174,6 @@ const Guide = (): ReactElement => {
         </div>
       </section>
 
-      {/* HWP 도구 생태계 참고 섹션 */}
-      <section className="section">
-        <div className="container">
-          <h2 className="section-title">
-            {isKo ? 'HWP 도구 생태계' : 'HWP Tools Ecosystem'}
-          </h2>
-          <p className="section-subtitle" style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '32px' }}>
-            {isKo
-              ? '오픈소스 HWP 문서 처리 도구 모음입니다.'
-              : 'A collection of open-source HWP document processing tools.'}
-          </p>
-          <div className="ecosystem-grid">
-            {ecosystemTools.map(tool => (
-              <div key={tool.name} className="ecosystem-card">
-                <div className="ecosystem-card-header">
-                  <h4>{tool.name}</h4>
-                  <span className="ecosystem-badge">{tool.badge}</span>
-                </div>
-                <p>{tool.desc}</p>
-                <a href={tool.github} target="_blank" rel="noopener noreferrer" className="ecosystem-link">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                  GitHub
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 };

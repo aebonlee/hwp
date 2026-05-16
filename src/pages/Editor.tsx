@@ -41,8 +41,9 @@ const Editor = (): ReactElement => {
         break;
       case 'hwpx': {
         try {
-          const { generateHwpx } = await import('../lib/hwpxWriter/generator');
-          const blob = await generateHwpx(content, title || t('site.editor.untitled'));
+          const { markdownToHwpx } = await import('../lib/kordoc/index');
+          const arrayBuffer = await markdownToHwpx(content);
+          const blob = new Blob([arrayBuffer], { type: 'application/hwp+zip' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;

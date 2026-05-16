@@ -63,6 +63,7 @@ const site: SiteConfig = {
     { path: '/templates', labelKey: 'site.nav.templates' },
     { path: '/documents', labelKey: 'site.nav.documents' },
     { path: '/ai-writer', labelKey: 'site.nav.aiWriter' },
+    { path: '/humanize', labelKey: 'site.nav.humanize' },
     { path: '/guide', labelKey: 'site.nav.guide' },
   ],
 

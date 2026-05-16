@@ -2,7 +2,36 @@
  * Markdown → IR converter
  * Parses markdown text into IR blocks for HWPX export.
  */
-import { newParagraph, newTable, newList, newImage, type IRDocument, type IRBlock, type IRListItem } from '../ir/types';
+import { newParagraph, newTable, newList, newImage, type IRDocument, type IRBlock, type IRListItem, type IRRun } from '../ir/types';
+
+/**
+ * Parse inline formatting (**bold**, *italic*) into IRRun[].
+ */
+function parseInlineRuns(text: string): IRRun[] {
+  const runs: IRRun[] = [];
+  // Regex: match **bold**, *italic*, or plain text
+  const pattern = /(\*\*(.+?)\*\*|\*(.+?)\*|([^*]+))/g;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match[2] !== undefined) {
+      // **bold**
+      runs.push({ text: match[2], style: { bold: true } });
+    } else if (match[3] !== undefined) {
+      // *italic*
+      runs.push({ text: match[3], style: { italic: true } });
+    } else if (match[4] !== undefined) {
+      // plain text
+      if (match[4]) runs.push({ text: match[4], style: {} });
+    }
+  }
+
+  if (runs.length === 0 && text) {
+    runs.push({ text, style: {} });
+  }
+
+  return runs;
+}
 
 /**
  * Parse a markdown string into an IR Document.
@@ -48,8 +77,24 @@ export function markdownToIR(markdown: string): IRDocument {
       const text = headingMatch[2];
       const para = newParagraph(text);
       para.style.headingLevel = level;
+      para.runs = parseInlineRuns(text);
       doc.content.push({ type: 'paragraph', paragraph: para });
       i++;
+      continue;
+    }
+
+    // Blockquote
+    if (line.startsWith('> ')) {
+      let quoteText = '';
+      while (i < lines.length && lines[i].startsWith('> ')) {
+        if (quoteText) quoteText += '\n';
+        quoteText += lines[i].slice(2);
+        i++;
+      }
+      const para = newParagraph(quoteText);
+      para.style.isQuote = true;
+      para.runs = parseInlineRuns(quoteText);
+      doc.content.push({ type: 'paragraph', paragraph: para });
       continue;
     }
 
@@ -112,13 +157,15 @@ export function markdownToIR(markdown: string): IRDocument {
 
     // Regular paragraph (collect consecutive non-empty lines)
     let text = '';
-    while (i < lines.length && lines[i].trim() && !lines[i].startsWith('#') && !lines[i].startsWith('|') && !lines[i].match(/^\s*[-*+]\s/) && !lines[i].match(/^\s*\d+\.\s/)) {
+    while (i < lines.length && lines[i].trim() && !lines[i].startsWith('#') && !lines[i].startsWith('|') && !lines[i].startsWith('> ') && !lines[i].match(/^\s*[-*+]\s/) && !lines[i].match(/^\s*\d+\.\s/)) {
       if (text) text += '\n';
       text += lines[i];
       i++;
     }
     if (text.trim()) {
-      doc.content.push({ type: 'paragraph', paragraph: newParagraph(text) });
+      const para = newParagraph(text);
+      para.runs = parseInlineRuns(text);
+      doc.content.push({ type: 'paragraph', paragraph: para });
     }
   }
 
