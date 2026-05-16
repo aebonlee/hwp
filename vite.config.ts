@@ -23,13 +23,32 @@ function kordocBrowserPlugin(): Plugin {
   }
 }
 
+/**
+ * kordoc 소스 파일에 Buffer import를 자동 주입하는 플러그인.
+ * kordoc은 Node.js 라이브러리라 Buffer를 전역으로 사용하지만,
+ * 브라우저에서는 전역 Buffer가 없으므로 각 파일에 import를 주입.
+ */
+function bufferPolyfillPlugin(): Plugin {
+  return {
+    name: 'buffer-polyfill',
+    transform(code, id) {
+      // kordoc 소스 파일 중 Buffer를 사용하는 파일에만 주입
+      if (id.includes('kordoc') && /\bBuffer\b/.test(code) && !code.includes("from 'buffer'") && !code.includes('from "buffer"')) {
+        return `import { Buffer } from 'buffer';\n${code}`
+      }
+      return null
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [kordocBrowserPlugin(), react(), wasm(), topLevelAwait()],
+  plugins: [bufferPolyfillPlugin(), kordocBrowserPlugin(), react(), wasm(), topLevelAwait()],
   base: '/',
   resolve: {
     alias: {
       '@kordoc': path.resolve(__dirname, '../kordoc/src'),
       'zlib': path.resolve(__dirname, 'src/lib/kordoc/zlib-shim.ts'),
+      'buffer': path.resolve(__dirname, 'node_modules/buffer/index.js'),
     },
     dedupe: ['jszip', '@xmldom/xmldom', 'fflate'],
   },
