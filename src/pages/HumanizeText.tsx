@@ -263,13 +263,15 @@ const HumanizeText = (): ReactElement => {
                   </div>
                 ) : (
                   <div className="result-only-view">
-                    <div className="result-only-section">
-                      <div className="result-only-label">{t('site.humanize.original')}</div>
-                      <pre className="humanize-pre">{originalText}</pre>
-                    </div>
-                    <div className="result-only-section">
-                      <div className="result-only-label">{t('site.humanize.humanized')}</div>
-                      <pre className="humanize-pre full">{humanizedText}</pre>
+                    <div className="result-only-cols">
+                      <div className="result-only-col">
+                        <div className="result-only-label original-label">{t('site.humanize.original')}</div>
+                        <pre className="humanize-pre">{originalText}</pre>
+                      </div>
+                      <div className="result-only-col">
+                        <div className="result-only-label humanized-label">{t('site.humanize.humanized')}</div>
+                        <pre className="humanize-pre">{humanizedText}</pre>
+                      </div>
                     </div>
                   </div>
                 )}
