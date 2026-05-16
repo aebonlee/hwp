@@ -102,9 +102,23 @@ html[data-color="orange"] {
     --highlight-gradient: linear-gradient(135deg, #FDCF93 0%, #FDE4BF 50%, #FFFFFF 100%);
 }
 
+html, body, #root {
+    height: 100%;
+}
+
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.App > main {
+    flex: 1;
 }
 
 body {
