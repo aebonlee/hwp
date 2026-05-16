@@ -21,5 +21,6 @@
 @import './styles/viewer.css';
 @import './styles/generator.css';
 @import './styles/pricing.css';
+@import './styles/humanize-text.css';
 @import './styles/dark-mode.css';
 @import './styles/responsive.css';

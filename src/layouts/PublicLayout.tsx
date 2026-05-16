@@ -20,6 +20,7 @@ const Viewer = lazy(() => import('../pages/Viewer'));
 const Generator = lazy(() => import('../pages/Generator'));
 const AiWriter = lazy(() => import('../pages/AiWriter'));
 const Humanize = lazy(() => import('../pages/Humanize'));
+const HumanizeText = lazy(() => import('../pages/HumanizeText'));
 const Guide = lazy(() => import('../pages/Guide'));
 const Pricing = lazy(() => import('../pages/Pricing'));
 const NotFound = lazy(() => import('../pages/NotFound'));
@@ -58,6 +59,7 @@ const PublicLayout = (): ReactElement => {
             <Route path="/generator" element={<Generator />} />
             <Route path="/ai-writer" element={<AiWriter />} />
             <Route path="/humanize" element={<Humanize />} />
+            <Route path="/humanize-text" element={<HumanizeText />} />
             <Route path="/guide" element={<Guide />} />
             <Route path="/pricing" element={<Pricing />} />
 
