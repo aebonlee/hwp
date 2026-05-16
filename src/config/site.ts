@@ -97,7 +97,6 @@ const site: SiteConfig = {
   ],
 
   footerLinks: [
-    { path: '/', labelKey: 'nav.home' },
     { path: '/convert', labelKey: 'site.nav.convert' },
     { path: '/md-editor', labelKey: 'site.nav.mdEditor' },
     { path: '/hwp-editor', labelKey: 'site.nav.hwpEditor' },
