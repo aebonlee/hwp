@@ -1,5 +1,5 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-G183QK7U.js","assets/SEOHead-DNbEnOLL.js","assets/useAOS-BhSpzq8e.js","assets/Convert-ZkFukrU5.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-DFAz9rr0.js","assets/editor-B2FMxC-J.css","assets/Templates-DjdMVx8E.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-D5KyY261.js","assets/TemplateDetail-B2aoDrl5.js","assets/Documents-DZrii7WD.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-DblLmRLb.js","assets/BusinessPlan-Bd_8nAmB.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-wj0lb4fK.js","assets/useRhwp-1064TS1r.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-Beixbo4k.js","assets/Viewer-BeyzE84f.css","assets/Generator-z-zyTKea.js","assets/Generator-B3i-1g61.css","assets/AiWriter-BV55yYke.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-9-8N76mR.js","assets/Humanize--lwfvXIZ.css","assets/Guide-LIHRbOrY.js","assets/Pricing-DIlCgiOw.js","assets/NotFound-RDllfXWu.js","assets/Login-Br-eHsE9.js","assets/auth-DKHmQrFs.css","assets/Register-CDlQdwDR.js","assets/ForgotPassword-DEdrG5Qh.js","assets/MyPage-CY4TETiD.js"])))=>i.map(i=>d[i]);
-let Rn, _E, TE, Ie, Nt, Eg, kE, Oc, EE, SE, Jt, xE, RE, w, OE, CE, Tc, je, Xv, A, AE, ng;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-D9e89Gqz.js","assets/SEOHead-C5wZqPSz.js","assets/useAOS-D0XGtV6h.js","assets/Convert-DcxIbt7u.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-NJIqjZJx.js","assets/editor-B2FMxC-J.css","assets/Templates-BQdsi2vZ.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-BQymD5VA.js","assets/TemplateDetail-DHQGhvEA.js","assets/Documents-Cl6E_DR_.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-Dt0UbKZQ.js","assets/BusinessPlan-CETDSi7h.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-YAZwitXK.js","assets/useRhwp-0lG9-csr.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-BKCLMw8Z.js","assets/Viewer-BeyzE84f.css","assets/Generator-Dk-A6MxR.js","assets/Generator-B3i-1g61.css","assets/AiWriter-9_p7B1ko.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-D-lyco6O.js","assets/Humanize--lwfvXIZ.css","assets/HumanizeText-C2sC7WII.js","assets/HumanizeText-yxUPGyHW.css","assets/Guide-BzvSFGzx.js","assets/Pricing-CR4FrRX_.js","assets/NotFound-zH_1QzqX.js","assets/Login-BUk22oag.js","assets/auth-DKHmQrFs.css","assets/Register-Ddvbs7SK.js","assets/ForgotPassword-DW_VR3CZ.js","assets/MyPage-KPKncNzU.js"])))=>i.map(i=>d[i]);
+let Rn, SE, AE, Pe, Nt, Eg, jE, Oc, TE, EE, Jt, RE, OE, w, CE, kE, Tc, je, Xv, A, xE, ng;
 let __tla = (async ()=>{
     (function() {
         const n = document.createElement("link").relList;
@@ -174,8 +174,8 @@ let __tla = (async ()=>{
             })) : se != null && (ot(se) && (se = Dt(se, I + (se.key == null || x && x.key === se.key ? "" : ("" + se.key).replace(ie, "$&/") + "/") + ve)), P.push(se)), 1;
             ve = 0;
             var ut = W === "" ? "." : W + ":";
-            if (te(x)) for(var Pe = 0; Pe < x.length; Pe++)W = x[Pe], ue = ut + be(W, Pe), ve += M(W, P, I, ue, se);
-            else if (Pe = E(x), typeof Pe == "function") for(x = Pe.call(x), Pe = 0; !(W = x.next()).done;)W = W.value, ue = ut + be(W, Pe++), ve += M(W, P, I, ue, se);
+            if (te(x)) for(var $e = 0; $e < x.length; $e++)W = x[$e], ue = ut + be(W, $e), ve += M(W, P, I, ue, se);
+            else if ($e = E(x), typeof $e == "function") for(x = $e.call(x), $e = 0; !(W = x.next()).done;)W = W.value, ue = ut + be(W, $e++), ve += M(W, P, I, ue, se);
             else if (ue === "object") {
                 if (typeof x.then == "function") return M(Re(x), P, I, W, se);
                 throw P = String(x), Error("Objects are not valid as a React child (found: " + (P === "[object Object]" ? "object with keys {" + Object.keys(x).join(", ") + "}" : P) + "). If you meant to render a collection of children, use an array instead.");
@@ -278,7 +278,7 @@ let __tla = (async ()=>{
             var ve = arguments.length - 2;
             if (ve === 1) se.children = I;
             else if (1 < ve) {
-                for(var ut = Array(ve), Pe = 0; Pe < ve; Pe++)ut[Pe] = arguments[Pe + 2];
+                for(var ut = Array(ve), $e = 0; $e < ve; $e++)ut[$e] = arguments[$e + 2];
                 se.children = ut;
             }
             if (x && x.defaultProps) for(W in ve = x.defaultProps, ve)se[W] === void 0 && (se[W] = ve[W]);
@@ -363,7 +363,7 @@ let __tla = (async ()=>{
         return $p || ($p = 1, Wu.exports = Qv()), Wu.exports;
     }
     A = Ac();
-    _E = Xv(A);
+    SE = Xv(A);
     var Ju = {
         exports: {}
     }, Sr = {}, Qu = {
@@ -906,7 +906,7 @@ let __tla = (async ()=>{
             }
             P(W), I(W, e);
         }
-        function Pe() {
+        function $e() {
             P(W), P(se), P(ue);
         }
         function Oi(e) {
@@ -3263,21 +3263,21 @@ Error generating stack: ` + s.message + `
         var Tt = x(null), Pt = null;
         function qn(e) {
             var t = e.alternate;
-            I($e, $e.current & 1), I(Tt, e), Pt === null && (t === null || Wa.current !== null || t.memoizedState !== null) && (Pt = e);
+            I(Ge, Ge.current & 1), I(Tt, e), Pt === null && (t === null || Wa.current !== null || t.memoizedState !== null) && (Pt = e);
         }
         function ko(e) {
-            I($e, $e.current), I(Tt, e), Pt === null && (Pt = e);
+            I(Ge, Ge.current), I(Tt, e), Pt === null && (Pt = e);
         }
         function af(e) {
-            e.tag === 22 ? (I($e, $e.current), I(Tt, e), Pt === null && (Pt = e)) : Pn();
+            e.tag === 22 ? (I(Ge, Ge.current), I(Tt, e), Pt === null && (Pt = e)) : Pn();
         }
         function Pn() {
-            I($e, $e.current), I(Tt, Tt.current);
+            I(Ge, Ge.current), I(Tt, Tt.current);
         }
         function At(e) {
-            P(Tt), Pt === e && (Pt = null), P($e);
+            P(Tt), Pt === e && (Pt = null), P(Ge);
         }
-        var $e = x(0);
+        var Ge = x(0);
         function ys(e) {
             for(var t = e; t !== null;){
                 if (t.tag === 13) {
@@ -3360,7 +3360,7 @@ Error generating stack: ` + s.message + `
             };
             return Ke === null ? le.memoizedState = Ke = e : Ke = Ke.next = e, Ke;
         }
-        function Ge() {
+        function Ie() {
             if (Te === null) {
                 var e = le.alternate;
                 e = e !== null ? e.memoizedState : null;
@@ -3419,7 +3419,7 @@ Error generating stack: ` + s.message + `
             return typeof t == "function" ? t(e) : t;
         }
         function Ss(e) {
-            var t = Ge();
+            var t = Ie();
             return Mo(t, Te, e);
         }
         function Mo(e, t, a) {
@@ -3484,7 +3484,7 @@ Error generating stack: ` + s.message + `
             ];
         }
         function Ho(e) {
-            var t = Ge(), a = t.queue;
+            var t = Ie(), a = t.queue;
             if (a === null) throw Error(l(311));
             a.lastRenderedReducer = e;
             var s = a.dispatch, o = a.pending, c = t.memoizedState;
@@ -3501,7 +3501,7 @@ Error generating stack: ` + s.message + `
             ];
         }
         function lf(e, t, a) {
-            var s = le, o = Ge(), c = pe;
+            var s = le, o = Ie(), c = pe;
             if (c) {
                 if (a === void 0) throw Error(l(407));
                 a = a();
@@ -3688,7 +3688,7 @@ Error generating stack: ` + s.message + `
             ];
         }
         function wf(e) {
-            var t = Ge();
+            var t = Ie();
             return _f(t, Te, e);
         }
         function _f(e, t, a) {
@@ -3698,7 +3698,7 @@ Error generating stack: ` + s.message + `
                 throw m === Ya ? fs : m;
             }
             else s = t;
-            t = Ge();
+            t = Ie();
             var o = t.queue, c = o.dispatch;
             return a !== t.memoizedState && (le.flags |= 2048, Za(9, {
                 destroy: void 0
@@ -3712,9 +3712,9 @@ Error generating stack: ` + s.message + `
             e.action = t;
         }
         function Sf(e) {
-            var t = Ge(), a = Te;
+            var t = Ie(), a = Te;
             if (a !== null) return _f(t, a, e);
-            Ge(), t = t.memoizedState, a = Ge();
+            Ie(), t = t.memoizedState, a = Ie();
             var s = a.queue.dispatch;
             return a.memoizedState = e, [
                 t,
@@ -3732,7 +3732,7 @@ Error generating stack: ` + s.message + `
             }, t = le.updateQueue, t === null && (t = ws(), le.updateQueue = t), a = t.lastEffect, a === null ? t.lastEffect = e.next = e : (s = a.next, a.next = e, e.next = s, t.lastEffect = e), e;
         }
         function Ef() {
-            return Ge().memoizedState;
+            return Ie().memoizedState;
         }
         function Es(e, t, a, s) {
             var o = ct();
@@ -3741,7 +3741,7 @@ Error generating stack: ` + s.message + `
             }, a, s === void 0 ? null : s);
         }
         function Ts(e, t, a, s) {
-            var o = Ge();
+            var o = Ie();
             s = s === void 0 ? null : s;
             var c = o.memoizedState.inst;
             Te !== null && s !== null && jo(s, Te.memoizedState.deps) ? o.memoizedState = Za(t, c, a, s) : (le.flags |= e, o.memoizedState = Za(1 | t, c, a, s));
@@ -3766,7 +3766,7 @@ Error generating stack: ` + s.message + `
             }
         }
         function Af(e) {
-            var t = Ge().memoizedState;
+            var t = Ie().memoizedState;
             return Py({
                 ref: t,
                 nextImpl: e
@@ -3800,7 +3800,7 @@ Error generating stack: ` + s.message + `
         }
         function $o() {}
         function kf(e, t) {
-            var a = Ge();
+            var a = Ie();
             t = t === void 0 ? null : t;
             var s = a.memoizedState;
             return t !== null && jo(t, s[1]) ? s[0] : (a.memoizedState = [
@@ -3809,7 +3809,7 @@ Error generating stack: ` + s.message + `
             ], e);
         }
         function jf(e, t) {
-            var a = Ge();
+            var a = Ie();
             t = t === void 0 ? null : t;
             var s = a.memoizedState;
             if (t !== null && jo(t, s[1])) return s[0];
@@ -3900,10 +3900,10 @@ Error generating stack: ` + s.message + `
             return nt(yr);
         }
         function Lf() {
-            return Ge().memoizedState;
+            return Ie().memoizedState;
         }
         function Mf() {
-            return Ge().memoizedState;
+            return Ie().memoizedState;
         }
         function Gy(e) {
             for(var t = e.return; t !== null;){
@@ -4177,11 +4177,11 @@ Error generating stack: ` + s.message + `
             },
             useDebugValue: $o,
             useDeferredValue: function(e, t) {
-                var a = Ge();
+                var a = Ie();
                 return Nf(a, Te.memoizedState, e, t);
             },
             useTransition: function() {
-                var e = Ss(mn)[0], t = Ge().memoizedState;
+                var e = Ss(mn)[0], t = Ie().memoizedState;
                 return [
                     typeof e == "boolean" ? e : Fi(e),
                     t
@@ -4193,7 +4193,7 @@ Error generating stack: ` + s.message + `
             useFormState: wf,
             useActionState: wf,
             useOptimistic: function(e, t) {
-                var a = Ge();
+                var a = Ie();
                 return df(a, Te, e, t);
             },
             useMemoCache: Lo,
@@ -4217,11 +4217,11 @@ Error generating stack: ` + s.message + `
             },
             useDebugValue: $o,
             useDeferredValue: function(e, t) {
-                var a = Ge();
+                var a = Ie();
                 return Te === null ? Go(a, e, t) : Nf(a, Te.memoizedState, e, t);
             },
             useTransition: function() {
-                var e = Ho(mn)[0], t = Ge().memoizedState;
+                var e = Ho(mn)[0], t = Ie().memoizedState;
                 return [
                     typeof e == "boolean" ? e : Fi(e),
                     t
@@ -4233,7 +4233,7 @@ Error generating stack: ` + s.message + `
             useFormState: Sf,
             useActionState: Sf,
             useOptimistic: function(e, t) {
-                var a = Ge();
+                var a = Ie();
                 return Te !== null ? df(a, Te, e, t) : (a.baseState = e, [
                     e,
                     a.queue.dispatch
@@ -4565,7 +4565,7 @@ Error generating stack: ` + s.message + `
         }
         function sd(e, t, a) {
             var s = t.pendingProps, o = !1, c = (t.flags & 128) !== 0, m;
-            if ((m = c) || (m = e !== null && e.memoizedState === null ? !1 : ($e.current & 2) !== 0), m && (o = !0, t.flags &= -129), m = (t.flags & 32) !== 0, t.flags &= -33, e === null) {
+            if ((m = c) || (m = e !== null && e.memoizedState === null ? !1 : (Ge.current & 2) !== 0), m && (o = !0, t.flags &= -129), m = (t.flags & 32) !== 0, t.flags &= -33, e === null) {
                 if (pe) {
                     if (o ? qn(t) : Pn(), (e = De) ? (e = pp(e, qt), e = e !== null && e.data !== "&" ? e : null, e !== null && (t.memoizedState = {
                         dehydrated: e,
@@ -4651,8 +4651,8 @@ Error generating stack: ` + s.message + `
         function od(e, t, a) {
             var s = t.pendingProps, o = s.revealOrder, c = s.tail;
             s = s.children;
-            var m = $e.current, y = (m & 2) !== 0;
-            if (y ? (m = m & 1 | 2, t.flags |= 128) : m &= 1, I($e, m), at(e, t, s, a), s = pe ? Gi : 0, !y && e !== null && (e.flags & 128) !== 0) e: for(e = t.child; e !== null;){
+            var m = Ge.current, y = (m & 2) !== 0;
+            if (y ? (m = m & 1 | 2, t.flags |= 128) : m &= 1, I(Ge, m), at(e, t, s, a), s = pe ? Gi : 0, !y && e !== null && (e.flags & 128) !== 0) e: for(e = t.child; e !== null;){
                 if (e.tag === 13) e.memoizedState !== null && ld(e, a, t);
                 else if (e.tag === 19) ld(e, a, t);
                 else if (e.child !== null) {
@@ -4733,7 +4733,7 @@ Error generating stack: ` + s.message + `
                         if (s) return od(e, t, a);
                         t.flags |= 128;
                     }
-                    if (o = t.memoizedState, o !== null && (o.rendering = null, o.tail = null, o.lastEffect = null), I($e, $e.current), s) break;
+                    if (o = t.memoizedState, o !== null && (o.rendering = null, o.tail = null, o.lastEffect = null), I(Ge, Ge.current), s) break;
                     return null;
                 case 22:
                     return t.lanes = 0, ed(e, t, a, t.pendingProps);
@@ -4905,7 +4905,7 @@ Error generating stack: ` + s.message + `
                 case 1:
                     return Ue(t), null;
                 case 3:
-                    return a = t.stateNode, s = null, e !== null && (s = e.memoizedState.cache), t.memoizedState.cache !== s && (t.flags |= 2048), dn(Ve), Pe(), a.pendingContext && (a.context = a.pendingContext, a.pendingContext = null), (e === null || e.child === null) && (Ga(t) ? yn(t) : e === null || e.memoizedState.isDehydrated && (t.flags & 256) === 0 || (t.flags |= 1024, go())), Ue(t), null;
+                    return a = t.stateNode, s = null, e !== null && (s = e.memoizedState.cache), t.memoizedState.cache !== s && (t.flags |= 2048), dn(Ve), $e(), a.pendingContext && (a.context = a.pendingContext, a.pendingContext = null), (e === null || e.child === null) && (Ga(t) ? yn(t) : e === null || e.memoizedState.isDehydrated && (t.flags & 256) === 0 || (t.flags |= 1024, go())), Ue(t), null;
                 case 26:
                     var o = t.type, c = t.memoizedState;
                     return e === null ? (yn(t), c !== null ? (Ue(t), cd(t, c)) : (Ue(t), su(t, o, null, s, a))) : c ? c !== e.memoizedState ? (yn(t), Ue(t), cd(t, c)) : (Ue(t), t.flags &= -16777217) : (e = e.memoizedProps, e !== s && yn(t), Ue(t), su(t, o, e, s, a)), null;
@@ -5032,17 +5032,17 @@ Error generating stack: ` + s.message + `
                     }
                     return At(t), (t.flags & 128) !== 0 ? (t.lanes = a, t) : (a = s !== null, e = e !== null && e.memoizedState !== null, a && (s = t.child, o = null, s.alternate !== null && s.alternate.memoizedState !== null && s.alternate.memoizedState.cachePool !== null && (o = s.alternate.memoizedState.cachePool.pool), c = null, s.memoizedState !== null && s.memoizedState.cachePool !== null && (c = s.memoizedState.cachePool.pool), c !== o && (s.flags |= 2048)), a !== e && a && (t.child.flags |= 8192), ks(t, t.updateQueue), Ue(t), null);
                 case 4:
-                    return Pe(), e === null && Ou(t.stateNode.containerInfo), Ue(t), null;
+                    return $e(), e === null && Ou(t.stateNode.containerInfo), Ue(t), null;
                 case 10:
                     return dn(t.type), Ue(t), null;
                 case 19:
-                    if (P($e), s = t.memoizedState, s === null) return Ue(t), null;
+                    if (P(Ge), s = t.memoizedState, s === null) return Ue(t), null;
                     if (o = (t.flags & 128) !== 0, c = s.rendering, c === null) if (o) ar(s, !1);
                     else {
                         if (Be !== 0 || e !== null && (e.flags & 128) !== 0) for(e = t.child; e !== null;){
                             if (c = ys(e), c !== null) {
                                 for(t.flags |= 128, ar(s, !1), e = c.updateQueue, t.updateQueue = e, ks(t, e), t.subtreeFlags = 0, e = a, a = t.child; a !== null;)Mh(a, e), a = a.sibling;
-                                return I($e, $e.current & 1 | 2), pe && hn(t, s.treeForkCount), t.child;
+                                return I(Ge, Ge.current & 1 | 2), pe && hn(t, s.treeForkCount), t.child;
                             }
                             e = e.sibling;
                         }
@@ -5054,7 +5054,7 @@ Error generating stack: ` + s.message + `
                         } else 2 * bt() - s.renderingStartTime > zs && a !== 536870912 && (t.flags |= 128, o = !0, ar(s, !1), t.lanes = 4194304);
                         s.isBackwards ? (c.sibling = t.child, t.child = c) : (e = s.last, e !== null ? e.sibling = c : t.child = c, s.last = c);
                     }
-                    return s.tail !== null ? (e = s.tail, s.rendering = e, s.tail = e.sibling, s.renderingStartTime = bt(), e.sibling = null, a = $e.current, I($e, o ? a & 1 | 2 : a & 1), pe && hn(t, s.treeForkCount), e) : (Ue(t), null);
+                    return s.tail !== null ? (e = s.tail, s.rendering = e, s.tail = e.sibling, s.renderingStartTime = bt(), e.sibling = null, a = Ge.current, I(Ge, o ? a & 1 | 2 : a & 1), pe && hn(t, s.treeForkCount), e) : (Ue(t), null);
                 case 22:
                 case 23:
                     return At(t), Co(), s = t.memoizedState !== null, e !== null ? e.memoizedState !== null !== s && (t.flags |= 8192) : s && (t.flags |= 8192), s ? (a & 536870912) !== 0 && (t.flags & 128) === 0 && (Ue(t), t.subtreeFlags & 6 && (t.flags |= 8192)) : Ue(t), a = t.updateQueue, a !== null && ks(t, a.retryQueue), a = null, e !== null && e.memoizedState !== null && e.memoizedState.cachePool !== null && (a = e.memoizedState.cachePool.pool), s = null, t.memoizedState !== null && t.memoizedState.cachePool !== null && (s = t.memoizedState.cachePool.pool), s !== a && (t.flags |= 2048), e !== null && P(pa), null;
@@ -5072,7 +5072,7 @@ Error generating stack: ` + s.message + `
                 case 1:
                     return e = t.flags, e & 65536 ? (t.flags = e & -65537 | 128, t) : null;
                 case 3:
-                    return dn(Ve), Pe(), e = t.flags, (e & 65536) !== 0 && (e & 128) === 0 ? (t.flags = e & -65537 | 128, t) : null;
+                    return dn(Ve), $e(), e = t.flags, (e & 65536) !== 0 && (e & 128) === 0 ? (t.flags = e & -65537 | 128, t) : null;
                 case 26:
                 case 27:
                 case 5:
@@ -5090,9 +5090,9 @@ Error generating stack: ` + s.message + `
                     }
                     return e = t.flags, e & 65536 ? (t.flags = e & -65537 | 128, t) : null;
                 case 19:
-                    return P($e), null;
+                    return P(Ge), null;
                 case 4:
-                    return Pe(), null;
+                    return $e(), null;
                 case 10:
                     return dn(t.type), null;
                 case 22:
@@ -5109,7 +5109,7 @@ Error generating stack: ` + s.message + `
         function hd(e, t) {
             switch(po(t), t.tag){
                 case 3:
-                    dn(Ve), Pe();
+                    dn(Ve), $e();
                     break;
                 case 26:
                 case 27:
@@ -5117,7 +5117,7 @@ Error generating stack: ` + s.message + `
                     Pr(t);
                     break;
                 case 4:
-                    Pe();
+                    $e();
                     break;
                 case 31:
                     t.memoizedState !== null && At(t);
@@ -5126,7 +5126,7 @@ Error generating stack: ` + s.message + `
                     At(t);
                     break;
                 case 19:
-                    P($e);
+                    P(Ge);
                     break;
                 case 10:
                     dn(t.type);
@@ -8795,7 +8795,7 @@ Error generating stack: ` + s.message + `
         }
         return l0(n, r, null, i);
     }
-    function Le(i, n) {
+    function Me(i, n) {
         if (i === !1 || i === null || typeof i > "u") throw new Error(n);
     }
     function It(i, n) {
@@ -8931,7 +8931,7 @@ Error generating stack: ` + s.message + `
     }
     function o0(i, n = !1) {
         let r = "http://localhost";
-        typeof window < "u" && (r = window.location.origin !== "null" ? window.location.origin : window.location.href), Le(r, "No window.location.(origin|href) available to create URL");
+        typeof window < "u" && (r = window.location.origin !== "null" ? window.location.origin : window.location.href), Me(r, "No window.location.(origin|href) available to create URL");
         let l = typeof i == "string" ? i : kr(i);
         return l = l.replace(/ $/, "%20"), !n && l.startsWith("//") && (l = r + l), new URL(l, r);
     }
@@ -8960,13 +8960,13 @@ Error generating stack: ` + s.message + `
             };
             if (b.relativePath.startsWith("/")) {
                 if (!b.relativePath.startsWith(l) && p) return;
-                Le(b.relativePath.startsWith(l), `Absolute route path "${b.relativePath}" nested under path "${l}" is not valid. An absolute child route path must start with the combined path of all its parent routes.`), b.relativePath = b.relativePath.slice(l.length);
+                Me(b.relativePath.startsWith(l), `Absolute route path "${b.relativePath}" nested under path "${l}" is not valid. An absolute child route path must start with the combined path of all its parent routes.`), b.relativePath = b.relativePath.slice(l.length);
             }
             let v = sn([
                 l,
                 b.relativePath
             ]), S = r.concat(b);
-            f.children && f.children.length > 0 && (Le(f.index !== !0, `Index routes must not have child routes. Please remove all child routes from route path "${v}".`), Mm(f.children, n, S, v, p)), !(f.path == null && !f.index) && n.push({
+            f.children && f.children.length > 0 && (Me(f.index !== !0, `Index routes must not have child routes. Please remove all child routes from route path "${v}".`), Mm(f.children, n, S, v, p)), !(f.path == null && !f.index) && n.push({
                 path: v,
                 score: y0(v, f.index),
                 routesMeta: S
@@ -9119,7 +9119,7 @@ Error generating stack: ` + s.message + `
         let u;
         typeof i == "string" ? u = Ti(i) : (u = {
             ...i
-        }, Le(!u.pathname || !u.pathname.includes("?"), ec("?", "pathname", "search", u)), Le(!u.pathname || !u.pathname.includes("#"), ec("#", "pathname", "hash", u)), Le(!u.search || !u.search.includes("#"), ec("#", "search", "hash", u)));
+        }, Me(!u.pathname || !u.pathname.includes("?"), ec("?", "pathname", "search", u)), Me(!u.pathname || !u.pathname.includes("#"), ec("#", "pathname", "hash", u)), Me(!u.search || !u.search.includes("#"), ec("#", "search", "hash", u)));
         let h = i === "" || u.pathname === "", f = h ? "/" : u.pathname, d;
         if (f == null) d = r;
         else {
@@ -9221,7 +9221,7 @@ Error generating stack: ` + s.message + `
         } catch  {}
     }
     function B0(i, { relative: n } = {}) {
-        Le(xi(), "useHref() may be used only in the context of a <Router> component.");
+        Me(xi(), "useHref() may be used only in the context of a <Router> component.");
         let { basename: r, navigator: l } = A.useContext(jt), { hash: u, pathname: h, search: f } = Br(i, {
             relative: n
         }), d = h;
@@ -9238,7 +9238,7 @@ Error generating stack: ` + s.message + `
         return A.useContext(Hr) != null;
     }
     Nt = function() {
-        return Le(xi(), "useLocation() may be used only in the context of a <Router> component."), A.useContext(Hr).location;
+        return Me(xi(), "useLocation() may be used only in the context of a <Router> component."), A.useContext(Hr).location;
     };
     var Vm = "You should call navigate() in a React.useEffect(), not when your component is first rendered.";
     function Km(i) {
@@ -9249,7 +9249,7 @@ Error generating stack: ` + s.message + `
         return i ? Z0() : q0();
     };
     function q0() {
-        Le(xi(), "useNavigate() may be used only in the context of a <Router> component.");
+        Me(xi(), "useNavigate() may be used only in the context of a <Router> component.");
         let i = A.useContext(Ai), { basename: n, navigator: r } = A.useContext(jt), { matches: l } = A.useContext(Qt), { pathname: u } = Nt(), h = JSON.stringify(xc(l)), f = A.useRef(!1);
         return Km(()=>{
             f.current = !0;
@@ -9273,7 +9273,7 @@ Error generating stack: ` + s.message + `
         ]);
     }
     A.createContext(null);
-    SE = function() {
+    EE = function() {
         let { matches: i } = A.useContext(Qt), n = i[i.length - 1];
         return n ? n.params : {};
     };
@@ -9290,7 +9290,7 @@ Error generating stack: ` + s.message + `
         return Ym(i, n);
     }
     function Ym(i, n, r) {
-        Le(xi(), "useRoutes() may be used only in the context of a <Router> component.");
+        Me(xi(), "useRoutes() may be used only in the context of a <Router> component.");
         let { navigator: l } = A.useContext(jt), { matches: u } = A.useContext(Qt), h = u[u.length - 1], f = h ? h.params : {}, d = h ? h.pathname : "/", p = h ? h.pathnameBase : "/", g = h && h.route;
         {
             let k = g && g.path || "";
@@ -9301,7 +9301,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
         let b = Nt(), v;
         if (n) {
             let k = typeof n == "string" ? Ti(n) : n;
-            Le(p === "/" || k.pathname?.startsWith(p), `When overriding the location using \`<Routes location>\` or \`useRoutes(routes, location)\`, the location pathname must begin with the portion of the URL pathname that was matched by all parent routes. The current pathname base is "${p}" but pathname "${k.pathname}" was given in the \`location\` prop.`), v = k;
+            Me(p === "/" || k.pathname?.startsWith(p), `When overriding the location using \`<Routes location>\` or \`useRoutes(routes, location)\`, the location pathname must begin with the portion of the URL pathname that was matched by all parent routes. The current pathname base is "${p}" but pathname "${k.pathname}" was given in the \`location\` prop.`), v = k;
         } else v = b;
         let S = v.pathname || "/", E = S;
         if (p !== "/") {
@@ -9444,7 +9444,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
         let u = i, h = l?.errors;
         if (h != null) {
             let b = u.findIndex((v)=>v.route.id && h?.[v.route.id] !== void 0);
-            Le(b >= 0, `Could not find a matching route for errors on route IDs: ${Object.keys(h).join(",")}`), u = u.slice(0, Math.min(u.length, b + 1));
+            Me(b >= 0, `Could not find a matching route for errors on route IDs: ${Object.keys(h).join(",")}`), u = u.slice(0, Math.min(u.length, b + 1));
         }
         let f = !1, d = -1;
         if (r && l) {
@@ -9505,19 +9505,19 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
     }
     function Y0(i) {
         let n = A.useContext(Ai);
-        return Le(n, Cc(i)), n;
+        return Me(n, Cc(i)), n;
     }
     function X0(i) {
         let n = A.useContext(El);
-        return Le(n, Cc(i)), n;
+        return Me(n, Cc(i)), n;
     }
     function W0(i) {
         let n = A.useContext(Qt);
-        return Le(n, Cc(i)), n;
+        return Me(n, Cc(i)), n;
     }
     function kc(i) {
         let n = W0(i), r = n.matches[n.matches.length - 1];
-        return Le(r.route.id, `${i} can only be used on routes that contain a unique "id"`), r.route.id;
+        return Me(r.route.id, `${i} can only be used on routes that contain a unique "id"`), r.route.id;
     }
     function J0() {
         return kc("useRouteId");
@@ -9553,7 +9553,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
         });
     }
     function eb({ to: i, replace: n, state: r, relative: l }) {
-        Le(xi(), "<Navigate> may be used only in the context of a <Router> component.");
+        Me(xi(), "<Navigate> may be used only in the context of a <Router> component.");
         let { static: u } = A.useContext(jt);
         It(!u, "<Navigate> must not be used on the initial render in a <StaticRouter>. This is a no-op, but you should modify your code so the <Navigate> is only ever rendered in response to some user interaction or state change.");
         let { matches: h } = A.useContext(Qt), { pathname: f } = Nt(), d = Oc(), p = Sl(i, xc(h), f, l === "path"), g = JSON.stringify(p);
@@ -9571,11 +9571,11 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
             r
         ]), null;
     }
-    function Me(i) {
-        Le(!1, "A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.");
+    function Le(i) {
+        Me(!1, "A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.");
     }
     function tb({ basename: i = "/", children: n = null, location: r, navigationType: l = "POP", navigator: u, static: h = !1, unstable_useTransitions: f }) {
-        Le(!xi(), "You cannot render a <Router> inside another <Router>. You should never have more than one in your app.");
+        Me(!xi(), "You cannot render a <Router> inside another <Router>. You should never have more than one in your app.");
         let d = i.replace(/^\/*/, "/"), p = A.useMemo(()=>({
                 basename: d,
                 navigator: u,
@@ -9634,7 +9634,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                 r.push.apply(r, cc(l.props.children, h));
                 return;
             }
-            Le(l.type === Me, `[${typeof l.type == "string" ? l.type : l.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`), Le(!l.props.index || !l.props.children, "An index route cannot have child routes.");
+            Me(l.type === Le, `[${typeof l.type == "string" ? l.type : l.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`), Me(!l.props.index || !l.props.children, "An index route cannot have child routes.");
             let f = {
                 id: l.props.id || h.join("-"),
                 caseSensitive: l.props.caseSensitive,
@@ -10159,7 +10159,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
     }
     function Fm(i) {
         let n = A.useContext(Ai);
-        return Le(n, Cb(i)), n;
+        return Me(n, Cb(i)), n;
     }
     function kb(i, { target: n, replace: r, unstable_mask: l, state: u, preventScrollReset: h, relative: f, viewTransition: d, unstable_defaultShouldRevalidate: p, unstable_useTransitions: g } = {}) {
         let b = Oc(), v = Nt(), S = Br(i, {
@@ -10195,7 +10195,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
             g
         ]);
     }
-    EE = function(i) {
+    TE = function(i) {
         It(typeof URLSearchParams < "u", "You cannot use the `useSearchParams` hook in a browser that does not support the URLSearchParams API. If you need to support Internet Explorer 11, we recommend you load a polyfill such as https://github.com/ungap/url-search-params.");
         let n = A.useRef(hc(i)), r = A.useRef(!1), l = Nt(), u = A.useMemo(()=>lb(l.search, r.current ? null : n.current), [
             l.search
@@ -10249,7 +10249,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
     }
     function Ub(i, { relative: n } = {}) {
         let { basename: r } = A.useContext(jt), l = A.useContext(Qt);
-        Le(l, "useFormAction must be used inside a RouteContext");
+        Me(l, "useFormAction must be used inside a RouteContext");
         let [u] = l.matches.slice(-1), h = {
             ...Br(i || ".", {
                 relative: n
@@ -10271,7 +10271,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
     }
     function zb(i, { relative: n } = {}) {
         let r = A.useContext(Gm);
-        Le(r != null, "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?");
+        Me(r != null, "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?");
         let { basename: l } = Fm("useViewTransitionState"), u = Br(i, {
             relative: n
         });
@@ -10372,6 +10372,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     guide: "가이드",
                     aiWriter: "AI 문서 작성",
                     humanize: "AI 휴머나이징",
+                    humanizeText: "문장 휴머나이징",
                     groupConvert: "변환",
                     groupEdit: "편집",
                     groupCreate: "생성",
@@ -10404,6 +10405,15 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     paraChanged: "변경됨",
                     paraAdded: "추가됨",
                     paraRemoved: "삭제됨"
+                },
+                humanizeText: {
+                    title: "문장 휴머나이징",
+                    subtitle: "텍스트를 붙여넣어 문장별로 자연스럽게 변환합니다",
+                    placeholder: "휴머나이징할 텍스트를 붙여넣으세요...",
+                    charCount: "글자",
+                    startConvert: "변환 시작",
+                    reset: "초기화",
+                    processing: "문장 휴머나이징 처리 중..."
                 },
                 pricing: {
                     title: "요금제",
@@ -10793,6 +10803,7 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     guide: "Guide",
                     aiWriter: "AI Writer",
                     humanize: "Humanize",
+                    humanizeText: "Text Humanize",
                     groupConvert: "Convert",
                     groupEdit: "Edit",
                     groupCreate: "Create",
@@ -10825,6 +10836,15 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     paraChanged: "Changed",
                     paraAdded: "Added",
                     paraRemoved: "Removed"
+                },
+                humanizeText: {
+                    title: "Text Humanizer",
+                    subtitle: "Paste text to humanize sentence by sentence",
+                    placeholder: "Paste text to humanize...",
+                    charCount: "chars",
+                    startConvert: "Start Conversion",
+                    reset: "Reset",
+                    processing: "Processing text humanization..."
                 },
                 pricing: {
                     title: "Pricing",
@@ -18977,6 +18997,10 @@ ${B}`;
                     {
                         path: "/humanize",
                         labelKey: "site.nav.humanize"
+                    },
+                    {
+                        path: "/humanize-text",
+                        labelKey: "site.nav.humanizeText"
                     }
                 ]
             },
@@ -19085,7 +19109,7 @@ ${B}`;
     };
     jm = "https://hcmgdztsgjvzcyxyayaj.supabase.co";
     Nm = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbWdkenRzZ2p2emN5eHlheWFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MzU4ODcsImV4cCI6MjA4NzAxMTg4N30.gznaPzY1l8qDAPsEyYNR9KS7f7VqS3xaw-_2HTSwSZw";
-    TE = {
+    AE = {
         documents: `${je.dbPrefix}documents`,
         templates: `${je.dbPrefix}templates`,
         conversions: `${je.dbPrefix}conversions`,
@@ -19100,7 +19124,7 @@ ${B}`;
                 persistSession: !0
             }
         })), oc);
-    AE = async function() {
+    xE = async function() {
         const i = Jt();
         if (!i) throw new Error("Supabase not configured");
         const { data: n, error: r } = await i.auth.signInWithOAuth({
@@ -19112,7 +19136,7 @@ ${B}`;
         if (r) throw r;
         return n;
     };
-    xE = async function() {
+    RE = async function() {
         const i = Jt();
         if (!i) throw new Error("Supabase not configured");
         const { data: n, error: r } = await i.auth.signInWithOAuth({
@@ -19125,7 +19149,7 @@ ${B}`;
         if (r) throw r;
         return n;
     };
-    RE = async function(i, n) {
+    OE = async function(i, n) {
         const r = Jt();
         if (!r) throw new Error("Supabase not configured");
         const { data: l, error: u } = await r.auth.signInWithPassword({
@@ -19135,7 +19159,7 @@ ${B}`;
         if (u) throw u;
         return l;
     };
-    OE = async function(i, n, r) {
+    CE = async function(i, n, r) {
         const l = Jt();
         if (!l) throw new Error("Supabase not configured");
         const { data: u, error: h } = await l.auth.signUp({
@@ -19165,7 +19189,7 @@ ${B}`;
         const { data: r, error: l } = await n.from("user_profiles").select("*").eq("id", i).single();
         return l ? (console.error("getProfile error:", l), null) : r;
     }
-    CE = async function(i) {
+    kE = async function(i) {
         const n = Jt();
         if (!n) throw new Error("Supabase not configured");
         const { data: r, error: l } = await n.auth.resetPasswordForEmail(i, {
@@ -19977,20 +20001,20 @@ ${B}`;
             ]
         });
     }
-    kE = function() {
+    jE = function() {
         const i = A.useContext(Tg);
         return i || {
             showToast: (n)=>(console.warn("ToastProvider not found:", n), 0),
             removeToast: ()=>{}
         };
     };
-    let YS, XS, zm, yi, WS, JS, QS, ZS, FS, eE, tE, nE, aE, iE, rE, sE, lE, oE, uE, cE, hE, fE, dE, pE, mE, gE, yE, vE, bE;
+    let YS, XS, zm, yi, WS, JS, QS, ZS, FS, eE, tE, nE, aE, iE, rE, sE, lE, oE, uE, cE, hE, fE, dE, pE, mE, gE, yE, vE, bE, wE;
     YS = "modulepreload";
     XS = function(i) {
         return "/" + i;
     };
     zm = {};
-    Ie = function(n, r, l) {
+    Pe = function(n, r, l) {
         let u = Promise.resolve();
         if (r && r.length > 0) {
             let p = function(g) {
@@ -20678,55 +20702,56 @@ ${B}`;
             })
         });
     };
-    QS = A.lazy(()=>Ie(()=>import("./Home-G183QK7U.js"), __vite__mapDeps([0,1,2])));
-    ZS = A.lazy(()=>Ie(()=>import("./Convert-ZkFukrU5.js").then(async (m)=>{
+    QS = A.lazy(()=>Pe(()=>import("./Home-D9e89Gqz.js"), __vite__mapDeps([0,1,2])));
+    ZS = A.lazy(()=>Pe(()=>import("./Convert-DcxIbt7u.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([3,1,4,5])));
-    FS = A.lazy(()=>Ie(()=>import("./Editor-DFAz9rr0.js").then(async (m)=>{
+    FS = A.lazy(()=>Pe(()=>import("./Editor-NJIqjZJx.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([6,1,4,7])));
-    eE = A.lazy(()=>Ie(()=>import("./Templates-DjdMVx8E.js"), __vite__mapDeps([8,1,9])));
-    tE = A.lazy(()=>Ie(()=>import("./TemplateCreate-D5KyY261.js").then(async (m)=>{
+    eE = A.lazy(()=>Pe(()=>import("./Templates-BQdsi2vZ.js"), __vite__mapDeps([8,1,9])));
+    tE = A.lazy(()=>Pe(()=>import("./TemplateCreate-BQymD5VA.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([10,1,4,9])));
-    nE = A.lazy(()=>Ie(()=>import("./TemplateDetail-B2aoDrl5.js").then(async (m)=>{
+    nE = A.lazy(()=>Pe(()=>import("./TemplateDetail-DHQGhvEA.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([11,1,4,9])));
-    aE = A.lazy(()=>Ie(()=>import("./Documents-DZrii7WD.js"), __vite__mapDeps([12,1,13])));
-    iE = A.lazy(()=>Ie(()=>import("./DocumentDetail-DblLmRLb.js"), __vite__mapDeps([14,1,4,7])));
-    rE = A.lazy(()=>Ie(()=>import("./BusinessPlan-Bd_8nAmB.js").then(async (m)=>{
+    aE = A.lazy(()=>Pe(()=>import("./Documents-Cl6E_DR_.js"), __vite__mapDeps([12,1,13])));
+    iE = A.lazy(()=>Pe(()=>import("./DocumentDetail-Dt0UbKZQ.js"), __vite__mapDeps([14,1,4,7])));
+    rE = A.lazy(()=>Pe(()=>import("./BusinessPlan-CETDSi7h.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([15,1,16])));
-    sE = A.lazy(()=>Ie(()=>import("./HwpEditor-wj0lb4fK.js").then(async (m)=>{
+    sE = A.lazy(()=>Pe(()=>import("./HwpEditor-YAZwitXK.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([17,18,1,19])));
-    lE = A.lazy(()=>Ie(()=>import("./Viewer-Beixbo4k.js").then(async (m)=>{
+    lE = A.lazy(()=>Pe(()=>import("./Viewer-BKCLMw8Z.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([20,1,18,21])));
-    oE = A.lazy(()=>Ie(()=>import("./Generator-z-zyTKea.js").then(async (m)=>{
+    oE = A.lazy(()=>Pe(()=>import("./Generator-Dk-A6MxR.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([22,1,23])));
-    uE = A.lazy(()=>Ie(()=>import("./AiWriter-BV55yYke.js"), __vite__mapDeps([24,1,25])));
-    cE = A.lazy(()=>Ie(()=>import("./Humanize-9-8N76mR.js").then(async (m)=>{
+    uE = A.lazy(()=>Pe(()=>import("./AiWriter-9_p7B1ko.js"), __vite__mapDeps([24,1,25])));
+    cE = A.lazy(()=>Pe(()=>import("./Humanize-D-lyco6O.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([26,1,4,27])));
-    hE = A.lazy(()=>Ie(()=>import("./Guide-LIHRbOrY.js"), __vite__mapDeps([28,1])));
-    fE = A.lazy(()=>Ie(()=>import("./Pricing-DIlCgiOw.js"), __vite__mapDeps([29,1,2])));
-    dE = A.lazy(()=>Ie(()=>import("./NotFound-RDllfXWu.js"), __vite__mapDeps([30,1])));
-    pE = A.lazy(()=>Ie(()=>import("./Login-Br-eHsE9.js"), __vite__mapDeps([31,1,32])));
-    mE = A.lazy(()=>Ie(()=>import("./Register-CDlQdwDR.js"), __vite__mapDeps([33,1,32])));
-    gE = A.lazy(()=>Ie(()=>import("./ForgotPassword-DEdrG5Qh.js"), __vite__mapDeps([34,1,32])));
-    yE = A.lazy(()=>Ie(()=>import("./MyPage-CY4TETiD.js"), __vite__mapDeps([35,1,32])));
-    vE = ()=>w.jsx("div", {
+    hE = A.lazy(()=>Pe(()=>import("./HumanizeText-C2sC7WII.js"), __vite__mapDeps([28,1,29])));
+    fE = A.lazy(()=>Pe(()=>import("./Guide-BzvSFGzx.js"), __vite__mapDeps([30,1])));
+    dE = A.lazy(()=>Pe(()=>import("./Pricing-CR4FrRX_.js"), __vite__mapDeps([31,1,2])));
+    pE = A.lazy(()=>Pe(()=>import("./NotFound-zH_1QzqX.js"), __vite__mapDeps([32,1])));
+    mE = A.lazy(()=>Pe(()=>import("./Login-BUk22oag.js"), __vite__mapDeps([33,1,34])));
+    gE = A.lazy(()=>Pe(()=>import("./Register-Ddvbs7SK.js"), __vite__mapDeps([35,1,34])));
+    yE = A.lazy(()=>Pe(()=>import("./ForgotPassword-DW_VR3CZ.js"), __vite__mapDeps([36,1,34])));
+    vE = A.lazy(()=>Pe(()=>import("./MyPage-KPKncNzU.js"), __vite__mapDeps([37,1,34])));
+    bE = ()=>w.jsx("div", {
             style: {
                 display: "flex",
                 justifyContent: "center",
@@ -20737,83 +20762,87 @@ ${B}`;
                 className: "loading-spinner"
             })
         });
-    bE = ()=>w.jsxs(w.Fragment, {
+    wE = ()=>w.jsxs(w.Fragment, {
             children: [
                 w.jsx(WS, {}),
                 w.jsx("main", {
                     children: w.jsx(A.Suspense, {
-                        fallback: w.jsx(vE, {}),
+                        fallback: w.jsx(bE, {}),
                         children: w.jsxs(Jm, {
                             children: [
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/",
                                     element: w.jsx(QS, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/convert",
                                     element: w.jsx(ZS, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/md-editor",
                                     element: w.jsx(FS, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/hwp-editor",
                                     element: w.jsx(sE, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/templates",
                                     element: w.jsx(yi, {
                                         children: w.jsx(eE, {})
                                     })
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/templates/new",
                                     element: w.jsx(yi, {
                                         children: w.jsx(tE, {})
                                     })
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/templates/:id",
                                     element: w.jsx(yi, {
                                         children: w.jsx(nE, {})
                                     })
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/business-plan",
                                     element: w.jsx(rE, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/viewer",
                                     element: w.jsx(lE, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/generator",
                                     element: w.jsx(oE, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/ai-writer",
                                     element: w.jsx(uE, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/humanize",
                                     element: w.jsx(cE, {})
                                 }),
-                                w.jsx(Me, {
-                                    path: "/guide",
+                                w.jsx(Le, {
+                                    path: "/humanize-text",
                                     element: w.jsx(hE, {})
                                 }),
-                                w.jsx(Me, {
-                                    path: "/pricing",
+                                w.jsx(Le, {
+                                    path: "/guide",
                                     element: w.jsx(fE, {})
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
+                                    path: "/pricing",
+                                    element: w.jsx(dE, {})
+                                }),
+                                w.jsx(Le, {
                                     path: "/documents",
                                     element: w.jsx(yi, {
                                         children: w.jsx(aE, {})
                                     })
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "/documents/:id",
                                     element: w.jsx(yi, {
                                         children: w.jsx(iE, {})
@@ -20821,29 +20850,29 @@ ${B}`;
                                 }),
                                 w.jsxs(w.Fragment, {
                                     children: [
-                                        w.jsx(Me, {
+                                        w.jsx(Le, {
                                             path: "/login",
-                                            element: w.jsx(pE, {})
-                                        }),
-                                        w.jsx(Me, {
-                                            path: "/register",
                                             element: w.jsx(mE, {})
                                         }),
-                                        w.jsx(Me, {
-                                            path: "/forgot-password",
+                                        w.jsx(Le, {
+                                            path: "/register",
                                             element: w.jsx(gE, {})
                                         }),
-                                        w.jsx(Me, {
+                                        w.jsx(Le, {
+                                            path: "/forgot-password",
+                                            element: w.jsx(yE, {})
+                                        }),
+                                        w.jsx(Le, {
                                             path: "/mypage",
                                             element: w.jsx(yi, {
-                                                children: w.jsx(yE, {})
+                                                children: w.jsx(vE, {})
                                             })
                                         })
                                     ]
                                 }),
-                                w.jsx(Me, {
+                                w.jsx(Le, {
                                     path: "*",
-                                    element: w.jsx(dE, {})
+                                    element: w.jsx(pE, {})
                                 })
                             ]
                         })
@@ -20852,7 +20881,7 @@ ${B}`;
                 w.jsx(JS, {})
             ]
         });
-    function wE() {
+    function _E() {
         return w.jsx(Hb, {
             children: w.jsx(Pb, {
                 children: w.jsx(IS, {
@@ -20861,9 +20890,9 @@ ${B}`;
                             children: w.jsx("div", {
                                 className: "App",
                                 children: w.jsx(Jm, {
-                                    children: w.jsx(Me, {
+                                    children: w.jsx(Le, {
                                         path: "*",
-                                        element: w.jsx(bE, {})
+                                        element: w.jsx(wE, {})
                                     })
                                 })
                             })
@@ -20874,7 +20903,7 @@ ${B}`;
         });
     }
     i0.createRoot(document.getElementById("root")).render(w.jsx(A.StrictMode, {
-        children: w.jsx(wE, {})
+        children: w.jsx(_E, {})
     }));
 })();
-export { Rn as L, _E as R, TE as T, Ie as _, Nt as a, Eg as b, kE as c, Oc as d, EE as e, SE as f, Jt as g, xE as h, RE as i, w as j, OE as k, CE as l, Tc as m, je as n, Xv as o, A as r, AE as s, ng as u, __tla };
+export { Rn as L, SE as R, AE as T, Pe as _, Nt as a, Eg as b, jE as c, Oc as d, TE as e, EE as f, Jt as g, RE as h, OE as i, w as j, CE as k, kE as l, Tc as m, je as n, Xv as o, A as r, xE as s, ng as u, __tla };
