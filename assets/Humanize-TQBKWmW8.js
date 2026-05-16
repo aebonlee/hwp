@@ -1,8 +1,8 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-BrfNapfF.js","assets/jszip.min-Bdydx-rh.js","assets/index-BtpUbS1A.js","assets/index-DG2YfOBJ.css","assets/parser-DJr_P0bV.js","assets/types-b19hQvwC.js"])))=>i.map(i=>d[i]);
-import { u as I, r as t, _ as b, j as e, g as W, __tla as __tla_0 } from "./index-BtpUbS1A.js";
-import { S as X } from "./SEOHead-DiSh1TKm.js";
-import { g as O, f as q } from "./fileUtils-1h3TEy09.js";
-let Q;
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-CmP3LND0.js","assets/jszip.min-DOzXBEpV.js","assets/index-B-67kTbQ.js","assets/index-DnMOgZSi.css","assets/parser-DJr_P0bV.js","assets/types-b19hQvwC.js"])))=>i.map(i=>d[i]);
+import { u as X, r as i, _ as b, j as e, g as q, __tla as __tla_0 } from "./index-B-67kTbQ.js";
+import { S as G } from "./SEOHead-D-taEm1S.js";
+import { g as O, f as J } from "./fileUtils-1h3TEy09.js";
+let ee;
 let __tla = Promise.all([
     (()=>{
         try {
@@ -10,40 +10,60 @@ let __tla = Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    Q = ()=>{
-        const { t: a } = I(), [p, d] = t.useState("upload"), [R, z] = t.useState(!1), [h, C] = t.useState(null), [o, _] = t.useState(""), [m, D] = t.useState(""), [E, l] = t.useState(""), [x, f] = t.useState("moderate"), [v, k] = t.useState("formal"), [F, S] = t.useState(!1), [w, H] = t.useState("side-by-side"), L = t.useCallback(async (s)=>{
-            const n = O(s.name), i = await s.arrayBuffer();
-            if (n === "md" || n === "txt") return new TextDecoder("utf-8").decode(i);
-            const { parseHwpxDocument: c, parseDocxDocument: u, blocksToMarkdown: j } = await b(async ()=>{
-                const { parseHwpxDocument: r, parseDocxDocument: g, blocksToMarkdown: N } = await import("./index-BrfNapfF.js");
+    function P(a) {
+        return a.split(/\n\s*\n/).map((o)=>o.trim()).filter(Boolean);
+    }
+    function K(a, o) {
+        const d = P(a), w = P(o), p = [], h = Math.max(d.length, w.length);
+        for(let u = 0; u < h; u++){
+            const r = d[u] ?? "", x = w[u] ?? "";
+            let c;
+            r && x ? c = r === x ? "same" : "changed" : r ? c = "removed" : c = "added", p.push({
+                left: r,
+                right: x,
+                status: c
+            });
+        }
+        return p;
+    }
+    ee = ()=>{
+        const { t: a } = X(), [o, d] = i.useState("upload"), [w, p] = i.useState(!1), [h, u] = i.useState(null), [r, x] = i.useState(""), [c, E] = i.useState(""), [S, v] = i.useState(""), [g, k] = i.useState("moderate"), [f, y] = i.useState("formal"), [B, M] = i.useState(!1), [z, R] = i.useState("side-by-side"), U = i.useMemo(()=>o === "done" ? K(r, c) : [], [
+            o,
+            r,
+            c
+        ]), H = i.useCallback(async (s)=>{
+            const n = O(s.name), t = await s.arrayBuffer();
+            if (n === "md" || n === "txt") return new TextDecoder("utf-8").decode(t);
+            const { parseHwpxDocument: m, parseDocxDocument: j, blocksToMarkdown: N } = await b(async ()=>{
+                const { parseHwpxDocument: l, parseDocxDocument: C, blocksToMarkdown: _ } = await import("./index-CmP3LND0.js");
                 return {
-                    parseHwpxDocument: r,
-                    parseDocxDocument: g,
-                    blocksToMarkdown: N
+                    parseHwpxDocument: l,
+                    parseDocxDocument: C,
+                    blocksToMarkdown: _
                 };
             }, __vite__mapDeps([0,1,2,3]));
             if (n === "hwpx") {
-                const r = await c(i);
-                return r.markdown || j(r.blocks);
+                const l = await m(t);
+                return l.markdown || N(l.blocks);
             } else if (n === "docx") {
-                const r = await u(i);
-                return r.markdown || j(r.blocks);
+                const l = await j(t);
+                return l.markdown || N(l.blocks);
             } else if (n === "hwp") {
-                const { parseHwp: r } = await b(async ()=>{
-                    const { parseHwp: y } = await import("./parser-DJr_P0bV.js");
+                const { parseHwp: l } = await b(async ()=>{
+                    const { parseHwp: D } = await import("./parser-DJr_P0bV.js");
                     return {
-                        parseHwp: y
+                        parseHwp: D
                     };
-                }, __vite__mapDeps([4,5])), g = await r(i), { irToMarkdown: N } = await b(async ()=>{
-                    const { irToMarkdown: y } = await import("./toMarkdown-CeTF6k-c.js");
+                }, __vite__mapDeps([4,5])), C = await l(t), { irToMarkdown: _ } = await b(async ()=>{
+                    const { irToMarkdown: D } = await import("./toMarkdown-CeTF6k-c.js");
                     return {
-                        irToMarkdown: y
+                        irToMarkdown: D
                     };
                 }, []);
-                return N(g);
+                return _(C);
             }
             throw new Error("지원하지 않는 파일 형식입니다.");
-        }, []), M = t.useCallback(async (s)=>{
+        }, []), L = i.useCallback(async (s)=>{
             const n = O(s.name);
             if (![
                 "hwp",
@@ -52,75 +72,75 @@ let __tla = Promise.all([
                 "md",
                 "txt"
             ].includes(n)) {
-                l("지원 포맷: .hwpx, .docx, .hwp, .md, .txt");
+                v("지원 포맷: .hwpx, .docx, .hwp, .md, .txt");
                 return;
             }
-            C(s), l("");
+            u(s), v("");
             try {
-                const c = await L(s);
-                _(c), d("preview");
-            } catch (c) {
-                l(c.message || "파일 파싱 중 오류가 발생했습니다.");
+                const m = await H(s);
+                x(m), d("preview");
+            } catch (m) {
+                v(m.message || "파일 파싱 중 오류가 발생했습니다.");
             }
         }, [
-            L
-        ]), U = (s)=>{
-            s.preventDefault(), z(!1);
+            H
+        ]), A = (s)=>{
+            s.preventDefault(), p(!1);
             const n = s.dataTransfer.files;
-            n.length > 0 && M(n[0]);
-        }, B = ()=>{
+            n.length > 0 && L(n[0]);
+        }, F = ()=>{
             const s = document.createElement("input");
             s.type = "file", s.accept = ".hwpx,.docx,.hwp,.md,.txt", s.onchange = ()=>{
-                s.files && s.files.length > 0 && M(s.files[0]);
+                s.files && s.files.length > 0 && L(s.files[0]);
             }, s.click();
-        }, P = async ()=>{
-            d("processing"), l("");
+        }, $ = async ()=>{
+            d("processing"), v("");
             try {
-                const s = W();
+                const s = q();
                 if (!s) throw new Error("Supabase not configured");
-                const { data: n, error: i } = await s.functions.invoke("humanize-document", {
+                const { data: n, error: t } = await s.functions.invoke("humanize-document", {
                     body: {
-                        markdown: o,
-                        intensity: x,
-                        tone: v
+                        markdown: r,
+                        intensity: g,
+                        tone: f
                     }
                 });
-                if (i) throw i;
-                D(n?.humanized || n?.markdown || o), d("done");
+                if (t) throw t;
+                E(n?.humanized || n?.markdown || r), d("done");
             } catch  {
-                l(a("site.humanize.serviceUnavailable")), d("preview");
+                v(a("site.humanize.serviceUnavailable")), d("preview");
             }
-        }, A = async ()=>{
-            await navigator.clipboard.writeText(m), S(!0), setTimeout(()=>S(!1), 2e3);
-        }, V = ()=>{
+        }, V = async ()=>{
+            await navigator.clipboard.writeText(c), M(!0), setTimeout(()=>M(!1), 2e3);
+        }, I = ()=>{
             const s = new Blob([
-                m
+                c
             ], {
                 type: "text/markdown"
-            }), n = URL.createObjectURL(s), i = document.createElement("a");
-            i.href = n, i.download = (h?.name.replace(/\.[^.]+$/, "") || "humanized") + ".md", i.click(), URL.revokeObjectURL(n);
-        }, $ = async ()=>{
+            }), n = URL.createObjectURL(s), t = document.createElement("a");
+            t.href = n, t.download = (h?.name.replace(/\.[^.]+$/, "") || "humanized") + ".md", t.click(), URL.revokeObjectURL(n);
+        }, W = async ()=>{
             try {
                 const { markdownToHwpx: s } = await b(async ()=>{
-                    const { markdownToHwpx: j } = await import("./index-BrfNapfF.js");
+                    const { markdownToHwpx: N } = await import("./index-CmP3LND0.js");
                     return {
-                        markdownToHwpx: j
+                        markdownToHwpx: N
                     };
-                }, __vite__mapDeps([0,1,2,3])), n = await s(m), i = new Blob([
+                }, __vite__mapDeps([0,1,2,3])), n = await s(c), t = new Blob([
                     n
                 ], {
                     type: "application/hwp+zip"
-                }), c = URL.createObjectURL(i), u = document.createElement("a");
-                u.href = c, u.download = (h?.name.replace(/\.[^.]+$/, "") || "humanized") + ".hwpx", u.click(), URL.revokeObjectURL(c);
+                }), m = URL.createObjectURL(t), j = document.createElement("a");
+                j.href = m, j.download = (h?.name.replace(/\.[^.]+$/, "") || "humanized") + ".hwpx", j.click(), URL.revokeObjectURL(m);
             } catch (s) {
                 console.error("HWPX export error:", s);
             }
         }, T = ()=>{
-            d("upload"), C(null), _(""), D(""), l("");
+            d("upload"), u(null), x(""), E(""), v("");
         };
         return e.jsxs(e.Fragment, {
             children: [
-                e.jsx(X, {
+                e.jsx(G, {
                     title: a("site.humanize.title"),
                     path: "/humanize"
                 }),
@@ -143,7 +163,7 @@ let __tla = Promise.all([
                     children: e.jsxs("div", {
                         className: "container",
                         children: [
-                            E && e.jsxs("div", {
+                            S && e.jsxs("div", {
                                 className: "error-alert",
                                 children: [
                                     e.jsxs("svg", {
@@ -173,17 +193,17 @@ let __tla = Promise.all([
                                             })
                                         ]
                                     }),
-                                    E
+                                    S
                                 ]
                             }),
-                            p === "upload" && e.jsxs("div", {
-                                className: `dropzone ${R ? "drag-over" : ""}`,
+                            o === "upload" && e.jsxs("div", {
+                                className: `dropzone ${w ? "drag-over" : ""}`,
                                 onDragOver: (s)=>{
-                                    s.preventDefault(), z(!0);
+                                    s.preventDefault(), p(!0);
                                 },
-                                onDragLeave: ()=>z(!1),
-                                onDrop: U,
-                                onClick: B,
+                                onDragLeave: ()=>p(!1),
+                                onDrop: A,
+                                onClick: F,
                                 children: [
                                     e.jsxs("svg", {
                                         className: "dropzone-icon",
@@ -214,7 +234,7 @@ let __tla = Promise.all([
                                     })
                                 ]
                             }),
-                            p === "preview" && e.jsxs("div", {
+                            o === "preview" && e.jsxs("div", {
                                 className: "humanize-preview",
                                 children: [
                                     h && e.jsxs("div", {
@@ -244,7 +264,7 @@ let __tla = Promise.all([
                                                     }),
                                                     e.jsx("div", {
                                                         className: "file-info-size",
-                                                        children: q(h.size)
+                                                        children: J(h.size)
                                                     })
                                                 ]
                                             })
@@ -263,18 +283,18 @@ let __tla = Promise.all([
                                                         className: "option-buttons",
                                                         children: [
                                                             e.jsx("button", {
-                                                                className: x === "light" ? "active" : "",
-                                                                onClick: ()=>f("light"),
+                                                                className: g === "light" ? "active" : "",
+                                                                onClick: ()=>k("light"),
                                                                 children: a("site.humanize.intensityLight")
                                                             }),
                                                             e.jsx("button", {
-                                                                className: x === "moderate" ? "active" : "",
-                                                                onClick: ()=>f("moderate"),
+                                                                className: g === "moderate" ? "active" : "",
+                                                                onClick: ()=>k("moderate"),
                                                                 children: a("site.humanize.intensityModerate")
                                                             }),
                                                             e.jsx("button", {
-                                                                className: x === "aggressive" ? "active" : "",
-                                                                onClick: ()=>f("aggressive"),
+                                                                className: g === "aggressive" ? "active" : "",
+                                                                onClick: ()=>k("aggressive"),
                                                                 children: a("site.humanize.intensityAggressive")
                                                             })
                                                         ]
@@ -291,18 +311,18 @@ let __tla = Promise.all([
                                                         className: "option-buttons",
                                                         children: [
                                                             e.jsx("button", {
-                                                                className: v === "formal" ? "active" : "",
-                                                                onClick: ()=>k("formal"),
+                                                                className: f === "formal" ? "active" : "",
+                                                                onClick: ()=>y("formal"),
                                                                 children: a("site.humanize.toneFormal")
                                                             }),
                                                             e.jsx("button", {
-                                                                className: v === "casual" ? "active" : "",
-                                                                onClick: ()=>k("casual"),
+                                                                className: f === "casual" ? "active" : "",
+                                                                onClick: ()=>y("casual"),
                                                                 children: a("site.humanize.toneCasual")
                                                             }),
                                                             e.jsx("button", {
-                                                                className: v === "academic" ? "active" : "",
-                                                                onClick: ()=>k("academic"),
+                                                                className: f === "academic" ? "active" : "",
+                                                                onClick: ()=>y("academic"),
                                                                 children: a("site.humanize.toneAcademic")
                                                             })
                                                         ]
@@ -323,7 +343,7 @@ let __tla = Promise.all([
                                                     e.jsxs("span", {
                                                         className: "preview-lines",
                                                         children: [
-                                                            o.split(`
+                                                            r.split(`
 `).length,
                                                             " lines"
                                                         ]
@@ -333,8 +353,8 @@ let __tla = Promise.all([
                                             e.jsxs("pre", {
                                                 className: "humanize-pre",
                                                 children: [
-                                                    o.slice(0, 3e3),
-                                                    o.length > 3e3 ? `
+                                                    r.slice(0, 3e3),
+                                                    r.length > 3e3 ? `
 ...` : ""
                                                 ]
                                             })
@@ -350,14 +370,14 @@ let __tla = Promise.all([
                                             }),
                                             e.jsx("button", {
                                                 className: "btn-primary",
-                                                onClick: P,
+                                                onClick: $,
                                                 children: a("site.humanize.startConvert")
                                             })
                                         ]
                                     })
                                 ]
                             }),
-                            p === "processing" && e.jsxs("div", {
+                            o === "processing" && e.jsxs("div", {
                                 className: "humanize-processing",
                                 children: [
                                     e.jsx("div", {
@@ -368,7 +388,7 @@ let __tla = Promise.all([
                                     })
                                 ]
                             }),
-                            p === "done" && e.jsxs("div", {
+                            o === "done" && e.jsxs("div", {
                                 className: "humanize-result",
                                 children: [
                                     e.jsxs("div", {
@@ -378,13 +398,13 @@ let __tla = Promise.all([
                                                 className: "result-tabs",
                                                 children: [
                                                     e.jsx("button", {
-                                                        className: `result-tab ${w === "side-by-side" ? "active" : ""}`,
-                                                        onClick: ()=>H("side-by-side"),
+                                                        className: `result-tab ${z === "side-by-side" ? "active" : ""}`,
+                                                        onClick: ()=>R("side-by-side"),
                                                         children: a("site.humanize.compare")
                                                     }),
                                                     e.jsx("button", {
-                                                        className: `result-tab ${w === "result" ? "active" : ""}`,
-                                                        onClick: ()=>H("result"),
+                                                        className: `result-tab ${z === "result" ? "active" : ""}`,
+                                                        onClick: ()=>R("result"),
                                                         children: a("site.humanize.resultOnly")
                                                     })
                                                 ]
@@ -393,15 +413,15 @@ let __tla = Promise.all([
                                                 className: "result-actions",
                                                 children: [
                                                     e.jsx("button", {
-                                                        onClick: A,
-                                                        children: a(F ? "site.convert.copied" : "site.convert.copy")
+                                                        onClick: V,
+                                                        children: a(B ? "site.convert.copied" : "site.convert.copy")
                                                     }),
                                                     e.jsx("button", {
-                                                        onClick: V,
+                                                        onClick: I,
                                                         children: "Markdown"
                                                     }),
                                                     e.jsx("button", {
-                                                        onClick: $,
+                                                        onClick: W,
                                                         children: "HWPX"
                                                     }),
                                                     e.jsx("button", {
@@ -413,39 +433,75 @@ let __tla = Promise.all([
                                         ]
                                     }),
                                     e.jsx("div", {
-                                        className: `humanize-result-content ${w}`,
-                                        children: w === "side-by-side" ? e.jsxs(e.Fragment, {
+                                        className: `humanize-result-content ${z}`,
+                                        children: z === "side-by-side" ? e.jsxs("div", {
+                                            className: "para-compare",
                                             children: [
                                                 e.jsxs("div", {
-                                                    className: "compare-col",
+                                                    className: "para-compare-legend",
                                                     children: [
-                                                        e.jsx("div", {
-                                                            className: "compare-label",
-                                                            children: a("site.humanize.original")
+                                                        e.jsx("span", {
+                                                            className: "legend-item legend-same",
+                                                            children: a("site.humanize.paraSame")
                                                         }),
-                                                        e.jsx("pre", {
-                                                            className: "humanize-pre",
-                                                            children: o
+                                                        e.jsx("span", {
+                                                            className: "legend-item legend-changed",
+                                                            children: a("site.humanize.paraChanged")
+                                                        }),
+                                                        e.jsx("span", {
+                                                            className: "legend-item legend-added",
+                                                            children: a("site.humanize.paraAdded")
+                                                        }),
+                                                        e.jsx("span", {
+                                                            className: "legend-item legend-removed",
+                                                            children: a("site.humanize.paraRemoved")
                                                         })
                                                     ]
                                                 }),
-                                                e.jsxs("div", {
-                                                    className: "compare-col",
-                                                    children: [
-                                                        e.jsx("div", {
-                                                            className: "compare-label",
-                                                            children: a("site.humanize.humanized")
-                                                        }),
-                                                        e.jsx("pre", {
-                                                            className: "humanize-pre",
-                                                            children: m
-                                                        })
-                                                    ]
-                                                })
+                                                U.map((s, n)=>e.jsxs("div", {
+                                                        className: `para-row para-${s.status}`,
+                                                        children: [
+                                                            e.jsxs("div", {
+                                                                className: "para-index",
+                                                                children: [
+                                                                    e.jsxs("span", {
+                                                                        className: "para-num",
+                                                                        children: [
+                                                                            "#",
+                                                                            n + 1
+                                                                        ]
+                                                                    }),
+                                                                    e.jsx("span", {
+                                                                        className: `para-badge badge-${s.status}`,
+                                                                        children: s.status === "same" ? a("site.humanize.paraSame") : s.status === "changed" ? a("site.humanize.paraChanged") : s.status === "added" ? a("site.humanize.paraAdded") : a("site.humanize.paraRemoved")
+                                                                    })
+                                                                ]
+                                                            }),
+                                                            e.jsxs("div", {
+                                                                className: "para-cols",
+                                                                children: [
+                                                                    e.jsx("div", {
+                                                                        className: "para-col para-left",
+                                                                        children: s.left || e.jsx("span", {
+                                                                            className: "para-empty",
+                                                                            children: "—"
+                                                                        })
+                                                                    }),
+                                                                    e.jsx("div", {
+                                                                        className: "para-col para-right",
+                                                                        children: s.right || e.jsx("span", {
+                                                                            className: "para-empty",
+                                                                            children: "—"
+                                                                        })
+                                                                    })
+                                                                ]
+                                                            })
+                                                        ]
+                                                    }, n))
                                             ]
                                         }) : e.jsx("pre", {
                                             className: "humanize-pre full",
-                                            children: m
+                                            children: c
                                         })
                                     })
                                 ]
@@ -457,4 +513,4 @@ let __tla = Promise.all([
         });
     };
 });
-export { Q as default, __tla };
+export { ee as default, __tla };
