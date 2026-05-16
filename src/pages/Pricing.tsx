@@ -99,34 +99,10 @@ const Pricing = (): ReactElement => {
         </div>
       </section>
 
-      {/* Free Plan */}
+      {/* Top-up Section */}
       <section className="pricing-section">
         <div className="container">
-          <div className="pricing-grid pricing-grid-1">
-            <div className="pricing-card" data-aos="fade-up">
-              <h3 className="pricing-plan-name">{t(FREE_PLAN.nameKey)}</h3>
-              <div className="pricing-price">
-                <span className="pricing-amount">{language === 'en' ? FREE_PLAN.priceLabelEn : FREE_PLAN.priceLabel}</span>
-              </div>
-              <p className="pricing-desc">{t(FREE_PLAN.descKey)}</p>
-              <ul className="pricing-features">
-                {getFeatures(FREE_PLAN.featuresKey).map((f, i) => (
-                  <li key={i}>
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--primary)" strokeWidth="2.5">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <button className="btn pricing-btn btn-outline" onClick={handleFreeClick}>
-                {t(FREE_PLAN.btnLabelKey)}
-              </button>
-            </div>
-          </div>
-
-          {/* Top-up Section */}
-          <h3 className="section-title text-center" style={{ marginTop: '64px' }}>{t('site.pricing.topupTitle')}</h3>
+          <h3 className="section-title text-center">{t('site.pricing.topupTitle')}</h3>
           <p className="pricing-topup-subtitle">{t('site.pricing.topupSubtitle')}</p>
 
           <div className="pricing-grid pricing-grid-3">
@@ -169,6 +145,29 @@ const Pricing = (): ReactElement => {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Free Plan */}
+          <div className="pricing-free-section" data-aos="fade-up">
+            <div className="pricing-card pricing-card-free">
+              <div className="pricing-free-left">
+                <h3 className="pricing-plan-name">{t(FREE_PLAN.nameKey)}</h3>
+                <p className="pricing-desc">{t(FREE_PLAN.descKey)}</p>
+                <button className="btn pricing-btn btn-outline" onClick={handleFreeClick}>
+                  {t(FREE_PLAN.btnLabelKey)}
+                </button>
+              </div>
+              <ul className="pricing-features pricing-free-features">
+                {getFeatures(FREE_PLAN.featuresKey).map((f, i) => (
+                  <li key={i}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--primary)" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
