@@ -1,6 +1,6 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-CF3yht6M.js","assets/jszip.min-CLSuxE1x.js","assets/index-D7e5NJ_E.js","assets/index-CdGgBfzl.css","assets/parser-DJr_P0bV.js","assets/types-b19hQvwC.js"])))=>i.map(i=>d[i]);
-import { u as X, r as i, _ as b, j as e, g as q, __tla as __tla_0 } from "./index-D7e5NJ_E.js";
-import { S as G } from "./SEOHead-DFwRUzJa.js";
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-DrzVVwWQ.js","assets/jszip.min-DN0kVYkU.js","assets/index-DXJucl8f.js","assets/index-CdGgBfzl.css","assets/parser-DJr_P0bV.js","assets/types-b19hQvwC.js"])))=>i.map(i=>d[i]);
+import { u as X, r as i, _ as b, j as e, g as q, __tla as __tla_0 } from "./index-DXJucl8f.js";
+import { S as G } from "./SEOHead-DS80-21O.js";
 import { g as O, f as J } from "./fileUtils-1h3TEy09.js";
 let ee;
 let __tla = Promise.all([
@@ -35,7 +35,7 @@ let __tla = Promise.all([
             const n = O(s.name), t = await s.arrayBuffer();
             if (n === "md" || n === "txt") return new TextDecoder("utf-8").decode(t);
             const { parseHwpxDocument: m, parseDocxDocument: j, blocksToMarkdown: N } = await b(async ()=>{
-                const { parseHwpxDocument: l, parseDocxDocument: C, blocksToMarkdown: _ } = await import("./index-CF3yht6M.js");
+                const { parseHwpxDocument: l, parseDocxDocument: C, blocksToMarkdown: _ } = await import("./index-DrzVVwWQ.js");
                 return {
                     parseHwpxDocument: l,
                     parseDocxDocument: C,
@@ -102,7 +102,8 @@ let __tla = Promise.all([
                     body: {
                         markdown: r,
                         intensity: g,
-                        tone: f
+                        tone: f,
+                        provider: "openai"
                     }
                 });
                 if (t) throw t;
@@ -122,7 +123,7 @@ let __tla = Promise.all([
         }, W = async ()=>{
             try {
                 const { markdownToHwpx: s } = await b(async ()=>{
-                    const { markdownToHwpx: N } = await import("./index-CF3yht6M.js");
+                    const { markdownToHwpx: N } = await import("./index-DrzVVwWQ.js");
                     return {
                         markdownToHwpx: N
                     };
