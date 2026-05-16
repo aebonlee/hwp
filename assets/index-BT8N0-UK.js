@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-LHeGDXCA.js","assets/SEOHead-4HIbEn4I.js","assets/useAOS-DLVDPFWU.js","assets/Convert-bxCF3N3i.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-wPGIlBNA.js","assets/editor-B2FMxC-J.css","assets/Templates-D-S3L62V.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-Cdd4Musc.js","assets/TemplateDetail-C2QS7AoX.js","assets/Documents-BXARJekG.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-DSJMLRav.js","assets/BusinessPlan-F6deae50.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-B4Tstnfs.js","assets/useRhwp-DKpoRvk8.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-C3qPInUC.js","assets/Viewer-BeyzE84f.css","assets/Generator-CNkI3Q9f.js","assets/Generator-B3i-1g61.css","assets/AiWriter-Bg3ViXrB.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-BFK-eHaf.js","assets/Humanize--lwfvXIZ.css","assets/HumanizeText-CObXbh21.js","assets/HumanizeText-DmJSOmHL.css","assets/Guide-DEXhqgAD.js","assets/Pricing-B7qJhGgD.js","assets/NotFound-D6ZJzNsu.js","assets/Login-DzXGLJ4J.js","assets/auth-DKHmQrFs.css","assets/Register-BVvOwUUS.js","assets/ForgotPassword-DD-99_b4.js","assets/MyPage-Bqxnnz6Q.js","assets/About-BCm_OP-1.js","assets/About-D4JMrjv8.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Home-Czm6Y5MJ.js","assets/SEOHead-BkixELSI.js","assets/useAOS-CVJ406E0.js","assets/Convert-BKgCBFJs.js","assets/fileUtils-1h3TEy09.js","assets/Convert-DYDy6mLq.css","assets/Editor-DTkpEi9a.js","assets/editor-B2FMxC-J.css","assets/Templates-Chs2OeAN.js","assets/templates-zT9MYh1M.css","assets/TemplateCreate-CSgnoG5W.js","assets/TemplateDetail-CF-22y0b.js","assets/Documents-BBgDv1mf.js","assets/Documents-7jKc5y4S.css","assets/DocumentDetail-E7O2A4M3.js","assets/BusinessPlan-Dx5p-3Hh.js","assets/BusinessPlan-lsmXagVZ.css","assets/HwpEditor-BVsM_u4b.js","assets/useRhwp-DHJensm4.js","assets/HwpEditor-DNPpr6at.css","assets/Viewer-B0LP9aa7.js","assets/Viewer-BeyzE84f.css","assets/Generator-C6SobGqp.js","assets/Generator-B3i-1g61.css","assets/AiWriter-BDNN04Ec.js","assets/AiWriter-DtjHDkZn.css","assets/Humanize-DJzTuqNV.js","assets/Humanize--lwfvXIZ.css","assets/HumanizeText-BJ1uP2f-.js","assets/HumanizeText-DmJSOmHL.css","assets/Guide-I-CGkFEe.js","assets/Pricing-Cc4MK4xr.js","assets/NotFound-CZvCMWXv.js","assets/Login-CPHlPGAP.js","assets/auth-DKHmQrFs.css","assets/Register-BcIv56yT.js","assets/ForgotPassword-DqIQ71-b.js","assets/MyPage-6ovqJ0Fj.js","assets/About-DnXIvElv.js","assets/About-D4JMrjv8.css"])))=>i.map(i=>d[i]);
 let Rn, EE, xE, He, Nt, Eg, NE, Oc, AE, TE, Jt, OE, CE, w, kE, jE, Tc, je, Xv, A, RE, ng;
 let __tla = (async ()=>{
     (function() {
@@ -10418,12 +10418,13 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                 },
                 pricing: {
                     title: "요금제",
-                    subtitle: "HWP Web의 다양한 기능을 합리적인 가격으로 이용하세요",
+                    subtitle: "필요한 만큼 충전해서 사용하세요 — 월 구독 없이 간편하게",
                     recommended: "추천",
                     loginRequired: "로그인이 필요합니다.",
-                    comingSoon: "유료 결제 기능을 준비 중입니다.",
-                    compareTitle: "요금제 비교",
+                    comingSoon: "충전 결제 기능을 준비 중입니다.",
+                    compareTitle: "무료 vs 충전 비교",
                     compareItem: "항목",
+                    topupCol: "충전 사용자",
                     faqTitle: "자주 묻는 질문",
                     ctaTitle: "지금 시작하세요",
                     ctaDesc: "HWP Web으로 한글 문서를 웹에서 변환·편집·관리하세요",
@@ -10432,56 +10433,43 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     freeDesc: "기본 변환과 편집 기능을 무료로 체험하세요",
                     freeFeatures: "HWP/HWPX → Markdown 변환 5회/월|마크다운 에디터|문서 1개 저장|사용자 API 키로 AI 기능",
                     freeBtn: "무료 시작",
-                    basicName: "Basic",
-                    basicDesc: "자주 사용하는 분을 위한 합리적인 요금제",
-                    basicFeatures: "변환 50회/월|AI 처리 월 150,000자 (A4 약 40페이지)|문서 30개 저장|1회 최대 30,000자|HWP 에디터 + HWPX 내보내기|이메일 지원",
-                    basicBtn: "Basic 시작",
-                    proName: "Pro",
-                    proDesc: "전문가를 위한 대용량 AI 처리",
-                    proFeatures: "변환 무제한|AI 처리 월 500,000자 (A4 약 125페이지)|문서 무제한 저장|1회 최대 50,000자|사업계획서 + AI 문서 작성|HWPX + Markdown 내보내기|이메일 지원",
-                    proBtn: "Pro 시작",
+                    topupTitle: "크레딧 충전",
+                    topupSubtitle: "충전한 크레딧은 만료 없이 사용할 수 있습니다",
+                    topup5Name: "₩5,000",
+                    topup5Desc: "A4 약 22페이지 분량",
+                    topup10Name: "₩10,000",
+                    topup10Desc: "A4 약 45페이지 분량",
+                    topup30Name: "₩30,000",
+                    topup30Desc: "A4 약 137페이지 분량",
+                    topupBtn: "충전하기",
+                    creditsLabel: "AI 크레딧",
+                    paidFeaturesTitle: "충전 시 제공되는 기능",
+                    paidFeatures: "변환 무제한|AI 휴머나이징·문서 작성·사업계획서|문서 무제한 저장|1회 최대 50,000자 처리|HWP 에디터 + HWPX/Markdown 내보내기",
                     compare: {
-                        price: {
-                            label: "월 요금",
-                            free: "무료",
-                            basic: "₩9,900",
-                            pro: "₩29,900"
-                        },
                         converts: {
                             label: "변환 횟수",
                             free: "5회/월",
-                            basic: "50회/월",
-                            pro: "무제한"
+                            paid: "무제한"
                         },
-                        humanize: {
-                            label: "AI 처리량",
+                        aiQuota: {
+                            label: "AI 크레딧",
                             free: "사용자 키",
-                            basic: "월 150,000자",
-                            pro: "월 500,000자"
+                            paid: "충전량에 따라"
                         },
                         maxLength: {
                             label: "1회 최대 길이",
                             free: "5,000자",
-                            basic: "30,000자",
-                            pro: "50,000자"
+                            paid: "50,000자"
                         },
                         export: {
                             label: "내보내기",
                             free: "Markdown",
-                            basic: "Markdown, HWPX",
-                            pro: "Markdown, HWPX"
+                            paid: "Markdown, HWPX"
                         },
                         storage: {
                             label: "문서 저장",
                             free: "1개",
-                            basic: "30개",
-                            pro: "무제한"
-                        },
-                        support: {
-                            label: "지원",
-                            free: "-",
-                            basic: "이메일",
-                            pro: "이메일"
+                            paid: "무제한"
                         }
                     },
                     faq1: {
@@ -10489,20 +10477,20 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                         a: "네, 무료 요금제에서도 월 5회까지 HWP/HWPX → Markdown 변환을 이용할 수 있습니다. 마크다운 에디터도 제한 없이 사용 가능합니다."
                     },
                     faq2: {
-                        q: "AI 처리량은 어떻게 계산되나요?",
-                        a: "AI 휴머나이징, AI 문서 작성, 사업계획서 생성 등 모든 AI 기능 사용 시 처리된 글자 수가 차감됩니다. 월 할당량을 초과하면 다음 달까지 대기하거나 사용자 API 키로 계속 이용할 수 있습니다."
+                        q: "AI 크레딧은 어떻게 차감되나요?",
+                        a: "AI 휴머나이징, AI 문서 작성, 사업계획서 생성 등 AI 기능 사용 시 처리된 글자 수만큼 크레딧이 차감됩니다. 잔여 크레딧은 만료 없이 유지됩니다."
                     },
                     faq3: {
-                        q: "요금제는 언제든 변경할 수 있나요?",
-                        a: "네, 언제든 업그레이드 또는 다운그레이드가 가능합니다. 업그레이드 시 즉시 적용되며, 다운그레이드는 다음 결제일부터 적용됩니다."
+                        q: "크레딧을 다 쓰면 어떻게 되나요?",
+                        a: "추가 충전하거나, 사용자 본인의 API 키를 입력하여 무료로 계속 이용할 수 있습니다."
                     },
                     faq4: {
                         q: "사용자 API 키는 어떻게 사용하나요?",
-                        a: "무료 요금제에서 AI 기능을 사용하려면 본인의 Claude 또는 OpenAI API 키를 입력하면 됩니다. API 키는 브라우저에만 저장되며 서버로 전송되지 않습니다."
+                        a: "본인의 OpenAI API 키를 입력하면 크레딧 차감 없이 AI 기능을 사용할 수 있습니다. API 키는 브라우저에만 저장되며 서버로 전송되지 않습니다."
                     },
                     faq5: {
                         q: "환불 정책은 어떻게 되나요?",
-                        a: "결제 후 7일 이내 사용 이력이 없는 경우 전액 환불이 가능합니다. 자세한 사항은 고객센터로 문의해 주세요."
+                        a: "충전 후 7일 이내 사용 이력이 없는 경우 전액 환불이 가능합니다."
                     }
                 },
                 home: {
@@ -10850,12 +10838,13 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                 },
                 pricing: {
                     title: "Pricing",
-                    subtitle: "Access all HWP Web features at a fair price",
+                    subtitle: "Top up as you need — no monthly subscription required",
                     recommended: "Recommended",
                     loginRequired: "Please log in first.",
-                    comingSoon: "Paid plans are coming soon.",
-                    compareTitle: "Plan Comparison",
+                    comingSoon: "Top-up payments are coming soon.",
+                    compareTitle: "Free vs Top-up",
                     compareItem: "Feature",
+                    topupCol: "Top-up Users",
                     faqTitle: "Frequently Asked Questions",
                     ctaTitle: "Get Started Now",
                     ctaDesc: "Convert, edit, and manage HWP documents on the web with HWP Web",
@@ -10864,56 +10853,43 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                     freeDesc: "Try basic conversion and editing for free",
                     freeFeatures: "HWP/HWPX → Markdown 5 times/mo|Markdown editor|1 document storage|AI features with your own key",
                     freeBtn: "Start Free",
-                    basicName: "Basic",
-                    basicDesc: "A reasonable plan for regular users",
-                    basicFeatures: "50 conversions/mo|AI quota: 150,000 chars/mo (~40 pages)|30 document storage|Max 30,000 chars per request|HWP Editor + HWPX export|Email support",
-                    basicBtn: "Start Basic",
-                    proName: "Pro",
-                    proDesc: "High-volume AI processing for professionals",
-                    proFeatures: "Unlimited conversions|AI quota: 500,000 chars/mo (~125 pages)|Unlimited storage|Max 50,000 chars per request|Business plan + AI writer|HWPX + Markdown export|Email support",
-                    proBtn: "Start Pro",
+                    topupTitle: "Credit Top-up",
+                    topupSubtitle: "Credits never expire — use them whenever you need",
+                    topup5Name: "₩5,000",
+                    topup5Desc: "~22 A4 pages",
+                    topup10Name: "₩10,000",
+                    topup10Desc: "~45 A4 pages",
+                    topup30Name: "₩30,000",
+                    topup30Desc: "~137 A4 pages",
+                    topupBtn: "Top Up",
+                    creditsLabel: "AI Credits",
+                    paidFeaturesTitle: "Included with any top-up",
+                    paidFeatures: "Unlimited conversions|AI humanization, writer & business plan|Unlimited storage|Max 50,000 chars per request|HWP Editor + HWPX/Markdown export",
                     compare: {
-                        price: {
-                            label: "Monthly",
-                            free: "Free",
-                            basic: "₩9,900",
-                            pro: "₩29,900"
-                        },
                         converts: {
                             label: "Conversions",
                             free: "5/mo",
-                            basic: "50/mo",
-                            pro: "Unlimited"
+                            paid: "Unlimited"
                         },
-                        humanize: {
-                            label: "AI Quota",
+                        aiQuota: {
+                            label: "AI Credits",
                             free: "Own key",
-                            basic: "150,000 chars/mo",
-                            pro: "500,000 chars/mo"
+                            paid: "Based on top-up"
                         },
                         maxLength: {
                             label: "Max per Request",
                             free: "5,000 chars",
-                            basic: "30,000 chars",
-                            pro: "50,000 chars"
+                            paid: "50,000 chars"
                         },
                         export: {
                             label: "Export",
                             free: "Markdown",
-                            basic: "Markdown, HWPX",
-                            pro: "Markdown, HWPX"
+                            paid: "Markdown, HWPX"
                         },
                         storage: {
                             label: "Storage",
                             free: "1 doc",
-                            basic: "30 docs",
-                            pro: "Unlimited"
-                        },
-                        support: {
-                            label: "Support",
-                            free: "-",
-                            basic: "Email",
-                            pro: "Email"
+                            paid: "Unlimited"
                         }
                     },
                     faq1: {
@@ -10921,20 +10897,20 @@ Please change the parent <Route path="${k}"> to <Route path="${k === "/" ? "*" :
                         a: "Yes, the free plan allows up to 5 HWP/HWPX → Markdown conversions per month. The Markdown editor is also available without limits."
                     },
                     faq2: {
-                        q: "How is the AI quota calculated?",
-                        a: "All AI features (humanization, AI writer, business plan generation) consume characters from your monthly quota. When exceeded, you can wait for the next month or use your own API key to continue."
+                        q: "How are AI credits consumed?",
+                        a: "AI features (humanization, AI writer, business plan) deduct credits based on the number of characters processed. Remaining credits never expire."
                     },
                     faq3: {
-                        q: "Can I change my plan anytime?",
-                        a: "Yes, you can upgrade or downgrade at any time. Upgrades take effect immediately, and downgrades apply from the next billing date."
+                        q: "What happens when credits run out?",
+                        a: "You can top up again, or enter your own API key to continue using AI features for free."
                     },
                     faq4: {
                         q: "How do I use my own API key?",
-                        a: "To use AI features on the free plan, enter your Claude or OpenAI API key. Keys are stored only in your browser and never sent to our servers."
+                        a: "Enter your OpenAI API key to use AI features without consuming credits. Keys are stored only in your browser and never sent to our servers."
                     },
                     faq5: {
                         q: "What is the refund policy?",
-                        a: "Full refunds are available within 7 days of payment if no usage has occurred. Please contact support for details."
+                        a: "Full refunds are available within 7 days of top-up if no usage has occurred."
                     }
                 },
                 home: {
@@ -20708,56 +20684,56 @@ ${B}`;
             })
         });
     };
-    QS = A.lazy(()=>He(()=>import("./Home-LHeGDXCA.js"), __vite__mapDeps([0,1,2])));
-    ZS = A.lazy(()=>He(()=>import("./Convert-bxCF3N3i.js").then(async (m)=>{
+    QS = A.lazy(()=>He(()=>import("./Home-Czm6Y5MJ.js"), __vite__mapDeps([0,1,2])));
+    ZS = A.lazy(()=>He(()=>import("./Convert-BKgCBFJs.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([3,1,4,5])));
-    FS = A.lazy(()=>He(()=>import("./Editor-wPGIlBNA.js").then(async (m)=>{
+    FS = A.lazy(()=>He(()=>import("./Editor-DTkpEi9a.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([6,1,4,7])));
-    eE = A.lazy(()=>He(()=>import("./Templates-D-S3L62V.js"), __vite__mapDeps([8,1,9])));
-    tE = A.lazy(()=>He(()=>import("./TemplateCreate-Cdd4Musc.js").then(async (m)=>{
+    eE = A.lazy(()=>He(()=>import("./Templates-Chs2OeAN.js"), __vite__mapDeps([8,1,9])));
+    tE = A.lazy(()=>He(()=>import("./TemplateCreate-CSgnoG5W.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([10,1,4,9])));
-    nE = A.lazy(()=>He(()=>import("./TemplateDetail-C2QS7AoX.js").then(async (m)=>{
+    nE = A.lazy(()=>He(()=>import("./TemplateDetail-CF-22y0b.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([11,1,4,9])));
-    aE = A.lazy(()=>He(()=>import("./Documents-BXARJekG.js"), __vite__mapDeps([12,1,13])));
-    iE = A.lazy(()=>He(()=>import("./DocumentDetail-DSJMLRav.js"), __vite__mapDeps([14,1,4,7])));
-    rE = A.lazy(()=>He(()=>import("./BusinessPlan-F6deae50.js").then(async (m)=>{
+    aE = A.lazy(()=>He(()=>import("./Documents-BBgDv1mf.js"), __vite__mapDeps([12,1,13])));
+    iE = A.lazy(()=>He(()=>import("./DocumentDetail-E7O2A4M3.js"), __vite__mapDeps([14,1,4,7])));
+    rE = A.lazy(()=>He(()=>import("./BusinessPlan-Dx5p-3Hh.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([15,1,16])));
-    sE = A.lazy(()=>He(()=>import("./HwpEditor-B4Tstnfs.js").then(async (m)=>{
+    sE = A.lazy(()=>He(()=>import("./HwpEditor-BVsM_u4b.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([17,18,1,19])));
-    lE = A.lazy(()=>He(()=>import("./Viewer-C3qPInUC.js").then(async (m)=>{
+    lE = A.lazy(()=>He(()=>import("./Viewer-B0LP9aa7.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([20,1,18,21])));
-    oE = A.lazy(()=>He(()=>import("./Generator-CNkI3Q9f.js").then(async (m)=>{
+    oE = A.lazy(()=>He(()=>import("./Generator-C6SobGqp.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([22,1,23])));
-    uE = A.lazy(()=>He(()=>import("./AiWriter-Bg3ViXrB.js"), __vite__mapDeps([24,1,25])));
-    cE = A.lazy(()=>He(()=>import("./Humanize-BFK-eHaf.js").then(async (m)=>{
+    uE = A.lazy(()=>He(()=>import("./AiWriter-BDNN04Ec.js"), __vite__mapDeps([24,1,25])));
+    cE = A.lazy(()=>He(()=>import("./Humanize-DJzTuqNV.js").then(async (m)=>{
                 await m.__tla;
                 return m;
             }), __vite__mapDeps([26,1,4,27])));
-    hE = A.lazy(()=>He(()=>import("./HumanizeText-CObXbh21.js"), __vite__mapDeps([28,1,29])));
-    fE = A.lazy(()=>He(()=>import("./Guide-DEXhqgAD.js"), __vite__mapDeps([30,1])));
-    dE = A.lazy(()=>He(()=>import("./Pricing-B7qJhGgD.js"), __vite__mapDeps([31,1,2])));
-    pE = A.lazy(()=>He(()=>import("./NotFound-D6ZJzNsu.js"), __vite__mapDeps([32,1])));
-    mE = A.lazy(()=>He(()=>import("./Login-DzXGLJ4J.js"), __vite__mapDeps([33,1,34])));
-    gE = A.lazy(()=>He(()=>import("./Register-BVvOwUUS.js"), __vite__mapDeps([35,1,34])));
-    yE = A.lazy(()=>He(()=>import("./ForgotPassword-DD-99_b4.js"), __vite__mapDeps([36,1,34])));
-    vE = A.lazy(()=>He(()=>import("./MyPage-Bqxnnz6Q.js"), __vite__mapDeps([37,1,34])));
-    bE = A.lazy(()=>He(()=>import("./About-BCm_OP-1.js"), __vite__mapDeps([38,1,2,39])));
+    hE = A.lazy(()=>He(()=>import("./HumanizeText-BJ1uP2f-.js"), __vite__mapDeps([28,1,29])));
+    fE = A.lazy(()=>He(()=>import("./Guide-I-CGkFEe.js"), __vite__mapDeps([30,1])));
+    dE = A.lazy(()=>He(()=>import("./Pricing-Cc4MK4xr.js"), __vite__mapDeps([31,1,2])));
+    pE = A.lazy(()=>He(()=>import("./NotFound-CZvCMWXv.js"), __vite__mapDeps([32,1])));
+    mE = A.lazy(()=>He(()=>import("./Login-CPHlPGAP.js"), __vite__mapDeps([33,1,34])));
+    gE = A.lazy(()=>He(()=>import("./Register-BcIv56yT.js"), __vite__mapDeps([35,1,34])));
+    yE = A.lazy(()=>He(()=>import("./ForgotPassword-DqIQ71-b.js"), __vite__mapDeps([36,1,34])));
+    vE = A.lazy(()=>He(()=>import("./MyPage-6ovqJ0Fj.js"), __vite__mapDeps([37,1,34])));
+    bE = A.lazy(()=>He(()=>import("./About-DnXIvElv.js"), __vite__mapDeps([38,1,2,39])));
     wE = ()=>w.jsx("div", {
             style: {
                 display: "flex",
