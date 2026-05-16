@@ -410,7 +410,44 @@
   font-style: italic;
 }
 
-/* ── Result Only (pre) ── */
+/* ── Result Only View ── */
+.humanize-text-page .result-only-view {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.humanize-text-page .result-only-section {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.humanize-text-page .result-only-label {
+  padding: 10px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.humanize-text-page .humanize-pre {
+  padding: 20px;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--card-bg, #fff);
+  color: var(--text-primary);
+}
+
+/* ── Result Only (full height) ── */
 .humanize-text-page .humanize-pre.full {
   max-height: 600px;
   overflow-y: auto;
