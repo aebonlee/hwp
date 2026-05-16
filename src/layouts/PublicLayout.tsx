@@ -30,6 +30,7 @@ const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
 const MyPage = lazy(() => import('../pages/MyPage'));
+const About = lazy(() => import('../pages/About'));
 
 const Loading = (): ReactElement => (
   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
@@ -78,6 +79,8 @@ const PublicLayout = (): ReactElement => {
             )}
 
             {/* 404 */}
+            <Route path="/about" element={<About />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

@@ -54,6 +54,7 @@ const site: SiteConfig = {
   ],
 
   menuItems: [
+    { path: '/about', labelKey: 'nav.about' },
     {
       path: '/convert',
       labelKey: 'site.nav.groupConvert',
