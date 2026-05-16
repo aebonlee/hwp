@@ -522,6 +522,193 @@
   border-top: 1px solid var(--border-light);
 }
 
+/* ── Credits Section ── */
+.mypage-credits {
+  margin-bottom: 24px;
+  padding: 24px;
+  background: var(--bg-secondary, #f8f9fa);
+  border: 1px solid var(--border-color, var(--border-light));
+  border-radius: 14px;
+}
+
+.credits-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.credits-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.credits-topup-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary, var(--primary-blue));
+  text-decoration: none;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(var(--primary-rgb, 0, 70, 200), 0.08);
+  transition: background 0.2s;
+}
+
+.credits-topup-link:hover {
+  background: rgba(var(--primary-rgb, 0, 70, 200), 0.14);
+}
+
+.credits-balance {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.credits-balance-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary, var(--primary-blue));
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.credits-balance-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary, var(--text-light));
+}
+
+.credits-usage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credits-bar {
+  height: 8px;
+  background: rgba(var(--primary-rgb, 0, 70, 200), 0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.credits-bar-fill {
+  height: 100%;
+  background: var(--primary-gradient, var(--primary, var(--primary-blue)));
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.credits-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-secondary, var(--text-light));
+}
+
+/* ── Credit Logs ── */
+.mypage-credit-logs {
+  margin-bottom: 24px;
+}
+
+.mypage-credit-logs h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 14px;
+}
+
+.credit-logs-empty {
+  font-size: 13px;
+  color: var(--text-secondary, var(--text-light));
+  text-align: center;
+  padding: 24px 16px;
+  background: var(--bg-secondary, #f8f9fa);
+  border-radius: 10px;
+  border: 1px dashed var(--border-color, var(--border-light));
+}
+
+.credit-logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.credit-log-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color, var(--border-light));
+  border-radius: 10px;
+  background: var(--card-bg, #fff);
+  transition: border-color 0.2s;
+}
+
+.credit-log-item:hover {
+  border-color: rgba(var(--primary-rgb, 0, 70, 200), 0.3);
+}
+
+.credit-log-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.credit-log-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.credit-log-badge.charge {
+  background: rgba(0, 133, 90, 0.1);
+  color: #00855A;
+}
+
+.credit-log-badge.usage {
+  background: rgba(200, 16, 46, 0.08);
+  color: #C8102E;
+}
+
+.credit-log-desc {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.credit-log-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.credit-log-amount {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.credit-log-amount.charge {
+  color: #00855A;
+}
+
+.credit-log-amount.usage {
+  color: #C8102E;
+}
+
+.credit-log-date {
+  font-size: 11px;
+  color: var(--text-secondary, var(--text-light));
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .auth-fullpage {

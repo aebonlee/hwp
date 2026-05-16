@@ -3,11 +3,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { updateProfile } from '../utils/auth';
+import getSupabase, { TABLES } from '../utils/supabase';
 import SEOHead from '../components/SEOHead';
 import '../styles/auth.css';
 
+interface CreditInfo {
+  balance: number;
+  total_charged: number;
+  total_used: number;
+}
+
+interface CreditLog {
+  id: string;
+  type: 'charge' | 'usage';
+  amount: number;
+  description: string;
+  created_at: string;
+}
+
 const MyPage = (): ReactElement => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { user, profile, signOut, refreshProfile } = useAuth();
   const navigate = useNavigate();
 
@@ -15,6 +30,8 @@ const MyPage = (): ReactElement => {
   const [form, setForm] = useState({ displayName: '', avatarUrl: '' });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [credits, setCredits] = useState<CreditInfo | null>(null);
+  const [logs, setLogs] = useState<CreditLog[]>([]);
 
   useEffect(() => {
     if (profile) {
@@ -24,6 +41,42 @@ const MyPage = (): ReactElement => {
       });
     }
   }, [profile]);
+
+  useEffect(() => {
+    if (!user) return;
+    const client = getSupabase();
+    if (!client) return;
+
+    const fetchCredits = async () => {
+      try {
+        const { data } = await client
+          .from(TABLES.credits)
+          .select('balance, total_charged, total_used')
+          .eq('user_id', user.id)
+          .single();
+        if (data) setCredits(data);
+      } catch {
+        // table may not exist yet
+      }
+    };
+
+    const fetchLogs = async () => {
+      try {
+        const { data } = await client
+          .from(TABLES.creditLogs)
+          .select('id, type, amount, description, created_at')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(20);
+        if (data) setLogs(data);
+      } catch {
+        // table may not exist yet
+      }
+    };
+
+    fetchCredits();
+    fetchLogs();
+  }, [user]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -46,6 +99,18 @@ const MyPage = (): ReactElement => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
+  };
+
+  const balance = credits?.balance ?? 0;
+  const totalCharged = credits?.total_charged ?? 0;
+  const totalUsed = credits?.total_used ?? 0;
+  const usagePercent = totalCharged > 0 ? Math.min((totalUsed / totalCharged) * 100, 100) : 0;
+
+  const formatDate = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return language === 'ko'
+      ? `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+      : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   };
 
   return (
@@ -107,6 +172,56 @@ const MyPage = (): ReactElement => {
               )}
 
               {message && <div className="auth-message">{message}</div>}
+            </div>
+
+            {/* AI 크레딧 섹션 */}
+            <div className="mypage-credits">
+              <div className="credits-header">
+                <h3>{t('site.mypage.creditsTitle')}</h3>
+                <Link to="/pricing" className="credits-topup-link">
+                  {t('site.mypage.topupLink')}
+                </Link>
+              </div>
+              <div className="credits-balance">
+                <span className="credits-balance-value">{balance.toLocaleString()}</span>
+                <span className="credits-balance-unit">{t('site.mypage.creditsUnit')}</span>
+              </div>
+              <div className="credits-usage">
+                <div className="credits-bar">
+                  <div className="credits-bar-fill" style={{ width: `${usagePercent}%` }} />
+                </div>
+                <div className="credits-stats">
+                  <span>{t('site.mypage.totalCharged')}: {totalCharged.toLocaleString()}{t('site.mypage.creditsUnit')}</span>
+                  <span>{t('site.mypage.totalUsed')}: {totalUsed.toLocaleString()}{t('site.mypage.creditsUnit')}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 크레딧 사용 내역 */}
+            <div className="mypage-credit-logs">
+              <h3>{t('site.mypage.logsTitle')}</h3>
+              {logs.length === 0 ? (
+                <p className="credit-logs-empty">{t('site.mypage.logsEmpty')}</p>
+              ) : (
+                <div className="credit-logs-list">
+                  {logs.map(log => (
+                    <div key={log.id} className={`credit-log-item credit-log-${log.type}`}>
+                      <div className="credit-log-left">
+                        <span className={`credit-log-badge ${log.type}`}>
+                          {log.type === 'charge' ? t('site.mypage.logCharge') : t('site.mypage.logUsage')}
+                        </span>
+                        <span className="credit-log-desc">{log.description}</span>
+                      </div>
+                      <div className="credit-log-right">
+                        <span className={`credit-log-amount ${log.type}`}>
+                          {log.type === 'charge' ? '+' : '-'}{log.amount.toLocaleString()}{t('site.mypage.creditsUnit')}
+                        </span>
+                        <span className="credit-log-date">{formatDate(log.created_at)}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="mypage-sections">
